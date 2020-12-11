@@ -6,11 +6,13 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
@@ -48,6 +50,15 @@ public class FileManager {
         String[] retArray = new String[ret.size()];
         ret.toArray(retArray);
         return retArray;
+    }
+
+    public static String readFileString(File file)
+    {
+        try
+        {
+            return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")).readLine();
+        }
+        catch (IOException e) { return null; }
     }
 
     public static File createFile(String filename, Activity activity) throws IOException {
@@ -96,7 +107,6 @@ public class FileManager {
             InputStream is = new FileInputStream(source);
             ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is));
             ZipEntry ze;
-            byte[] buffer = new byte[65536];
             int count;
             while ((ze = zis.getNextEntry()) != null) {
                 filename = ze.getName();
@@ -107,10 +117,13 @@ public class FileManager {
                     continue;
                 }
                 FileOutputStream fout = new FileOutputStream(target + filename);
+                byte[] buffer = new byte[65536];
                 while ((count = zis.read(buffer)) != -1) {
                     fout.write(buffer, 0, count);
                 }
                 fout.close();
+                File file = new File(target + filename);
+                file.setExecutable(true);
                 zis.closeEntry();
             }
             zis.close();

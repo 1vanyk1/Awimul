@@ -3,11 +3,14 @@ package com.vantacom.aarm.wine;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import com.vantacom.aarm.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Locale;
 
 public class WineActivity extends Activity {
@@ -58,12 +61,24 @@ public class WineActivity extends Activity {
         wineSettings = appendWineSetting(wineSettings, "LC_ALL", lang);
         wineSettings = appendWineSetting(wineSettings, "LANG", lang);
         wineSettings = appendWineSetting(wineSettings, "PATH", binDir.toString() + ":" + System.getenv("PATH"));
+        File logfile = new File(Environment.getExternalStorageDirectory(), "logwine.txt");
+        try {
+            PrintWriter writer = new PrintWriter(logfile);
+            writer.print("");
+            writer.close();
+        } catch (FileNotFoundException e) {}
+        wineSettings = appendWineSetting(wineSettings, "WINEDEBUGLOG", logfile.toString());
+        Log.i("WA", "logging to " + logfile.toString());
         return wineSettings;
     }
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
     public void loadWine(String path2cmd) {
         String wineABI = "armeabi-v7a";
+        Log.e("canExecute", new File(filesDir, wineABI + "/bin/wineserver").toString());
+        if (new File(filesDir, wineABI + "/bin/wineserver").canExecute()) {
+            Log.e("canExecute", wineABI + "/bin/wineserver");
+        }
         File binDir = new File(filesDir, wineABI + "/bin");
         File libraryDir = new File(filesDir, wineABI + "/lib");
         File winePrefix = new File(filesDir, "prefix");
