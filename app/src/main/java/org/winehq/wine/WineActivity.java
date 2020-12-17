@@ -1,41 +1,61 @@
 package org.winehq.wine;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.Surface;
 
 public class WineActivity extends Activity {
-    public void runWine(String path2cmd, String[] wineSettings) {
-        Log.e("wine", "2");
-        Log.e("wine", wine_init(new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2cmd}, wineSettings));
+    com.vantacom.aarm.wine.WineActivity activity;
+
+    public WineActivity(com.vantacom.aarm.wine.WineActivity activity) {
+        this.activity = activity;
+    }
+
+    public void runWine(String path2file, String[] wineSettings) {
+        Log.e("wine", wine_init(new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings));
     }
 
     public native String wine_init(String[] wineParams, String[] wineSettings);
 
-    public native void wine_config_changed(int int1);
+    public native void wine_config_changed(int dpi);
 
-    public native void wine_desktop_changed(int int1, int int2);
+    public native void wine_desktop_changed(int width, int height);
 
     public native boolean wine_keyboard_event(int int1, int int2, int int3, int int4);
 
     public native boolean wine_motion_event(int int1, int int2, int int3, int int4, int int5, int int6);
 
-    public native void wine_surface_changed(int int1, Surface surface, boolean bool1);
+    public native void wine_surface_changed(int hwnd, Surface surface, boolean isClient);
 
-    public void createDesktopWindow(int int1) {
-        Log.e("wine", "createWindow");
+    public void createDesktopWindow(int hwnd) {
+        activity.createDesktopWindow(hwnd);
+    }
+
+    public void createWindow(int hwnd, boolean isClient, int paramInt2, float scale, int i) {
+        activity.createWindow(hwnd, isClient, paramInt2, scale);
+    }
+
+    public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, int win_l, int win_t, int win_r, int win_b, int client_l, int client_t, int client_r, int client_b, int vis_l, int vis_t, int vis_r, int vis_b) {
+        Rect win_rect = new Rect(win_l, win_t, win_r, win_b);
+        Rect client_rect = new Rect(client_l, client_t, client_r, client_b);
+        Rect visible_rect = new Rect(vis_l, vis_t, vis_r, vis_b);
+        activity.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
+    }
+
+    public void destroyWindow(int hwnd) {
+        activity.destroyWindow(hwnd);
+    }
+
+    public void setParent(int hwnd, int hwnd_parent, float scale, int int1) {
+        activity.setWindowParent(hwnd, hwnd_parent, scale);
+    }
+
+    public void setCursor(int int1, int int2, int int3, int int4, int int5, int[] int_array)  {
 //        TODO
     }
 
-    public void createWindow(int int1, boolean bool1, int int2, float float1, int int3) {
-//        TODO
-    }
-
-    public void windowPosChanged(int int1, int int2, int int3, int int4, int int5, int int6, int int7, int int8, int int9, int int10, int int11, int int12, int int13, int int14, int int15, int int16, int int17) {
-//        TODO
-    }
-
-    public void destroyWindow(int int1) {
-//        TODO
+    public void destroy() {
+        activity = null;
     }
 }
