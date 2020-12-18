@@ -2,6 +2,7 @@ package com.vantacom.aarm.wine.views;
 
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 
@@ -40,6 +41,8 @@ public class Window {
             parent.addView(this);
         }
     }
+
+    public int getHWND() { return hwnd; }
 
     public float getScale() {
         return scale;
@@ -229,5 +232,13 @@ public class Window {
         if (visible && windowGroup != null) {
             addViewToParent();
         }
+    }
+
+    public int[] getEventPos(MotionEvent event)
+    {
+        int[] eventPos = new int[2];
+        eventPos[0] = Math.round(event.getX() * scale + windowGroup.getLeft());
+        eventPos[1] = Math.round(event.getY() * scale + windowGroup.getTop());
+        return eventPos;
     }
 }

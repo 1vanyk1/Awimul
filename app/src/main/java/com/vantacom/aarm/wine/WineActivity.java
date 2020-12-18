@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.wine.views.Window;
@@ -14,17 +15,22 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class WineActivity extends Activity {
+    private static int c = 0;
     private org.winehq.wine.WineActivity wineActivity;
     private File filesDir;
     private MainView mainView;
+    private LinearLayout view;
     private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
+    private String wineABI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wine);
-        wineActivity = new org.winehq.wine.WineActivity(this);
+        wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
+        wineActivity = new org.winehq.wine.WineActivity(this, new File(filesDir, wineABI + "/lib"));
+        view = (LinearLayout)findViewById(R.id.mainLayout);
         new Thread(new Runnable() {
             public void run() {
                 loadWine(null);
@@ -41,6 +47,7 @@ public class WineActivity extends Activity {
             windowsArray[i].destroy();
         }
         windowsHM.clear();
+        view.removeAllViews();
         mainView.destroy();
         mainView = null;
         try {
@@ -48,6 +55,10 @@ public class WineActivity extends Activity {
         } catch (IOException e) {
             Log.e("WA/onDestroy", e.toString());
         }
+    }
+
+    public MainView getMainView() {
+        return mainView;
     }
 
     public Window getWindow(int hwnd) {
@@ -64,20 +75,12 @@ public class WineActivity extends Activity {
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
     public void loadWine(String path2file) {
-        String wineABI = "armeabi-v7a";
         File binDir = new File(filesDir, wineABI + "/bin");
         File libraryDir = new File(filesDir, wineABI + "/lib");
         File winePrefix = new File(filesDir, "prefix");
         String[] wineSettings = StartupManager.getWineSetting(binDir, libraryDir, winePrefix, getApplicationInfo());
         if (path2file == null) {
             path2file = StartupManager.getFilePath(winePrefix, "cmd");
-        }
-        try {
-            System.loadLibrary("wine");
-        }
-        catch (UnsatisfiedLinkError e) {
-            Log.e("WA", e.toString());
-            System.load(libraryDir.toString() + "/libwine.so");
         }
         winePrefix.mkdirs();
         for (int i = 0; i < wineSettings.length; i += 2) {
@@ -90,7 +93,7 @@ public class WineActivity extends Activity {
         runOnUiThread(new Runnable() {
             public void run() {
                 mainView = new MainView(WineActivity.this, wineActivity, WineActivity.this, desktopView);
-                setContentView(mainView);
+                view.addView(mainView);
                 wineActivity.wine_config_changed(getResources().getConfiguration().densityDpi);
             }
         });

@@ -2,6 +2,7 @@ package com.vantacom.aarm.wine.views;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.view.MotionEvent;
 import android.view.TextureView;
 
 import com.vantacom.aarm.wine.WineActivity;
@@ -40,4 +41,13 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
+            int[] eventPos = window.getEventPos(event);
+            return wineActivity.wine_motion_event(window.getHWND(), event.getAction(), eventPos[0], eventPos[1], event.getButtonState(), 0);
+        }
+        return false;
+    }
 }

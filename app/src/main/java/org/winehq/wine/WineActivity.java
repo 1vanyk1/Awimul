@@ -1,19 +1,33 @@
 package org.winehq.wine;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.Surface;
 
+import java.io.File;
+
 public class WineActivity extends Activity {
     com.vantacom.aarm.wine.WineActivity activity;
 
-    public WineActivity(com.vantacom.aarm.wine.WineActivity activity) {
+    @SuppressLint("UnsafeDynamicallyLoadedCode")
+    public WineActivity(com.vantacom.aarm.wine.WineActivity activity, File libraryDir) {
         this.activity = activity;
+        try {
+            System.loadLibrary("wine");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e("WA", e.toString());
+            Runtime.getRuntime().load(libraryDir.toString() + "/libwine.so");
+        }
     }
 
     public void runWine(String path2file, String[] wineSettings) {
-        Log.e("wine", wine_init(new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings));
+        try {
+            wine_init(new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings);
+        } catch (Exception e) {
+            Log.e("wine", e.toString());
+        }
     }
 
     public native String wine_init(String[] wineParams, String[] wineSettings);
@@ -24,7 +38,7 @@ public class WineActivity extends Activity {
 
     public native boolean wine_keyboard_event(int int1, int int2, int int3, int int4);
 
-    public native boolean wine_motion_event(int int1, int int2, int int3, int int4, int int5, int int6);
+    public native boolean wine_motion_event(int hwnd, int event, int x, int y, int buttonState, int int1);
 
     public native void wine_surface_changed(int hwnd, Surface surface, boolean isClient);
 
