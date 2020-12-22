@@ -5,15 +5,16 @@ import android.graphics.SurfaceTexture;
 import android.view.MotionEvent;
 import android.view.TextureView;
 
+import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.WineActivity;
 
 public class WineView extends TextureView implements TextureView.SurfaceTextureListener {
     private Window window;
     private boolean isClient;
     private WineActivity activity;
-    private org.winehq.wine.WineActivity wineActivity;
+    private CustomClassManager wineActivity;
 
-    public WineView(WineActivity activity, org.winehq.wine.WineActivity wineActivity, Context context, Window window, boolean isClient) {
+    public WineView(WineActivity activity, CustomClassManager wineActivity, Context context, Window window, boolean isClient) {
         super(context);
         this.wineActivity = wineActivity;
         this.activity = activity;
@@ -46,7 +47,7 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
     public boolean onTouchEvent(MotionEvent event) {
         if (!this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
             int[] eventPos = window.getEventPos(event);
-            return wineActivity.wine_motion_event(window.getHWND(), event.getAction(), eventPos[0], eventPos[1], event.getButtonState(), 0);
+            return (boolean)wineActivity.invoke("wine_motion_event", window.getHWND(), event.getAction(), eventPos[0], eventPos[1], event.getButtonState(), 0);
         }
         return false;
     }

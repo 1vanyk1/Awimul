@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.wine.views.Window;
 
@@ -15,13 +16,14 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class WineActivity extends Activity {
-    private static int c = 0;
-    private org.winehq.wine.WineActivity wineActivity;
     private File filesDir;
     private MainView mainView;
     private LinearLayout view;
     private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
     private String wineABI;
+    private CustomClassManager wineActivity;
+
+    private static boolean b = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,13 @@ public class WineActivity extends Activity {
         setContentView(R.layout.activity_wine);
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
-        wineActivity = new org.winehq.wine.WineActivity(this, new File(filesDir, wineABI + "/lib"));
-        view = (LinearLayout)findViewById(R.id.mainLayout);
+        view = findViewById(R.id.mainLayout);
+        try {
+            wineActivity = new CustomClassManager("org.winehq.wine.WineActivity");
+            wineActivity.invoke("init", this, new File(filesDir, wineABI + "/lib"));
+        } catch (Exception e) {
+            Log.e("WA", e.toString());
+        }
         new Thread(new Runnable() {
             public void run() {
                 loadWine(null);
@@ -41,7 +48,6 @@ public class WineActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        wineActivity.destroy();
         Window[] windowsArray = windowsHM.values().toArray(new Window[0]);
         for (int i = 0; i < windowsHM.values().size(); i++) {
             windowsArray[i].destroy();
@@ -50,11 +56,15 @@ public class WineActivity extends Activity {
         view.removeAllViews();
         mainView.destroy();
         mainView = null;
+
         try {
             Runtime.getRuntime().exec("wineserver -k9");
         } catch (IOException e) {
             Log.e("WA/onDestroy", e.toString());
         }
+        wineActivity.destroy();
+        wineActivity = null;
+        finish();
     }
 
     public MainView getMainView() {
@@ -86,7 +96,11 @@ public class WineActivity extends Activity {
         for (int i = 0; i < wineSettings.length; i += 2) {
             Log.i("WA/wineSettings", String.format("%s: %s", wineSettings[i], wineSettings[i + 1]));
         }
-        wineActivity.runWine(path2file, wineSettings);
+        runWine(path2file, wineSettings);
+    }
+
+    private void runWine(String path2file, String[] wineSettings) {
+        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings);
     }
 
     public void createDesktopWindow(int desktopView) {
@@ -94,7 +108,11 @@ public class WineActivity extends Activity {
             public void run() {
                 mainView = new MainView(WineActivity.this, wineActivity, WineActivity.this, desktopView);
                 view.addView(mainView);
-                wineActivity.wine_config_changed(getResources().getConfiguration().densityDpi);
+                try {
+                    wineActivity.invoke("wine_config_changed", getResources().getConfiguration().densityDpi);
+                } catch (Exception e) {
+                    Log.e("wine", e.toString());
+                }
             }
         });
     }

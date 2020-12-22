@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 
+import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.WineActivity;
 
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ public class Window {
     private Window parent;
     private Rect windowRect, clientRect;
     private WineActivity activity;
-    private org.winehq.wine.WineActivity wineActivity;
+    private CustomClassManager wineActivity;
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
 
-    public Window(WineActivity activity, org.winehq.wine.WineActivity wineActivity, int hwnd, Window parent, float scale) {
+    public Window(WineActivity activity, CustomClassManager wineActivity, int hwnd, Window parent, float scale) {
         this.activity = activity;
         this.wineActivity = wineActivity;
         this.hwnd = hwnd;
@@ -102,12 +103,28 @@ public class Window {
                 removeViewFromParent();
             }
             windowGroup.destroyContentView();
+            windowGroup = null;
         }
         if (clientGroup != null) {
             clientGroup.destroyContentView();
+            clientGroup = null;
         }
-        windowGroup = null;
-        clientGroup = null;
+        if (windowSurfTex != null) {
+            windowSurfTex.release();
+            windowSurfTex = null;
+        }
+        if (clientSurfTex != null) {
+            clientSurfTex.release();
+            clientSurfTex = null;
+        }
+        if (windowSurface != null) {
+            windowSurface.release();
+            windowSurface = null;
+        }
+        if (clientSurface != null) {
+            clientSurface.release();
+            clientSurface = null;
+        }
     }
 
     public void createWindowGroups() {
@@ -182,11 +199,26 @@ public class Window {
     }
 
     private void syncViewsZOrder() {
+        int view = 0;
         Window window;
+        View contentView;
         for (int i = parent.children.size() - 1; i >= 0; i--) {
-            window = parent.getView(i);
-            if (window.visible) {
-                window.windowGroup.bringToFront();
+            window = this.parent.getView(i);
+            if (!window.visible) {
+                contentView = this.parent.clientGroup.getChildAt(view);
+                if (contentView != this.parent.clientGroup.getContentView()) {
+                    if (window == ((WindowsGroup)contentView).getWindow()) {
+                        view += 1;
+                    } else {
+                        for (int j = i; j >= 0; j--) {
+                            window = this.parent.getView(j);
+                            if (window.visible) {
+                                window.windowGroup.bringToFront();
+                            }
+                        }
+                        return;
+                    }
+                }
             }
         }
     }
@@ -200,7 +232,7 @@ public class Window {
                     clientSurfTex = surface;
                     clientSurface = new Surface(surface);
                 }
-                wineActivity.wine_surface_changed(this.hwnd, clientSurface, true);
+                wineActivity.invoke("wine_surface_changed", this.hwnd, clientSurface, true);
             }
         } else {
             if (surface == null) {
@@ -210,7 +242,7 @@ public class Window {
                     windowSurfTex = surface;
                     windowSurface = new Surface(surface);
                 }
-                wineActivity.wine_surface_changed(hwnd, windowSurface, false);
+                wineActivity.invoke("wine_surface_changed", hwnd, windowSurface, false);
             }
         }
     }

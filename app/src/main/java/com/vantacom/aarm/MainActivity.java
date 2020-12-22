@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Trace;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +19,9 @@ import java.io.IOException;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button generate;
-    Button load;
-    Intent wineActivity;
+    private Button generate;
+    private Button load;
+    private Intent wineActivity;
 
 
     @Override
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //          FileManager.copyFile(this.getAssets().open("armwine/picture.png"), f);
         } else if (v.getId() == R.id.load) {
             wineActivity = new Intent(MainActivity.this, com.vantacom.aarm.wine.WineActivity.class);
+//            Object eText = "information to send";
+//            wineActivity.putExtra("mainClass", eText);
             startActivity(wineActivity);
         }
     }

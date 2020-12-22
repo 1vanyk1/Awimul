@@ -3,18 +3,19 @@ package com.vantacom.aarm.wine;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.views.Window;
 
 public class MainView extends ViewGroup {
     private Window desktopWindow;
     private WineActivity activity;
-    private org.winehq.wine.WineActivity wineActivity;
+    private CustomClassManager wineActivity;
 
     public MainView(Context context) {
         super(context);
     }
 
-    public MainView(WineActivity activity, org.winehq.wine.WineActivity wineActivity, Context context, int desktopView) {
+    public MainView(WineActivity activity, CustomClassManager wineActivity, Context context, int desktopView) {
         super(context);
         this.activity = activity;
         this.wineActivity = wineActivity;
@@ -44,6 +45,6 @@ public class MainView extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        wineActivity.wine_desktop_changed(w, h);
+        wineActivity.invoke("wine_desktop_changed", w, h);
     }
 }

@@ -3,6 +3,7 @@ package com.vantacom.aarm.wine.views;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.WineActivity;
 
 public class WindowsGroup extends ViewGroup {
@@ -24,7 +25,7 @@ public class WindowsGroup extends ViewGroup {
         }
     }
 
-    public WineView createContentView(WineActivity activity, org.winehq.wine.WineActivity wineActivity, boolean isClient) {
+    public WineView createContentView(WineActivity activity, CustomClassManager wineActivity, boolean isClient) {
         if (contentView != null) {
             return contentView;
         }

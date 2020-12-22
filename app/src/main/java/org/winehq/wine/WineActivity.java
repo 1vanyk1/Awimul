@@ -18,16 +18,27 @@ public class WineActivity extends Activity {
             System.loadLibrary("wine");
         } catch (UnsatisfiedLinkError e) {
             Log.e("WA", e.toString());
-            Runtime.getRuntime().load(libraryDir.toString() + "/libwine.so");
+            System.load(libraryDir.toString() + "/libwine.so");
         }
     }
 
-    public void runWine(String path2file, String[] wineSettings) {
+    public WineActivity() {}
+
+    @SuppressLint("UnsafeDynamicallyLoadedCode")
+    public void init(com.vantacom.aarm.wine.WineActivity activity, File libraryDir) {
+        this.activity = activity;
         try {
-            wine_init(new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings);
-        } catch (Exception e) {
+            System.loadLibrary("wine");
+        } catch (UnsatisfiedLinkError e) {
             Log.e("wine", e.toString());
+            System.load(libraryDir.toString() + "/libwine.so");
         }
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        Log.e("wine", "A garbage collected");
+        super.finalize();
     }
 
     public native String wine_init(String[] wineParams, String[] wineSettings);
@@ -69,7 +80,8 @@ public class WineActivity extends Activity {
 //        TODO
     }
 
-    public void destroy() {
+    public void destroy() throws Throwable {
         activity = null;
+        this.finish();
     }
 }
