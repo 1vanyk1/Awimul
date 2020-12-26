@@ -1,6 +1,7 @@
 package com.vantacom.aarm;
 
 import android.util.Log;
+import android.view.Surface;
 
 import java.lang.reflect.Method;
 
@@ -23,11 +24,25 @@ public class CustomClassManager {
         }
     }
 
+    public Class[] getMethodArgs(String method) {
+        switch (method) {
+            default: return null;
+            case "wine_surface_changed": return new Class[] {int.class, Surface.class, boolean.class};
+        }
+    }
+
     public Object invoke(String methodName, Object ... args) {
         try {
-            Class[] cArgs = new Class[args.length];
-            for (int i = 0; i < args.length; i++) {
-                cArgs[i] = getClass(args[i].getClass());
+            Class[] cArgs = getMethodArgs(methodName);
+            if (cArgs == null) {
+                cArgs = new Class[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i] == null) {
+                        cArgs[i] = null;
+                    } else {
+                        cArgs[i] = getClass(args[i].getClass());
+                    }
+                }
             }
             Method method = pClass.getMethod(methodName, cArgs);
             Object res;
@@ -35,7 +50,7 @@ public class CustomClassManager {
             method = null;
             return res;
         } catch (Exception e) {
-            Log.e("CCL/invoke", e.toString());
+            Log.e("CCM/invoke", e.toString());
             return new Object[0];
         }
     }

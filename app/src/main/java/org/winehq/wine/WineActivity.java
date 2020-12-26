@@ -49,7 +49,7 @@ public class WineActivity extends Activity {
 
     public native boolean wine_keyboard_event(int int1, int int2, int int3, int int4);
 
-    public native boolean wine_motion_event(int hwnd, int event, int x, int y, int buttonState, int int1);
+    public native boolean wine_motion_event(int hwnd, int event, int x, int y, int buttonState, int scroll);
 
     public native void wine_surface_changed(int hwnd, Surface surface, boolean isClient);
 

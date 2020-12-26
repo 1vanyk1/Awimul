@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Window {
     private ArrayList<Window> children;
-    private int hwnd, owner, style;
+    private int hwnd;
     private boolean visible;
     private float scale;
     private Window parent;
@@ -28,8 +28,6 @@ public class Window {
         this.activity = activity;
         this.wineActivity = wineActivity;
         this.hwnd = hwnd;
-        this.owner = 0;
-        this.style = 0;
         this.visible = false;
         Rect rect = new Rect(0, 0, 0, 0);
         this.clientRect = rect;
@@ -144,19 +142,19 @@ public class Window {
     }
 
     protected void addViewToParent() {
-        int pos = parent.clientGroup.getChildCount();
-        if (pos > 0 && parent.clientGroup.getChildAt(pos) == parent.clientGroup.getContentView()) {
+        int pos = parent.clientGroup.getChildCount() - 1;
+        if (pos >= 0 && parent.clientGroup.getChildAt(pos) == parent.clientGroup.getContentView()) {
             pos -= 1;
         }
         Window window;
-        for (int i = 0; i < parent.getCountOFViews() && pos > 0; i++) {
+        for (int i = 0; i < parent.getCountOFViews() && pos >= 0; i++) {
             window = parent.getView(i);
             if (window == this) { break; }
-            if (window.visible && window == ((WindowsGroup)parent.clientGroup.getChildAt(pos - 1)).getWindow()) {
+            if (window.visible && window == ((WindowsGroup)parent.clientGroup.getChildAt(pos)).getWindow()) {
                 pos -= 1;
             }
         }
-        parent.clientGroup.addView(windowGroup, pos);
+        parent.clientGroup.addView(windowGroup, pos + 1);
     }
 
     public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
@@ -164,17 +162,16 @@ public class Window {
         boolean visible = this.visible;
         this.windowRect = windowRect;
         this.clientRect = clientRect;
-        this.style = style;
-        this.owner = owner;
-        this.visible = (this.style & 0x10000000) != 0;
+        style = style & 0x10000000;
+        this.visible = style != 0;
         if ((vis & View.INVISIBLE) == 0 && parent != null) {
             setZOrder(activity.getWindow(next_hwnd));
         }
         if (windowGroup != null) {
             windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
             if (parent != null) {
-                if (visible || (style & 0x10000000) == 0) {
-                    if (visible && (style & 0x10000000) == 0) {
+                if (visible || style == 0) {
+                    if (visible && style == 0) {
                         removeViewFromParent();
                     } else if (this.visible && (vis & View.INVISIBLE) == 0) {
                         syncViewsZOrder();
@@ -189,7 +186,7 @@ public class Window {
         }
     }
 
-    private void setZOrder(Window window) {
+    public void setZOrder(Window window) {
         int index = 0;
         parent.removeView(this);
         if (window != null) {
@@ -198,15 +195,15 @@ public class Window {
         parent.addView(index, this);
     }
 
-    private void syncViewsZOrder() {
+    public void syncViewsZOrder() {
         int view = 0;
         Window window;
         View contentView;
         for (int i = parent.children.size() - 1; i >= 0; i--) {
-            window = this.parent.getView(i);
-            if (!window.visible) {
-                contentView = this.parent.clientGroup.getChildAt(view);
-                if (contentView != this.parent.clientGroup.getContentView()) {
+            window = parent.getView(i);
+            if (window.visible) {
+                contentView = parent.clientGroup.getChildAt(view);
+                if (contentView != parent.clientGroup.getContentView()) {
                     if (window == ((WindowsGroup)contentView).getWindow()) {
                         view += 1;
                     } else {
@@ -232,8 +229,8 @@ public class Window {
                     clientSurfTex = surface;
                     clientSurface = new Surface(surface);
                 }
-                wineActivity.invoke("wine_surface_changed", this.hwnd, clientSurface, true);
             }
+            wineActivity.invoke("wine_surface_changed", hwnd, clientSurface, true);
         } else {
             if (surface == null) {
                 windowSurface = null;
@@ -242,8 +239,8 @@ public class Window {
                     windowSurfTex = surface;
                     windowSurface = new Surface(surface);
                 }
-                wineActivity.invoke("wine_surface_changed", hwnd, windowSurface, false);
             }
+            wineActivity.invoke("wine_surface_changed", hwnd, windowSurface, false);
         }
     }
 
@@ -260,7 +257,7 @@ public class Window {
         }
         this.parent.children.remove(this);
         this.parent = parent;
-        this.parent.children.add(this);
+        this.parent.addView(this);
         if (visible && windowGroup != null) {
             addViewToParent();
         }

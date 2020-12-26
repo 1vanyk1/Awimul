@@ -111,7 +111,6 @@ public class FileManager {
             while ((ze = zis.getNextEntry()) != null) {
                 filename = ze.getName();
                 if (ze.isDirectory()) {
-                    Log.e("unpackZip", target + filename);
                     File file = new File(target + filename);
                     file.mkdirs();
                     continue;

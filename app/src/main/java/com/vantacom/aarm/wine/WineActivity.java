@@ -90,7 +90,7 @@ public class WineActivity extends Activity {
         File winePrefix = new File(filesDir, "prefix");
         String[] wineSettings = StartupManager.getWineSetting(binDir, libraryDir, winePrefix, getApplicationInfo());
         if (path2file == null) {
-            path2file = StartupManager.getFilePath(winePrefix, "cmd");
+            path2file = StartupManager.getFilePath(winePrefix, "explorer");
         }
         winePrefix.mkdirs();
         for (int i = 0; i < wineSettings.length; i += 2) {

@@ -47,13 +47,12 @@ public class WindowsGroup extends ViewGroup {
 
     public void setScale(float paramFloat)
     {
-        if (contentView == null) {
-            return;
+        if (contentView != null) {
+            contentView.setPivotX(0.0F);
+            contentView.setPivotY(0.0F);
+            contentView.setScaleX(paramFloat);
+            contentView.setScaleY(paramFloat);
         }
-        contentView.setPivotX(0.0F);
-        contentView.setPivotY(0.0F);
-        contentView.setScaleX(paramFloat);
-        contentView.setScaleY(paramFloat);
     }
 
     public void setLayout(int l, int t, int r, int b)
