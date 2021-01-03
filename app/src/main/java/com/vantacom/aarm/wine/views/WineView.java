@@ -2,7 +2,6 @@ package com.vantacom.aarm.wine.views;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.TextureView;
@@ -13,14 +12,14 @@ import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.WineActivity;
 import com.vantacom.aarm.wine.controls.MouseActions;
 
-import java.io.File;
-
 public class WineView extends TextureView implements TextureView.SurfaceTextureListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private Window window;
     private boolean isClient;
     private WineActivity activity;
     private CustomClassManager wineActivity;
     private GestureDetectorCompat gDetector;
+
+    boolean isMoving = false;
 
     public WineView(WineActivity activity, CustomClassManager wineActivity, Context context, Window window, boolean isClient) {
         super(context);
@@ -54,10 +53,14 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
-        if (event.getAction() == 1 && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == 1 && isMoving && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
             int[] eventPos = window.getEventPos(event);
             wineActivity.invoke("wine_motion_event", window.getHWND(), 1, eventPos[0], eventPos[1], 0, 0);
+        }
+        if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+            activity.getKeyboard().toggleKeyboard();
+            return true;
         }
         return this.gDetector.onTouchEvent(event);
     }
@@ -72,14 +75,21 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onSingleTapUp(MotionEvent event) {
+        activity.getKeyboard().setHWND(window.getHWND());
         return MouseActions.singleLeftButtonClick(event, wineActivity, window);
     }
 
     @Override
     public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
-//        Log.e("1", String.valueOf(window.b));
-        Log.e("1", String.valueOf(window.getHWND()));
-        return MouseActions.setLeftButtonClick(event2, wineActivity, window, 0);
+        if (window.getCanMove()) {
+            if (!isMoving) {
+                isMoving = true;
+                MouseActions.setLeftButtonClick(event2, wineActivity, window, 0);
+            } else {
+                MouseActions.setLeftButtonClick(event2, wineActivity, window, 2);
+            }
+        }
+        return true;
     }
 
     @Override
@@ -91,6 +101,8 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+        isMoving = false;
+        window.setCanMove(true);
         return MouseActions.setLeftButtonClick(event2, wineActivity, window, 1);
     }
 

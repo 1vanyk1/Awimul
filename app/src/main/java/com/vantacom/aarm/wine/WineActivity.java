@@ -2,13 +2,18 @@ package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.wine.controls.Keyboard;
 import com.vantacom.aarm.wine.views.Window;
 
 import java.io.File;
@@ -18,17 +23,17 @@ import java.util.HashMap;
 public class WineActivity extends Activity {
     private File filesDir;
     private MainView mainView;
-    private LinearLayout view;
+    public LinearLayout view;
     private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
     private String wineABI;
     private CustomClassManager wineActivity;
-
-    private static boolean b = false;
+    private Keyboard keyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wine);
+        keyboard = new Keyboard(this);
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
         view = findViewById(R.id.mainLayout);
@@ -67,21 +72,30 @@ public class WineActivity extends Activity {
         finish();
     }
 
-    public MainView getMainView() {
-        return mainView;
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        boolean b = (boolean) wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), event.getAction(), event.getKeyCode(), event.getMetaState());
+        if (!b) {
+            b = super.dispatchKeyEvent(event);
+        }
+        return b;
     }
 
-    public Window getWindow(int hwnd) {
-        return windowsHM.get(hwnd);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        keyboard.hideKeyboard();
     }
 
-    public void addWindow(int hwnd, Window window) {
-        windowsHM.put(hwnd, window);
-    }
+    public Keyboard getKeyboard() { return keyboard; }
 
-    public void removeWindow(Window window) {
-        windowsHM.remove(window);
-    }
+    public MainView getMainView() { return mainView; }
+
+    public Window getWindow(int hwnd) { return windowsHM.get(hwnd); }
+
+    public void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
+
+    public void removeWindow(Window window) { windowsHM.remove(window); }
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
     public void loadWine(String path2file) {

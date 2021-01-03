@@ -47,7 +47,7 @@ public class WineActivity extends Activity {
 
     public native void wine_desktop_changed(int width, int height);
 
-    public native boolean wine_keyboard_event(int int1, int int2, int int3, int int4);
+    public native boolean wine_keyboard_event(int hwnd, int event, int key, int metaState);
 
     public native boolean wine_motion_event(int hwnd, int event, int x, int y, int buttonState, int scroll);
 

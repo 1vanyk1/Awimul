@@ -7,6 +7,7 @@ import com.vantacom.aarm.wine.views.Window;
 
 //    event == 0  on down
 //    event == 1  on up
+//    event == 2  on move
 
 //    buttonState == 0  left button
 //    buttonState == 2  right button

@@ -24,6 +24,8 @@ public class Window {
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
 
+    private boolean canMove = true;
+
     public Window(WineActivity activity, CustomClassManager wineActivity, int hwnd, Window parent, float scale) {
         this.activity = activity;
         this.wineActivity = wineActivity;
@@ -41,33 +43,25 @@ public class Window {
         }
     }
 
+    public void setCanMove(boolean canMove) { this.canMove = canMove; }
+
+    public boolean getCanMove() { return canMove; }
+
     public int getHWND() { return hwnd; }
 
-    public float getScale() {
-        return scale;
-    }
+    public float getScale() { return scale; }
 
     public Window getParent() { return parent; }
 
-    public void addView(Window window) {
-        children.add(window);
-    }
+    public void addView(Window window) { children.add(window); }
 
-    public void addView(int index, Window window) {
-        children.add(index, window);
-    }
+    public void addView(int index, Window window) { children.add(index, window); }
 
-    public void removeView(Window window) {
-        children.remove(window);
-    }
+    public void removeView(Window window) { children.remove(window); }
 
-    public int getIndexOFView(Window window) {
-        return children.indexOf(window);
-    }
+    public int getIndexOFView(Window window) { return children.indexOf(window); }
 
-    public int getCountOFViews() {
-        return children.size();
-    }
+    public int getCountOFViews() { return children.size(); }
 
     public Window getView(int index) { return children.get(index); }
 
@@ -159,30 +153,40 @@ public class Window {
 
     public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
     {
-        boolean visible = this.visible;
-        this.windowRect = windowRect;
-        this.clientRect = clientRect;
-        style = style & 0x10000000;
-        this.visible = style != 0;
-        if ((vis & View.INVISIBLE) == 0 && parent != null) {
-            setZOrder(activity.getWindow(next_hwnd));
-        }
-        if (windowGroup != null) {
-            windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
-            if (parent != null) {
-                if (visible || style == 0) {
-                    if (visible && style == 0) {
-                        removeViewFromParent();
-                    } else if (this.visible && (vis & View.INVISIBLE) == 0) {
-                        syncViewsZOrder();
+        Window ownerW = activity.getWindow(owner);
+        if (ownerW == null || ownerW.canMove) {
+
+            if (ownerW != null) {
+                ownerW.canMove = false;
+            }
+            boolean visible = this.visible;
+            this.windowRect = windowRect;
+            this.clientRect = clientRect;
+            style = style & 0x10000000;
+            this.visible = style != 0;
+            if ((vis & View.INVISIBLE) == 0 && parent != null) {
+                setZOrder(activity.getWindow(next_hwnd));
+            }
+            if (windowGroup != null) {
+                windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
+                if (parent != null) {
+                    if (visible || style == 0) {
+                        if (visible && style == 0) {
+                            removeViewFromParent();
+                        } else if (this.visible && (vis & View.INVISIBLE) == 0) {
+                            syncViewsZOrder();
+                        }
+                    } else {
+                        addViewToParent();
                     }
-                } else {
-                    addViewToParent();
                 }
             }
-        }
-        if (clientGroup != null) {
-            clientGroup.setLayout(clientRect.left - windowRect.left, clientRect.top - windowRect.top, clientRect.right - windowRect.left, clientRect.bottom - windowRect.top);
+            if (clientGroup != null) {
+                clientGroup.setLayout(clientRect.left - windowRect.left, clientRect.top - windowRect.top, clientRect.right - windowRect.left, clientRect.bottom - windowRect.top);
+            }
+            if (ownerW != null) {
+                ownerW.canMove = true;
+            }
         }
     }
 
