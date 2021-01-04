@@ -11,15 +11,17 @@ import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class LoadingDialog extends AsyncTask<Context, Void, Void> {
     private ProgressDialog dialog;
+    private CharSequence text;
 
     public LoadingDialog(Activity activity) {
+        text = activity.getResources().getText(R.string.unpackLText);
         dialog = new ProgressDialog(activity);
         dialog.setCancelable(false);
     }
 
     @Override
     protected void onPreExecute() {
-        dialog.setMessage("Unpacking files, please wait.");
+        dialog.setMessage(text);
         dialog.show();
     }
 

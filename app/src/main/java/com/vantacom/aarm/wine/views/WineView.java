@@ -56,7 +56,7 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
-        if (!isMultiTouch && event.getAction() == 1 && isMoving && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
+        if (event.getAction() == 1 && (!isMoving || !isMultiTouch) && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
             MouseActions.setLeftButtonClick(event, wineActivity, window, 1);
         }
         switch (action) {

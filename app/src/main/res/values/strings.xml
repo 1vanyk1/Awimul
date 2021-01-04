@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Awimul</string>
+    <string name="unpackLText">Unpacking files, please wait.</string>
+    <string name="wineLTitle">Loading...</string>
+    <string name="wineLText">Loading wine, please wait.</string>
 </resources>

@@ -15,7 +15,7 @@ import com.vantacom.aarm.wine.views.Window;
 public class MouseActions {
     public static boolean singleLeftButtonClick(MotionEvent event, CustomClassManager activity, Window window) {
         int[] eventPos = window.getEventPos(event);
-        activity.invoke("wine_motion_event", window.getHWND(), 0, eventPos[0] - 1, eventPos[1], 1, 0);
+        activity.invoke("wine_motion_event", window.getHWND(), 0, eventPos[0], eventPos[1], 1, 0);
         return (boolean)activity.invoke("wine_motion_event", window.getHWND(), 1, eventPos[0], eventPos[1], 1, 0);
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -21,11 +22,22 @@ import java.util.HashMap;
 public class WineActivity extends Activity {
     private File filesDir;
     private MainView mainView;
-    public ConstraintLayout view;
+    private ConstraintLayout view;
     private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
     private String wineABI;
     private CustomClassManager wineActivity;
     private Keyboard keyboard;
+
+    private LoadingWineDialog dialog;
+
+    private void hideSystemUI() {
+        getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,9 @@ public class WineActivity extends Activity {
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
+        dialog = new LoadingWineDialog(this);
+        dialog.show();
+        hideSystemUI();
         new Thread(new Runnable() {
             public void run() {
                 loadWine(null);
@@ -118,6 +133,9 @@ public class WineActivity extends Activity {
     public void createDesktopWindow(int desktopView) {
         runOnUiThread(new Runnable() {
             public void run() {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 mainView = new MainView(WineActivity.this, wineActivity, WineActivity.this, desktopView);
                 view.addView(mainView);
                 try {

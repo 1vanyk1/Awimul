@@ -1,7 +1,6 @@
 package com.vantacom.aarm.wine;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
