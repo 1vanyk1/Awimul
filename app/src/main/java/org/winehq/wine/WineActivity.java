@@ -17,7 +17,6 @@ public class WineActivity extends Activity {
         try {
             System.loadLibrary("wine");
         } catch (UnsatisfiedLinkError e) {
-            Log.e("WA", e.toString());
             System.load(libraryDir.toString() + "/libwine.so");
         }
     }
@@ -30,7 +29,6 @@ public class WineActivity extends Activity {
         try {
             System.loadLibrary("wine");
         } catch (UnsatisfiedLinkError e) {
-            Log.e("wine", e.toString());
             System.load(libraryDir.toString() + "/libwine.so");
         }
     }

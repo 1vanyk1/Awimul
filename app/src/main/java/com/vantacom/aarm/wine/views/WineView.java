@@ -19,7 +19,8 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
     private CustomClassManager wineActivity;
     private GestureDetectorCompat gDetector;
 
-    boolean isMoving = false;
+    private boolean isMoving = false;
+    private boolean isMultiTouch = false;
 
     public WineView(WineActivity activity, CustomClassManager wineActivity, Context context, Window window, boolean isClient) {
         super(context);
@@ -54,15 +55,42 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == 1 && isMoving && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
-            int[] eventPos = window.getEventPos(event);
-            wineActivity.invoke("wine_motion_event", window.getHWND(), 1, eventPos[0], eventPos[1], 0, 0);
+        int action = event.getActionMasked();
+        if (!isMultiTouch && event.getAction() == 1 && isMoving && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
+            MouseActions.setLeftButtonClick(event, wineActivity, window, 1);
         }
-        if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
-            activity.getKeyboard().toggleKeyboard();
-            return true;
+        switch (action) {
+            default:
+                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
+                isMoving = true;
+                if (event.getPointerCount() == 2) {
+                    activity.getMainView().resize(event);
+                }
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                isMultiTouch = true;
+                if (event.getPointerCount() == 2) {
+                    activity.getMainView().setStartDistance(event);
+                    event.setAction(MotionEvent.ACTION_UP);
+                    gDetector.onTouchEvent(event);
+                }
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (isMoving) {
+                    isMoving = false;
+                } else {
+                    activity.getKeyboard().toggleKeyboard();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
+                isMultiTouch = false;
+                break;
         }
-        return this.gDetector.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -75,8 +103,11 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onSingleTapUp(MotionEvent event) {
-        activity.getKeyboard().setHWND(window.getHWND());
-        return MouseActions.singleLeftButtonClick(event, wineActivity, window);
+        if (!isMultiTouch) {
+            activity.getKeyboard().setHWND(window.getHWND());
+            return MouseActions.singleLeftButtonClick(event, wineActivity, window);
+        }
+        return MouseActions.setLeftButtonClick(event, wineActivity, window, 2);
     }
 
     @Override
@@ -84,7 +115,7 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
         if (window.getCanMove()) {
             if (!isMoving) {
                 isMoving = true;
-                MouseActions.setLeftButtonClick(event2, wineActivity, window, 0);
+                MouseActions.setLeftButtonClick(event1, wineActivity, window, 0);
             } else {
                 MouseActions.setLeftButtonClick(event2, wineActivity, window, 2);
             }
@@ -94,9 +125,7 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public void onLongPress(MotionEvent event) {
-        if (this.window.getGroup(false) != null ) {
-            MouseActions.singleRightButtonClick(event, wineActivity, window);
-        }
+        MouseActions.singleRightButtonClick(event, wineActivity, window);
     }
 
     @Override

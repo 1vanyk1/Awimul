@@ -2,14 +2,12 @@ package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
@@ -23,7 +21,7 @@ import java.util.HashMap;
 public class WineActivity extends Activity {
     private File filesDir;
     private MainView mainView;
-    public LinearLayout view;
+    public ConstraintLayout view;
     private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
     private String wineABI;
     private CustomClassManager wineActivity;
