@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,8 +17,10 @@ import com.vantacom.aarm.R;
 import com.vantacom.aarm.wine.controls.Keyboard;
 import com.vantacom.aarm.wine.views.Window;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class WineActivity extends Activity {
@@ -27,6 +31,9 @@ public class WineActivity extends Activity {
     private String wineABI;
     private CustomClassManager wineActivity;
     private Keyboard keyboard;
+
+    private int screenWidth, screenHeight;
+    private int desktopWidth, desktopHeight;
 
     private LoadingWineDialog dialog;
 
@@ -39,6 +46,67 @@ public class WineActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
     }
 
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getDesktopWidth() {
+        return desktopWidth;
+    }
+
+    public int getDesktopHeight() {
+        return desktopHeight;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideSystemUI();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+
+    public String runAsRoot(String line) {
+        try {
+            Process process = Runtime.getRuntime().exec(line);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            int read;
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) > 0) {
+                output.append(buffer, 0, read);
+            }
+            reader.close();
+
+            process.waitFor();
+
+            return output.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void onWineLoad() {
+        try {
+            runAsRoot(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
+            runAsRoot("wine regedit ../../logpixels.reg");
+        } catch (Exception e) {
+            Log.e("WA/onDestroy", e.toString());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +115,25 @@ public class WineActivity extends Activity {
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
         view = findViewById(R.id.mainLayout);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
+        desktopWidth = getIntent().getIntExtra("width", screenWidth);
+        desktopHeight = getIntent().getIntExtra("height", screenHeight);
+        int w = screenWidth, h = screenHeight;
+        if (desktopWidth > screenWidth) {
+            w = desktopWidth;
+        }
+        if (desktopHeight > screenHeight) {
+            h = desktopHeight;
+        }
+        view.setLayoutParams(new ConstraintLayout.LayoutParams(w, h));
         try {
             wineActivity = new CustomClassManager("org.winehq.wine.WineActivity");
             wineActivity.invoke("init", this, new File(filesDir, wineABI + "/lib"));
+//            Log.e("WA/onDestroy", runAsRoot("ls -s /mnt/cdrom " + getFilesDir() + "/.wine/dosdevices/a:"));
+//                Runtime.getRuntime().exec("ls -la ~/.wine/dosdevices/");
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
@@ -64,8 +148,18 @@ public class WineActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        hideSystemUI();
+        if (mainView != null) {
+            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
+            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        keyboard.hideKeyboard();
         Window[] windowsArray = windowsHM.values().toArray(new Window[0]);
         for (int i = 0; i < windowsHM.values().size(); i++) {
             windowsArray[i].destroy();
@@ -76,8 +170,8 @@ public class WineActivity extends Activity {
         mainView = null;
 
         try {
-            Runtime.getRuntime().exec("wineserver -k9");
-        } catch (IOException e) {
+            runAsRoot("wineserver -k9");
+        } catch (Exception e) {
             Log.e("WA/onDestroy", e.toString());
         }
         wineActivity.destroy();
@@ -127,7 +221,7 @@ public class WineActivity extends Activity {
     }
 
     private void runWine(String path2file, String[] wineSettings) {
-        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer.exe", "/desktop=shell,,android", path2file}, wineSettings);
+        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
     }
 
     public void createDesktopWindow(int desktopView) {
@@ -143,6 +237,7 @@ public class WineActivity extends Activity {
                 } catch (Exception e) {
                     Log.e("wine", e.toString());
                 }
+                onWineLoad();
             }
         });
     }

@@ -19,6 +19,7 @@ public class MainView extends ViewGroup {
 
     private int width, height;
     private int layoutWidth, layoutHeight;
+    private int screenWidth, screenHeight;
 
     private float pressX = 0f, pressY = 0f;
 
@@ -56,15 +57,17 @@ public class MainView extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (!isCreated) {
-            width = w;
-            height = h;
-            layoutWidth = w;
-            layoutHeight = h;
-            scaleView = Math.min(((float)w) / width, ((float)h) / height);
+            isCreated = true;
+            width = activity.getDesktopWidth();
+            height = activity.getDesktopHeight();
+            layoutWidth = activity.getScreenWidth();
+            layoutHeight = activity.getScreenHeight();
+            screenWidth = w;
+            screenHeight = h;
+            scaleView = Math.min(((float)layoutWidth) / width, ((float)layoutHeight) / height);
             super.onSizeChanged(width, height, oldw, oldh);
             wineActivity.invoke("wine_desktop_changed", width, height);
             resizeLayout(1f);
-            isCreated = true;
         }
     }
 
@@ -84,8 +87,17 @@ public class MainView extends ViewGroup {
         if (scale < 1.05f) {
             setScaleX(scaleView);
             setScaleY(scaleView);
-            setX((layoutWidth - width) / 2f * scaleView);
-            setY((layoutHeight - height) / 2f * scaleView);
+            if (screenWidth > layoutWidth) {
+                setX((layoutWidth - width) / 2f * scaleView - (screenWidth - layoutWidth) / 10f / scaleView);
+            } else {
+                setX((layoutWidth - width) / 2f * scaleView);
+            }
+            if (screenHeight > layoutHeight) {
+                setY((layoutHeight - height) / 2f * scaleView - (screenHeight - layoutHeight) / 10f / scaleView);
+            } else {
+                setY((layoutHeight - height) / 2f * scaleView);
+            }
+//            setX((layoutWidth - width) / 2f * scaleView);
         } else if (5f < scale) {
             setScaleX(scaleView * 5f);
             setScaleY(scaleView * 5f);

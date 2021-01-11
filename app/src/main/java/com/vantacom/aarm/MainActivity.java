@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
-
-import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button generate;
@@ -38,9 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.generate) {
             LoadingDialog progressDialog = new LoadingDialog(this);
             progressDialog.execute(this);
-//          FileManager.copyFromAssetFolder(this, "armwine", Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS) + "/armwine/");
         } else if (v.getId() == R.id.load) {
             wineActivity = new Intent(MainActivity.this, com.vantacom.aarm.wine.WineActivity.class);
+            wineActivity.putExtra("width", 1280);
+            wineActivity.putExtra("height", 720);
             startActivity(wineActivity);
         }
     }
