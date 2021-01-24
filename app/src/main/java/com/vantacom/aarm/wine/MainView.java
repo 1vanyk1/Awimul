@@ -97,7 +97,6 @@ public class MainView extends ViewGroup {
             } else {
                 setY((layoutHeight - height) / 2f * scaleView);
             }
-//            setX((layoutWidth - width) / 2f * scaleView);
         } else if (5f < scale) {
             setScaleX(scaleView * 5f);
             setScaleY(scaleView * 5f);

@@ -1,4 +1,4 @@
-package com.vantacom.aarm;
+package com.vantacom.aarm.managers;
 
 import android.app.Activity;
 import android.content.Context;

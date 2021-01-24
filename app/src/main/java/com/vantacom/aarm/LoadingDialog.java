@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.vantacom.aarm.managers.FileManager;
+
 public class LoadingDialog extends AsyncTask<Context, Void, Void> {
     private ProgressDialog dialog;
     private CharSequence text;

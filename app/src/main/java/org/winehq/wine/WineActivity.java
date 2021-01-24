@@ -35,7 +35,7 @@ public class WineActivity extends Activity {
 
     @Override
     public void finalize() throws Throwable {
-        Log.e("wine", "A garbage collected");
+        Log.e("wine", "WineActivity was finalized");
         super.finalize();
     }
 

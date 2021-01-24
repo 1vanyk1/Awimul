@@ -14,13 +14,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.managers.ConsoleManager;
+import com.vantacom.aarm.managers.ProcessManager;
 import com.vantacom.aarm.wine.controls.Keyboard;
 import com.vantacom.aarm.wine.views.Window;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class WineActivity extends Activity {
@@ -31,6 +30,9 @@ public class WineActivity extends Activity {
     private String wineABI;
     private CustomClassManager wineActivity;
     private Keyboard keyboard;
+    private ProcessManager processManager;
+
+    private boolean ifTurnedOff = false;
 
     private int screenWidth, screenHeight;
     private int desktopWidth, desktopHeight;
@@ -62,9 +64,31 @@ public class WineActivity extends Activity {
         return desktopHeight;
     }
 
+    public Keyboard getKeyboard() { return keyboard; }
+
+    public MainView getMainView() { return mainView; }
+
+    public Window getWindow(int hwnd) { return windowsHM.get(hwnd); }
+
+    public void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
+
+    public void removeWindow(Window window) { windowsHM.remove(window); }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (processManager != null) {
+            processManager.pauseSystem();
+        }
+        keyboard.hideKeyboard();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        if (processManager != null) {
+            processManager.resumeSystem();
+        }
         hideSystemUI();
     }
 
@@ -76,34 +100,13 @@ public class WineActivity extends Activity {
         }
     }
 
-    public String runAsRoot(String line) {
-        try {
-            Process process = Runtime.getRuntime().exec(line);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int read;
-            char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
-                output.append(buffer, 0, read);
-            }
-            reader.close();
-
-            process.waitFor();
-
-            return output.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void onWineLoad() {
+        processManager = new ProcessManager();
         try {
-            runAsRoot(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
-            runAsRoot("wine regedit ../../logpixels.reg");
+            ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
+            ConsoleManager.runCommand("wine regedit ../../logpixels.reg");
         } catch (Exception e) {
-            Log.e("WA/onDestroy", e.toString());
+            Log.e("WA/onWineLoad", e.toString());
         }
     }
 
@@ -132,8 +135,6 @@ public class WineActivity extends Activity {
         try {
             wineActivity = new CustomClassManager("org.winehq.wine.WineActivity");
             wineActivity.invoke("init", this, new File(filesDir, wineABI + "/lib"));
-//            Log.e("WA/onDestroy", runAsRoot("ls -s /mnt/cdrom " + getFilesDir() + "/.wine/dosdevices/a:"));
-//                Runtime.getRuntime().exec("ls -la ~/.wine/dosdevices/");
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
@@ -148,17 +149,14 @@ public class WineActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
-        hideSystemUI();
-        if (mainView != null) {
-            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
-            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!ifTurnedOff) {
+            onTurnOff();
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onTurnOff() {
         keyboard.hideKeyboard();
         Window[] windowsArray = windowsHM.values().toArray(new Window[0]);
         for (int i = 0; i < windowsHM.values().size(); i++) {
@@ -170,13 +168,24 @@ public class WineActivity extends Activity {
         mainView = null;
 
         try {
-            runAsRoot("wineserver -k9");
+            ConsoleManager.runCommand("wineserver -k");
         } catch (Exception e) {
             Log.e("WA/onDestroy", e.toString());
         }
         wineActivity.destroy();
         wineActivity = null;
+        ifTurnedOff = true;
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        onTurnOff();  // Use this for tests
+        hideSystemUI();
+        if (mainView != null) {
+            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
+            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
+        }
     }
 
     @Override
@@ -187,22 +196,6 @@ public class WineActivity extends Activity {
         }
         return b;
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        keyboard.hideKeyboard();
-    }
-
-    public Keyboard getKeyboard() { return keyboard; }
-
-    public MainView getMainView() { return mainView; }
-
-    public Window getWindow(int hwnd) { return windowsHM.get(hwnd); }
-
-    public void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
-
-    public void removeWindow(Window window) { windowsHM.remove(window); }
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
     public void loadWine(String path2file) {
