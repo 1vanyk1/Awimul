@@ -59,4 +59,6 @@ public class ProcessManager {
             isPaused = false;
         }
     }
+
+    public boolean getIsPaused() { return isPaused; }
 }

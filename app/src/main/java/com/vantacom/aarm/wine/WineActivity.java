@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -73,6 +74,13 @@ public class WineActivity extends Activity {
     public void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
 
     public void removeWindow(Window window) { windowsHM.remove(window); }
+
+    public boolean isSystemPaused() {
+        if (processManager == null || !processManager.getIsPaused()) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     protected void onPause() {
@@ -180,9 +188,9 @@ public class WineActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-//        onTurnOff();  // Use this for tests
+//        processManager.toggle();  // Use this for tests
         hideSystemUI();
-        if (mainView != null) {
+        if (mainView != null && !isSystemPaused()) {
             wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
             wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
         }
@@ -190,11 +198,14 @@ public class WineActivity extends Activity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        boolean b = (boolean) wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), event.getAction(), event.getKeyCode(), event.getMetaState());
-        if (!b) {
-            b = super.dispatchKeyEvent(event);
+        if (!isSystemPaused()) {
+            boolean b = (boolean) wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), event.getAction(), event.getKeyCode(), event.getMetaState());
+            if (!b) {
+                b = super.dispatchKeyEvent(event);
+            }
+            return b;
         }
-        return b;
+        return super.dispatchKeyEvent(event);
     }
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")

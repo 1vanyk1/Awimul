@@ -55,40 +55,48 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-        if (event.getAction() == 1 && (!isMoving || !isMultiTouch) && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
-            MouseActions.setLeftButtonClick(event, wineActivity, window, 1);
-        }
-        switch (action) {
-            default:
-                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
-                isMoving = true;
-                if (event.getPointerCount() == 2) {
-                    activity.getMainView().resize(event);
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                isMultiTouch = true;
-                if (event.getPointerCount() == 2) {
-                    activity.getMainView().setStartDistance(event);
-                    event.setAction(MotionEvent.ACTION_UP);
-                    gDetector.onTouchEvent(event);
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                if (isMoving) {
-                    isMoving = false;
-                } else {
-                    activity.getKeyboard().toggleKeyboard();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (!isMultiTouch) { return gDetector.onTouchEvent(event); }
-                isMultiTouch = false;
-                break;
+        if (!activity.isSystemPaused()) {
+            int action = event.getActionMasked();
+            if (event.getAction() == 1 && (!isMoving || !isMultiTouch) && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
+                MouseActions.setLeftButtonClick(event, wineActivity, window, 1);
+            }
+            switch (action) {
+                default:
+                    if (!isMultiTouch) {
+                        return gDetector.onTouchEvent(event);
+                    }
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (!isMultiTouch) {
+                        return gDetector.onTouchEvent(event);
+                    }
+                    isMoving = true;
+                    if (event.getPointerCount() == 2) {
+                        activity.getMainView().resize(event);
+                    }
+                    break;
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    isMultiTouch = true;
+                    if (event.getPointerCount() == 2) {
+                        activity.getMainView().setStartDistance(event);
+                        event.setAction(MotionEvent.ACTION_UP);
+                        gDetector.onTouchEvent(event);
+                    }
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                    if (isMoving) {
+                        isMoving = false;
+                    } else {
+                        activity.getKeyboard().toggleKeyboard();
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (!isMultiTouch) {
+                        return gDetector.onTouchEvent(event);
+                    }
+                    isMultiTouch = false;
+                    break;
+            }
         }
         return true;
     }
