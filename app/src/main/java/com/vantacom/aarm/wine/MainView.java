@@ -114,4 +114,155 @@ public class MainView extends ViewGroup {
         setY(event.getY(0) - pressY + getY());
         resizeLayout(newSize);
     }
+
+//    private boolean isMoving = false;
+//    private boolean isMultiTouch = false;
+//    private Window window;
+//    private boolean isWindowSet = false;
+//    private float eventX, eventY;
+//    private float startEventX, startEventY;
+//
+//    public boolean checkWindow(Window window) {
+//        return this.window == window;
+//    }
+//
+//    public void setCurrentWindow(Window window, MotionEvent event, float x, float y) {
+//        if (!isWindowSet) {
+//            isWindowSet = true;
+//            this.window = window;
+//            startEventX = event.getX();
+//            startEventY = event.getY();
+//            eventX = event.getX();
+//            eventY = event.getY();
+//        }
+//    }
+//
+//    @Override
+//    public boolean onSingleTapConfirmed(MotionEvent event) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onDoubleTap(MotionEvent event) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onDoubleTapEvent(MotionEvent event) {
+//        return MouseActions.singleLeftButtonClick(event, wineActivity, window);
+//    }
+//
+//    @Override
+//    public boolean onDown(MotionEvent event) {
+//        return true;
+//    }
+//
+//    @Override
+//    public void onShowPress(MotionEvent event) {
+//
+//    }
+//
+//    @Override
+//    public boolean onSingleTapUp(MotionEvent event) {
+//        if (!isMultiTouch) {
+//            activity.getKeyboard().setHWND(window.getHWND());
+//            return MouseActions.singleLeftButtonClick(event, wineActivity, window);
+//        }
+//        return MouseActions.setLeftButtonClick(event, wineActivity, window, 2);
+//    }
+//
+//    @Override
+//    public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
+//        if (window.getCanMove()) {
+//            if (!isMoving) {
+//                isMoving = true;
+//                MouseActions.setLeftButtonClick(event1, wineActivity, window, 0);
+//            } else {
+//                MouseActions.setLeftButtonClick(event2, wineActivity, window, 2);
+//            }
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public void onLongPress(MotionEvent event) {
+//        MouseActions.singleRightButtonClick(event, wineActivity, window);
+//    }
+//
+//    @Override
+//    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+//        isMoving = false;
+//        window.setCanMove(true);
+//        return MouseActions.setLeftButtonClick(event2, wineActivity, window, 1);
+//    }
+//
+//    public boolean isMoving() {
+//        return isMoving;
+//    }
+//
+//    public void setMoving(boolean moving) {
+//        isMoving = moving;
+//    }
+//
+//    public boolean isMultiTouch() {
+//        return isMultiTouch;
+//    }
+//
+//    public void setMultiTouch(boolean multiTouch) {
+//        isMultiTouch = multiTouch;
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        Log.e("getX", String.valueOf(event.getX()));
+//        Log.e("eventX", String.valueOf(eventX));
+//        float resX = startEventX + event.getX() - eventX;
+//        float resY = startEventY + event.getY() - eventY;
+//        eventX = event.getX();
+//        eventY = event.getY();
+//        event.setLocation(resX, resY);
+//        if (!activity.isSystemPaused()) {
+//            int action = event.getActionMasked();
+//            Log.e("getHWND", String.valueOf(window.getHWND()));
+//            switch (action) {
+//                default:
+//                    if (!isMultiTouch) {
+//                        return gDetector.onTouchEvent(event);
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    if (!isMultiTouch) {
+//                        return gDetector.onTouchEvent(event);
+//                    }
+//                    isMoving = true;
+//                    if (event.getPointerCount() == 2) {
+//                        resize(event);
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_POINTER_DOWN:
+//                    isMultiTouch = true;
+//                    if (event.getPointerCount() == 2) {
+//                        setStartDistance(event);
+//                        event.setAction(MotionEvent.ACTION_UP);
+//                        gDetector.onTouchEvent(event);
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_POINTER_UP:
+//                    if (isMoving) {
+//                        isMoving = false;
+//                    } else {
+//                        activity.getKeyboard().toggleKeyboard();
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    isWindowSet = false;
+//                    if (!isMultiTouch) {
+//                        return gDetector.onTouchEvent(event);
+//                    }
+//                    isMultiTouch = false;
+//                    break;
+//            }
+//        }
+//        return true;
+//    }
 }

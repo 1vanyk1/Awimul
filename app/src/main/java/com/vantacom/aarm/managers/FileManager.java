@@ -22,6 +22,7 @@ import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class FileManager {
     private final static String EXP_PATH = "/Android/obb/";
+
     public static String[] copyAPKExpansionFiles(Context context, int mainVersion, int patchVersion, String dest) {
         String packageName = context.getPackageName();
         Vector<String> ret = new Vector<String>();
@@ -50,6 +51,13 @@ public class FileManager {
         String[] retArray = new String[ret.size()];
         ret.toArray(retArray);
         return retArray;
+    }
+
+    public static boolean checkAPKExpansionFiles(Context context) {
+        String packageName = context.getPackageName();
+        File root = Environment.getExternalStorageDirectory();
+        File expPath = new File(root.toString() + EXP_PATH + packageName);
+        return expPath.exists();
     }
 
     public static String readFileString(File file)
@@ -208,5 +216,25 @@ public class FileManager {
         } catch (IOException e) {
             Log.e("copyFile", e.toString());
         }
+    }
+
+    public static String getDriveCPath(Context context, String prefix) {
+        return context.getFilesDir() + String.format("/%s/drive_c", prefix);
+    }
+
+    public static void createFile(String path, String text) {
+        File saveFile = new File(path);
+        try {
+            FileOutputStream os = new FileOutputStream(saveFile);
+            os.write(text.getBytes());
+            os.close();
+        } catch (Exception e) {
+            Log.e("createFile", e.toString());
+        }
+    }
+
+    public static void deleteFile(String path) {
+        File saveFile = new File(path);
+        saveFile.delete();
     }
 }

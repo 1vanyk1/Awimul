@@ -53,6 +53,7 @@ public class WineActivity extends Activity {
 
     public void createDesktopWindow(int hwnd) {
         activity.createDesktopWindow(hwnd);
+        activity.onWineLoad();
     }
 
     public void createWindow(int hwnd, boolean isClient, int paramInt2, float scale, int i) {

@@ -1,4 +1,4 @@
-package com.vantacom.aarm.wine;
+ package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,14 +9,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
+import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.ProcessManager;
+import com.vantacom.aarm.managers.SaveFilesManager;
 import com.vantacom.aarm.wine.controls.Keyboard;
 import com.vantacom.aarm.wine.views.Window;
 
@@ -32,6 +34,7 @@ public class WineActivity extends Activity {
     private CustomClassManager wineActivity;
     private Keyboard keyboard;
     private ProcessManager processManager;
+    private SaveFilesManager saveFilesManager;
 
     private boolean ifTurnedOff = false;
 
@@ -108,13 +111,22 @@ public class WineActivity extends Activity {
         }
     }
 
-    private void onWineLoad() {
+    public void onWineLoad() {
         processManager = new ProcessManager();
-        try {
-            ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
-            ConsoleManager.runCommand("wine regedit ../../logpixels.reg");
-        } catch (Exception e) {
-            Log.e("WA/onWineLoad", e.toString());
+        ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
+        if (saveFilesManager.getIsFirstLoad()) {
+            Log.e("1", FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg");
+            FileManager.createFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg",
+                    "REGEDIT4\n" +
+                    "\n" +
+                    "[HKEY_CURRENT_USER\\Control Panel\\Desktop]\n" +
+                    "\"LogPixels\"=dword:00000060\n" +
+                    "\n" +
+                    "[HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Hardware Profiles\\Current\\Software\\Fonts]\n" +
+                    "\"LogPixels\"=dword:00000060");
+            ConsoleManager.runCommand("wine regedit logpixels.reg");
+            FileManager.deleteFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg");
+            saveFilesManager.setIsFirstLoad(false);
         }
     }
 
@@ -122,6 +134,7 @@ public class WineActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wine);
+        saveFilesManager = new SaveFilesManager(this, "prefix");
         keyboard = new Keyboard(this);
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
@@ -175,11 +188,7 @@ public class WineActivity extends Activity {
         mainView.destroy();
         mainView = null;
 
-        try {
-            ConsoleManager.runCommand("wineserver -k");
-        } catch (Exception e) {
-            Log.e("WA/onDestroy", e.toString());
-        }
+        ConsoleManager.runCommand("wineserver -k");
         wineActivity.destroy();
         wineActivity = null;
         ifTurnedOff = true;
@@ -188,7 +197,6 @@ public class WineActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-//        processManager.toggle();  // Use this for tests
         hideSystemUI();
         if (mainView != null && !isSystemPaused()) {
             wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
@@ -241,7 +249,6 @@ public class WineActivity extends Activity {
                 } catch (Exception e) {
                     Log.e("wine", e.toString());
                 }
-                onWineLoad();
             }
         });
     }

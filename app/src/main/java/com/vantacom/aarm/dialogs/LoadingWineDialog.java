@@ -1,4 +1,4 @@
-package com.vantacom.aarm.wine;
+package com.vantacom.aarm.dialogs;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

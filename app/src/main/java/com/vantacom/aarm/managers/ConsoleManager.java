@@ -1,5 +1,7 @@
 package com.vantacom.aarm.managers;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +12,9 @@ public class ConsoleManager {
             Process process = Runtime.getRuntime().exec(line);
             process.waitFor();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Log.e("$", e.toString());
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Log.e("$", e.toString());
         }
     }
 
@@ -32,9 +34,10 @@ public class ConsoleManager {
 
             return output.toString();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Log.e("$", e.toString());
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Log.e("$", e.toString());
         }
+        return "";
     }
 }

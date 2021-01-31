@@ -1,10 +1,11 @@
-package com.vantacom.aarm;
+package com.vantacom.aarm.dialogs;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.vantacom.aarm.R;
 import com.vantacom.aarm.managers.FileManager;
 
 public class LoadingDialog extends AsyncTask<Context, Void, Void> {

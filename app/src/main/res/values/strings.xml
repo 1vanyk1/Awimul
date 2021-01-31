@@ -3,4 +3,7 @@
     <string name="unpackLText">Unpacking files, please wait.</string>
     <string name="wineLTitle">Loading...</string>
     <string name="wineLText">Loading wine, please wait.</string>
+    <string name="warning">Warning</string>
+    <string name="obbWarning">There is no obb file. Please install it and reload app.</string>
+    <string name="ok">OK</string>
 </resources>

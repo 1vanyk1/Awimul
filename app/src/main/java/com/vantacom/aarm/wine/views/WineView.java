@@ -55,6 +55,16 @@ public class WineView extends TextureView implements TextureView.SurfaceTextureL
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//            activity.getMainView().setCurrentWindow(window, event, this.getLeft(), this.getTop());
+//        }
+//        if (activity.getMainView().checkWindow(window)) {
+//            activity.getMainView().setEventXY(this.getX(), this.getY());
+//        }
+//        if (window.getGroup(false) != null  && !this.isClient) {
+//            Log.e("1", String.valueOf(window.getHWND()));
+//        }
+//        return false;
         if (!activity.isSystemPaused()) {
             int action = event.getActionMasked();
             if (event.getAction() == 1 && (!isMoving || !isMultiTouch) && !this.isClient && (this.window.getParent() == null || window.getParent() == activity.getMainView().getDesktopWindow())) {
