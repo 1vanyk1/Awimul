@@ -2,12 +2,14 @@
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,27 +21,26 @@ import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.ProcessManager;
 import com.vantacom.aarm.managers.SaveFilesManager;
+import com.vantacom.aarm.wine.controls.Controls;
 import com.vantacom.aarm.wine.controls.Keyboard;
 import com.vantacom.aarm.wine.views.Window;
+import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
-import java.util.HashMap;
 
-public class WineActivity extends Activity {
+public class WineActivity extends Activity implements View.OnTouchListener {
     private File filesDir;
-    private MainView mainView;
     private ConstraintLayout view;
-    private HashMap<Integer, Window> windowsHM = new HashMap<Integer, Window>();
     private String wineABI;
     private CustomClassManager wineActivity;
     private Keyboard keyboard;
     private ProcessManager processManager;
     private SaveFilesManager saveFilesManager;
+    private XServerManager xserver;
+
+    private View touchView;
 
     private boolean ifTurnedOff = false;
-
-    private int screenWidth, screenHeight;
-    private int desktopWidth, desktopHeight;
 
     private LoadingWineDialog dialog;
 
@@ -51,32 +52,6 @@ public class WineActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
     }
-
-    public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public int getScreenHeight() {
-        return screenHeight;
-    }
-
-    public int getDesktopWidth() {
-        return desktopWidth;
-    }
-
-    public int getDesktopHeight() {
-        return desktopHeight;
-    }
-
-    public Keyboard getKeyboard() { return keyboard; }
-
-    public MainView getMainView() { return mainView; }
-
-    public Window getWindow(int hwnd) { return windowsHM.get(hwnd); }
-
-    public void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
-
-    public void removeWindow(Window window) { windowsHM.remove(window); }
 
     public boolean isSystemPaused() {
         if (processManager == null || !processManager.getIsPaused()) {
@@ -115,7 +90,6 @@ public class WineActivity extends Activity {
         processManager = new ProcessManager();
         ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
         if (saveFilesManager.getIsFirstLoad()) {
-            Log.e("1", FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg");
             FileManager.createFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg",
                     "REGEDIT4\n" +
                     "\n" +
@@ -139,12 +113,13 @@ public class WineActivity extends Activity {
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
         view = findViewById(R.id.mainLayout);
+        touchView = findViewById(R.id.touchView);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        screenWidth = displayMetrics.widthPixels;
-        screenHeight = displayMetrics.heightPixels;
-        desktopWidth = getIntent().getIntExtra("width", screenWidth);
-        desktopHeight = getIntent().getIntExtra("height", screenHeight);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+        int desktopWidth = getIntent().getIntExtra("width", screenWidth);
+        int desktopHeight = getIntent().getIntExtra("height", screenHeight);
         int w = screenWidth, h = screenHeight;
         if (desktopWidth > screenWidth) {
             w = desktopWidth;
@@ -159,6 +134,8 @@ public class WineActivity extends Activity {
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
+        xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, this, wineActivity, keyboard);
+        touchView.setOnTouchListener(new Controls(this, xserver));
         dialog = new LoadingWineDialog(this);
         dialog.show();
         hideSystemUI();
@@ -179,14 +156,8 @@ public class WineActivity extends Activity {
 
     public void onTurnOff() {
         keyboard.hideKeyboard();
-        Window[] windowsArray = windowsHM.values().toArray(new Window[0]);
-        for (int i = 0; i < windowsHM.values().size(); i++) {
-            windowsArray[i].destroy();
-        }
-        windowsHM.clear();
         view.removeAllViews();
-        mainView.destroy();
-        mainView = null;
+        xserver.destroy();
 
         ConsoleManager.runCommand("wineserver -k");
         wineActivity.destroy();
@@ -198,7 +169,7 @@ public class WineActivity extends Activity {
     @Override
     public void onBackPressed() {
         hideSystemUI();
-        if (mainView != null && !isSystemPaused()) {
+        if (xserver.getDesktopView() != null && !isSystemPaused()) {
             wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
             wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
         }
@@ -236,19 +207,14 @@ public class WineActivity extends Activity {
         wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
     }
 
-    public void createDesktopWindow(int desktopView) {
+    public void createDesktopWindow(int hwnd) {
         runOnUiThread(new Runnable() {
             public void run() {
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                mainView = new MainView(WineActivity.this, wineActivity, WineActivity.this, desktopView);
-                view.addView(mainView);
-                try {
-                    wineActivity.invoke("wine_config_changed", getResources().getConfiguration().densityDpi);
-                } catch (Exception e) {
-                    Log.e("wine", e.toString());
-                }
+                xserver.createDesktopWindow(hwnd);
+                view.addView(xserver.getDesktopView());
             }
         });
     }
@@ -256,17 +222,7 @@ public class WineActivity extends Activity {
     public void createWindow(int hwnd, boolean isClient, int parent, float scale) {
         runOnUiThread(new Runnable() {
             public void run() {
-                Window window = getWindow(hwnd);
-                if (window == null) {
-                    window = new Window(WineActivity.this, wineActivity, hwnd, getWindow(parent), scale);
-                    window.createWindowGroups();
-                    if (window.getParent() == mainView.getDesktopWindow()) {
-                        window.createWindowView();
-                    }
-                }
-                if (isClient) {
-                    window.createClientView();
-                }
+                xserver.createWindow(hwnd, isClient, parent, scale);
             }
         });
     }
@@ -274,10 +230,7 @@ public class WineActivity extends Activity {
     public void destroyWindow(int hwnd) {
         runOnUiThread(new Runnable() {
             public void run() {
-                Window wineWindow = getWindow(hwnd);
-                if (wineWindow != null) {
-                    wineWindow.destroy();
-                }
+                xserver.destroyWindow(hwnd);
             }
         });
     }
@@ -285,13 +238,7 @@ public class WineActivity extends Activity {
     public void setWindowParent(int hwnd, int hwnd_parent, float scale) {
         runOnUiThread(new Runnable() {
             public void run() {
-                Window window = getWindow(hwnd);
-                if (window != null) {
-                    window.setParent(getWindow(hwnd_parent), scale);
-                    if (window.getParent() == mainView.getDesktopWindow()) {
-                        window.createWindowView();
-                    }
-                }
+                xserver.setWindowsParent(hwnd, hwnd_parent, scale);
             }
         });
     }
@@ -299,11 +246,16 @@ public class WineActivity extends Activity {
     public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, Rect win_rect, Rect client_rect, Rect visible_rect) {
         runOnUiThread(new Runnable() {
             public void run() {
-                Window window = getWindow(hwnd);
-                if (window != null) {
-                    window.posChanged(vis, next_hwnd, owner, style, client_rect, visible_rect);
-                }
+                xserver.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
             }
         });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.e("Desktop1", String.format("%f %f", event.getX(), event.getY()));
+        PointF point2 = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
+        Log.e("Desktop2", String.format("%f %f", point2.x, point2.y));
+        return false;
     }
 }

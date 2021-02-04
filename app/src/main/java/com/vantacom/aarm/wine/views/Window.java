@@ -2,12 +2,12 @@ package com.vantacom.aarm.wine.views;
 
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 
-import com.vantacom.aarm.CustomClassManager;
-import com.vantacom.aarm.wine.WineActivity;
+import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.util.ArrayList;
 
@@ -18,17 +18,15 @@ public class Window {
     private float scale;
     private Window parent;
     private Rect windowRect, clientRect;
-    private WineActivity activity;
-    private CustomClassManager wineActivity;
+    private XServerManager xserver;
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
 
     private boolean canMove = true;
 
-    public Window(WineActivity activity, CustomClassManager wineActivity, int hwnd, Window parent, float scale) {
-        this.activity = activity;
-        this.wineActivity = wineActivity;
+    public Window(XServerManager xserver, int hwnd, Window parent, float scale) {
+        this.xserver = xserver;
         this.hwnd = hwnd;
         this.visible = false;
         Rect rect = new Rect(0, 0, 0, 0);
@@ -37,7 +35,6 @@ public class Window {
         this.parent = parent;
         this.scale = scale;
         this.children = new ArrayList<Window>();
-        this.activity.addWindow(hwnd, this);
         if (parent != null) {
             parent.addView(this);
         }
@@ -74,19 +71,18 @@ public class Window {
 
     public void createClientView() {
         if (clientGroup == null) { createWindowGroups(); }
-        clientGroup.createContentView(activity, wineActivity, true).layout(0, 0, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top);
+        clientGroup.createContentView(true).layout(0, 0, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top);
     }
 
     public View createWindowView() {
         if (windowGroup == null) { createWindowGroups(); }
-        windowGroup.createContentView(activity, wineActivity, false).layout(0, 0, Math.round((windowRect.right - windowRect.left) * scale), Math.round((windowRect.bottom - windowRect.top) * scale));
+        windowGroup.createContentView(false).layout(0, 0, Math.round((windowRect.right - windowRect.left) * scale), Math.round((windowRect.bottom - windowRect.top) * scale));
         windowGroup.setScale(scale);
         return windowGroup;
     }
 
     public void destroy() {
         visible = false;
-        activity.removeWindow(this);
         if (parent != null) {
             parent.removeView(this);
         }
@@ -121,8 +117,8 @@ public class Window {
 
     public void createWindowGroups() {
         if (clientGroup == null) {
-            windowGroup = new WindowsGroup(activity, this);
-            clientGroup = new WindowsGroup(activity, this);
+            windowGroup = new WindowsGroup(xserver, this);
+            clientGroup = new WindowsGroup(xserver, this);
             windowGroup.addView(clientGroup);
             clientGroup.setLayout(clientRect.left - windowRect.left, clientRect.top - windowRect.top, clientRect.right - windowRect.left, clientRect.bottom - windowRect.top);
             if (parent != null) {
@@ -153,7 +149,7 @@ public class Window {
 
     public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
     {
-        Window ownerW = activity.getWindow(owner);
+        Window ownerW = xserver.getWindow(owner);
         if (ownerW == null || ownerW.canMove) {
 
             if (ownerW != null) {
@@ -165,7 +161,7 @@ public class Window {
             style = style & 0x10000000;
             this.visible = style != 0;
             if ((vis & View.INVISIBLE) == 0 && parent != null) {
-                setZOrder(activity.getWindow(next_hwnd));
+                setZOrder(xserver.getWindow(next_hwnd));
             }
             if (windowGroup != null) {
                 windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
@@ -195,6 +191,9 @@ public class Window {
         parent.removeView(this);
         if (window != null) {
             index = parent.getIndexOFView(window) + 1;
+            xserver.changeZOrder(hwnd, window.getHWND());
+        } else {
+            xserver.changeZOrder(hwnd, parent.getHWND());
         }
         parent.addView(index, this);
     }
@@ -234,7 +233,7 @@ public class Window {
                     clientSurface = new Surface(surface);
                 }
             }
-            wineActivity.invoke("wine_surface_changed", hwnd, clientSurface, true);
+            xserver.getWineActivity().invoke("wine_surface_changed", hwnd, clientSurface, true);
         } else {
             if (surface == null) {
                 windowSurface = null;
@@ -244,7 +243,7 @@ public class Window {
                     windowSurface = new Surface(surface);
                 }
             }
-            wineActivity.invoke("wine_surface_changed", hwnd, windowSurface, false);
+            xserver.getWineActivity().invoke("wine_surface_changed", hwnd, windowSurface, false);
         }
     }
 

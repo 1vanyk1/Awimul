@@ -3,18 +3,19 @@ package com.vantacom.aarm.wine.views;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.vantacom.aarm.CustomClassManager;
-import com.vantacom.aarm.wine.WineActivity;
+import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class WindowsGroup extends ViewGroup {
     private WineView contentView;
+    private XServerManager xserver;
     private Window window;
     private Context context;
 
-    public WindowsGroup(Context context, Window window) {
-        super(context);
-        this.context = context;
+    public WindowsGroup(XServerManager xserver, Window window) {
+        super(xserver.getContext());
+        this.context = xserver.getContext();
         this.window = window;
+        this.xserver = xserver;
         setVisibility(VISIBLE);
     }
 
@@ -25,11 +26,11 @@ public class WindowsGroup extends ViewGroup {
         }
     }
 
-    public WineView createContentView(WineActivity activity, CustomClassManager wineActivity, boolean isClient) {
+    public WineView createContentView(boolean isClient) {
         if (contentView != null) {
             return contentView;
         }
-        contentView = new WineView(activity, wineActivity, context, window, isClient);
+        contentView = new WineView(xserver, context, window, isClient);
         addView(contentView);
         return contentView;
     }
