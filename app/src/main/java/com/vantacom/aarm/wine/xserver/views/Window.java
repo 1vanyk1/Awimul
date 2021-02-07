@@ -1,8 +1,7 @@
-package com.vantacom.aarm.wine.views;
+package com.vantacom.aarm.wine.xserver.views;
 
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;

@@ -22,8 +22,6 @@ import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.ProcessManager;
 import com.vantacom.aarm.managers.SaveFilesManager;
 import com.vantacom.aarm.wine.controls.Controls;
-import com.vantacom.aarm.wine.controls.Keyboard;
-import com.vantacom.aarm.wine.views.Window;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
@@ -33,7 +31,6 @@ public class WineActivity extends Activity implements View.OnTouchListener {
     private ConstraintLayout view;
     private String wineABI;
     private CustomClassManager wineActivity;
-    private Keyboard keyboard;
     private ProcessManager processManager;
     private SaveFilesManager saveFilesManager;
     private XServerManager xserver;
@@ -66,7 +63,7 @@ public class WineActivity extends Activity implements View.OnTouchListener {
         if (processManager != null) {
             processManager.pauseSystem();
         }
-        keyboard.hideKeyboard();
+        xserver.getKeyboard().hideKeyboard();
     }
 
     @Override
@@ -109,7 +106,6 @@ public class WineActivity extends Activity implements View.OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wine);
         saveFilesManager = new SaveFilesManager(this, "prefix");
-        keyboard = new Keyboard(this);
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
         view = findViewById(R.id.mainLayout);
@@ -134,7 +130,7 @@ public class WineActivity extends Activity implements View.OnTouchListener {
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
-        xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, this, wineActivity, keyboard);
+        xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, this, wineActivity);
         touchView.setOnTouchListener(new Controls(this, xserver));
         dialog = new LoadingWineDialog(this);
         dialog.show();
@@ -155,7 +151,6 @@ public class WineActivity extends Activity implements View.OnTouchListener {
     }
 
     public void onTurnOff() {
-        keyboard.hideKeyboard();
         view.removeAllViews();
         xserver.destroy();
 
@@ -170,15 +165,15 @@ public class WineActivity extends Activity implements View.OnTouchListener {
     public void onBackPressed() {
         hideSystemUI();
         if (xserver.getDesktopView() != null && !isSystemPaused()) {
-            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 0, 111, 0);
-            wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), 1, 111, 0);
+            xserver.getKeyboard().pressKey(0, 111, 0);
+            xserver.getKeyboard().pressKey(1, 111, 0);
         }
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (!isSystemPaused()) {
-            boolean b = (boolean) wineActivity.invoke("wine_keyboard_event", keyboard.getHWND(), event.getAction(), event.getKeyCode(), event.getMetaState());
+            boolean b = xserver.getKeyboard().pressKey(event.getAction(), event.getKeyCode(), event.getMetaState());
             if (!b) {
                 b = super.dispatchKeyEvent(event);
             }
