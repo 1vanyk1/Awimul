@@ -82,32 +82,6 @@ public class XServerManager {
         return activity.isSystemPaused();
     }
 
-    public PointF convertWinCordsToDesk(PointF p, Window w) throws ClassNotFoundException {
-        return convertWinCordsToDesk(p.x, p.y,  w);
-    }
-
-    public PointF convertWinCordsToDesk(float x, float y, Window w) throws ClassNotFoundException {
-        if (w.getGroup(false) == null) {
-            throw new ClassNotFoundException();
-        }
-        float left = w.getGroup(false).getLeft();
-        float top = w.getGroup(false).getTop();
-        return new PointF(x + left, y + top);
-    }
-
-    public PointF convertDeskCordsToWin(PointF p, Window w) throws ClassNotFoundException{
-        return convertDeskCordsToWin(p.x, p.y,  w);
-    }
-
-    public PointF convertDeskCordsToWin(float x, float y, Window w) throws ClassNotFoundException {
-        if (w.getGroup(false) == null) {
-            throw new ClassNotFoundException();
-        }
-        float left = w.getGroup(false).getLeft();
-        float top = w.getGroup(false).getTop();
-        return new PointF(x - left, y - top);
-    }
-
     public boolean getPointTouchWindowDeskCords(PointF p, Window window) {
         float x = p.x;
         float y = p.y;
@@ -143,8 +117,6 @@ public class XServerManager {
     public void createDesktopWindow(int hwnd) {
         this.desktopView = new DesktopView(this, wineActivity, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
         addWindow(hwnd, desktopView.getDesktopWindow());
-        Log.e("f", String.valueOf(hwnd));
-//        zOrder.add(hwnd);
         try {
             wineActivity.invoke("wine_config_changed", activity.getResources().getConfiguration().densityDpi);
         } catch (Exception e) {
@@ -218,5 +190,9 @@ public class XServerManager {
 
     public ResizeManager getResizeManager() {
         return resizeManager;
+    }
+
+    public void toggleTopBar() {
+        activity.toggleTopBar();
     }
 }

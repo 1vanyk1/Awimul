@@ -1,8 +1,6 @@
  package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,11 +9,17 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
@@ -26,7 +30,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
 
-public class WineActivity extends Activity implements View.OnTouchListener {
+public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
     private File filesDir;
     private ConstraintLayout view;
     private String wineABI;
@@ -35,7 +39,9 @@ public class WineActivity extends Activity implements View.OnTouchListener {
     private SaveFilesManager saveFilesManager;
     private XServerManager xserver;
 
-    private View touchView;
+    private View keyboard, exit;
+
+    private View touchView, topPanel;
 
     private boolean ifTurnedOff = false;
 
@@ -47,7 +53,7 @@ public class WineActivity extends Activity implements View.OnTouchListener {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     public boolean isSystemPaused() {
@@ -85,8 +91,8 @@ public class WineActivity extends Activity implements View.OnTouchListener {
 
     public void onWineLoad() {
         processManager = new ProcessManager();
-        ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
         if (saveFilesManager.getIsFirstLoad()) {
+            ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
             FileManager.createFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg",
                     "REGEDIT4\n" +
                     "\n" +
@@ -99,17 +105,31 @@ public class WineActivity extends Activity implements View.OnTouchListener {
             FileManager.deleteFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg");
             saveFilesManager.setIsFirstLoad(false);
         }
+        runOnUiThread(new Runnable() {
+            public void run() {
+                topPanel.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_wine);
         saveFilesManager = new SaveFilesManager(this, "prefix");
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
+
         view = findViewById(R.id.mainLayout);
         touchView = findViewById(R.id.touchView);
+        topPanel = findViewById(R.id.topPanel);
+        keyboard = findViewById(R.id.keyboard);
+        keyboard.setOnTouchListener(this);
+        exit = findViewById(R.id.exit);
+        exit.setOnTouchListener(this);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
@@ -248,9 +268,24 @@ public class WineActivity extends Activity implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.e("Desktop1", String.format("%f %f", event.getX(), event.getY()));
-        PointF point2 = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
-        Log.e("Desktop2", String.format("%f %f", point2.x, point2.y));
-        return false;
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (v.getId() == R.id.keyboard) {
+                xserver.getKeyboard().toggleKeyboard();
+            } else if (v.getId() == R.id.exit) {
+                ConfirmTurnOff dialog = new ConfirmTurnOff(this);
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                dialog.show(transaction, "dialog");
+            }
+        }
+        return true;
+    }
+
+    public void toggleTopBar() {
+        if (topPanel.getVisibility() == View.VISIBLE) {
+            topPanel.setVisibility(View.INVISIBLE);
+        } else {
+            topPanel.setVisibility(View.VISIBLE);
+        }
     }
 }

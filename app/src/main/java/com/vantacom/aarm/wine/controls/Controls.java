@@ -2,6 +2,7 @@ package com.vantacom.aarm.wine.controls;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.vantacom.aarm.CustomClassManager;
 import com.vantacom.aarm.wine.xserver.views.Window;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
+import java.security.acl.LastOwnerException;
+
 public class Controls implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
     private GestureDetectorCompat gDetector;
     private CustomClassManager wineActivity;
@@ -21,6 +24,7 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     private boolean isMoving = false;
     private boolean isMultiTouch = false;
+    private boolean isTripleTouch = false;
     private boolean isLongPress = false;
 
     public Controls(Context context, XServerManager xserver) {
@@ -33,6 +37,11 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (window == null) {
+            Log.e("window", "null");
+        } else {
+            Log.e("window", String.valueOf(window.getHWND()));
+        }
         if (!xserver.isSystemPaused()) {
             PointF secondPoint = null;
             int action = event.getActionMasked();
@@ -43,7 +52,7 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                 }
                 PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
                 try {
-                    point = xserver.convertDeskCordsToWin(point.x, point.y, window);
+                    point = window.convertDeskCordsToWin(point.x, point.y);
                     event.setLocation(point.x, point.y);
                     if (window != w) {
                         window = w;
@@ -62,12 +71,12 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                 if (event.getPointerCount() >= 2) {
                     secondPoint = xserver.getDesktopView().getDesktopCords(event.getX(1), event.getY(1));
                     try {
-                        secondPoint = xserver.convertDeskCordsToWin(secondPoint.x, secondPoint.y, window);
+                        secondPoint = window.convertDeskCordsToWin(secondPoint.x, secondPoint.y);
                     } catch (ClassNotFoundException e) {}
                 }
                 PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
                 try {
-                    point = xserver.convertDeskCordsToWin(point.x, point.y, window);
+                    point = window.convertDeskCordsToWin(point.x, point.y);
                     event.setLocation(point.x, point.y);
                 } catch (ClassNotFoundException e) {
                     return true;
@@ -107,6 +116,9 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                             MouseActions.setLeftButtonClick(event, wineActivity, window, MouseActions.MOUSE_UP);
                             event.setAction(MotionEvent.ACTION_UP);
                             gDetector.onTouchEvent(event);
+                        } else if (event.getPointerCount() == 3) {
+                            isTripleTouch = true;
+                            xserver.toggleTopBar();
                         }
                     }
                     break;
@@ -137,6 +149,7 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                         return gDetector.onTouchEvent(event);
                     }
                     isMultiTouch = false;
+                    isTripleTouch = false;
                     break;
             }
         }
@@ -162,11 +175,13 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     @Override
     public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
-        if (isMoving) {
-            wheelActions.move(event2);
-        } else {
-            wheelActions.setStartY(event1, window);
-            isMoving = true;
+        if (!isTripleTouch) {
+            if (isMoving) {
+                wheelActions.move(event2);
+            } else {
+                wheelActions.setStartY(event1, window);
+                isMoving = true;
+            }
         }
         return true;
     }

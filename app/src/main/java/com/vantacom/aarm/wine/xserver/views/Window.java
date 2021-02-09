@@ -1,5 +1,6 @@
 package com.vantacom.aarm.wine.xserver.views;
 
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.view.MotionEvent;
@@ -271,5 +272,31 @@ public class Window {
         eventPos[0] = Math.round(event.getX() * scale + windowGroup.getLeft());
         eventPos[1] = Math.round(event.getY() * scale + windowGroup.getTop());
         return eventPos;
+    }
+
+    public PointF convertWinCordsToDesk(PointF p) throws ClassNotFoundException {
+        return convertWinCordsToDesk(p.x, p.y);
+    }
+
+    public PointF convertWinCordsToDesk(float x, float y) throws ClassNotFoundException {
+        if (getGroup(false) == null) {
+            throw new ClassNotFoundException();
+        }
+        float left = getGroup(false).getLeft();
+        float top = getGroup(false).getTop();
+        return new PointF(x + left, y + top);
+    }
+
+    public PointF convertDeskCordsToWin(PointF p) throws ClassNotFoundException {
+        return convertDeskCordsToWin(p.x, p.y);
+    }
+
+    public PointF convertDeskCordsToWin(float x, float y) throws ClassNotFoundException {
+        if (getGroup(false) == null) {
+            throw new ClassNotFoundException();
+        }
+        float left = getGroup(false).getLeft();
+        float top = getGroup(false).getTop();
+        return new PointF(x - left, y - top);
     }
 }

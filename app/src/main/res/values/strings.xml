@@ -6,4 +6,7 @@
     <string name="warning">Warning</string>
     <string name="obbWarning">There is no obb file. Please install it and reload app.</string>
     <string name="ok">OK</string>
+    <string name="confirmTurnOff">Are you sure that you want to turn off the machine?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>
