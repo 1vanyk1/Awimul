@@ -11,7 +11,6 @@ public class Keyboard {
     private InputMethodManager keyboard;
     private boolean isShown = false;
     private View view;
-    private int hwnd = 0;
     private XServerManager xserver;
 
     public Keyboard(Activity activity, XServerManager xserver) {
@@ -35,8 +34,6 @@ public class Keyboard {
         xserver = null;
     }
 
-    public void setHWND(int hwnd) { this.hwnd = hwnd; }
-
     public void showKeyboard() {
         isShown = true;
         keyboard.showSoftInput(view, InputMethodManager.SHOW_FORCED);
@@ -53,7 +50,7 @@ public class Keyboard {
 
     public boolean pressKey(int action, int key, int metaState) {
         if (!xserver.isSystemPaused()) {
-            return (boolean) xserver.getWineActivity().invoke("wine_keyboard_event", hwnd, action, key, metaState);
+            return (boolean) xserver.getWineActivity().invoke("wine_keyboard_event", xserver.getFocusedWindow().getHWND(), action, key, metaState);
         }
         return false;
     }

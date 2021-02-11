@@ -25,6 +25,7 @@ public class XServerManager {
     private DesktopView desktopView;
     private ArrayList<Integer> zOrder;
     private ResizeManager resizeManager;
+    private Window focusedWindow;
 
     public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, CustomClassManager wineActivity) {
         this.screenWidth = screenWidth;
@@ -78,6 +79,34 @@ public class XServerManager {
         }
     }
 
+    public void syncViewsZOrder() {
+        Window window;
+        for (int i = zOrder.size() - 1; i >= 0; i--) {
+            window = getWindowByZOrder(i);
+            if (window.getParent() == null || window.getParent() == getDesktopView().getDesktopWindow()) {
+                window.getGroup(false).bringToFront();
+            }
+        }
+    }
+
+    public void moveToTopZOrder(int hwnd) {
+        Window window = windowsHM.get(hwnd);
+        if (window.getParent() == getDesktopView().getDesktopWindow()) {
+            window.setZOrder(null);
+        }
+
+//        zOrder.remove((Object)hwnd);
+//        zOrder.add(0, hwnd);
+//        Window window = windowsHM.get(hwnd);
+//        for (int j = 0; j < window.getCountOFViews(); j++) {
+//            if (j == 0) {
+//                changeZOrder(window.getView(j).getHWND(), hwnd);
+//            } else {
+//                changeZOrder(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
+//            }
+//        }
+    }
+
     public boolean isSystemPaused() {
         return activity.isSystemPaused();
     }
@@ -108,15 +137,33 @@ public class XServerManager {
 
     public void f() {
         StringBuilder s = new StringBuilder();
+        Window window;
         for (int i = 0; i < zOrder.size(); i++) {
-            s.append(zOrder.get(i)).append(" ");
+            window = getWindowByZOrder(i);
+            if (window.getParent() == getDesktopView().getDesktopWindow()) {
+                s.append(zOrder.get(i)).append(" ");
+            }
+
         }
         Log.e("f", s.toString());
+    }
+
+    public Window getFocusedWindow() {
+        return focusedWindow;
+    }
+
+    public void changeFocus(Window w) {
+        if (focusedWindow != w && w.getParent() == getDesktopView().getDesktopWindow()) {
+            focusedWindow = w;
+            moveToTopZOrder(getFocusedWindow().getHWND());
+            syncViewsZOrder();
+        }
     }
 
     public void createDesktopWindow(int hwnd) {
         this.desktopView = new DesktopView(this, wineActivity, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
         addWindow(hwnd, desktopView.getDesktopWindow());
+        focusedWindow = desktopView.getDesktopWindow();
         try {
             wineActivity.invoke("wine_config_changed", activity.getResources().getConfiguration().densityDpi);
         } catch (Exception e) {
@@ -134,6 +181,7 @@ public class XServerManager {
             addWindow(hwnd, window);
             window.createWindowGroups();
             if (window.getParent() == desktopView.getDesktopWindow()) {
+                focusedWindow = window;
                 window.createWindowView();
             }
         }
@@ -145,8 +193,13 @@ public class XServerManager {
     public void destroyWindow(int hwnd) {
         Window window = getWindow(hwnd);
         if (window != null) {
+            if (focusedWindow == window) {
+                focusedWindow = getDesktopView().getDesktopWindow();
+            }
             removeWindow(window);
-            zOrder.remove((Object)hwnd);
+            if (zOrder.contains(hwnd)) {
+                zOrder.remove((Object)hwnd);
+            }
             window.destroy();
         }
     }

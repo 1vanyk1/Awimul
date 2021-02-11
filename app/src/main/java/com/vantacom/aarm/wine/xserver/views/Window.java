@@ -170,7 +170,7 @@ public class Window {
                         if (visible && style == 0) {
                             removeViewFromParent();
                         } else if (this.visible && (vis & View.INVISIBLE) == 0) {
-                            syncViewsZOrder();
+                            xserver.syncViewsZOrder();
                         }
                     } else {
                         addViewToParent();
@@ -190,37 +190,12 @@ public class Window {
         int index = 0;
         parent.removeView(this);
         if (window != null) {
-            index = parent.getIndexOFView(window) + 1;
+            index = parent.getIndexOFView(window);
             xserver.changeZOrder(hwnd, window.getHWND());
         } else {
             xserver.changeZOrder(hwnd, parent.getHWND());
         }
         parent.addView(index, this);
-    }
-
-    public void syncViewsZOrder() {
-        int view = 0;
-        Window window;
-        View contentView;
-        for (int i = parent.children.size() - 1; i >= 0; i--) {
-            window = parent.getView(i);
-            if (window.visible) {
-                contentView = parent.clientGroup.getChildAt(view);
-                if (contentView != parent.clientGroup.getContentView()) {
-                    if (window == ((WindowsGroup)contentView).getWindow()) {
-                        view += 1;
-                    } else {
-                        for (int j = i; j >= 0; j--) {
-                            window = this.parent.getView(j);
-                            if (window.visible) {
-                                window.windowGroup.bringToFront();
-                            }
-                        }
-                        return;
-                    }
-                }
-            }
-        }
     }
 
     public void setSurface(SurfaceTexture surface, boolean isClient) {
@@ -266,11 +241,11 @@ public class Window {
         }
     }
 
-    public int[] getEventPos(MotionEvent event)
+    public int[] getEventPos(float x, float y)
     {
         int[] eventPos = new int[2];
-        eventPos[0] = Math.round(event.getX() * scale + windowGroup.getLeft());
-        eventPos[1] = Math.round(event.getY() * scale + windowGroup.getTop());
+        eventPos[0] = Math.round(x * scale + windowGroup.getLeft());
+        eventPos[1] = Math.round(y * scale + windowGroup.getTop());
         return eventPos;
     }
 
