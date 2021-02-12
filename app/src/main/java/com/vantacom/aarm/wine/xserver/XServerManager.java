@@ -153,7 +153,7 @@ public class XServerManager {
     }
 
     public void changeFocus(Window w) {
-        if (focusedWindow != w && w.getParent() == getDesktopView().getDesktopWindow()) {
+        if (focusedWindow != w && (w.getParent() == getDesktopView().getDesktopWindow() || getDesktopView().getDesktopWindow() == w)) {
             focusedWindow = w;
             moveToTopZOrder(getFocusedWindow().getHWND());
             syncViewsZOrder();

@@ -91,7 +91,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
 
     public void onWineLoad() {
         processManager = new ProcessManager();
-        if (saveFilesManager.getIsFirstLoad()) {
+        if (saveFilesManager.getIsFirstLoad() && ConsoleManager.runCommandWithLog("pwd").equals(FileManager.getDriveCPath(this, "prefix") + "/drive_c")) {
             ConsoleManager.runCommand(String.format("ln -s %s ../dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
             FileManager.createFile(FileManager.getDriveCPath(this, "prefix") + "/logpixels.reg",
                     "REGEDIT4\n" +

@@ -37,7 +37,6 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     public void updateWindow(MotionEvent event) {
         Window w = xserver.getTouchedWindow(point1.x, point1.y);
-        Log.e("updateWindow", String.valueOf(w.getHWND()));
         PointF point = xserver.getDesktopView().getDesktopCords(point1.x, point1.y);
         xserver.changeFocus(w);
         try {
