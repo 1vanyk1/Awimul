@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button load;
     private Intent wineActivity;
     private SaveFilesManager saveFilesManager;
+    public static String PACKAGE_NAME = "com.vantacom.aarm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         generate.setOnClickListener(this);
         load = findViewById(R.id.load);
         load.setOnClickListener(this);
-
+        PACKAGE_NAME = getApplicationContext().getPackageName();
     }
 
     @Override

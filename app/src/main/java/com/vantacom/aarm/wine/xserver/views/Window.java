@@ -22,6 +22,7 @@ public class Window {
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
+    private int style;
 
     private boolean canMove = true;
 
@@ -45,6 +46,8 @@ public class Window {
     public boolean getCanMove() { return canMove; }
 
     public int getHWND() { return hwnd; }
+
+    public int getStyle() { return style; }
 
     public float getScale() { return scale; }
 
@@ -150,24 +153,23 @@ public class Window {
     public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
     {
         Window ownerW = xserver.getWindow(owner);
+        this.style = style;
         if (ownerW == null || ownerW.canMove) {
-
             if (ownerW != null) {
                 ownerW.canMove = false;
             }
             boolean visible = this.visible;
             this.windowRect = windowRect;
             this.clientRect = clientRect;
-            style = style & 0x10000000;
-            this.visible = style != 0;
+            this.visible = (style & 0x10000000) != 0;
             if ((vis & View.INVISIBLE) == 0 && parent != null) {
                 setZOrder(xserver.getWindow(next_hwnd));
             }
             if (windowGroup != null) {
                 windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
                 if (parent != null) {
-                    if (visible || style == 0) {
-                        if (visible && style == 0) {
+                    if (visible || ((style & 0x10000000) == 0)) {
+                        if (visible && ((style & 0x10000000) == 0)) {
                             removeViewFromParent();
                         } else if (this.visible && (vis & View.INVISIBLE) == 0) {
                             xserver.syncViewsZOrder();

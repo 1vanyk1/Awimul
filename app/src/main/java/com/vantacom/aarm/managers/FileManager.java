@@ -3,7 +3,10 @@ package com.vantacom.aarm.managers;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
+
+import com.vantacom.aarm.MainActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -14,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -222,6 +227,10 @@ public class FileManager {
         return context.getFilesDir() + String.format("/%s/drive_c", prefix);
     }
 
+    public static String getPrefixPath(Context context, String prefix) {
+        return context.getFilesDir() + String.format("/%s", prefix);
+    }
+
     public static void createFile(String path, String text) {
         File saveFile = new File(path);
         try {
@@ -231,6 +240,19 @@ public class FileManager {
         } catch (Exception e) {
             Log.e("createFile", e.toString());
         }
+    }
+
+    public static String fixPWD(Context context, String pwd) {
+        String packageName = MainActivity.PACKAGE_NAME;
+        ArrayList<String> pwdList = new ArrayList<String>(Arrays.asList(pwd.split("/")));
+        if (!pwdList.contains(packageName)) {
+            return pwd;
+        }
+        ArrayList<String> path = new ArrayList<String>(Arrays.asList(context.getFilesDir().getParent().split("/")));
+        for (int i = pwdList.indexOf(packageName) + 1; i < pwdList.size(); i++) {
+            path.add(pwdList.get(i));
+        }
+        return TextUtils.join("/", path).trim();
     }
 
     public static void deleteFile(String path) {

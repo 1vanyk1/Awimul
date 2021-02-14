@@ -153,10 +153,18 @@ public class XServerManager {
     }
 
     public void changeFocus(Window w) {
-        if (focusedWindow != w && (w.getParent() == getDesktopView().getDesktopWindow() || getDesktopView().getDesktopWindow() == w)) {
-            focusedWindow = w;
-            moveToTopZOrder(getFocusedWindow().getHWND());
-            syncViewsZOrder();
+        if (focusedWindow != w) {
+            if (getDesktopView().getDesktopWindow() == w) {
+                Log.e("f", Integer.toBinaryString(w.getStyle()));
+                focusedWindow = w;
+            } else if (w.getParent() == getDesktopView().getDesktopWindow()) {
+                Log.e("f", Integer.toBinaryString(w.getStyle()));
+                Log.e("ffff", Integer.toBinaryString(w.getStyle() & 0x40000));
+                Log.e(String.valueOf(w.getHWND()), String.format("%d %d %d %d", w.getGroup(true).getLeft(), w.getGroup(true).getTop(), w.getGroup(true).getRight(), w.getGroup(true).getBottom()));
+                focusedWindow = w;
+                moveToTopZOrder(getFocusedWindow().getHWND());
+                syncViewsZOrder();
+            }
         }
     }
 
