@@ -17,7 +17,7 @@ public class Window {
     private boolean visible;
     private float scale;
     private Window parent;
-    private Rect windowRect, clientRect;
+    public Rect windowRect, clientRect;
     private XServerManager xserver;
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;

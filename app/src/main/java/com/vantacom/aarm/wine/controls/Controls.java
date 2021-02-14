@@ -2,6 +2,7 @@ package com.vantacom.aarm.wine.controls;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,10 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (xserver.getFocusedWindow() != null) {
+            Log.e("w", String.valueOf(xserver.getFocusedWindow().getHWND()));
+        }
+        xserver.f();
         if (!xserver.isSystemPaused()) {
             int action = event.getActionMasked();
             point1 = new PointF(event.getX(), event.getY());

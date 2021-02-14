@@ -61,6 +61,24 @@ public class XServerManager {
         }
     }
 
+    private void changeZOrderC(int hwnd, int prev_hwnd) {
+        zOrder.remove((Object) hwnd);
+        for (int i = 0; i < zOrder.size(); i++) {
+            if (zOrder.get(i) == prev_hwnd) {
+                zOrder.add(i + 1, hwnd);
+                Window window = windowsHM.get(hwnd);
+                for (int j = 0; j < window.getCountOFViews(); j++) {
+                    if (j == 0) {
+                        changeZOrderC(window.getView(j).getHWND(), hwnd);
+                    } else {
+                        changeZOrderC(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     public void changeZOrder(int hwnd, int prev_hwnd) {
         zOrder.remove((Object)hwnd);
         for (int i = 0; i < zOrder.size(); i++) {
@@ -69,14 +87,15 @@ public class XServerManager {
                 Window window = windowsHM.get(hwnd);
                 for (int j = 0; j < window.getCountOFViews(); j++) {
                     if (j == 0) {
-                        changeZOrder(window.getView(j).getHWND(), hwnd);
+                        changeZOrderC(window.getView(j).getHWND(), hwnd);
                     } else {
-                        changeZOrder(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
+                        changeZOrderC(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
                     }
                 }
                 break;
             }
         }
+        syncViewsZOrder();
     }
 
     public void syncViewsZOrder() {
@@ -94,7 +113,7 @@ public class XServerManager {
         if (window.getParent() == getDesktopView().getDesktopWindow()) {
             window.setZOrder(null);
         }
-
+        syncViewsZOrder();
 //        zOrder.remove((Object)hwnd);
 //        zOrder.add(0, hwnd);
 //        Window window = windowsHM.get(hwnd);
@@ -158,12 +177,14 @@ public class XServerManager {
                 Log.e("f", Integer.toBinaryString(w.getStyle()));
                 focusedWindow = w;
             } else if (w.getParent() == getDesktopView().getDesktopWindow()) {
-                Log.e("f", Integer.toBinaryString(w.getStyle()));
-                Log.e("ffff", Integer.toBinaryString(w.getStyle() & 0x40000));
-                Log.e(String.valueOf(w.getHWND()), String.format("%d %d %d %d", w.getGroup(true).getLeft(), w.getGroup(true).getTop(), w.getGroup(true).getRight(), w.getGroup(true).getBottom()));
+//                Log.e(String.valueOf(w.getHWND()), Integer.toBinaryString(w.getStyle()));
+//                Log.e("ffff", Integer.toBinaryString(w.getStyle() & 0x40000));
+//                Log.e(String.valueOf(w.getHWND()), w.windowRect.toString());
+//                Log.e(String.valueOf(w.getHWND()), w.clientRect.toString());
+//                Log.e(String.valueOf(w.getHWND()), String.format("%d %d %d %d", w.getGroup(true).getLeft(), w.getGroup(true).getTop(), w.getGroup(true).getRight(), w.getGroup(true).getBottom()));
                 focusedWindow = w;
-                moveToTopZOrder(getFocusedWindow().getHWND());
-                syncViewsZOrder();
+//                moveToTopZOrder(getFocusedWindow().getHWND());
+//                syncViewsZOrder();
             }
         }
     }
