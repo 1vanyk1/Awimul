@@ -80,6 +80,7 @@ public class XServerManager {
     }
 
     public void changeZOrder(int hwnd, int prev_hwnd) {
+        f();
         zOrder.remove((Object)hwnd);
         for (int i = 0; i < zOrder.size(); i++) {
             if (zOrder.get(i) == prev_hwnd) {
@@ -102,7 +103,7 @@ public class XServerManager {
         Window window;
         for (int i = zOrder.size() - 1; i >= 0; i--) {
             window = getWindowByZOrder(i);
-            if (window.getParent() == null || window.getParent() == getDesktopView().getDesktopWindow()) {
+            if (window.getParent() != null && window.getParent() == getDesktopView().getDesktopWindow()) {
                 window.getGroup(false).bringToFront();
             }
         }
@@ -110,20 +111,10 @@ public class XServerManager {
 
     public void moveToTopZOrder(int hwnd) {
         Window window = windowsHM.get(hwnd);
-        if (window.getParent() == getDesktopView().getDesktopWindow()) {
+        if (window != null && window.getParent() == getDesktopView().getDesktopWindow()) {
             window.setZOrder(null);
         }
         syncViewsZOrder();
-//        zOrder.remove((Object)hwnd);
-//        zOrder.add(0, hwnd);
-//        Window window = windowsHM.get(hwnd);
-//        for (int j = 0; j < window.getCountOFViews(); j++) {
-//            if (j == 0) {
-//                changeZOrder(window.getView(j).getHWND(), hwnd);
-//            } else {
-//                changeZOrder(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
-//            }
-//        }
     }
 
     public boolean isSystemPaused() {
@@ -174,17 +165,11 @@ public class XServerManager {
     public void changeFocus(Window w) {
         if (focusedWindow != w) {
             if (getDesktopView().getDesktopWindow() == w) {
-                Log.e("f", Integer.toBinaryString(w.getStyle()));
                 focusedWindow = w;
             } else if (w.getParent() == getDesktopView().getDesktopWindow()) {
-//                Log.e(String.valueOf(w.getHWND()), Integer.toBinaryString(w.getStyle()));
-//                Log.e("ffff", Integer.toBinaryString(w.getStyle() & 0x40000));
-//                Log.e(String.valueOf(w.getHWND()), w.windowRect.toString());
-//                Log.e(String.valueOf(w.getHWND()), w.clientRect.toString());
-//                Log.e(String.valueOf(w.getHWND()), String.format("%d %d %d %d", w.getGroup(true).getLeft(), w.getGroup(true).getTop(), w.getGroup(true).getRight(), w.getGroup(true).getBottom()));
+                Log.e(String.valueOf(focusedWindow.getHWND()), String.valueOf(w.getHWND()));
                 focusedWindow = w;
-//                moveToTopZOrder(getFocusedWindow().getHWND());
-//                syncViewsZOrder();
+                moveToTopZOrder(w.getHWND());
             }
         }
     }
@@ -192,7 +177,7 @@ public class XServerManager {
     public void createDesktopWindow(int hwnd) {
         this.desktopView = new DesktopView(this, wineActivity, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
         addWindow(hwnd, desktopView.getDesktopWindow());
-        focusedWindow = desktopView.getDesktopWindow();
+        changeFocus(desktopView.getDesktopWindow());
         try {
             wineActivity.invoke("wine_config_changed", activity.getResources().getConfiguration().densityDpi);
         } catch (Exception e) {
@@ -210,7 +195,7 @@ public class XServerManager {
             addWindow(hwnd, window);
             window.createWindowGroups();
             if (window.getParent() == desktopView.getDesktopWindow()) {
-                focusedWindow = window;
+                changeFocus(window);
                 window.createWindowView();
             }
         }
@@ -223,7 +208,7 @@ public class XServerManager {
         Window window = getWindow(hwnd);
         if (window != null) {
             if (focusedWindow == window) {
-                focusedWindow = getDesktopView().getDesktopWindow();
+                changeFocus(getDesktopView().getDesktopWindow());
             }
             removeWindow(window);
             if (zOrder.contains(hwnd)) {

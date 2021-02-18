@@ -53,7 +53,6 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
         if (xserver.getFocusedWindow() != null) {
             Log.e("w", String.valueOf(xserver.getFocusedWindow().getHWND()));
         }
-        xserver.f();
         if (!xserver.isSystemPaused()) {
             int action = event.getActionMasked();
             point1 = new PointF(event.getX(), event.getY());

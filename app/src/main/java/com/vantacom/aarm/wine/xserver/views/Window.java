@@ -3,7 +3,6 @@ package com.vantacom.aarm.wine.xserver.views;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 
@@ -22,7 +21,6 @@ public class Window {
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
-    private int style;
 
     private boolean canMove = true;
 
@@ -46,8 +44,6 @@ public class Window {
     public boolean getCanMove() { return canMove; }
 
     public int getHWND() { return hwnd; }
-
-    public int getStyle() { return style; }
 
     public float getScale() { return scale; }
 
@@ -153,7 +149,6 @@ public class Window {
     public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
     {
         Window ownerW = xserver.getWindow(owner);
-        this.style = style;
         if (ownerW == null || ownerW.canMove) {
             if (ownerW != null) {
                 ownerW.canMove = false;
@@ -171,11 +166,11 @@ public class Window {
                     if (visible || ((style & 0x10000000) == 0)) {
                         if (visible && ((style & 0x10000000) == 0)) {
                             removeViewFromParent();
-                        } else if (this.visible && (vis & View.INVISIBLE) == 0) {
                             xserver.syncViewsZOrder();
                         }
                     } else {
                         addViewToParent();
+                        xserver.syncViewsZOrder();
                     }
                 }
             }
