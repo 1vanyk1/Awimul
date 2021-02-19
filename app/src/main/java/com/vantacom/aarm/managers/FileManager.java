@@ -246,7 +246,7 @@ public class FileManager {
         String packageName = MainActivity.PACKAGE_NAME;
         ArrayList<String> pwdList = new ArrayList<String>(Arrays.asList(pwd.split("/")));
         if (!pwdList.contains(packageName)) {
-            return pwd;
+            return pwd.trim();
         }
         ArrayList<String> path = new ArrayList<String>(Arrays.asList(context.getFilesDir().getParent().split("/")));
         for (int i = pwdList.indexOf(packageName) + 1; i < pwdList.size(); i++) {

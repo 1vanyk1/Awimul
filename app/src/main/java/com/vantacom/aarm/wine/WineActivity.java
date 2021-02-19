@@ -92,9 +92,12 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     public void onWineLoad() {
         processManager = new ProcessManager();
         String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
+        if (pwd.charAt(pwd.length() - 1) != '/') {
+            pwd = pwd + '/';
+        }
         if (saveFilesManager.getIsFirstLoad()) {
             ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefix") + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
-            FileManager.createFile(pwd + "/logpixels.reg",
+            FileManager.createFile(pwd + "logpixels.reg",
                     "REGEDIT4\n" +
                     "\n" +
                     "[HKEY_CURRENT_USER\\Control Panel\\Desktop]\n" +
@@ -103,7 +106,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                     "[HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Hardware Profiles\\Current\\Software\\Fonts]\n" +
                     "\"LogPixels\"=dword:00000060");
             ConsoleManager.runCommand("wine regedit logpixels.reg");
-            FileManager.deleteFile(pwd + "/logpixels.reg");
+            FileManager.deleteFile(pwd + "logpixels.reg");
             saveFilesManager.setIsFirstLoad(false);
         }
         runOnUiThread(new Runnable() {

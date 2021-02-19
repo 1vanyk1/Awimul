@@ -50,9 +50,6 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (xserver.getFocusedWindow() != null) {
-            Log.e("w", String.valueOf(xserver.getFocusedWindow().getHWND()));
-        }
         if (!xserver.isSystemPaused()) {
             int action = event.getActionMasked();
             point1 = new PointF(event.getX(), event.getY());
@@ -81,7 +78,7 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                             if (xserver.getFocusedWindow().getCanMove()) {
                                 if (!isMoving) {
                                     isMoving = true;
-                                    updateWindow(event);
+                                    mousePos = new PointF(event.getX(), event.getY());
                                     MouseActions.setLeftButtonClick(mousePos.x, mousePos.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN);
                                 } else {
                                     mousePos = new PointF(event.getX(), event.getY());
