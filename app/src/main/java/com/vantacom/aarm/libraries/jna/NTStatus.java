@@ -1,0 +1,16 @@
+package com.vantacom.aarm.libraries.jna;
+
+public interface NTStatus {
+    int STATUS_SUCCESS = 0x00000000;
+    int STATUS_BUFFER_TOO_SMALL  = 0xC0000023;
+    int  STATUS_WAIT_0 = 0x00000000;
+    int  STATUS_WAIT_1 = 0x00000001;
+    int  STATUS_WAIT_2 = 0x00000002;
+    int  STATUS_WAIT_3 = 0x00000003;
+    int  STATUS_WAIT_63 = 0x0000003F;
+    int  STATUS_ABANDONED = 0x00000080;
+    int  STATUS_ABANDONED_WAIT_0 = 0x00000080;
+    int  STATUS_ABANDONED_WAIT_63 = 0x000000BF;
+    int  STATUS_INVALID_OWNER = 0xC000005A;
+    int STATUS_ACCESS_DENIED = 0xC0000022;
+}

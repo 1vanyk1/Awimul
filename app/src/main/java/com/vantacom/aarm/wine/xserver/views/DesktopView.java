@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.view.ViewGroup;
 
-import com.vantacom.aarm.CustomClassManager;
+import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class DesktopView extends ViewGroup {
     private Window desktopWindow;
     private XServerManager xserver;
-    private CustomClassManager wineActivity;
+    private LibraryManager wineActivity;
     private boolean isCreated = false;
 
     private float scaleView = 1f;
@@ -19,7 +19,7 @@ public class DesktopView extends ViewGroup {
     private float layoutWidth, layoutHeight;
     private float screenWidth, screenHeight;
 
-    public DesktopView(XServerManager xserver, CustomClassManager wineActivity, Context context, int hwnd, int width, int height, int layoutWidth, int layoutHeight) {
+    public DesktopView(XServerManager xserver, LibraryManager wineActivity, Context context, int hwnd, int width, int height, int layoutWidth, int layoutHeight) {
         super(context);
         this.width = width;
         this.height = height;

@@ -3,6 +3,8 @@ package com.vantacom.aarm;
 import android.util.Log;
 import android.view.Surface;
 
+import com.vantacom.aarm.libraries.Library;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -11,13 +13,13 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomClassManager {
+public class LibraryManager {
     private CustomClassLoader ccl;
     private Class pClass;
     private Object object;
 
-    public CustomClassManager(String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        ccl = new CustomClassLoader(CustomClassManager.class.getClassLoader());
+    public LibraryManager(String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ccl = new CustomClassLoader(LibraryManager.class.getClassLoader());
         pClass = ccl.loadClass(className);
         object = pClass.newInstance();
     }
@@ -27,6 +29,7 @@ public class CustomClassManager {
             default: return lClass;
             case "java.lang.Integer": return int.class;
             case "java.lang.Boolean": return boolean.class;
+            case "java.lang.Byte": return byte.class;
         }
     }
 
@@ -56,7 +59,7 @@ public class CustomClassManager {
             method = null;
             return res;
         } catch (Exception e) {
-            Log.e("CCM/invoke", e.toString());
+            Log.e("LM/invoke", e.toString());
             return new Object[0];
         }
     }
@@ -103,13 +106,7 @@ public class CustomClassManager {
         @Override
         public Class loadClass(String name) throws ClassNotFoundException {
             Class c;
-            System.out.println("Loading Class '" + name + "'");
-            if (name.startsWith("com.journaldev")) {
-                System.out.println("Loading Class using CCLoader");
-                c = getClass(name);
-            } else {
-                c = super.loadClass(name);
-            }
+            c = super.loadClass(name);
             classes.put(name, c);
             return c;
         }

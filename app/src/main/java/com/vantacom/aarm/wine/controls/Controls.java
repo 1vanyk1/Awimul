@@ -2,20 +2,19 @@ package com.vantacom.aarm.wine.controls;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.core.view.GestureDetectorCompat;
 
-import com.vantacom.aarm.CustomClassManager;
+import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.xserver.views.Window;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class Controls implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
     private GestureDetectorCompat gDetector;
-    private CustomClassManager wineActivity;
+    private LibraryManager wineActivity;
     private XServerManager xserver;
     private MouseWheelActions wheelActions;
 
@@ -113,7 +112,9 @@ public class Controls implements View.OnTouchListener, GestureDetector.OnGesture
                         if (isMoving) {
                             isMoving = false;
                         } else {
-                            xserver.getKeyboard().toggleKeyboard();
+                            if (!isTripleTouch) {
+                                xserver.getKeyboard().toggleKeyboard();
+                            }
                         }
                     }
                     break;

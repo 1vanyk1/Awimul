@@ -5,7 +5,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 
-import com.vantacom.aarm.CustomClassManager;
+import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.xserver.views.DesktopView;
 import com.vantacom.aarm.wine.WineActivity;
 import com.vantacom.aarm.wine.controls.keyboard.Keyboard;
@@ -20,14 +20,14 @@ public class XServerManager {
     private int screenWidth, screenHeight;
     private int desktopWidth, desktopHeight;
     private WineActivity activity;
-    private CustomClassManager wineActivity;
+    private LibraryManager wineActivity;
     private Keyboard keyboard;
     private DesktopView desktopView;
     private ArrayList<Integer> zOrder;
     private ResizeManager resizeManager;
     private Window focusedWindow;
 
-    public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, CustomClassManager wineActivity) {
+    public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, LibraryManager wineActivity) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.desktopWidth = desktopWidth;
@@ -41,7 +41,7 @@ public class XServerManager {
 
     public Context getContext() { return activity; }
 
-    public CustomClassManager getWineActivity() { return wineActivity; }
+    public LibraryManager getWineActivity() { return wineActivity; }
 
     public Keyboard getKeyboard() { return keyboard; }
 
@@ -80,7 +80,6 @@ public class XServerManager {
     }
 
     public void changeZOrder(int hwnd, int prev_hwnd) {
-        f();
         zOrder.remove((Object)hwnd);
         for (int i = 0; i < zOrder.size(); i++) {
             if (zOrder.get(i) == prev_hwnd) {
@@ -107,14 +106,6 @@ public class XServerManager {
                 window.getGroup(false).bringToFront();
             }
         }
-    }
-
-    public void moveToTopZOrder(int hwnd) {
-        Window window = windowsHM.get(hwnd);
-        if (window != null && window.getParent() == getDesktopView().getDesktopWindow()) {
-            window.setZOrder(null);
-        }
-        syncViewsZOrder();
     }
 
     public boolean isSystemPaused() {
@@ -145,19 +136,6 @@ public class XServerManager {
         return desktopView.getDesktopWindow();
     }
 
-    public void f() {
-        StringBuilder s = new StringBuilder();
-        Window window;
-        for (int i = 0; i < zOrder.size(); i++) {
-            window = getWindowByZOrder(i);
-            if (window.getParent() == getDesktopView().getDesktopWindow()) {
-                s.append(zOrder.get(i)).append(" ");
-            }
-
-        }
-        Log.e("f", s.toString());
-    }
-
     public Window getFocusedWindow() {
         return focusedWindow;
     }
@@ -167,9 +145,7 @@ public class XServerManager {
             if (getDesktopView().getDesktopWindow() == w) {
                 focusedWindow = w;
             } else if (w.getParent() == getDesktopView().getDesktopWindow()) {
-                Log.e(String.valueOf(focusedWindow.getHWND()), String.valueOf(w.getHWND()));
                 focusedWindow = w;
-                moveToTopZOrder(w.getHWND());
             }
         }
     }

@@ -146,13 +146,9 @@ public class Window {
         parent.clientGroup.addView(windowGroup, pos + 1);
     }
 
-    public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect)
-    {
-        Window ownerW = xserver.getWindow(owner);
-        if (ownerW == null || ownerW.canMove) {
-            if (ownerW != null) {
-                ownerW.canMove = false;
-            }
+    public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect) {
+        if (canMove) {
+            canMove = false;
             boolean visible = this.visible;
             this.windowRect = windowRect;
             this.clientRect = clientRect;
@@ -177,9 +173,7 @@ public class Window {
             if (clientGroup != null) {
                 clientGroup.setLayout(clientRect.left - windowRect.left, clientRect.top - windowRect.top, clientRect.right - windowRect.left, clientRect.bottom - windowRect.top);
             }
-            if (ownerW != null) {
-                ownerW.canMove = true;
-            }
+            canMove = true;
         }
     }
 
