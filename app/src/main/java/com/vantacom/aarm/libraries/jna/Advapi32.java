@@ -36,7 +36,7 @@ import com.vantacom.aarm.libraries.jna.Winsvc.SERVICE_STATUS_HANDLE;
 
 
 public interface Advapi32 extends Library {
-    Advapi32 INSTANCE = Native.loadLibrary("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/advapi32.dll.so", Advapi32.class, W32APIOptions.DEFAULT_OPTIONS);
+    Advapi32 INSTANCE = Native.loadLibrary("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/advapi32.dll.so", Advapi32.class, W32APIOptions.UNICODE_OPTIONS);
 
     int MAX_KEY_LENGTH = 255;
     int MAX_VALUE_NAME = 16383;

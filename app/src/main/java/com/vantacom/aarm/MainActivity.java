@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.setProperty("jna.debug_load", "true");
+        System.setProperty("jna.dump_memory", "true");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(Build.VERSION.SDK_INT>22){

@@ -8,10 +8,12 @@ import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.Union;
 import com.sun.jna.ptr.ByReference;
 import com.sun.jna.win32.StdCallLibrary.StdCallCallback;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @SuppressWarnings("serial")
@@ -133,10 +135,13 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         public static final int TokenImpersonation = 2;
     }
 
-    @FieldOrder({"Luid", "Attributes"})
     public static class LUID_AND_ATTRIBUTES extends Structure {
-        public LUID Luid;
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Luid", "Attributes");
+        }
 
+        public LUID Luid;
         public DWORD Attributes;
 
         public LUID_AND_ATTRIBUTES() {
@@ -149,10 +154,13 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"Sid", "Attributes"})
     public static class SID_AND_ATTRIBUTES extends Structure {
-        public PSID.ByReference Sid;
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Sid", "Attributes");
+        }
 
+        public PSID.ByReference Sid;
         public int Attributes;
 
         public SID_AND_ATTRIBUTES() {
@@ -164,8 +172,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"Owner"})
     public static class TOKEN_OWNER extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Owner");
+        }
+
         public PSID.ByReference Owner;
 
         public TOKEN_OWNER() {
@@ -182,9 +194,14 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"sid"})
     public static class PSID extends Structure {
-        public static class ByReference extends PSID implements Structure.ByReference { }
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("sid");
+        }
+
+        public static class ByReference extends PSID implements Structure.ByReference {}
+
         public Pointer sid;
 
         public PSID() {
@@ -241,8 +258,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"User"})
     public static class TOKEN_USER extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("User");
+        }
+
         public SID_AND_ATTRIBUTES User;
 
         public TOKEN_USER() {
@@ -259,8 +280,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "PrimaryGroup" })
     public static class TOKEN_PRIMARY_GROUP extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("PrimaryGroup");
+        }
+
         public PSID.ByReference PrimaryGroup;
 
         public TOKEN_PRIMARY_GROUP() {
@@ -277,8 +302,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"GroupCount", "Group0"})
     public static class TOKEN_GROUPS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("GroupCount", "Group0");
+        }
+
         public int GroupCount;
         public SID_AND_ATTRIBUTES Group0;
 
@@ -300,8 +329,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"PrivilegeCount", "Control", "Privileges"})
     public static class PRIVILEGE_SET extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("PrivilegeCount", "Control", "Privileges");
+        }
+
         public DWORD PrivilegeCount;
         public DWORD Control;
         public LUID_AND_ATTRIBUTES Privileges[];
@@ -328,8 +361,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"PrivilegeCount", "Privileges"})
     public static class TOKEN_PRIVILEGES extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("PrivilegeCount", "Privileges");
+        }
+
         public DWORD PrivilegeCount;
 
         public LUID_AND_ATTRIBUTES Privileges[];
@@ -514,12 +551,15 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int COMPRESSION_ENGINE_MAXIMUM       = 0x0100;
     int COMPRESSION_ENGINE_HIBER         = 0x0200;
 
-    @FieldOrder({"NextEntryOffset", "Action", "FileNameLength", "FileName"})
     public static class FILE_NOTIFY_INFORMATION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("NextEntryOffset", "Action", "FileNameLength", "FileName");
+        }
+
         public int NextEntryOffset;
         public int Action;
         public int FileNameLength;
-        // filename is not nul-terminated, so we can't use a String/WString
         public char[] FileName = new char[1];
 
         private FILE_NOTIFY_INFORMATION() {
@@ -631,20 +671,32 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int REG_QWORD = 11;
     int REG_QWORD_LITTLE_ENDIAN = 11;
 
-    @FieldOrder({"LowPart", "HighPart"})
     public static class LUID extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("LowPart", "HighPart");
+        }
+
         public int LowPart;
         public int HighPart;
     }
 
-    @FieldOrder({"u"})
     public static class LARGE_INTEGER extends Structure implements Comparable<LARGE_INTEGER> {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("u");
+        }
+
         public static class ByReference extends LARGE_INTEGER implements
                 Structure.ByReference {
         }
 
-        @FieldOrder({"LowPart", "HighPart"})
         public static class LowHigh extends Structure {
+            @Override
+            protected List<String> getFieldOrder() {
+                return Arrays.asList("LowPart", "HighPart");
+            }
+
             public DWORD LowPart;
             public DWORD HighPart;
 
@@ -915,8 +967,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int SID_RECOMMENDED_SUB_AUTHORITIES = 1;
     int SECURITY_MAX_SID_SIZE = 68;
 
-    @FieldOrder({"dwOSVersionInfoSize", "dwMajorVersion", "dwMinorVersion", "dwBuildNumber", "dwPlatformId", "szCSDVersion"})
     public static class OSVERSIONINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwOSVersionInfoSize", "dwMajorVersion", "dwMinorVersion", "dwBuildNumber", "dwPlatformId", "szCSDVersion");
+        }
+
         public DWORD dwOSVersionInfoSize;
         public DWORD dwMajorVersion;
         public DWORD dwMinorVersion;
@@ -926,7 +982,7 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
         public OSVERSIONINFO() {
             szCSDVersion = new char[128];
-            dwOSVersionInfoSize = new DWORD(size()); // sizeof(OSVERSIONINFO)
+            dwOSVersionInfoSize = new DWORD(size());
         }
 
         public OSVERSIONINFO(Pointer memory) {
@@ -935,13 +991,17 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"dwOSVersionInfoSize",
-            "dwMajorVersion", "dwMinorVersion", "dwBuildNumber",
-            "dwPlatformId",
-            "szCSDVersion",
-            "wServicePackMajor", "wServicePackMinor",
-            "wSuiteMask", "wProductType", "wReserved"})
     public static class OSVERSIONINFOEX extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwOSVersionInfoSize",
+                    "dwMajorVersion", "dwMinorVersion", "dwBuildNumber",
+                    "dwPlatformId",
+                    "szCSDVersion",
+                    "wServicePackMajor", "wServicePackMinor",
+                    "wSuiteMask", "wProductType", "wReserved");
+        }
+
         public DWORD dwOSVersionInfoSize;
         public DWORD dwMajorVersion;
         public DWORD dwMinorVersion;
@@ -956,7 +1016,7 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
         public OSVERSIONINFOEX() {
             szCSDVersion = new char[128];
-            dwOSVersionInfoSize = new DWORD(size()); // sizeof(OSVERSIONINFOEX)
+            dwOSVersionInfoSize = new DWORD(size());
         }
 
         public OSVERSIONINFOEX(Pointer memory) {
@@ -1045,11 +1105,15 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int EVENTLOG_AUDIT_SUCCESS = 0x0008;
     int EVENTLOG_AUDIT_FAILURE = 0x0010;
 
-    @FieldOrder({"Length", "Reserved", "RecordNumber", "TimeGenerated", "TimeWritten",
-            "EventID", "EventType", "NumStrings", "EventCategory", "ReservedFlags",
-            "ClosingRecordNumber", "StringOffset", "UserSidLength", "UserSidOffset",
-            "DataLength", "DataOffset"})
     public static class EVENTLOGRECORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Length", "Reserved", "RecordNumber", "TimeGenerated", "TimeWritten",
+                    "EventID", "EventType", "NumStrings", "EventCategory", "ReservedFlags",
+                    "ClosingRecordNumber", "StringOffset", "UserSidLength", "UserSidOffset",
+                    "DataLength", "DataOffset");
+        }
+
         public DWORD Length;
         public DWORD Reserved;
         public DWORD RecordNumber;
@@ -1177,7 +1241,6 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int PROCESS_VM_WRITE = 0x0020;
     int PROCESS_SYNCHRONIZE = 0x00100000;
 
-    /* Security information types */
     int OWNER_SECURITY_INFORMATION = 0x00000001;
     int GROUP_SECURITY_INFORMATION = 0x00000002;
     int DACL_SECURITY_INFORMATION = 0x00000004;
@@ -1206,8 +1269,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
     int SECURITY_DESCRIPTOR_REVISION = 0x00000001;
 
-    @FieldOrder({"data"})
     public static class SECURITY_DESCRIPTOR extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("data");
+        }
+
         public static class ByReference extends SECURITY_DESCRIPTOR implements
                 Structure.ByReference {
         }
@@ -1245,8 +1312,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int MIN_ACL_REVISION    = ACL_REVISION2;
     int MAX_ACL_REVISION    = ACL_REVISION4;
 
-    @FieldOrder({"AclRevision", "Sbz1", "AclSize", "AceCount", "Sbz2"})
     public static class ACL extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("AclRevision", "Sbz1", "AclSize", "AceCount", "Sbz2");
+        }
+
         public static int MAX_ACL_SIZE = 64 * 1024;
 
         public byte AclRevision;
@@ -1318,8 +1389,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"Revision", "Sbz1", "Control", "Owner", "Group", "Sacl", "Dacl"})
     public static class SECURITY_DESCRIPTOR_RELATIVE extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Revision", "Sbz1", "Control", "Owner", "Group", "Sacl", "Dacl");
+        }
+
         public static class ByReference extends SECURITY_DESCRIPTOR_RELATIVE
                 implements Structure.ByReference {
         }
@@ -1389,8 +1464,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"AceType", "AceFlags", "AceSize"})
     public static class ACE_HEADER extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("AceType", "AceFlags", "AceSize");
+        }
+
         public byte AceType;
         public byte AceFlags;
         public short AceSize;
@@ -1413,8 +1492,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({"Mask", "SidStart"})
     public static abstract class ACCESS_ACEStructure extends ACE_HEADER {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Mask", "SidStart");
+        }
+
         public int Mask;
         public byte[] SidStart = new byte[4];
 
@@ -1538,10 +1621,13 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
                       WinBase.OVERLAPPED overlapped);
     }
 
-    @FieldOrder({"genericRead", "genericWrite", "genericExecute", "genericAll"})
     public static class GENERIC_MAPPING extends Structure {
-        public static class ByReference extends GENERIC_MAPPING implements Structure.ByReference {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("genericRead", "genericWrite", "genericExecute", "genericAll");
         }
+
+        public static class ByReference extends GENERIC_MAPPING implements Structure.ByReference {}
 
         public DWORD genericRead;
         public DWORD genericWrite;
@@ -1549,8 +1635,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         public DWORD genericAll;
     }
 
-    @FieldOrder({"processorMask", "relationship", "payload"})
     public static class SYSTEM_LOGICAL_PROCESSOR_INFORMATION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("processorMask", "relationship", "payload");
+        }
+
         public ULONG_PTR processorMask;
         public int relationship;
         public AnonymousUnionPayload payload;
@@ -1571,20 +1661,32 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
             public ULONGLONG[] reserved = new ULONGLONG[2];
         }
 
-        @FieldOrder({"flags"})
         public static class AnonymousStructProcessorCore extends Structure {
+            @Override
+            protected List<String> getFieldOrder() {
+                return Arrays.asList("flags");
+            }
+
             public BYTE flags;
         }
 
-        @FieldOrder({"nodeNumber"})
         public static class AnonymousStructNumaNode extends Structure {
+            @Override
+            protected List<String> getFieldOrder() {
+                return Arrays.asList("nodeNumber");
+            }
+
             public DWORD nodeNumber;
         }
     }
 
-    @FieldOrder({ "relationship", "size" })
     public abstract class SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX extends Structure {
-        public int /* LOGICAL_PROCESSOR_RELATIONSHIP */ relationship;
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("relationship", "size");
+        }
+
+        public int relationship;
 
         public int size;
 
@@ -1621,8 +1723,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "flags", "efficiencyClass", "reserved", "groupCount", "groupMask" })
     public static class PROCESSOR_RELATIONSHIP extends SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("flags", "efficiencyClass", "reserved", "groupCount", "groupMask");
+        }
+
         public byte flags;
         public byte efficiencyClass;
         public byte[] reserved = new byte[20];
@@ -1644,8 +1750,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "nodeNumber", "reserved", "groupMask" })
     public static class NUMA_NODE_RELATIONSHIP extends SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("nodeNumber", "reserved", "groupMask");
+        }
+
         public int nodeNumber;
         public byte[] reserved = new byte[20];
         public GROUP_AFFINITY groupMask;
@@ -1658,8 +1768,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "level", "associativity", "lineSize", "cacheSize", "type", "reserved", "groupMask" })
     public static class CACHE_RELATIONSHIP extends SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("level", "associativity", "lineSize", "cacheSize", "type", "reserved", "groupMask");
+        }
+
         public byte level;
         public byte associativity;
         public short lineSize;
@@ -1676,8 +1790,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "maximumGroupCount", "activeGroupCount", "reserved", "groupInfo" })
     public static class GROUP_RELATIONSHIP extends SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("maximumGroupCount", "activeGroupCount", "reserved", "groupInfo");
+        }
+
         public short maximumGroupCount;
         public short activeGroupCount;
         public byte[] reserved = new byte[20];
@@ -1698,9 +1816,13 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "mask", "group", "reserved" })
     public static class GROUP_AFFINITY extends Structure {
-        public ULONG_PTR /* KAFFINITY */ mask;
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("mask", "group", "reserved");
+        }
+
+        public ULONG_PTR mask;
         public short group;
         public short[] reserved = new short[3];
 
@@ -1713,8 +1835,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "maximumProcessorCount", "activeProcessorCount", "reserved", "activeProcessorMask" })
     public static class PROCESSOR_GROUP_INFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("maximumProcessorCount", "activeProcessorCount", "reserved", "activeProcessorMask");
+        }
+
         public byte maximumProcessorCount;
         public byte activeProcessorCount;
         public byte[] reserved = new byte[38];
@@ -1740,8 +1866,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
     byte CACHE_FULLY_ASSOCIATIVE = (byte)0xFF;
 
-    @FieldOrder({"level", "associativity", "lineSize", "size", "type"})
     public static class CACHE_DESCRIPTOR extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("level", "associativity", "lineSize", "size", "type");
+        }
+
         public BYTE level;
         public BYTE associativity;
         public WORD lineSize;
@@ -1774,14 +1904,18 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         int PowerSystemSleeping1 = 2;
         int PowerSystemSleeping2 = 3;
         int PowerSystemSleeping3 = 4;
-        int PowerSystemHibernate = 5; // S4
-        int PowerSystemShutdown = 6; // S5
+        int PowerSystemHibernate = 5;
+        int PowerSystemShutdown = 6;
         int PowerSystemMaximum = 7;
     }
 
-    @FieldOrder({ "AcOnLine", "BatteryPresent", "Charging", "Discharging", "Spare1", "Tag", "MaxCapacity",
-            "RemainingCapacity", "Rate", "EstimatedTime", "DefaultAlert1", "DefaultAlert2" })
     class SYSTEM_BATTERY_STATE extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("AcOnLine", "BatteryPresent", "Charging", "Discharging", "Spare1", "Tag", "MaxCapacity",
+                    "RemainingCapacity", "Rate", "EstimatedTime", "DefaultAlert1", "DefaultAlert2");
+        }
+
         public byte AcOnLine;
         public byte BatteryPresent;
         public byte Charging;
@@ -1805,14 +1939,22 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "Granularity", "Capacity" })
     class BATTERY_REPORTING_SCALE extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Granularity", "Capacity");
+        }
+
         public int Granularity;
         public int Capacity;
     }
 
-    @FieldOrder({ "Number", "MaxMhz", "CurrentMhz", "MhzLimit", "MaxIdleState", "CurrentIdleState" })
     class PROCESSOR_POWER_INFORMATION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Number", "MaxMhz", "CurrentMhz", "MhzLimit", "MaxIdleState", "CurrentIdleState");
+        }
+
         public int Number;
         public int MaxMhz;
         public int CurrentMhz;
@@ -1830,8 +1972,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "MaxIdlenessAllowed", "Idleness", "TimeRemaining", "CoolingMode" })
     class SYSTEM_POWER_INFORMATION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("MaxIdlenessAllowed", "Idleness", "TimeRemaining", "CoolingMode");
+        }
+
         public int MaxIdlenessAllowed;
         public int Idleness;
         public int TimeRemaining;
@@ -1847,15 +1993,23 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "Action", "Flags", "EventCode" })
     class POWER_ACTION_POLICY extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Action", "Flags", "EventCode");
+        }
+
         public int /* POWER_ACTION */ Action;
         public int Flags;
         public int EventCode;
     }
 
-    @FieldOrder({ "Enable", "Spare", "BatteryLevel", "PowerPolicy", "MinSystemState" })
     class SYSTEM_POWER_LEVEL extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Enable", "Spare", "BatteryLevel", "PowerPolicy", "MinSystemState");
+        }
+
         public byte Enable;
         public byte[] Spare = new byte[3];
         public int BatteryLevel;
@@ -1865,12 +2019,16 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
     int NUM_DISCHARGE_POLICIES = 4;
 
-    @FieldOrder({ "Revision", "PowerButton", "SleepButton", "LidClose", "LidOpenWake", "Reserved", "Idle",
-            "IdleTimeout", "IdleSensitivity", "DynamicThrottle", "Spare2", "MinSleep", "MaxSleep",
-            "ReducedLatencySleep", "WinLogonFlags", "Spare3", "DozeS4Timeout", "BroadcastCapacityResolution",
-            "DischargePolicy", "VideoTimeout", "VideoDimDisplay", "VideoReserved", "SpindownTimeout",
-            "OptimizeForPower", "FanThrottleTolerance", "ForcedThrottle", "MinThrottle", "OverThrottled" })
     class SYSTEM_POWER_POLICY extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Revision", "PowerButton", "SleepButton", "LidClose", "LidOpenWake", "Reserved", "Idle",
+                    "IdleTimeout", "IdleSensitivity", "DynamicThrottle", "Spare2", "MinSleep", "MaxSleep",
+                    "ReducedLatencySleep", "WinLogonFlags", "Spare3", "DozeS4Timeout", "BroadcastCapacityResolution",
+                    "DischargePolicy", "VideoTimeout", "VideoDimDisplay", "VideoReserved", "SpindownTimeout",
+                    "OptimizeForPower", "FanThrottleTolerance", "ForcedThrottle", "MinThrottle", "OverThrottled");
+        }
+
         public int Revision;
         public POWER_ACTION_POLICY PowerButton;
         public POWER_ACTION_POLICY SleepButton;
@@ -1910,14 +2068,17 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         }
     }
 
-    @FieldOrder({ "PowerButtonPresent", "SleepButtonPresent", "LidPresent", "SystemS1", "SystemS2", "SystemS3",
-            "SystemS4", "SystemS5", "HiberFilePresent", "FullWake", "VideoDimPresent", "ApmPresent", "UpsPresent",
-            "ThermalControl", "ProcessorThrottle", "ProcessorMinThrottle", "ProcessorMaxThrottle", "FastSystemS4",
-            "Hiberboot", "WakeAlarmPresent", "AoAc", "DiskSpinDown", "HiberFileType", "AoAcConnectivitySupported",
-            "spare3", "SystemBatteriesPresent", "BatteriesAreShortTerm", "BatteryScale", "AcOnLineWake", "SoftLidWake",
-            "RtcWake", "MinDeviceWakeState", "DefaultLowLatencyWake" })
     class SYSTEM_POWER_CAPABILITIES extends Structure {
-        // Misc supported system features
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("PowerButtonPresent", "SleepButtonPresent", "LidPresent", "SystemS1", "SystemS2", "SystemS3",
+                    "SystemS4", "SystemS5", "HiberFilePresent", "FullWake", "VideoDimPresent", "ApmPresent", "UpsPresent",
+                    "ThermalControl", "ProcessorThrottle", "ProcessorMinThrottle", "ProcessorMaxThrottle", "FastSystemS4",
+                    "Hiberboot", "WakeAlarmPresent", "AoAc", "DiskSpinDown", "HiberFileType", "AoAcConnectivitySupported",
+                    "spare3", "SystemBatteriesPresent", "BatteriesAreShortTerm", "BatteryScale", "AcOnLineWake", "SoftLidWake",
+                    "RtcWake", "MinDeviceWakeState", "DefaultLowLatencyWake");
+        }
+
         public byte PowerButtonPresent;
         public byte SleepButtonPresent;
         public byte LidPresent;
@@ -1932,33 +2093,22 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         public byte ApmPresent;
         public byte UpsPresent;
 
-        // Processors
         public byte ThermalControl;
         public byte ProcessorThrottle;
         public byte ProcessorMinThrottle;
 
-        // Prior to WinXP, next 5 bytes are ProcessorThrottleScale
-        // followed by 4 spare bytes
         public byte ProcessorMaxThrottle;
         public byte FastSystemS4;
         public byte Hiberboot;
         public byte WakeAlarmPresent;
         public byte AoAc;
-
-        // Disk
         public byte DiskSpinDown;
-
-        // HiberFile (Pre-Win10 next 2 bytes are spare)
         public byte HiberFileType;
         public byte AoAcConnectivitySupported;
         public byte[] spare3 = new byte[6];
-
-        // System Battery
         public byte SystemBatteriesPresent;
         public byte BatteriesAreShortTerm;
         public BATTERY_REPORTING_SCALE[] BatteryScale = new BATTERY_REPORTING_SCALE[3];
-
-        // Wake
         public int /* SYSTEM_POWER_STATE */ AcOnLineWake;
         public int /* SYSTEM_POWER_STATE */ SoftLidWake;
         public int /* SYSTEM_POWER_STATE */ RtcWake;
@@ -1991,9 +2141,13 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
     int MEM_DECOMMIT = 0x4000;
     int MEM_RELEASE = 0x8000;
 
-    @FieldOrder({"baseAddress", "allocationBase", "allocationProtect",
-            "regionSize", "state", "protect", "type"})
     public static class MEMORY_BASIC_INFORMATION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("baseAddress", "allocationBase", "allocationProtect",
+                    "regionSize", "state", "protect", "type");
+        }
+
         public Pointer baseAddress;
         public Pointer allocationBase;
         public DWORD allocationProtect;
@@ -2003,8 +2157,12 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
         public DWORD type;
     }
 
-    @FieldOrder({"Length", "ImpersonationLevel", "ContextTrackingMode", "EffectiveOnly"})
     public class SECURITY_QUALITY_OF_SERVICE extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Length", "ImpersonationLevel", "ContextTrackingMode", "EffectiveOnly");
+        }
+
         public int Length;
         public int ImpersonationLevel;
         public byte ContextTrackingMode;
@@ -2268,10 +2426,14 @@ public interface WinNT extends WinError, WinDef, WinBase, BaseTSD {
 
     public static final LCID LOCALE_INVARIANT      = LocaleMacros.MAKELCID(LocaleMacros.MAKELANGID(LANG_INVARIANT, SUBLANG_NEUTRAL), SORT_DEFAULT);
 
-    @FieldOrder({"ReadOperationCount", "WriteOperationCount",
-            "OtherOperationCount", "ReadTransferCount", "WriteTransferCount",
-            "OtherTransferCount"})
     public static class IO_COUNTERS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ReadOperationCount", "WriteOperationCount",
+                    "OtherOperationCount", "ReadTransferCount", "WriteTransferCount",
+                    "OtherTransferCount");
+        }
+
         public long ReadOperationCount;
         public long WriteOperationCount;
         public long OtherOperationCount;

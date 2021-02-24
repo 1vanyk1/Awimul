@@ -9,8 +9,9 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.W32APIOptions;
 import com.vantacom.aarm.libraries.jna.WinGDI.ICONINFO;
 
+@SuppressWarnings("serial")
 public interface User32 extends Library, WinUser, WinNT {
-    User32 INSTANCE = Native.load("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/user32.dll.so", User32.class, W32APIOptions.DEFAULT_OPTIONS);
+    User32 INSTANCE = Native.loadLibrary("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/user32.dll.so", User32.class, W32APIOptions.UNICODE_OPTIONS);
     HWND HWND_MESSAGE = new HWND(Pointer.createConstant(-3));
     int CS_GLOBALCLASS = 0x4000;
     int WS_EX_TOPMOST = 0x00000008;

@@ -1,15 +1,16 @@
 package com.vantacom.aarm.libraries.jna;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.Union;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.win32.StdCallLibrary.StdCallCallback;
@@ -111,9 +112,7 @@ public interface WinBase extends WinDef, BaseTSD {
     int FileIdExtdDirectoryInfo         = 19; // 0x13
     int FileIdExtdDirectoryRestartInfo  = 20; // 0x14
 
-    @FieldOrder({"CreationTime", "LastAccessTime", "LastWriteTime", "ChangeTime", "FileAttributes"})
     public static class FILE_BASIC_INFO extends Structure {
-
         public static class ByReference extends FILE_BASIC_INFO implements Structure.ByReference {
             public ByReference() {
             }
@@ -121,6 +120,11 @@ public interface WinBase extends WinDef, BaseTSD {
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("CreationTime", "LastAccessTime", "LastWriteTime", "ChangeTime", "FileAttributes");
         }
 
         public WinNT.LARGE_INTEGER CreationTime;
@@ -174,7 +178,6 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"AllocationSize", "EndOfFile", "NumberOfLinks", "DeletePending", "Directory"})
     public static class FILE_STANDARD_INFO extends Structure {
         public static class ByReference extends FILE_STANDARD_INFO implements Structure.ByReference {
             public ByReference() {
@@ -183,6 +186,11 @@ public interface WinBase extends WinDef, BaseTSD {
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("AllocationSize", "EndOfFile", "NumberOfLinks", "DeletePending", "Directory");
         }
 
         public WinNT.LARGE_INTEGER AllocationSize;
@@ -219,16 +227,18 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"DeleteFile"})
     public static class FILE_DISPOSITION_INFO extends Structure {
-
         public static class ByReference extends FILE_DISPOSITION_INFO  implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("DeleteFile");
         }
 
         public boolean DeleteFile;
@@ -253,16 +263,18 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"CompressedFileSize", "CompressionFormat", "CompressionUnitShift", "ChunkShift", "ClusterShift", "Reserved"})
     public static class FILE_COMPRESSION_INFO extends Structure {
-
         public static class ByReference extends FILE_COMPRESSION_INFO implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("CompressedFileSize", "CompressionFormat", "CompressionUnitShift", "ChunkShift", "ClusterShift", "Reserved");
         }
 
         public WinNT.LARGE_INTEGER CompressedFileSize;
@@ -301,16 +313,18 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"FileAttributes", "ReparseTag"})
     public static class FILE_ATTRIBUTE_TAG_INFO extends Structure {
-
         public static class ByReference extends FILE_ATTRIBUTE_TAG_INFO implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("FileAttributes", "ReparseTag");
         }
 
         public int FileAttributes;
@@ -338,19 +352,20 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"VolumeSerialNumber", "FileId"})
     public static class FILE_ID_INFO extends Structure {
-
         public static class ByReference extends FILE_ID_INFO implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
         }
 
-        @FieldOrder({"Identifier"})
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("VolumeSerialNumber", "FileId");
+        }
+
         public static class FILE_ID_128 extends Structure {
             public BYTE[] Identifier = new BYTE[16];
 
@@ -366,6 +381,11 @@ public interface WinBase extends WinDef, BaseTSD {
             public FILE_ID_128(BYTE[] Identifier) {
                 this.Identifier = Identifier;
                 write();
+            }
+
+            @Override
+            protected List<String> getFieldOrder() {
+                return Arrays.asList("Identifier");
             }
         }
 
@@ -401,16 +421,18 @@ public interface WinBase extends WinDef, BaseTSD {
     int FindExSearchLimitToDirectories = 1;
     int FindExSearchLimitToDevices = 2;
 
-    @FieldOrder({"dwFileAttributes", "ftCreationTime", "ftLastAccessTime", "ftLastWriteTime", "nFileSizeHigh", "nFileSizeLow", "dwReserved0", "dwReserved1", "cFileName", "cAlternateFileName"})
     public static class WIN32_FIND_DATA extends Structure {
-
         public static class ByReference extends WIN32_FIND_DATA implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwFileAttributes", "ftCreationTime", "ftLastAccessTime", "ftLastWriteTime", "nFileSizeHigh", "nFileSizeLow", "dwReserved0", "dwReserved1", "cFileName", "cAlternateFileName");
         }
 
         public int dwFileAttributes;
@@ -468,18 +490,21 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"dwLowDateTime", "dwHighDateTime"})
     public static class FILETIME extends Structure {
         public int dwLowDateTime;
         public int dwHighDateTime;
 
         public static class ByReference extends FILETIME implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwLowDateTime", "dwHighDateTime");
         }
 
         public FILETIME(Date date) {
@@ -550,7 +575,6 @@ public interface WinBase extends WinDef, BaseTSD {
     int  LMEM_DISCARDED = 0x4000;
     int  LMEM_LOCKCOUNT = 0x00FF;
 
-    @FieldOrder({"wYear", "wMonth", "wDayOfWeek", "wDay", "wHour", "wMinute", "wSecond", "wMilliseconds"})
     public static class SYSTEMTIME extends Structure {
         public short wYear;
         public short wMonth;
@@ -560,6 +584,11 @@ public interface WinBase extends WinDef, BaseTSD {
         public short wMinute;
         public short wSecond;
         public short wMilliseconds;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("wYear", "wMonth", "wDayOfWeek", "wDay", "wHour", "wMinute", "wSecond", "wMilliseconds");
+        }
 
         public SYSTEMTIME() {
             super();
@@ -616,7 +645,6 @@ public interface WinBase extends WinDef, BaseTSD {
         }
     }
 
-    @FieldOrder({"Bias", "StandardName", "StandardDate", "StandardBias", "DaylightName", "DaylightDate", "DaylightBias"})
     public static class TIME_ZONE_INFORMATION extends Structure {
         public LONG       Bias;
         public String      StandardName;
@@ -625,6 +653,11 @@ public interface WinBase extends WinDef, BaseTSD {
         public String      DaylightName;
         public SYSTEMTIME DaylightDate;
         public LONG       DaylightBias;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Bias", "StandardName", "StandardDate", "StandardBias", "DaylightName", "DaylightDate", "DaylightBias");
+        }
 
         public TIME_ZONE_INFORMATION() {
             super(W32APITypeMapper.DEFAULT);
@@ -646,28 +679,37 @@ public interface WinBase extends WinDef, BaseTSD {
     int DRIVE_CDROM = 5;
     int DRIVE_RAMDISK = 6;
 
-    @FieldOrder({"Internal", "InternalHigh", "Offset", "OffsetHigh", "hEvent"})
     public static class OVERLAPPED extends Structure {
         public ULONG_PTR Internal;
         public ULONG_PTR InternalHigh;
         public int Offset;
         public int OffsetHigh;
         public WinNT.HANDLE hEvent;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Internal", "InternalHigh", "Offset", "OffsetHigh", "hEvent");
+        }
     }
 
     int INFINITE = 0xFFFFFFFF;
 
-    @FieldOrder({"processorArchitecture", "dwPageSize", "lpMinimumApplicationAddress", "lpMaximumApplicationAddress", "dwActiveProcessorMask", "dwNumberOfProcessors", "dwProcessorType", "dwAllocationGranularity", "wProcessorLevel", "wProcessorRevision"})
     public static class SYSTEM_INFO extends Structure {
-        @FieldOrder({"wProcessorArchitecture", "wReserved"})
         public static class PI extends Structure {
-
-            public static class ByReference extends PI implements Structure.ByReference {
-
-            }
+            public static class ByReference extends PI implements Structure.ByReference {}
 
             public WORD wProcessorArchitecture;
             public WORD wReserved;
+
+            @Override
+            protected List<String> getFieldOrder() {
+                return Arrays.asList("wProcessorArchitecture", "wReserved");
+            }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("processorArchitecture", "dwPageSize", "lpMinimumApplicationAddress", "lpMaximumApplicationAddress", "dwActiveProcessorMask", "dwNumberOfProcessors", "dwProcessorType", "dwAllocationGranularity", "wProcessorLevel", "wProcessorRevision");
         }
 
         public static class UNION extends Union {
@@ -700,7 +742,6 @@ public interface WinBase extends WinDef, BaseTSD {
         public WORD wProcessorRevision;
     }
 
-    @FieldOrder({"dwLength", "dwMemoryLoad", "ullTotalPhys", "ullAvailPhys", "ullTotalPageFile", "ullAvailPageFile", "ullTotalVirtual", "ullAvailVirtual", "ullAvailExtendedVirtual"})
     public static class MEMORYSTATUSEX extends Structure {
         public DWORD dwLength;
         public DWORD dwMemoryLoad;
@@ -712,23 +753,31 @@ public interface WinBase extends WinDef, BaseTSD {
         public DWORDLONG ullAvailVirtual;
         public DWORDLONG ullAvailExtendedVirtual;
 
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwLength", "dwMemoryLoad", "ullTotalPhys", "ullAvailPhys", "ullTotalPageFile", "ullAvailPageFile", "ullTotalVirtual", "ullAvailVirtual", "ullAvailExtendedVirtual");
+        }
+
         public MEMORYSTATUSEX() {
             dwLength = new DWORD(size());
         }
-    };
+    }
 
-    @FieldOrder({"dwLength", "lpSecurityDescriptor", "bInheritHandle"})
     public static class SECURITY_ATTRIBUTES extends Structure {
         public DWORD dwLength;
         public Pointer lpSecurityDescriptor;
         public boolean bInheritHandle;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwLength", "lpSecurityDescriptor", "bInheritHandle");
+        }
 
         public SECURITY_ATTRIBUTES() {
             dwLength = new DWORD(size());
         }
     }
 
-    @FieldOrder({"cb", "lpReserved", "lpDesktop", "lpTitle", "dwX", "dwY", "dwXSize", "dwYSize", "dwXCountChars", "dwYCountChars", "dwFillAttribute", "dwFlags", "wShowWindow", "cbReserved2", "lpReserved2", "hStdInput", "hStdOutput", "hStdError"})
     public static class STARTUPINFO extends Structure {
         public DWORD cb;
         public String lpReserved;
@@ -749,13 +798,17 @@ public interface WinBase extends WinDef, BaseTSD {
         public WinNT.HANDLE hStdOutput;
         public WinNT.HANDLE hStdError;
 
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cb", "lpReserved", "lpDesktop", "lpTitle", "dwX", "dwY", "dwXSize", "dwYSize", "dwXCountChars", "dwYCountChars", "dwFillAttribute", "dwFlags", "wShowWindow", "cbReserved2", "lpReserved2", "hStdInput", "hStdOutput", "hStdError");
+        }
+
         public STARTUPINFO() {
             super(W32APITypeMapper.DEFAULT);
             cb = new DWORD(size());
         }
     }
 
-    @FieldOrder({"hProcess", "hThread", "dwProcessId", "dwThreadId"})
     public static class PROCESS_INFORMATION extends Structure {
         public WinNT.HANDLE hProcess;
         public WinNT.HANDLE hThread;
@@ -763,12 +816,16 @@ public interface WinBase extends WinDef, BaseTSD {
         public DWORD dwThreadId;
 
         public static class ByReference extends PROCESS_INFORMATION implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("hProcess", "hThread", "dwProcessId", "dwThreadId");
         }
 
         public PROCESS_INFORMATION() {
@@ -791,9 +848,13 @@ public interface WinBase extends WinDef, BaseTSD {
         public DWORD apply( LPVOID lpParameter );
     }
 
-    @FieldOrder({"foreignLocation"})
     public class FOREIGN_THREAD_START_ROUTINE extends Structure {
         public LPVOID foreignLocation;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("foreignLocation");
+        }
     }
 
     public static interface COMPUTER_NAME_FORMAT {
@@ -842,21 +903,29 @@ public interface WinBase extends WinDef, BaseTSD {
     int NMPWAIT_NOWAIT=0x00000001;
     int NMPWAIT_WAIT_FOREVER=0xffffffff;
 
-    @FieldOrder({"ReadIntervalTimeout", "ReadTotalTimeoutMultiplier",
-            "ReadTotalTimeoutConstant", "WriteTotalTimeoutMultiplier",
-            "WriteTotalTimeoutConstant"})
     public static class COMMTIMEOUTS extends Structure {
         public DWORD ReadIntervalTimeout;
         public DWORD ReadTotalTimeoutMultiplier;
         public DWORD ReadTotalTimeoutConstant;
         public DWORD WriteTotalTimeoutMultiplier;
         public DWORD WriteTotalTimeoutConstant;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ReadIntervalTimeout", "ReadTotalTimeoutMultiplier",
+                    "ReadTotalTimeoutConstant", "WriteTotalTimeoutMultiplier",
+                    "WriteTotalTimeoutConstant");
+        }
     }
 
-    @FieldOrder({"DCBlength", "BaudRate", "controllBits", "wReserved", "XonLim",
-            "XoffLim", "ByteSize", "Parity", "StopBits", "XonChar", "XoffChar",
-            "ErrorChar", "EofChar", "EvtChar", "wReserved1"})
     public static class DCB extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("DCBlength", "BaudRate", "controllBits", "wReserved", "XonLim",
+                    "XoffLim", "ByteSize", "Parity", "StopBits", "XonChar", "XoffChar",
+                    "ErrorChar", "EofChar", "EvtChar", "wReserved1");
+        }
+
         public static class DCBControllBits extends DWORD {
             private static final long serialVersionUID = 8574966619718078579L;
 

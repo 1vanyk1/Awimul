@@ -5,6 +5,9 @@ import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface Tlhelp32 {
     WinDef.DWORD TH32CS_SNAPHEAPLIST = new WinDef.DWORD(0x00000001);
     WinDef.DWORD TH32CS_SNAPPROCESS  = new WinDef.DWORD(0x00000002);
@@ -18,9 +21,6 @@ public interface Tlhelp32 {
 
     int MAX_MODULE_NAME32 = 255;
 
-    @Structure.FieldOrder({"dwSize", "cntUsage", "th32ProcessID", "th32DefaultHeapID",
-            "th32ModuleID", "cntThreads", "th32ParentProcessID", "pcPriClassBase",
-            "dwFlags", "szExeFile"})
     public static class PROCESSENTRY32 extends Structure {
         public static class ByReference extends PROCESSENTRY32 implements Structure.ByReference {
             public ByReference() {
@@ -29,6 +29,13 @@ public interface Tlhelp32 {
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize", "cntUsage", "th32ProcessID", "th32DefaultHeapID",
+                    "th32ModuleID", "cntThreads", "th32ParentProcessID", "pcPriClassBase",
+                    "dwFlags", "szExeFile");
         }
 
         public WinDef.DWORD dwSize;
@@ -52,7 +59,6 @@ public interface Tlhelp32 {
         }
     }
 
-    @Structure.FieldOrder({ "dwSize", "cntUsage", "th32ThreadID", "th32OwnerProcessID", "tpBasePri", "tpDeltaPri", "dwFlags" })
     public static class THREADENTRY32 extends Structure {
         public static class ByReference extends THREADENTRY32 implements Structure.ByReference {
             public ByReference() {
@@ -61,6 +67,11 @@ public interface Tlhelp32 {
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize", "cntUsage", "th32ThreadID", "th32OwnerProcessID", "tpBasePri", "tpDeltaPri", "dwFlags");
         }
 
         public int dwSize;
@@ -81,9 +92,6 @@ public interface Tlhelp32 {
         }
     }
 
-    @Structure.FieldOrder({"dwSize", "th32ModuleID", "th32ProcessID", "GlblcntUsage",
-            "ProccntUsage", "modBaseAddr", "modBaseSize", "hModule",
-            "szModule", "szExePath"})
     public class MODULEENTRY32W extends Structure {
         public static class ByReference extends MODULEENTRY32W implements Structure.ByReference {
             public ByReference() {
@@ -92,6 +100,13 @@ public interface Tlhelp32 {
             public ByReference(Pointer memory) {
                 super(memory);
             }
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize", "th32ModuleID", "th32ProcessID", "GlblcntUsage",
+                    "ProccntUsage", "modBaseAddr", "modBaseSize", "hModule",
+                    "szModule", "szExePath");
         }
 
         public WinDef.DWORD dwSize;

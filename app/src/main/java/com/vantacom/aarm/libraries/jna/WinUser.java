@@ -4,11 +4,13 @@ import com.sun.jna.Callback;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.Union;
 import com.sun.jna.win32.StdCallLibrary.StdCallCallback;
 import com.vantacom.aarm.libraries.jna.BaseTSD.ULONG_PTR;
 import com.vantacom.aarm.libraries.jna.WinNT.HANDLE;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static com.sun.jna.win32.W32APITypeMapper.DEFAULT;
 
@@ -50,9 +52,13 @@ public interface WinUser extends WinDef {
     int LR_COPYFROMRESOURCE = 0x4000;
     int LR_SHARED = 0x8000;
 
-    @FieldOrder({"cbSize", "flags", "hwndActive", "hwndFocus", "hwndCapture",
-            "hwndMenuOwner", "hwndMoveSize", "hwndCaret", "rcCaret"})
     public class GUITHREADINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "flags", "hwndActive", "hwndFocus", "hwndCapture",
+                    "hwndMenuOwner", "hwndMoveSize", "hwndCaret", "rcCaret");
+        }
+
         public int cbSize = size();
         public int flags;
         public HWND hwndActive;
@@ -64,10 +70,14 @@ public interface WinUser extends WinDef {
         public RECT rcCaret;
     }
 
-    @FieldOrder({"cbSize", "rcWindow", "rcClient", "dwStyle", "dwExStyle",
-            "dwWindowStatus", "cxWindowBorders", "cyWindowBorders", "atomWindowType",
-            "wCreatorVersion"})
     public class WINDOWINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "rcWindow", "rcClient", "dwStyle", "dwExStyle",
+                    "dwWindowStatus", "cxWindowBorders", "cyWindowBorders", "atomWindowType",
+                    "wCreatorVersion");
+        }
+
         public int cbSize = size();
         public RECT rcWindow;
         public RECT rcClient;
@@ -80,8 +90,12 @@ public interface WinUser extends WinDef {
         public short wCreatorVersion;
     }
 
-    @FieldOrder({"length","flags","showCmd","ptMinPosition","ptMaxPosition", "rcNormalPosition"})
     public class WINDOWPLACEMENT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("length","flags","showCmd","ptMinPosition","ptMaxPosition", "rcNormalPosition");
+        }
+
         public static final int WPF_SETMINPOSITION = 0x1;
         public static final int WPF_RESTORETOMAXIMIZED = 0x2;
         public static final int WPF_ASYNCWINDOWPLACEMENT = 0x4;
@@ -145,8 +159,12 @@ public interface WinUser extends WinDef {
     int ULW_ALPHA = 2;
     int ULW_OPAQUE = 4;
 
-    @FieldOrder({"hWnd", "message", "wParam", "lParam", "time", "pt"})
     public class MSG extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("hWnd", "message", "wParam", "lParam", "time", "pt");
+        }
+
         public HWND hWnd;
         public int message;
         public WPARAM wParam;
@@ -155,8 +173,12 @@ public interface WinUser extends WinDef {
         public POINT pt;
     }
 
-    @FieldOrder({"dwData", "cbData", "lpData"})
     public class COPYDATASTRUCT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwData", "cbData", "lpData");
+        }
+
         public COPYDATASTRUCT() {
             super();
         }
@@ -171,8 +193,12 @@ public interface WinUser extends WinDef {
         public Pointer lpData;
     }
 
-    @FieldOrder({"cbSize", "hWnd", "dwFlags", "uCount", "dwTimeout"})
     public class FLASHWINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "hWnd", "dwFlags", "uCount", "dwTimeout");
+        }
+
         public int cbSize = size();
         public HANDLE hWnd;
         public int dwFlags;
@@ -197,8 +223,12 @@ public interface WinUser extends WinDef {
                       DWORD dwmsEventTime);
     }
 
-    @FieldOrder({"cx", "cy"})
     public class SIZE extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cx", "cy");
+        }
+
         public int cx, cy;
 
         public SIZE() {}
@@ -214,8 +244,12 @@ public interface WinUser extends WinDef {
     int AC_SRC_NO_PREMULT_ALPHA = 0x01;
     int AC_SRC_NO_ALPHA = 0x02;
 
-    @FieldOrder({"BlendOp", "BlendFlags", "SourceConstantAlpha", "AlphaFormat"})
     public class BLENDFUNCTION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("BlendOp", "BlendFlags", "SourceConstantAlpha", "AlphaFormat");
+        }
+
         public byte BlendOp = AC_SRC_OVER;
         public byte BlendFlags = 0;
         public byte SourceConstantAlpha;
@@ -248,8 +282,12 @@ public interface WinUser extends WinDef {
 
     public interface HOOKPROC extends StdCallCallback {}
 
-    @FieldOrder({"lParam", "wParam", "message", "hwnd"})
     public class CWPSTRUCT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("lParam", "wParam", "message", "hwnd");
+        }
+
         public CWPSTRUCT() {
             super();
         }
@@ -294,8 +332,12 @@ public interface WinUser extends WinDef {
     int ICON_SMALL = 0;
     int ICON_SMALL2 = 2;
 
-    @FieldOrder({"pt", "mouseData", "flags", "time", "dwExtraInfo"})
     public class MSLLHOOKSTRUCT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("pt", "mouseData", "flags", "time", "dwExtraInfo");
+        }
+
         public POINT pt;
         public int mouseData;
         public int flags;
@@ -303,8 +345,12 @@ public interface WinUser extends WinDef {
         public ULONG_PTR dwExtraInfo;
     }
 
-    @FieldOrder({"vkCode", "scanCode", "flags", "time", "dwExtraInfo"})
     public class KBDLLHOOKSTRUCT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("vkCode", "scanCode", "flags", "time", "dwExtraInfo");
+        }
+
         public int vkCode;
         public int scanCode;
         public int flags;
@@ -479,8 +525,12 @@ public interface WinUser extends WinDef {
     int BS_TYPEMASK                    = 0x0000000F;
     int BS_LEFTTEXT                    = 0x00000020;
 
-    @FieldOrder({"uMsg", "wParamL", "wParamH"})
     public static class HARDWAREINPUT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("uMsg", "wParamL", "wParamH");
+        }
+
         public static class ByReference extends HARDWAREINPUT implements Structure.ByReference {
             public ByReference() {}
 
@@ -501,8 +551,12 @@ public interface WinUser extends WinDef {
         public WORD wParamH;
     }
 
-    @FieldOrder({"type", "input"})
     public static class INPUT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("type", "input");
+        }
+
         public static final int INPUT_MOUSE = 0;
         public static final int INPUT_KEYBOARD = 1;
         public static final int INPUT_HARDWARE = 2;
@@ -539,8 +593,12 @@ public interface WinUser extends WinDef {
         }
     }
 
-    @FieldOrder({"wVk", "wScan", "dwFlags", "time", "dwExtraInfo"})
     public static class KEYBDINPUT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("wVk", "wScan", "dwFlags", "time", "dwExtraInfo");
+        }
+
         public static final int KEYEVENTF_EXTENDEDKEY = 0x0001;
         public static final int KEYEVENTF_KEYUP = 0x0002;
         public static final int KEYEVENTF_UNICODE = 0x0004;
@@ -569,20 +627,21 @@ public interface WinUser extends WinDef {
         public ULONG_PTR dwExtraInfo;
     }
 
-    @FieldOrder({"dx", "dy", "mouseData", "dwFlags", "time", "dwExtraInfo"})
     public static class MOUSEINPUT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dx", "dy", "mouseData", "dwFlags", "time", "dwExtraInfo");
+        }
 
         public static class ByReference extends MOUSEINPUT implements Structure.ByReference {
-            public ByReference() {
-            }
+            public ByReference() {}
 
             public ByReference(Pointer memory) {
                 super(memory);
             }
         }
 
-        public MOUSEINPUT() {
-        }
+        public MOUSEINPUT() {}
 
         public MOUSEINPUT(Pointer memory) {
             super(memory);
@@ -597,16 +656,24 @@ public interface WinUser extends WinDef {
         public ULONG_PTR dwExtraInfo;
     }
 
-    @FieldOrder({"cbSize", "dwTime"})
     public static class LASTINPUTINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "dwTime");
+        }
+
         public int cbSize = size();
         public int dwTime;
     }
 
-    @FieldOrder({"cbSize", "style", "lpfnWndProc", "cbClsExtra", "cbWndExtra",
-            "hInstance", "hIcon", "hCursor", "hbrBackground", "lpszMenuName",
-            "lpszClassName", "hIconSm"})
     public class WNDCLASSEX extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "style", "lpfnWndProc", "cbClsExtra", "cbWndExtra",
+                    "hInstance", "hIcon", "hCursor", "hbrBackground", "lpszMenuName",
+                    "lpszClassName", "hIconSm");
+        }
+
         public static class ByReference extends WNDCLASSEX implements
                 Structure.ByReference {
         }
@@ -653,16 +720,24 @@ public interface WinUser extends WinDef {
     final int MONITORINFOF_PRIMARY =         0x00000001;
     final int CCHDEVICENAME =  32;
 
-    @FieldOrder({"cbSize", "rcMonitor", "rcWork", "dwFlags"})
     public class MONITORINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "rcMonitor", "rcWork", "dwFlags");
+        }
+
         public int     cbSize = size();
         public RECT    rcMonitor;
         public RECT    rcWork;
         public int     dwFlags;
     }
 
-    @FieldOrder({"cbSize", "rcMonitor", "rcWork", "dwFlags", "szDevice"})
     public class MONITORINFOEX extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("cbSize", "rcMonitor", "rcWork", "dwFlags", "szDevice");
+        }
+
         public int     cbSize;
         public RECT    rcMonitor;
         public RECT    rcWork;
@@ -733,8 +808,12 @@ public interface WinUser extends WinDef {
     int RIM_TYPEKEYBOARD = 1;
     int RIM_TYPEHID = 2;
 
-    @FieldOrder({"hDevice", "dwType"})
     public class RAWINPUTDEVICELIST extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("hDevice", "dwType");
+        }
+
         public HANDLE hDevice;
         public int dwType;
 

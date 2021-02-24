@@ -3,15 +3,21 @@ package com.vantacom.aarm.libraries.jna;
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.win32.StdCallLibrary;
 import com.sun.jna.win32.W32APITypeMapper;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface Winsvc {
-    @FieldOrder({"dwServiceType", "dwCurrentState", "dwControlsAccepted",
-            "dwWin32ExitCode", "dwServiceSpecificExitCode", "dwCheckPoint",
-            "dwWaitHint"})
     public static class SERVICE_STATUS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwServiceType", "dwCurrentState", "dwControlsAccepted",
+                    "dwWin32ExitCode", "dwServiceSpecificExitCode", "dwCheckPoint",
+                    "dwWaitHint");
+        }
+
         public int dwServiceType;
         public int dwCurrentState;
         public int dwControlsAccepted;
@@ -25,10 +31,14 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"dwServiceType", "dwCurrentState", "dwControlsAccepted",
-            "dwWin32ExitCode", "dwServiceSpecificExitCode",
-            "dwCheckPoint", "dwWaitHint", "dwProcessId", "dwServiceFlags"})
     public class SERVICE_STATUS_PROCESS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwServiceType", "dwCurrentState", "dwControlsAccepted",
+                    "dwWin32ExitCode", "dwServiceSpecificExitCode",
+                    "dwCheckPoint", "dwWaitHint", "dwProcessId", "dwServiceFlags");
+        }
+
         public int   dwServiceType;
         public int   dwCurrentState;
         public int   dwControlsAccepted;
@@ -58,9 +68,14 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"dwResetPeriod", "lpRebootMsg", "lpCommand", "cActions", "lpsaActions"})
     public class SERVICE_FAILURE_ACTIONS extends ChangeServiceConfig2Info {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwResetPeriod", "lpRebootMsg", "lpCommand", "cActions", "lpsaActions");
+        }
+
         public static class ByReference extends SERVICE_FAILURE_ACTIONS implements Structure.ByReference {}
+
         public int dwResetPeriod;
         public String lpRebootMsg;
         public String lpCommand;
@@ -77,15 +92,24 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"type", "delay"})
     public class SC_ACTION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("type", "delay");
+        }
+
         public static class ByReference extends SC_ACTION implements Structure.ByReference {}
+
         public int type;
         public int delay;
     }
 
-    @FieldOrder({"fFailureActionsOnNonCrashFailures"})
     public class SERVICE_FAILURE_ACTIONS_FLAG extends ChangeServiceConfig2Info {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("fFailureActionsOnNonCrashFailures");
+        }
+
         public int fFailureActionsOnNonCrashFailures;
 
         public SERVICE_FAILURE_ACTIONS_FLAG() {
@@ -213,8 +237,12 @@ public interface Winsvc {
                             Pointer lpEventData, Pointer lpContext);
     }
 
-    @FieldOrder({"lpServiceName", "lpServiceProc"})
     public static class SERVICE_TABLE_ENTRY extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("lpServiceName", "lpServiceProc");
+        }
+
         public String lpServiceName;
         public SERVICE_MAIN_FUNCTION lpServiceProc;
 
@@ -223,8 +251,12 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"lpDescription"})
     public static class SERVICE_DESCRIPTION extends ChangeServiceConfig2Info {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("lpDescription");
+        }
+
         public String lpDescription;
     }
 
@@ -238,8 +270,12 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"lpServiceName", "lpDisplayName", "ServiceStatus"})
     public static class ENUM_SERVICE_STATUS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("lpServiceName", "lpDisplayName", "ServiceStatus");
+        }
+
         public String lpServiceName;
         public String lpDisplayName;
         public SERVICE_STATUS ServiceStatus;
@@ -249,8 +285,12 @@ public interface Winsvc {
         }
     }
 
-    @FieldOrder({"lpServiceName", "lpDisplayName", "ServiceStatusProcess"})
     public static class ENUM_SERVICE_STATUS_PROCESS extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("lpServiceName", "lpDisplayName", "ServiceStatusProcess");
+        }
+
         public String lpServiceName;
         public String lpDisplayName;
         public SERVICE_STATUS_PROCESS ServiceStatusProcess;

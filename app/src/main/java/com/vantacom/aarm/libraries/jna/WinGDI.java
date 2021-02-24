@@ -3,16 +3,22 @@ package com.vantacom.aarm.libraries.jna;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.vantacom.aarm.libraries.jna.WinDef.HBITMAP;
 import com.vantacom.aarm.libraries.jna.WinDef.RECT;
 import com.vantacom.aarm.libraries.jna.WinNT.HANDLE;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface WinGDI {
     int RDH_RECTANGLES = 1;
 
-    @FieldOrder({"dwSize", "iType", "nCount", "nRgnSize", "rcBound"})
     class RGNDATAHEADER extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize", "iType", "nCount", "nRgnSize", "rcBound");
+        }
+
         public int dwSize = size();
         public int iType = RDH_RECTANGLES;
         public int nCount;
@@ -20,14 +26,19 @@ public interface WinGDI {
         public RECT rcBound;
     }
 
-    @FieldOrder({"rdh", "Buffer"})
     class RGNDATA extends Structure {
         public RGNDATAHEADER rdh;
         public byte[] Buffer;
 
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("rdh", "Buffer");
+        }
+
         public RGNDATA() {
             this(1);
         }
+
         public RGNDATA(int bufferSize) {
             Buffer = new byte[bufferSize];
             allocateMemory();
@@ -79,10 +90,14 @@ public interface WinGDI {
     int PFD_GENERIC_ACCELERATED = 0x00001000;
     int PFD_SUPPORT_DIRECTDRAW = 0x00002000;
 
-    @FieldOrder({"biSize", "biWidth", "biHeight", "biPlanes", "biBitCount",
-            "biCompression", "biSizeImage", "biXPelsPerMeter", "biYPelsPerMeter",
-            "biClrUsed", "biClrImportant"})
     class BITMAPINFOHEADER extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("biSize", "biWidth", "biHeight", "biPlanes", "biBitCount",
+                    "biCompression", "biSizeImage", "biXPelsPerMeter", "biYPelsPerMeter",
+                    "biClrUsed", "biClrImportant");
+        }
+
         public int biSize = size();
         public int biWidth;
         public int biHeight;
@@ -96,16 +111,23 @@ public interface WinGDI {
         public int biClrImportant;
     }
 
-    @FieldOrder({"rgbBlue", "rgbGreen", "rgbRed", "rgbReserved"})
     class RGBQUAD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("rgbBlue", "rgbGreen", "rgbRed", "rgbReserved");
+        }
+
         public byte rgbBlue;
         public byte rgbGreen;
         public byte rgbRed;
         public byte rgbReserved = 0;
     }
 
-    @FieldOrder({"bmiHeader", "bmiColors"})
     class BITMAPINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("bmiHeader", "bmiColors");
+        }
 
         public BITMAPINFOHEADER bmiHeader = new BITMAPINFOHEADER();
         public RGBQUAD[] bmiColors = new RGBQUAD[1];
@@ -117,8 +139,12 @@ public interface WinGDI {
         }
     }
 
-    @FieldOrder({"fIcon", "xHotspot", "yHotspot", "hbmMask", "hbmColor"})
     class ICONINFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("fIcon", "xHotspot", "yHotspot", "hbmMask", "hbmColor");
+        }
+
         public boolean fIcon;
         public int xHotspot;
         public int yHotspot;
@@ -126,8 +152,12 @@ public interface WinGDI {
         public HBITMAP hbmColor;
     }
 
-    @FieldOrder({"bmType", "bmWidth", "bmHeight", "bmWidthBytes", "bmPlanes", "bmBitsPixel", "bmBits"})
     class BITMAP extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("bmType", "bmWidth", "bmHeight", "bmWidthBytes", "bmPlanes", "bmBitsPixel", "bmBits");
+        }
+
         public NativeLong bmType;
         public NativeLong bmWidth;
         public NativeLong bmHeight;
@@ -137,8 +167,12 @@ public interface WinGDI {
         public Pointer bmBits;
     }
 
-    @FieldOrder({"dsBm", "dsBmih", "dsBitfields", "dshSection", "dsOffset"})
     class DIBSECTION extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dsBm", "dsBmih", "dsBitfields", "dshSection", "dsOffset");
+        }
+
         public BITMAP           dsBm;
         public BITMAPINFOHEADER dsBmih;
         public int[]            dsBitfields = new int[3];
@@ -149,11 +183,15 @@ public interface WinGDI {
     int DIB_RGB_COLORS = 0;
     int DIB_PAL_COLORS = 1;
 
-    @FieldOrder({"nSize", "nVersion", "dwFlags", "iPixelType",
-            "cColorBits", "cRedBits", "cRedShift", "cGreenBits", "cGreenShift", "cBlueBits", "cBlueShift", "cAlphaBits", "cAlphaShift",
-            "cAccumBits", "cAccumRedBits", "cAccumGreenBits", "cAccumBlueBits", "cAccumAlphaBits",
-            "cDepthBits", "cStencilBits", "cAuxBuffers", "iLayerType", "bReserved", "dwLayerMask", "dwVisibleMask", "dwDamageMask"})
     class PIXELFORMATDESCRIPTOR extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("nSize", "nVersion", "dwFlags", "iPixelType",
+                    "cColorBits", "cRedBits", "cRedShift", "cGreenBits", "cGreenShift", "cBlueBits", "cBlueShift", "cAlphaBits", "cAlphaShift",
+                    "cAccumBits", "cAccumRedBits", "cAccumGreenBits", "cAccumBlueBits", "cAccumAlphaBits",
+                    "cDepthBits", "cStencilBits", "cAuxBuffers", "iLayerType", "bReserved", "dwLayerMask", "dwVisibleMask", "dwDamageMask");
+        }
+
         public PIXELFORMATDESCRIPTOR() {
             nSize = (short) size();
         }
@@ -163,8 +201,7 @@ public interface WinGDI {
             read();
         }
 
-        public static class ByReference extends PIXELFORMATDESCRIPTOR implements Structure.ByReference {
-        }
+        public static class ByReference extends PIXELFORMATDESCRIPTOR implements Structure.ByReference {}
 
         public short  nSize;
         public short  nVersion;

@@ -1,9 +1,11 @@
 package com.vantacom.aarm.libraries.jna;
 
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.Union;
 import com.sun.jna.ptr.IntByReference;
+
+import java.util.Arrays;
+import java.util.List;
 
 public interface Wincon {
     boolean AllocConsole();
@@ -81,8 +83,11 @@ public interface Wincon {
 
     boolean WriteConsole(WinNT.HANDLE hConsoleOutput, String lpBuffer, int nNumberOfCharsToWrite, IntByReference lpNumberOfCharsWritten, WinDef.LPVOID lpReserved);
 
-    @FieldOrder({ "X", "Y" })
     public static class COORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("X", "Y");
+        }
 
         public short X;
         public short Y;
@@ -93,8 +98,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "Left", "Top", "Right", "Bottom" })
     public static class SMALL_RECT extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("Left", "Top", "Right", "Bottom");
+        }
 
         public short Left;
         public short Top;
@@ -107,8 +115,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "dwSize", "dwCursorPosition", "wAttributes", "srWindow", "dwMaximumWindowSize" })
     public static class CONSOLE_SCREEN_BUFFER_INFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize", "dwCursorPosition", "wAttributes", "srWindow", "dwMaximumWindowSize");
+        }
 
         public COORD dwSize;
         public COORD dwCursorPosition;
@@ -122,8 +133,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "EventType", "Event" })
     public static class INPUT_RECORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("EventType", "Event");
+        }
 
         public static final short KEY_EVENT = 0x01;
         public static final short MOUSE_EVENT = 0x02;
@@ -161,8 +175,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "bKeyDown", "wRepeatCount", "wVirtualKeyCode", "wVirtualScanCode", "uChar", "dwControlKeyState" })
     public static class KEY_EVENT_RECORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("bKeyDown", "wRepeatCount", "wVirtualKeyCode", "wVirtualScanCode", "uChar", "dwControlKeyState");
+        }
 
         public boolean bKeyDown;
         public short wRepeatCount;
@@ -177,8 +194,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "dwMousePosition", "dwButtonState", "dwControlKeyState", "dwEventFlags" })
     public static class MOUSE_EVENT_RECORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwMousePosition", "dwButtonState", "dwControlKeyState", "dwEventFlags");
+        }
 
         public COORD dwMousePosition;
         public int dwButtonState;
@@ -191,8 +211,11 @@ public interface Wincon {
         }
     }
 
-    @FieldOrder({ "dwSize" })
     public static class WINDOW_BUFFER_SIZE_RECORD extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("dwSize");
+        }
 
         public COORD dwSize;
 

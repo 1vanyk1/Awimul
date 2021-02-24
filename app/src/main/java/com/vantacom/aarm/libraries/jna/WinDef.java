@@ -5,11 +5,13 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 import com.sun.jna.Structure;
-import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.ptr.ByReference;
 import com.vantacom.aarm.libraries.jna.BaseTSD.LONG_PTR;
 import com.vantacom.aarm.libraries.jna.WinNT.HANDLE;
 import com.vantacom.aarm.libraries.jna.WinNT.HANDLEByReference;
+
+import java.util.Arrays;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public interface WinDef {
@@ -348,12 +350,16 @@ public interface WinDef {
         }
     }
 
-    @FieldOrder({"left", "top", "right", "bottom"})
     public class RECT extends Structure {
         public int left;
         public int top;
         public int right;
         public int bottom;
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("left", "top", "right", "bottom");
+        }
 
         @Override
         public String toString() {
@@ -489,7 +495,6 @@ public interface WinDef {
         }
     }
 
-    @FieldOrder({"x", "y"})
     public class POINT extends Structure {
         public static class ByReference extends POINT implements Structure.ByReference {
             public ByReference() {
@@ -517,6 +522,11 @@ public interface WinDef {
                 super(x, y);
             }
 
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("x", "y");
         }
 
         public int x;

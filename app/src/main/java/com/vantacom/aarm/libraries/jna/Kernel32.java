@@ -8,11 +8,13 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.win32.W32APIOptions;
 
+@SuppressWarnings("serial")
 public interface Kernel32 extends Library, WinNT, Wincon {
-    Kernel32 INSTANCE = Native.loadLibrary("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/kernel32.dll.so", Kernel32.class, W32APIOptions.DEFAULT_OPTIONS);
+    Kernel32 INSTANCE = Native.loadLibrary("/data/user/0/com.vantacom.aarm/files/armeabi-v7a/lib/wine/kernel32.dll.so", Kernel32.class, W32APIOptions.UNICODE_OPTIONS);
     int LOAD_LIBRARY_AS_DATAFILE = 0x2;
     boolean ReadFile(HANDLE hFile, byte[] lpBuffer, int nNumberOfBytesToRead,
                      IntByReference lpNumberOfBytesRead, WinBase.OVERLAPPED lpOverlapped);
+
     Pointer LocalFree(Pointer hMem);
 
     Pointer GlobalFree(Pointer hGlobal);
