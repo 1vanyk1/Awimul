@@ -6,8 +6,6 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.Surface;
 
-import com.vantacom.aarm.libraries.Library;
-
 import java.io.File;
 
 public class WineActivity extends Activity {

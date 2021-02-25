@@ -3,8 +3,6 @@ package com.vantacom.aarm;
 import android.util.Log;
 import android.view.Surface;
 
-import com.vantacom.aarm.libraries.Library;
-
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;

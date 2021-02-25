@@ -1,7 +1,6 @@
  package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,21 +17,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.sun.jna.CallbackThreadInitializer;
-import com.sun.jna.PointerType;
-import com.sun.jna.Structure;
-import com.sun.jna.win32.StdCallLibrary;
-import com.sun.jna.win32.W32APIOptions;
 import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
-import com.vantacom.aarm.libraries.User32Lib;
 import com.vantacom.aarm.libraries.jna.Kernel32;
-import com.vantacom.aarm.libraries.jna.Kernel32Util;
-import com.vantacom.aarm.libraries.jna.User32;
-import com.vantacom.aarm.libraries.jna.WinDef;
-import com.vantacom.aarm.libraries.jna.WinUser;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.ProcessManager;
@@ -41,8 +30,6 @@ import com.vantacom.aarm.wine.controls.Controls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 
 import com.sun.jna.Library;
@@ -206,70 +193,19 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         finish();
     }
 
-//    public interface User32 extends Library {
-//        public void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
-//        public int GetWindow(int hwnd, int rel);
-//        public boolean IsWindowVisible(int hwnd);
-//    }
-//
-
     @Override
     public void onBackPressed() {
         hideSystemUI();
         if (xserver.getDesktopView() != null && !isSystemPaused()) {
-//            user32.invoke("keybd_event", (byte)0x31, (byte)0x2, 0, 0);
-//            user32.invoke("keybd_event", (byte)0x31, (byte)0x02, 0x0002, 0);
-
-            Log.e(String.valueOf(getFilesDir()), "1");
-
-//            try {
-//                Kernel32 lib = Kernel32.INSTANCE;
-//                Kernel32.SYSTEMTIME time = new Kernel32.SYSTEMTIME();
-//                lib.GetSystemTime(time);
-//
-//                System.out.println("Today's integer value is " + time.wDay);
-//            } catch (Exception e) {
-//                Log.e("e", e.toString());
-//            }
-
-
-//            User32 lib = Native.loadLibrary(new File(filesDir, wineABI + "/lib/wine/user32.dll.so").toString(), User32.class);
-//            Log.e("1", "2");
-////            lib.test_keyboard_events();
-////            Log.e("1", "2");
-//            lib.IsWindowVisible(xserver.getFocusedWindow().getHWND());
-////            lib.GetWindow(xserver.getFocusedWindow().getHWND(), xserver.getDesktopView().getDesktopWindow().getHWND());
-//            Log.e("1", "2");
-
-
-//            lib.keybd_event((byte)0x31, (byte)0x02, 0, 0);
-//            lib.keybd_event((byte)0x31, (byte)0x02, 0x0002, 0);
-//            Log.e("Key", "ONBACK");
-//            user32.invoke("keybd_event");
-//            Log.e("Key", "ONBACK");
-//            user32.invoke("keybd_event");
-//            Log.e("Key", "ONBACK");
-
-//            xserver.getKeyboard().pressKey(0, 111, 0);
-//            xserver.getKeyboard().pressKey(1, 111, 0);
+            xserver.getKeyboard().pressKey(0, 111, 0);
+            xserver.getKeyboard().pressKey(1, 111, 0);
         }
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        User32 user32 = User32.INSTANCE;
-//        WinDef.HWND hwnd = User32.INSTANCE.GetDesktopWindow();
-
-//        WinDef.HWND hwnd = new WinDef.HWND(new Pointer(xserver.getDesktopView().getDesktopWindow().getHWND()));
-//        Log.e(String.valueOf(xserver.getDesktopView().getDesktopWindow().getHWND()), hwnd.toString());
-
-//        ((User32)Native.synchronizedLibrary(User32.INSTANCE)).GetAsyncKeyState(40);
-
-//        WinDef.HWND shellTrayHwnd = User32.INSTANCE.FindWindow("Shell_TrayWnd", null);
-
-//        User32.INSTANCE.GetForegroundWindow();
         Log.e("path", FileManager.getDriveCPath(this, "prefix"));
-
+        Log.e("ee", ConsoleManager.runCommandWithLog("man wineserver"));
         Kernel32 lib = (Kernel32)Native.synchronizedLibrary(Kernel32.INSTANCE);
         Log.e("Ticks", String.valueOf(lib.GetTickCount()));
 //        Log.e("Ticks", Kernel32Util.getComputerName());

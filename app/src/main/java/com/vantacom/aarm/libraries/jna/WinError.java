@@ -141,4838 +141,507 @@ public interface WinError {
     int ERROR_INVALID_CATEGORY = 117;
     int ERROR_INVALID_VERIFY_SWITCH = 118;
     int ERROR_BAD_DRIVER_LEVEL = 119;
-
-    //
-    // MessageId: ERROR_CALL_NOT_IMPLEMENTED
-    //
-    // MessageText:
-    //
-    // This function is not supported on this system.
-    //
     int ERROR_CALL_NOT_IMPLEMENTED = 120;
-
-    //
-    // MessageId: ERROR_SEM_TIMEOUT
-    //
-    // MessageText:
-    //
-    // The semaphore timeout period has expired.
-    //
     int ERROR_SEM_TIMEOUT = 121;
-
-    //
-    // MessageId: ERROR_INSUFFICIENT_BUFFER
-    //
-    // MessageText:
-    //
-    // The data area passed to a system call is too small.
-    //
-    int ERROR_INSUFFICIENT_BUFFER = 122; // dderror
-
-    //
-    // MessageId: ERROR_INVALID_NAME
-    //
-    // MessageText:
-    //
-    // The filename, directory name, or volume label syntax is incorrect.
-    //
-    int ERROR_INVALID_NAME = 123; // dderror
-
-    //
-    // MessageId: ERROR_INVALID_LEVEL
-    //
-    // MessageText:
-    //
-    // The system call level is not correct.
-    //
+    int ERROR_INSUFFICIENT_BUFFER = 122;
+    int ERROR_INVALID_NAME = 123;
     int ERROR_INVALID_LEVEL = 124;
-
-    //
-    // MessageId: ERROR_NO_VOLUME_LABEL
-    //
-    // MessageText:
-    //
-    // The disk has no volume label.
-    //
     int ERROR_NO_VOLUME_LABEL = 125;
-
-    //
-    // MessageId: ERROR_MOD_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The specified module could not be found.
-    //
     int ERROR_MOD_NOT_FOUND = 126;
-
-    //
-    // MessageId: ERROR_PROC_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The specified procedure could not be found.
-    //
     int ERROR_PROC_NOT_FOUND = 127;
-
-    //
-    // MessageId: ERROR_WAIT_NO_CHILDREN
-    //
-    // MessageText:
-    //
-    // There are no child processes to wait for.
-    //
     int ERROR_WAIT_NO_CHILDREN = 128;
-
-    //
-    // MessageId: ERROR_CHILD_NOT_COMPLETE
-    //
-    // MessageText:
-    //
-    // The %1 application cannot be run in Win32 mode.
-    //
     int ERROR_CHILD_NOT_COMPLETE = 129;
-
-    //
-    // MessageId: ERROR_DIRECT_ACCESS_HANDLE
-    //
-    // MessageText:
-    //
-    // Attempt to use a file handle to an open disk partition for an operation
-    // other than raw disk I/O.
-    //
     int ERROR_DIRECT_ACCESS_HANDLE = 130;
-
-    //
-    // MessageId: ERROR_NEGATIVE_SEEK
-    //
-    // MessageText:
-    //
-    // An attempt was made to move the file pointer before the beginning of the
-    // file.
-    //
     int ERROR_NEGATIVE_SEEK = 131;
-
-    //
-    // MessageId: ERROR_SEEK_ON_DEVICE
-    //
-    // MessageText:
-    //
-    // The file pointer cannot be set on the specified device or file.
-    //
     int ERROR_SEEK_ON_DEVICE = 132;
-
-    //
-    // MessageId: ERROR_IS_JOIN_TARGET
-    //
-    // MessageText:
-    //
-    // A JOIN or SUBST command cannot be used for a drive that contains
-    // previously joined drives.
-    //
     int ERROR_IS_JOIN_TARGET = 133;
-
-    //
-    // MessageId: ERROR_IS_JOINED
-    //
-    // MessageText:
-    //
-    // An attempt was made to use a JOIN or SUBST command on a drive that has
-    // already been joined.
-    //
     int ERROR_IS_JOINED = 134;
-
-    //
-    // MessageId: ERROR_IS_SUBSTED
-    //
-    // MessageText:
-    //
-    // An attempt was made to use a JOIN or SUBST command on a drive that has
-    // already been substituted.
-    //
     int ERROR_IS_SUBSTED = 135;
-
-    //
-    // MessageId: ERROR_NOT_JOINED
-    //
-    // MessageText:
-    //
-    // The system tried to delete the JOIN of a drive that is not joined.
-    //
     int ERROR_NOT_JOINED = 136;
-
-    //
-    // MessageId: ERROR_NOT_SUBSTED
-    //
-    // MessageText:
-    //
-    // The system tried to delete the substitution of a drive that is not
-    // substituted.
-    //
     int ERROR_NOT_SUBSTED = 137;
-
-    //
-    // MessageId: ERROR_JOIN_TO_JOIN
-    //
-    // MessageText:
-    //
-    // The system tried to join a drive to a directory on a joined drive.
-    //
     int ERROR_JOIN_TO_JOIN = 138;
-
-    //
-    // MessageId: ERROR_SUBST_TO_SUBST
-    //
-    // MessageText:
-    //
-    // The system tried to substitute a drive to a directory on a substituted
-    // drive.
-    //
     int ERROR_SUBST_TO_SUBST = 139;
-
-    //
-    // MessageId: ERROR_JOIN_TO_SUBST
-    //
-    // MessageText:
-    //
-    // The system tried to join a drive to a directory on a substituted drive.
-    //
     int ERROR_JOIN_TO_SUBST = 140;
-
-    //
-    // MessageId: ERROR_SUBST_TO_JOIN
-    //
-    // MessageText:
-    //
-    // The system tried to SUBST a drive to a directory on a joined drive.
-    //
     int ERROR_SUBST_TO_JOIN = 141;
-
-    //
-    // MessageId: ERROR_BUSY_DRIVE
-    //
-    // MessageText:
-    //
-    // The system cannot perform a JOIN or SUBST at this time.
-    //
     int ERROR_BUSY_DRIVE = 142;
-
-    //
-    // MessageId: ERROR_SAME_DRIVE
-    //
-    // MessageText:
-    //
-    // The system cannot join or substitute a drive to or for a directory on the
-    // same drive.
-    //
     int ERROR_SAME_DRIVE = 143;
-
-    //
-    // MessageId: ERROR_DIR_NOT_ROOT
-    //
-    // MessageText:
-    //
-    // The directory is not a subdirectory of the root directory.
-    //
     int ERROR_DIR_NOT_ROOT = 144;
-
-    //
-    // MessageId: ERROR_DIR_NOT_EMPTY
-    //
-    // MessageText:
-    //
-    // The directory is not empty.
-    //
     int ERROR_DIR_NOT_EMPTY = 145;
-
-    //
-    // MessageId: ERROR_IS_SUBST_PATH
-    //
-    // MessageText:
-    //
-    // The path specified is being used in a substitute.
-    //
     int ERROR_IS_SUBST_PATH = 146;
-
-    //
-    // MessageId: ERROR_IS_JOIN_PATH
-    //
-    // MessageText:
-    //
-    // Not enough resources are available to process this command.
-    //
     int ERROR_IS_JOIN_PATH = 147;
-
-    //
-    // MessageId: ERROR_PATH_BUSY
-    //
-    // MessageText:
-    //
-    // The path specified cannot be used at this time.
-    //
     int ERROR_PATH_BUSY = 148;
-
-    //
-    // MessageId: ERROR_IS_SUBST_TARGET
-    //
-    // MessageText:
-    //
-    // An attempt was made to join or substitute a drive for which a directory
-    // on the drive is the target of a previous substitute.
-    //
     int ERROR_IS_SUBST_TARGET = 149;
-
-    //
-    // MessageId: ERROR_SYSTEM_TRACE
-    //
-    // MessageText:
-    //
-    // System trace information was not specified in your CONFIG.SYS file, or
-    // tracing is disallowed.
-    //
     int ERROR_SYSTEM_TRACE = 150;
-
-    //
-    // MessageId: ERROR_INVALID_EVENT_COUNT
-    //
-    // MessageText:
-    //
-    // The number of specified semaphore events for DosMuxSemWait is not
-    // correct.
-    //
     int ERROR_INVALID_EVENT_COUNT = 151;
-
-    //
-    // MessageId: ERROR_TOO_MANY_MUXWAITERS
-    //
-    // MessageText:
-    //
-    // DosMuxSemWait did not execute; too many semaphores are already set.
-    //
     int ERROR_TOO_MANY_MUXWAITERS = 152;
-
-    //
-    // MessageId: ERROR_INVALID_LIST_FORMAT
-    //
-    // MessageText:
-    //
-    // The DosMuxSemWait list is not correct.
-    //
     int ERROR_INVALID_LIST_FORMAT = 153;
-
-    //
-    // MessageId: ERROR_LABEL_TOO_LONG
-    //
-    // MessageText:
-    //
-    // The volume label you entered exceeds the label character limit of the
-    // target file system.
-    //
     int ERROR_LABEL_TOO_LONG = 154;
-
-    //
-    // MessageId: ERROR_TOO_MANY_TCBS
-    //
-    // MessageText:
-    //
-    // Cannot create another thread.
-    //
     int ERROR_TOO_MANY_TCBS = 155;
-
-    //
-    // MessageId: ERROR_SIGNAL_REFUSED
-    //
-    // MessageText:
-    //
-    // The recipient process has refused the signal.
-    //
     int ERROR_SIGNAL_REFUSED = 156;
-
-    //
-    // MessageId: ERROR_DISCARDED
-    //
-    // MessageText:
-    //
-    // The segment is already discarded and cannot be locked.
-    //
     int ERROR_DISCARDED = 157;
-
-    //
-    // MessageId: ERROR_NOT_LOCKED
-    //
-    // MessageText:
-    //
-    // The segment is already unlocked.
-    //
     int ERROR_NOT_LOCKED = 158;
-
-    //
-    // MessageId: ERROR_BAD_THREADID_ADDR
-    //
-    // MessageText:
-    //
-    // The address for the thread ID is not correct.
-    //
     int ERROR_BAD_THREADID_ADDR = 159;
-
-    //
-    // MessageId: ERROR_BAD_ARGUMENTS
-    //
-    // MessageText:
-    //
-    // One or more arguments are not correct.
-    //
     int ERROR_BAD_ARGUMENTS = 160;
-
-    //
-    // MessageId: ERROR_BAD_PATHNAME
-    //
-    // MessageText:
-    //
-    // The specified path is invalid.
-    //
     int ERROR_BAD_PATHNAME = 161;
-
-    //
-    // MessageId: ERROR_SIGNAL_PENDING
-    //
-    // MessageText:
-    //
-    // A signal is already pending.
-    //
     int ERROR_SIGNAL_PENDING = 162;
-
-    //
-    // MessageId: ERROR_MAX_THRDS_REACHED
-    //
-    // MessageText:
-    //
-    // No more threads can be created in the system.
-    //
     int ERROR_MAX_THRDS_REACHED = 164;
-
-    //
-    // MessageId: ERROR_LOCK_FAILED
-    //
-    // MessageText:
-    //
-    // Unable to lock a region of a file.
-    //
     int ERROR_LOCK_FAILED = 167;
-
-    //
-    // MessageId: ERROR_BUSY
-    //
-    // MessageText:
-    //
-    // The requested resource is in use.
-    //
-    int ERROR_BUSY = 170; // dderror
-
-    //
-    // MessageId: ERROR_CANCEL_VIOLATION
-    //
-    // MessageText:
-    //
-    // A lock request was not outstanding for the supplied cancel region.
-    //
+    int ERROR_BUSY = 170;
     int ERROR_CANCEL_VIOLATION = 173;
-
-    //
-    // MessageId: ERROR_ATOMIC_LOCKS_NOT_SUPPORTED
-    //
-    // MessageText:
-    //
-    // The file system does not support atomic changes to the lock type.
-    //
     int ERROR_ATOMIC_LOCKS_NOT_SUPPORTED = 174;
-
-    //
-    // MessageId: ERROR_INVALID_SEGMENT_NUMBER
-    //
-    // MessageText:
-    //
-    // The system detected a segment number that was not correct.
-    //
     int ERROR_INVALID_SEGMENT_NUMBER = 180;
-
-    //
-    // MessageId: ERROR_INVALID_ORDINAL
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_ORDINAL = 182;
-
-    //
-    // MessageId: ERROR_ALREADY_EXISTS
-    //
-    // MessageText:
-    //
-    // Cannot create a file when that file already exists.
-    //
     int ERROR_ALREADY_EXISTS = 183;
-
-    //
-    // MessageId: ERROR_INVALID_FLAG_NUMBER
-    //
-    // MessageText:
-    //
-    // The flag passed is not correct.
-    //
     int ERROR_INVALID_FLAG_NUMBER = 186;
-
-    //
-    // MessageId: ERROR_SEM_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The specified system semaphore name was not found.
-    //
     int ERROR_SEM_NOT_FOUND = 187;
-
-    //
-    // MessageId: ERROR_INVALID_STARTING_CODESEG
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_STARTING_CODESEG = 188;
-
-    //
-    // MessageId: ERROR_INVALID_STACKSEG
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_STACKSEG = 189;
-
-    //
-    // MessageId: ERROR_INVALID_MODULETYPE
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_MODULETYPE = 190;
-
-    //
-    // MessageId: ERROR_INVALID_EXE_SIGNATURE
-    //
-    // MessageText:
-    //
-    // Cannot run %1 in Win32 mode.
-    //
     int ERROR_INVALID_EXE_SIGNATURE = 191;
-
-    //
-    // MessageId: ERROR_EXE_MARKED_INVALID
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_EXE_MARKED_INVALID = 192;
-
-    //
-    // MessageId: ERROR_BAD_EXE_FORMAT
-    //
-    // MessageText:
-    //
-    // %1 is not a valid Win32 application.
-    //
     int ERROR_BAD_EXE_FORMAT = 193;
-
-    //
-    // MessageId: ERROR_ITERATED_DATA_EXCEEDS_64k
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_ITERATED_DATA_EXCEEDS_64k = 194;
-
-    //
-    // MessageId: ERROR_INVALID_MINALLOCSIZE
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_MINALLOCSIZE = 195;
-
-    //
-    // MessageId: ERROR_DYNLINK_FROM_INVALID_RING
-    //
-    // MessageText:
-    //
-    // The operating system cannot run this application program.
-    //
     int ERROR_DYNLINK_FROM_INVALID_RING = 196;
-
-    //
-    // MessageId: ERROR_IOPL_NOT_ENABLED
-    //
-    // MessageText:
-    //
-    // The operating system is not presently configured to run this application.
-    //
     int ERROR_IOPL_NOT_ENABLED = 197;
-
-    //
-    // MessageId: ERROR_INVALID_SEGDPL
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INVALID_SEGDPL = 198;
-
-    //
-    // MessageId: ERROR_AUTODATASEG_EXCEEDS_64k
-    //
-    // MessageText:
-    //
-    // The operating system cannot run this application program.
-    //
     int ERROR_AUTODATASEG_EXCEEDS_64k = 199;
-
-    //
-    // MessageId: ERROR_RING2SEG_MUST_BE_MOVABLE
-    //
-    // MessageText:
-    //
-    // The code segment cannot be greater than or equal to=64K.
-    //
     int ERROR_RING2SEG_MUST_BE_MOVABLE = 200;
-
-    //
-    // MessageId: ERROR_RELOC_CHAIN_XEEDS_SEGLIM
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
-
-    //
-    // MessageId: ERROR_INFLOOP_IN_RELOC_CHAIN
-    //
-    // MessageText:
-    //
-    // The operating system cannot run %1.
-    //
     int ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
-
-    //
-    // MessageId: ERROR_ENVVAR_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The system could not find the environment option that was entered.
-    //
     int ERROR_ENVVAR_NOT_FOUND = 203;
-
-    //
-    // MessageId: ERROR_NO_SIGNAL_SENT
-    //
-    // MessageText:
-    //
-    // No process in the command subtree has a signal handler.
-    //
     int ERROR_NO_SIGNAL_SENT = 205;
-
-    //
-    // MessageId: ERROR_FILENAME_EXCED_RANGE
-    //
-    // MessageText:
-    //
-    // The filename or extension is too long.
-    //
     int ERROR_FILENAME_EXCED_RANGE = 206;
-
-    //
-    // MessageId: ERROR_RING2_STACK_IN_USE
-    //
-    // MessageText:
-    //
-    // The ring=2 stack is in use.
-    //
     int ERROR_RING2_STACK_IN_USE = 207;
-
-    //
-    // MessageId: ERROR_META_EXPANSION_TOO_LONG
-    //
-    // MessageText:
-    //
-    // The global filename characters, * or ?, are entered incorrectly or too
-    // many global filename characters are specified.
-    //
     int ERROR_META_EXPANSION_TOO_LONG = 208;
-
-    //
-    // MessageId: ERROR_INVALID_SIGNAL_NUMBER
-    //
-    // MessageText:
-    //
-    // The signal being posted is not correct.
-    //
     int ERROR_INVALID_SIGNAL_NUMBER = 209;
-
-    //
-    // MessageId: ERROR_THREAD_1_INACTIVE
-    //
-    // MessageText:
-    //
-    // The signal handler cannot be set.
-    //
     int ERROR_THREAD_1_INACTIVE = 210;
-
-    //
-    // MessageId: ERROR_LOCKED
-    //
-    // MessageText:
-    //
-    // The segment is locked and cannot be reallocated.
-    //
     int ERROR_LOCKED = 212;
-
-    //
-    // MessageId: ERROR_TOO_MANY_MODULES
-    //
-    // MessageText:
-    //
-    // Too many dynamic-link modules are attached to this program or
-    // dynamic-link module.
-    //
     int ERROR_TOO_MANY_MODULES = 214;
-
-    //
-    // MessageId: ERROR_NESTING_NOT_ALLOWED
-    //
-    // MessageText:
-    //
-    // Cannot nest calls to LoadModule.
-    //
     int ERROR_NESTING_NOT_ALLOWED = 215;
-
-    //
-    // MessageId: ERROR_EXE_MACHINE_TYPE_MISMATCH
-    //
-    // MessageText:
-    //
-    // This version of %1 is not compatible with the version of Windows you're
-    // running. Check your computer's system information to see whether you need
-    // a x86 (32-bit) or x64 (64-bit) version of the program, and then contact
-    // the software publisher.
-    //
     int ERROR_EXE_MACHINE_TYPE_MISMATCH = 216;
-
-    //
-    // MessageId: ERROR_EXE_CANNOT_MODIFY_SIGNED_BINARY
-    //
-    // MessageText:
-    //
-    // The image file %1 is signed, unable to modify.
-    //
     int ERROR_EXE_CANNOT_MODIFY_SIGNED_BINARY = 217;
-
-    //
-    // MessageId: ERROR_EXE_CANNOT_MODIFY_STRONG_SIGNED_BINARY
-    //
-    // MessageText:
-    //
-    // The image file %1 is strong signed, unable to modify.
-    //
     int ERROR_EXE_CANNOT_MODIFY_STRONG_SIGNED_BINARY = 218;
-
-    //
-    // MessageId: ERROR_FILE_CHECKED_OUT
-    //
-    // MessageText:
-    //
-    // This file is checked out or locked for editing by another user.
-    //
     int ERROR_FILE_CHECKED_OUT = 220;
-
-    //
-    // MessageId: ERROR_CHECKOUT_REQUIRED
-    //
-    // MessageText:
-    //
-    // The file must be checked out before saving changes.
-    //
     int ERROR_CHECKOUT_REQUIRED = 221;
-
-    //
-    // MessageId: ERROR_BAD_FILE_TYPE
-    //
-    // MessageText:
-    //
-    // The file type being saved or retrieved has been blocked.
-    //
     int ERROR_BAD_FILE_TYPE = 222;
-
-    //
-    // MessageId: ERROR_FILE_TOO_LARGE
-    //
-    // MessageText:
-    //
-    // The file size exceeds the limit allowed and cannot be saved.
-    //
     int ERROR_FILE_TOO_LARGE = 223;
-
-    //
-    // MessageId: ERROR_FORMS_AUTH_REQUIRED
-    //
-    // MessageText:
-    //
-    // Access Denied. Before opening files in this location, you must first
-    // browse to the web site and select the option to login automatically.
-    //
     int ERROR_FORMS_AUTH_REQUIRED = 224;
-
-    //
-    // MessageId: ERROR_VIRUS_INFECTED
-    //
-    // MessageText:
-    //
-    // Operation did not complete successfully because the file contains a
-    // virus.
-    //
     int ERROR_VIRUS_INFECTED = 225;
-
-    //
-    // MessageId: ERROR_VIRUS_DELETED
-    //
-    // MessageText:
-    //
-    // This file contains a virus and cannot be opened. Due to the nature of
-    // this virus, the file has been removed from this location.
-    //
     int ERROR_VIRUS_DELETED = 226;
-
-    //
-    // MessageId: ERROR_PIPE_LOCAL
-    //
-    // MessageText:
-    //
-    // The pipe is local.
-    //
     int ERROR_PIPE_LOCAL = 229;
-
-    //
-    // MessageId: ERROR_BAD_PIPE
-    //
-    // MessageText:
-    //
-    // The pipe state is invalid.
-    //
     int ERROR_BAD_PIPE = 230;
-
-    //
-    // MessageId: ERROR_PIPE_BUSY
-    //
-    // MessageText:
-    //
-    // All pipe instances are busy.
-    //
     int ERROR_PIPE_BUSY = 231;
-
-    //
-    // MessageId: ERROR_NO_DATA
-    //
-    // MessageText:
-    //
-    // The pipe is being closed.
-    //
     int ERROR_NO_DATA = 232;
-
-    //
-    // MessageId: ERROR_PIPE_NOT_CONNECTED
-    //
-    // MessageText:
-    //
-    // No process is on the other end of the pipe.
-    //
     int ERROR_PIPE_NOT_CONNECTED = 233;
-
-    //
-    // MessageId: ERROR_MORE_DATA
-    //
-    // MessageText:
-    //
-    // More data is available.
-    //
-    int ERROR_MORE_DATA = 234; // dderror
-
-    //
-    // MessageId: ERROR_VC_DISCONNECTED
-    //
-    // MessageText:
-    //
-    // The session was canceled.
-    //
+    int ERROR_MORE_DATA = 234;
     int ERROR_VC_DISCONNECTED = 240;
-
-    //
-    // MessageId: ERROR_INVALID_EA_NAME
-    //
-    // MessageText:
-    //
-    // The specified extended attribute name was invalid.
-    //
     int ERROR_INVALID_EA_NAME = 254;
-
-    //
-    // MessageId: ERROR_EA_LIST_INCONSISTENT
-    //
-    // MessageText:
-    //
-    // The extended attributes are inconsistent.
-    //
     int ERROR_EA_LIST_INCONSISTENT = 255;
-
-    //
-    // MessageId: WAIT_TIMEOUT
-    //
-    // MessageText:
-    //
-    // The wait operation timed out.
-    //
-    int WAIT_TIMEOUT = 258; // dderror
-
-    //
-    // MessageId: ERROR_NO_MORE_ITEMS
-    //
-    // MessageText:
-    //
-    // No more data is available.
-    //
+    int WAIT_TIMEOUT = 258;
     int ERROR_NO_MORE_ITEMS = 259;
-
-    //
-    // MessageId: ERROR_CANNOT_COPY
-    //
-    // MessageText:
-    //
-    // The copy functions cannot be used.
-    //
     int ERROR_CANNOT_COPY = 266;
-
-    //
-    // MessageId: ERROR_DIRECTORY
-    //
-    // MessageText:
-    //
-    // The directory name is invalid.
-    //
     int ERROR_DIRECTORY = 267;
-
-    //
-    // MessageId: ERROR_EAS_DIDNT_FIT
-    //
-    // MessageText:
-    //
-    // The extended attributes did not fit in the buffer.
-    //
     int ERROR_EAS_DIDNT_FIT = 275;
-
-    //
-    // MessageId: ERROR_EA_FILE_CORRUPT
-    //
-    // MessageText:
-    //
-    // The extended attribute file on the mounted file system is corrupt.
-    //
     int ERROR_EA_FILE_CORRUPT = 276;
-
-    //
-    // MessageId: ERROR_EA_TABLE_FULL
-    //
-    // MessageText:
-    //
-    // The extended attribute table file is full.
-    //
     int ERROR_EA_TABLE_FULL = 277;
-
-    //
-    // MessageId: ERROR_INVALID_EA_HANDLE
-    //
-    // MessageText:
-    //
-    // The specified extended attribute handle is invalid.
-    //
     int ERROR_INVALID_EA_HANDLE = 278;
-
-    //
-    // MessageId: ERROR_EAS_NOT_SUPPORTED
-    //
-    // MessageText:
-    //
-    // The mounted file system does not support extended attributes.
-    //
     int ERROR_EAS_NOT_SUPPORTED = 282;
-
-    //
-    // MessageId: ERROR_NOT_OWNER
-    //
-    // MessageText:
-    //
-    // Attempt to release mutex not owned by caller.
-    //
     int ERROR_NOT_OWNER = 288;
-
-    //
-    // MessageId: ERROR_TOO_MANY_POSTS
-    //
-    // MessageText:
-    //
-    // Too many posts were made to a semaphore.
-    //
     int ERROR_TOO_MANY_POSTS = 298;
-
-    //
-    // MessageId: ERROR_PARTIAL_COPY
-    //
-    // MessageText:
-    //
-    // Only part of a ReadProcessMemory or WriteProcessMemory request was
-    // completed.
-    //
     int ERROR_PARTIAL_COPY = 299;
-
-    //
-    // MessageId: ERROR_OPLOCK_NOT_GRANTED
-    //
-    // MessageText:
-    //
-    // The oplock request is denied.
-    //
     int ERROR_OPLOCK_NOT_GRANTED = 300;
-
-    //
-    // MessageId: ERROR_INVALID_OPLOCK_PROTOCOL
-    //
-    // MessageText:
-    //
-    // An invalid oplock acknowledgment was received by the system.
-    //
     int ERROR_INVALID_OPLOCK_PROTOCOL = 301;
-
-    //
-    // MessageId: ERROR_DISK_TOO_FRAGMENTED
-    //
-    // MessageText:
-    //
-    // The volume is too fragmented to complete this operation.
-    //
     int ERROR_DISK_TOO_FRAGMENTED = 302;
-
-    //
-    // MessageId: ERROR_DELETE_PENDING
-    //
-    // MessageText:
-    //
-    // The file cannot be opened because it is in the process of being deleted.
-    //
     int ERROR_DELETE_PENDING = 303;
-
-    //
-    // MessageId: ERROR_MR_MID_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The system cannot find message text for message number 0x%1 in the
-    // message file for %2.
-    //
     int ERROR_MR_MID_NOT_FOUND = 317;
-
-    //
-    // MessageId: ERROR_SCOPE_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The scope specified was not found.
-    //
     int ERROR_SCOPE_NOT_FOUND = 318;
-
-    //
-    // MessageId: ERROR_FAIL_NOACTION_REBOOT
-    //
-    // MessageText:
-    //
-    // No action was taken as a system reboot is required.
-    //
     int ERROR_FAIL_NOACTION_REBOOT = 350;
-
-    //
-    // MessageId: ERROR_FAIL_SHUTDOWN
-    //
-    // MessageText:
-    //
-    // The shutdown operation failed.
-    //
     int ERROR_FAIL_SHUTDOWN = 351;
-
-    //
-    // MessageId: ERROR_FAIL_RESTART
-    //
-    // MessageText:
-    //
-    // The restart operation failed.
-    //
     int ERROR_FAIL_RESTART = 352;
-
-    //
-    // MessageId: ERROR_MAX_SESSIONS_REACHED
-    //
-    // MessageText:
-    //
-    // The maximum number of sessions has been reached.
-    //
     int ERROR_MAX_SESSIONS_REACHED = 353;
-
-    //
-    // MessageId: ERROR_THREAD_MODE_ALREADY_BACKGROUND
-    //
-    // MessageText:
-    //
-    // The thread is already in background processing mode.
-    //
     int ERROR_THREAD_MODE_ALREADY_BACKGROUND = 400;
-
-    //
-    // MessageId: ERROR_THREAD_MODE_NOT_BACKGROUND
-    //
-    // MessageText:
-    //
-    // The thread is not in background processing mode.
-    //
     int ERROR_THREAD_MODE_NOT_BACKGROUND = 401;
-
-    //
-    // MessageId: ERROR_PROCESS_MODE_ALREADY_BACKGROUND
-    //
-    // MessageText:
-    //
-    // The process is already in background processing mode.
-    //
     int ERROR_PROCESS_MODE_ALREADY_BACKGROUND = 402;
-
-    //
-    // MessageId: ERROR_PROCESS_MODE_NOT_BACKGROUND
-    //
-    // MessageText:
-    //
-    // The process is not in background processing mode.
-    //
     int ERROR_PROCESS_MODE_NOT_BACKGROUND = 403;
-
-    //
-    // MessageId: ERROR_INVALID_ADDRESS
-    //
-    // MessageText:
-    //
-    // Attempt to access invalid address.
-    //
     int ERROR_INVALID_ADDRESS = 487;
-
-    //
-    // MessageId: ERROR_USER_PROFILE_LOAD
-    //
-    // MessageText:
-    //
-    // User profile cannot be loaded.
-    //
     int ERROR_USER_PROFILE_LOAD = 500;
-
-    //
-    // MessageId: ERROR_ARITHMETIC_OVERFLOW
-    //
-    // MessageText:
-    //
-    // Arithmetic result exceeded=32 bits.
-    //
     int ERROR_ARITHMETIC_OVERFLOW = 534;
-
-    //
-    // MessageId: ERROR_PIPE_CONNECTED
-    //
-    // MessageText:
-    //
-    // There is a process on other end of the pipe.
-    //
     int ERROR_PIPE_CONNECTED = 535;
-
-    //
-    // MessageId: ERROR_PIPE_LISTENING
-    //
-    // MessageText:
-    //
-    // Waiting for a process to open the other end of the pipe.
-    //
     int ERROR_PIPE_LISTENING = 536;
-
-    //
-    // MessageId: ERROR_VERIFIER_STOP
-    //
-    // MessageText:
-    //
-    // Application verifier has found an error in the current process.
-    //
     int ERROR_VERIFIER_STOP = 537;
-
-    //
-    // MessageId: ERROR_ABIOS_ERROR
-    //
-    // MessageText:
-    //
-    // An error occurred in the ABIOS subsystem.
-    //
     int ERROR_ABIOS_ERROR = 538;
-
-    //
-    // MessageId: ERROR_WX86_WARNING
-    //
-    // MessageText:
-    //
-    // A warning occurred in the WX86 subsystem.
-    //
     int ERROR_WX86_WARNING = 539;
-
-    //
-    // MessageId: ERROR_WX86_ERROR
-    //
-    // MessageText:
-    //
-    // An error occurred in the WX86 subsystem.
-    //
     int ERROR_WX86_ERROR = 540;
-
-    //
-    // MessageId: ERROR_TIMER_NOT_CANCELED
-    //
-    // MessageText:
-    //
-    // An attempt was made to cancel or set a timer that has an associated APC
-    // and the subject thread is not the thread that originally set the timer
-    // with an associated APC routine.
-    //
     int ERROR_TIMER_NOT_CANCELED = 541;
-
-    //
-    // MessageId: ERROR_UNWIND
-    //
-    // MessageText:
-    //
-    // Unwind exception code.
-    //
     int ERROR_UNWIND = 542;
-
-    //
-    // MessageId: ERROR_BAD_STACK
-    //
-    // MessageText:
-    //
-    // An invalid or unaligned stack was encountered during an unwind operation.
-    //
     int ERROR_BAD_STACK = 543;
-
-    //
-    // MessageId: ERROR_INVALID_UNWIND_TARGET
-    //
-    // MessageText:
-    //
-    // An invalid unwind target was encountered during an unwind operation.
-    //
     int ERROR_INVALID_UNWIND_TARGET = 544;
-
-    //
-    // MessageId: ERROR_INVALID_PORT_ATTRIBUTES
-    //
-    // MessageText:
-    //
-    // Invalid Object Attributes specified to NtCreatePort or invalid Port
-    // Attributes specified to NtConnectPort
-    //
     int ERROR_INVALID_PORT_ATTRIBUTES = 545;
-
-    //
-    // MessageId: ERROR_PORT_MESSAGE_TOO_LONG
-    //
-    // MessageText:
-    //
-    // Length of message passed to NtRequestPort or NtRequestWaitReplyPort was
-    // longer than the maximum message allowed by the port.
-    //
     int ERROR_PORT_MESSAGE_TOO_LONG = 546;
-
-    //
-    // MessageId: ERROR_INVALID_QUOTA_LOWER
-    //
-    // MessageText:
-    //
-    // An attempt was made to lower a quota limit below the current usage.
-    //
     int ERROR_INVALID_QUOTA_LOWER = 547;
-
-    //
-    // MessageId: ERROR_DEVICE_ALREADY_ATTACHED
-    //
-    // MessageText:
-    //
-    // An attempt was made to attach to a device that was already attached to
-    // another device.
-    //
     int ERROR_DEVICE_ALREADY_ATTACHED = 548;
-
-    //
-    // MessageId: ERROR_INSTRUCTION_MISALIGNMENT
-    //
-    // MessageText:
-    //
-    // An attempt was made to execute an instruction at an unaligned address and
-    // the host system does not support unaligned instruction references.
-    //
     int ERROR_INSTRUCTION_MISALIGNMENT = 549;
-
-    //
-    // MessageId: ERROR_PROFILING_NOT_STARTED
-    //
-    // MessageText:
-    //
-    // Profiling not started.
-    //
     int ERROR_PROFILING_NOT_STARTED = 550;
-
-    //
-    // MessageId: ERROR_PROFILING_NOT_STOPPED
-    //
-    // MessageText:
-    //
-    // Profiling not stopped.
-    //
     int ERROR_PROFILING_NOT_STOPPED = 551;
-
-    //
-    // MessageId: ERROR_COULD_NOT_INTERPRET
-    //
-    // MessageText:
-    //
-    // The passed ACL did not contain the minimum required information.
-    //
     int ERROR_COULD_NOT_INTERPRET = 552;
-
-    //
-    // MessageId: ERROR_PROFILING_AT_LIMIT
-    //
-    // MessageText:
-    //
-    // The number of active profiling objects is at the maximum and no more may
-    // be started.
-    //
     int ERROR_PROFILING_AT_LIMIT = 553;
-
-    //
-    // MessageId: ERROR_CANT_WAIT
-    //
-    // MessageText:
-    //
-    // Used to indicate that an operation cannot continue without blocking for
-    // I/O.
-    //
     int ERROR_CANT_WAIT = 554;
-
-    //
-    // MessageId: ERROR_CANT_TERMINATE_SELF
-    //
-    // MessageText:
-    //
-    // Indicates that a thread attempted to terminate itself by default (called
-    // NtTerminateThread with NUL; and it was the last thread in the current
-    // process.
-    //
     int ERROR_CANT_TERMINATE_SELF = 555;
-
-    //
-    // MessageId: ERROR_UNEXPECTED_MM_CREATE_ERR
-    //
-    // MessageText:
-    //
-    // If an MM error is returned which is not defined in the standard FsRtl
-    // filter, it is converted to one of the following errors which is
-    // guaranteed to be in the filter.
-    // In this case information is lost, however, the filter correctly handles
-    // the exception.
-    //
     int ERROR_UNEXPECTED_MM_CREATE_ERR = 556;
-
-    //
-    // MessageId: ERROR_UNEXPECTED_MM_MAP_ERROR
-    //
-    // MessageText:
-    //
-    // If an MM error is returned which is not defined in the standard FsRtl
-    // filter, it is converted to one of the following errors which is
-    // guaranteed to be in the filter.
-    // In this case information is lost, however, the filter correctly handles
-    // the exception.
-    //
     int ERROR_UNEXPECTED_MM_MAP_ERROR = 557;
-
-    //
-    // MessageId: ERROR_UNEXPECTED_MM_EXTEND_ERR
-    //
-    // MessageText:
-    //
-    // If an MM error is returned which is not defined in the standard FsRtl
-    // filter, it is converted to one of the following errors which is
-    // guaranteed to be in the filter.
-    // In this case information is lost, however, the filter correctly handles
-    // the exception.
-    //
     int ERROR_UNEXPECTED_MM_EXTEND_ERR = 558;
-
-    //
-    // MessageId: ERROR_BAD_FUNCTION_TABLE
-    //
-    // MessageText:
-    //
-    // A malformed function table was encountered during an unwind operation.
-    //
     int ERROR_BAD_FUNCTION_TABLE = 559;
-
-    //
-    // MessageId: ERROR_NO_GUID_TRANSLATION
-    //
-    // MessageText:
-    //
-    // Indicates that an attempt was made to assign protection to a file system
-    // file or directory and one of the SIDs in the security descriptor could
-    // not be translated into a GUID that could be stored by the file system.
-    // This causes the protection attempt to fail, which may cause a file
-    // creation attempt to fail.
-    //
     int ERROR_NO_GUID_TRANSLATION = 560;
-
-    //
-    // MessageId: ERROR_INVALID_LDT_SIZE
-    //
-    // MessageText:
-    //
-    // Indicates that an attempt was made to grow an LDT by setting its size, or
-    // that the size was not an even number of selectors.
-    //
     int ERROR_INVALID_LDT_SIZE = 561;
-
-    //
-    // MessageId: ERROR_INVALID_LDT_OFFSET
-    //
-    // MessageText:
-    //
-    // Indicates that the starting value for the LDT information was not an
-    // integral multiple of the selector size.
-    //
     int ERROR_INVALID_LDT_OFFSET = 563;
-
-    //
-    // MessageId: ERROR_INVALID_LDT_DESCRIPTOR
-    //
-    // MessageText:
-    //
-    // Indicates that the user supplied an invalid descriptor when trying to set
-    // up Ldt descriptors.
-    //
     int ERROR_INVALID_LDT_DESCRIPTOR = 564;
-
-    //
-    // MessageId: ERROR_TOO_MANY_THREADS
-    //
-    // MessageText:
-    //
-    // Indicates a process has too many threads to perform the requested action.
-    // For example, assignment of a primary token may only be performed when a
-    // process has zero or one threads.
-    //
     int ERROR_TOO_MANY_THREADS = 565;
-
-    //
-    // MessageId: ERROR_THREAD_NOT_IN_PROCESS
-    //
-    // MessageText:
-    //
-    // An attempt was made to operate on a thread within a specific process, but
-    // the thread specified is not in the process specified.
-    //
     int ERROR_THREAD_NOT_IN_PROCESS = 566;
-
-    //
-    // MessageId: ERROR_PAGEFILE_QUOTA_EXCEEDED
-    //
-    // MessageText:
-    //
-    // Page file quota was exceeded.
-    //
     int ERROR_PAGEFILE_QUOTA_EXCEEDED = 567;
-
-    //
-    // MessageId: ERROR_LOGON_SERVER_CONFLICT
-    //
-    // MessageText:
-    //
-    // The Netlogon service cannot start because another Netlogon service
-    // running in the domain conflicts with the specified role.
-    //
     int ERROR_LOGON_SERVER_CONFLICT = 568;
-
-    //
-    // MessageId: ERROR_SYNCHRONIZATION_REQUIRED
-    //
-    // MessageText:
-    //
-    // The SAM database on a Windows Server is significantly out of
-    // synchronization with the copy on the Domain Controller. A complete
-    // synchronization is required.
-    //
     int ERROR_SYNCHRONIZATION_REQUIRED = 569;
-
-    //
-    // MessageId: ERROR_NET_OPEN_FAILED
-    //
-    // MessageText:
-    //
-    // The NtCreateFile API failed. This error should never be returned to an
-    // application, it is a place holder for the Windows Lan Manager Redirector
-    // to use in its internal error mapping routines.
-    //
     int ERROR_NET_OPEN_FAILED = 570;
-
-    //
-    // MessageId: ERROR_IO_PRIVILEGE_FAILED
-    //
-    // MessageText:
-    //
-    // {Privilege Failed}
-    // The I/O permissions for the process could not be changed.
-    //
     int ERROR_IO_PRIVILEGE_FAILED = 571;
-
-    //
-    // MessageId: ERROR_CONTROL_C_EXIT
-    //
-    // MessageText:
-    //
-    // {Application Exit by CTRL+C}
-    // The application terminated as a result of a CTRL+C.
-    //
-    int ERROR_CONTROL_C_EXIT = 572; // winnt
-
-    //
-    // MessageId: ERROR_MISSING_SYSTEMFILE
-    //
-    // MessageText:
-    //
-    // {Missing System File}
-    // The required system file %hs is bad or missing.
-    //
+    int ERROR_CONTROL_C_EXIT = 572;
     int ERROR_MISSING_SYSTEMFILE = 573;
-
-    //
-    // MessageId: ERROR_UNHANDLED_EXCEPTION
-    //
-    // MessageText:
-    //
-    // {Application Error}
-    // The exception %s (0x%08;x) occurred in the application at location
-    // 0x%08;x.
-    //
     int ERROR_UNHANDLED_EXCEPTION = 574;
-
-    //
-    // MessageId: ERROR_APP_INIT_FAILURE
-    //
-    // MessageText:
-    //
-    // {Application Error}
-    // The application failed to initialize properly (0x%lx). Click OK to
-    // terminate the application.
-    //
     int ERROR_APP_INIT_FAILURE = 575;
-
-    //
-    // MessageId: ERROR_PAGEFILE_CREATE_FAILED
-    //
-    // MessageText:
-    //
-    // {Unable to Create Paging File}
-    // The creation of the paging file %hs failed (%lx). The requested size was
-    // %ld.
-    //
     int ERROR_PAGEFILE_CREATE_FAILED = 576;
-
-    //
-    // MessageId: ERROR_INVALID_IMAGE_HASH
-    //
-    // MessageText:
-    //
-    // Windows cannot verify the digital signature for this file. A recent
-    // hardware or software change might have installed a file that is signed
-    // incorrectly or damaged, or that might be malicious software from an
-    // unknown source.
-    //
     int ERROR_INVALID_IMAGE_HASH = 577;
-
-    //
-    // MessageId: ERROR_NO_PAGEFILE
-    //
-    // MessageText:
-    //
-    // {No Paging File Specified}
-    // No paging file was specified in the system configuration.
-    //
     int ERROR_NO_PAGEFILE = 578;
-
-    //
-    // MessageId: ERROR_ILLEGAL_FLOAT_CONTEXT
-    //
-    // MessageText:
-    //
-    // {EXCEPTION}
-    // A real-mode application issued a floating-point instruction and
-    // floating-point hardware is not present.
-    //
     int ERROR_ILLEGAL_FLOAT_CONTEXT = 579;
-
-    //
-    // MessageId: ERROR_NO_EVENT_PAIR
-    //
-    // MessageText:
-    //
-    // An event pair synchronization operation was performed using the thread
-    // specific client/server event pair object, but no event pair object was
-    // associated with the thread.
-    //
     int ERROR_NO_EVENT_PAIR = 580;
-
-    //
-    // MessageId: ERROR_DOMAIN_CTRLR_CONFIG_ERROR
-    //
-    // MessageText:
-    //
-    // A Windows Server has an incorrect configuration.
-    //
     int ERROR_DOMAIN_CTRLR_CONFIG_ERROR = 581;
-
-    //
-    // MessageId: ERROR_ILLEGAL_CHARACTER
-    //
-    // MessageText:
-    //
-    // An illegal character was encountered. For a multi-byte character set this
-    // includes a lead byte without a succeeding trail byte. For the Unicode
-    // character set this includes the characters 0xFFFF and 0xFFFE.
-    //
     int ERROR_ILLEGAL_CHARACTER = 582;
-
-    //
-    // MessageId: ERROR_UNDEFINED_CHARACTER
-    //
-    // MessageText:
-    //
-    // The Unicode character is not defined in the Unicode character set
-    // installed on the system.
-    //
     int ERROR_UNDEFINED_CHARACTER = 583;
-
-    //
-    // MessageId: ERROR_FLOPPY_VOLUME
-    //
-    // MessageText:
-    //
-    // The paging file cannot be created on a floppy diskette.
-    //
     int ERROR_FLOPPY_VOLUME = 584;
-
-    //
-    // MessageId: ERROR_BIOS_FAILED_TO_CONNECT_INTERRUPT
-    //
-    // MessageText:
-    //
-    // The system BIOS failed to connect a system interrupt to the device or bus
-    // for which the device is connected.
-    //
     int ERROR_BIOS_FAILED_TO_CONNECT_INTERRUPT = 585;
-
-    //
-    // MessageId: ERROR_BACKUP_CONTROLLER
-    //
-    // MessageText:
-    //
-    // This operation is only allowed for the Primary Domain Controller of the
-    // domain.
-    //
     int ERROR_BACKUP_CONTROLLER = 586;
-
-    //
-    // MessageId: ERROR_MUTANT_LIMIT_EXCEEDED
-    //
-    // MessageText:
-    //
-    // An attempt was made to acquire a mutant such that its maximum count would
-    // have been exceeded.
-    //
     int ERROR_MUTANT_LIMIT_EXCEEDED = 587;
-
-    //
-    // MessageId: ERROR_FS_DRIVER_REQUIRED
-    //
-    // MessageText:
-    //
-    // A volume has been accessed for which a file system driver is required
-    // that has not yet been loaded.
-    //
     int ERROR_FS_DRIVER_REQUIRED = 588;
-
-    //
-    // MessageId: ERROR_CANNOT_LOAD_REGISTRY_FILE
-    //
-    // MessageText:
-    //
-    // {Registry File Failure}
-    // The registry cannot load the hive (file):
-    // %hs
-    // or its log or alternate.
-    // It is corrupt, absent, or not writable.
-    //
     int ERROR_CANNOT_LOAD_REGISTRY_FILE = 589;
-
-    //
-    // MessageId: ERROR_DEBUG_ATTACH_FAILED
-    //
-    // MessageText:
-    //
-    // {Unexpected Failure in DebugActiveProcess}
-    // An unexpected failure occurred while processing a DebugActiveProcess API
-    // request. You may choose OK to terminate the process, or Cancel to ignore
-    // the error.
-    //
     int ERROR_DEBUG_ATTACH_FAILED = 590;
-
-    //
-    // MessageId: ERROR_SYSTEM_PROCESS_TERMINATED
-    //
-    // MessageText:
-    //
-    // {Fatal System Error}
-    // The %hs system process terminated unexpectedly with a status of 0x%08x
-    // (0x%08x 0x%08x).
-    // The system has been shut down.
-    //
     int ERROR_SYSTEM_PROCESS_TERMINATED = 591;
-
-    //
-    // MessageId: ERROR_DATA_NOT_ACCEPTED
-    //
-    // MessageText:
-    //
-    // {Data Not Accepted}
-    // The TDI client could not handle the data received during an indication.
-    //
     int ERROR_DATA_NOT_ACCEPTED = 592;
-
-    //
-    // MessageId: ERROR_VDM_HARD_ERROR
-    //
-    // MessageText:
-    //
-    // NTVDM encountered a hard error.
-    //
     int ERROR_VDM_HARD_ERROR = 593;
-
-    //
-    // MessageId: ERROR_DRIVER_CANCEL_TIMEOUT
-    //
-    // MessageText:
-    //
-    // {Cancel Timeout}
-    // The driver %hs failed to complete a cancelled I/O request in the allotted
-    // time.
-    //
     int ERROR_DRIVER_CANCEL_TIMEOUT = 594;
-
-    //
-    // MessageId: ERROR_REPLY_MESSAGE_MISMATCH
-    //
-    // MessageText:
-    //
-    // {Reply Message Mismatch}
-    // An attempt was made to reply to an LPC message, but the thread specified
-    // by the client ID in the message was not waiting on that message.
-    //
     int ERROR_REPLY_MESSAGE_MISMATCH = 595;
-
-    //
-    // MessageId: ERROR_LOST_WRITEBEHIND_DATA
-    //
-    // MessageText:
-    //
-    // {Delayed Write Failed}
-    // Windows was unable to save all the data for the file %hs. The data has
-    // been lost.
-    // This error may be caused by a failure of your computer hardware or
-    // network connection. Please try to save this file elsewhere.
-    //
     int ERROR_LOST_WRITEBEHIND_DATA = 596;
-
-    //
-    // MessageId: ERROR_CLIENT_SERVER_PARAMETERS_INVALID
-    //
-    // MessageText:
-    //
-    // The parameter(s) passed to the server in the client/server shared memory
-    // window were invalid. Too much data may have been put in the shared memory
-    // window.
-    //
     int ERROR_CLIENT_SERVER_PARAMETERS_INVALID = 597;
-
-    //
-    // MessageId: ERROR_NOT_TINY_STREAM
-    //
-    // MessageText:
-    //
-    // The stream is not a tiny stream.
-    //
     int ERROR_NOT_TINY_STREAM = 598;
-
-    //
-    // MessageId: ERROR_STACK_OVERFLOW_READ
-    //
-    // MessageText:
-    //
-    // The request must be handled by the stack overflow code.
-    //
     int ERROR_STACK_OVERFLOW_READ = 599;
-
-    //
-    // MessageId: ERROR_CONVERT_TO_LARGE
-    //
-    // MessageText:
-    //
-    // Internal OFS status codes indicating how an allocation operation is
-    // handled. Either it is retried after the containing onode is moved or the
-    // extent stream is converted to a large stream.
-    //
     int ERROR_CONVERT_TO_LARGE = 600;
-
-    //
-    // MessageId: ERROR_FOUND_OUT_OF_SCOPE
-    //
-    // MessageText:
-    //
-    // The attempt to find the object found an object matching by ID on the
-    // volume but it is out of the scope of the handle used for the operation.
-    //
     int ERROR_FOUND_OUT_OF_SCOPE = 601;
-
-    //
-    // MessageId: ERROR_ALLOCATE_BUCKET
-    //
-    // MessageText:
-    //
-    // The bucket array must be grown. Retry transaction after doing so.
-    //
     int ERROR_ALLOCATE_BUCKET = 602;
-
-    //
-    // MessageId: ERROR_MARSHALL_OVERFLOW
-    //
-    // MessageText:
-    //
-    // The user/kernel marshalling buffer has overflowed.
-    //
     int ERROR_MARSHALL_OVERFLOW = 603;
-
-    //
-    // MessageId: ERROR_INVALID_VARIANT
-    //
-    // MessageText:
-    //
-    // The supplied variant structure contains invalid data.
-    //
     int ERROR_INVALID_VARIANT = 604;
-
-    //
-    // MessageId: ERROR_BAD_COMPRESSION_BUFFER
-    //
-    // MessageText:
-    //
-    // The specified buffer contains ill-formed data.
-    //
     int ERROR_BAD_COMPRESSION_BUFFER = 605;
-
-    //
-    // MessageId: ERROR_AUDIT_FAILED
-    //
-    // MessageText:
-    //
-    // {Audit Failed}
-    // An attempt to generate a security audit failed.
-    //
     int ERROR_AUDIT_FAILED = 606;
-
-    //
-    // MessageId: ERROR_TIMER_RESOLUTION_NOT_SET
-    //
-    // MessageText:
-    //
-    // The timer resolution was not previously set by the current process.
-    //
     int ERROR_TIMER_RESOLUTION_NOT_SET = 607;
-
-    //
-    // MessageId: ERROR_INSUFFICIENT_LOGON_INFO
-    //
-    // MessageText:
-    //
-    // There is insufficient account information to log you on.
-    //
     int ERROR_INSUFFICIENT_LOGON_INFO = 608;
-
-    //
-    // MessageId: ERROR_BAD_DLL_ENTRYPOINT
-    //
-    // MessageText:
-    //
-    // {Invalid DLL Entrypoint}
-    // The dynamic link library %hs is not written correctly. The stack pointer
-    // has been left in an inconsistent state.
-    // The entrypoint should be declared as WINAPI or STDCALL. Select YES to
-    // fail the DLL load. Select NO to continue execution. Selecting NO may
-    // cause the application to operate incorrectly.
-    //
     int ERROR_BAD_DLL_ENTRYPOINT = 609;
-
-    //
-    // MessageId: ERROR_BAD_SERVICE_ENTRYPOINT
-    //
-    // MessageText:
-    //
-    // {Invalid Service Callback Entrypoint}
-    // The %hs service is not written correctly. The stack pointer has been left
-    // in an inconsistent state.
-    // The callback entrypoint should be declared as WINAPI or STDCALL.
-    // Selecting OK will cause the service to continue operation. However, the
-    // service process may operate incorrectly.
-    //
     int ERROR_BAD_SERVICE_ENTRYPOINT = 610;
-
-    //
-    // MessageId: ERROR_IP_ADDRESS_CONFLICT1
-    //
-    // MessageText:
-    //
-    // There is an IP address conflict with another system on the network
-    //
     int ERROR_IP_ADDRESS_CONFLICT1 = 611;
-
-    //
-    // MessageId: ERROR_IP_ADDRESS_CONFLICT2
-    //
-    // MessageText:
-    //
-    // There is an IP address conflict with another system on the network
-    //
     int ERROR_IP_ADDRESS_CONFLICT2 = 612;
-
-    //
-    // MessageId: ERROR_REGISTRY_QUOTA_LIMIT
-    //
-    // MessageText:
-    //
-    // {Low On Registry Space}
-    // The system has reached the maximum size allowed for the system part of
-    // the registry. Additional storage requests will be ignored.
-    //
     int ERROR_REGISTRY_QUOTA_LIMIT = 613;
-
-    //
-    // MessageId: ERROR_NO_CALLBACK_ACTIVE
-    //
-    // MessageText:
-    //
-    // A callback return system service cannot be executed when no callback is
-    // active.
-    //
     int ERROR_NO_CALLBACK_ACTIVE = 614;
-
-    //
-    // MessageId: ERROR_PWD_TOO_SHORT
-    //
-    // MessageText:
-    //
-    // The password provided is too short to meet the policy of your user
-    // account.
-    // Please choose a longer password.
-    //
     int ERROR_PWD_TOO_SHORT = 615;
-
-    //
-    // MessageId: ERROR_PWD_TOO_RECENT
-    //
-    // MessageText:
-    //
-    // The policy of your user account does not allow you to change passwords
-    // too frequently.
-    // This is done to prevent users from changing back to a familiar, but
-    // potentially discovered, password.
-    // If you feel your password has been compromised then please contact your
-    // administrator immediately to have a new one assigned.
-    //
     int ERROR_PWD_TOO_RECENT = 616;
-
-    //
-    // MessageId: ERROR_PWD_HISTORY_CONFLICT
-    //
-    // MessageText:
-    //
-    // You have attempted to change your password to one that you have used in
-    // the past.
-    // The policy of your user account does not allow this. Please select a
-    // password that you have not previously used.
-    //
     int ERROR_PWD_HISTORY_CONFLICT = 617;
-
-    //
-    // MessageId: ERROR_UNSUPPORTED_COMPRESSION
-    //
-    // MessageText:
-    //
-    // The specified compression format is unsupported.
-    //
     int ERROR_UNSUPPORTED_COMPRESSION = 618;
-
-    //
-    // MessageId: ERROR_INVALID_HW_PROFILE
-    //
-    // MessageText:
-    //
-    // The specified hardware profile configuration is invalid.
-    //
     int ERROR_INVALID_HW_PROFILE = 619;
-
-    //
-    // MessageId: ERROR_INVALID_PLUGPLAY_DEVICE_PATH
-    //
-    // MessageText:
-    //
-    // The specified Plug and Play registry device path is invalid.
-    //
     int ERROR_INVALID_PLUGPLAY_DEVICE_PATH = 620;
-
-    //
-    // MessageId: ERROR_QUOTA_LIST_INCONSISTENT
-    //
-    // MessageText:
-    //
-    // The specified quota list is internally inconsistent with its descriptor.
-    //
     int ERROR_QUOTA_LIST_INCONSISTENT = 621;
-
-    //
-    // MessageId: ERROR_EVALUATION_EXPIRATION
-    //
-    // MessageText:
-    //
-    // {Windows Evaluation Notification}
-    // The evaluation period for this installation of Windows has expired. This
-    // system will shutdown in=1 hour. To restore access to this installation of
-    // Windows, please upgrade this installation using a licensed distribution
-    // of this product.
-    //
     int ERROR_EVALUATION_EXPIRATION = 622;
-
-    //
-    // MessageId: ERROR_ILLEGAL_DLL_RELOCATION
-    //
-    // MessageText:
-    //
-    // {Illegal System DLL Relocation}
-    // The system DLL %hs was relocated in memory. The application will not run
-    // properly.
-    // The relocation occurred because the DLL %hs occupied an address range
-    // reserved for Windows system DLLs. The vendor supplying the DLL should be
-    // contacted for a new DLL.
-    //
     int ERROR_ILLEGAL_DLL_RELOCATION = 623;
-
-    //
-    // MessageId: ERROR_DLL_INIT_FAILED_LOGOFF
-    //
-    // MessageText:
-    //
-    // {DLL Initialization Failed}
-    // The application failed to initialize because the window station is
-    // shutting down.
-    //
     int ERROR_DLL_INIT_FAILED_LOGOFF = 624;
-
-    //
-    // MessageId: ERROR_VALIDATE_CONTINUE
-    //
-    // MessageText:
-    //
-    // The validation process needs to continue on to the next step.
-    //
     int ERROR_VALIDATE_CONTINUE = 625;
-
-    //
-    // MessageId: ERROR_NO_MORE_MATCHES
-    //
-    // MessageText:
-    //
-    // There are no more matches for the current index enumeration.
-    //
     int ERROR_NO_MORE_MATCHES = 626;
-
-    //
-    // MessageId: ERROR_RANGE_LIST_CONFLICT
-    //
-    // MessageText:
-    //
-    // The range could not be added to the range list because of a conflict.
-    //
     int ERROR_RANGE_LIST_CONFLICT = 627;
-
-    //
-    // MessageId: ERROR_SERVER_SID_MISMATCH
-    //
-    // MessageText:
-    //
-    // The server process is running under a SID different than that required by
-    // client.
-    //
     int ERROR_SERVER_SID_MISMATCH = 628;
-
-    //
-    // MessageId: ERROR_CANT_ENABLE_DENY_ONLY
-    //
-    // MessageText:
-    //
-    // A group marked use for deny only cannot be enabled.
-    //
     int ERROR_CANT_ENABLE_DENY_ONLY = 629;
-
-    //
-    // MessageId: ERROR_FLOAT_MULTIPLE_FAULTS
-    //
-    // MessageText:
-    //
-    // {EXCEPTION}
-    // Multiple floating point faults.
-    //
-    int ERROR_FLOAT_MULTIPLE_FAULTS = 630; // winnt
-
-    //
-    // MessageId: ERROR_FLOAT_MULTIPLE_TRAPS
-    //
-    // MessageText:
-    //
-    // {EXCEPTION}
-    // Multiple floating point traps.
-    //
-    int ERROR_FLOAT_MULTIPLE_TRAPS = 631; // winnt
-
-    //
-    // MessageId: ERROR_NOINTERFACE
-    //
-    // MessageText:
-    //
-    // The requested interface is not supported.
-    //
+    int ERROR_FLOAT_MULTIPLE_FAULTS = 630;
+    int ERROR_FLOAT_MULTIPLE_TRAPS = 631;
     int ERROR_NOINTERFACE = 632;
-
-    //
-    // MessageId: ERROR_DRIVER_FAILED_SLEEP
-    //
-    // MessageText:
-    //
-    // {System Standby Failed}
-    // The driver %hs does not support standby mode. Updating this driver may
-    // allow the system to go to standby mode.
-    //
     int ERROR_DRIVER_FAILED_SLEEP = 633;
-
-    //
-    // MessageId: ERROR_CORRUPT_SYSTEM_FILE
-    //
-    // MessageText:
-    //
-    // The system file %1 has become corrupt and has been replaced.
-    //
     int ERROR_CORRUPT_SYSTEM_FILE = 634;
-
-    //
-    // MessageId: ERROR_COMMITMENT_MINIMUM
-    //
-    // MessageText:
-    //
-    // {Virtual Memory Minimum Too Low}
-    // Your system is low on virtual memory. Windows is increasing the size of
-    // your virtual memory paging file.
-    // During this process, memory requests for some applications may be denied.
-    // For more information, see Help.
-    //
     int ERROR_COMMITMENT_MINIMUM = 635;
-
-    //
-    // MessageId: ERROR_PNP_RESTART_ENUMERATION
-    //
-    // MessageText:
-    //
-    // A device was removed so enumeration must be restarted.
-    //
     int ERROR_PNP_RESTART_ENUMERATION = 636;
-
-    //
-    // MessageId: ERROR_SYSTEM_IMAGE_BAD_SIGNATURE
-    //
-    // MessageText:
-    //
-    // {Fatal System Error}
-    // The system image %s is not properly signed.
-    // The file has been replaced with the signed file.
-    // The system has been shut down.
-    //
     int ERROR_SYSTEM_IMAGE_BAD_SIGNATURE = 637;
-
-    //
-    // MessageId: ERROR_PNP_REBOOT_REQUIRED
-    //
-    // MessageText:
-    //
-    // Device will not start without a reboot.
-    //
     int ERROR_PNP_REBOOT_REQUIRED = 638;
-
-    //
-    // MessageId: ERROR_INSUFFICIENT_POWER
-    //
-    // MessageText:
-    //
-    // There is not enough power to complete the requested operation.
-    //
     int ERROR_INSUFFICIENT_POWER = 639;
-
-    //
-    // MessageId: ERROR_MULTIPLE_FAULT_VIOLATION
-    //
-    // MessageText:
-    //
-    // ERROR_MULTIPLE_FAULT_VIOLATION
-    //
     int ERROR_MULTIPLE_FAULT_VIOLATION = 640;
-
-    //
-    // MessageId: ERROR_SYSTEM_SHUTDOWN
-    //
-    // MessageText:
-    //
-    // The system is in the process of shutting down.
-    //
     int ERROR_SYSTEM_SHUTDOWN = 641;
-
-    //
-    // MessageId: ERROR_PORT_NOT_SET
-    //
-    // MessageText:
-    //
-    // An attempt to remove a processes DebugPort was made, but a port was not
-    // already associated with the process.
-    //
     int ERROR_PORT_NOT_SET = 642;
-
-    //
-    // MessageId: ERROR_DS_VERSION_CHECK_FAILURE
-    //
-    // MessageText:
-    //
-    // This version of Windows is not compatible with the behavior version of
-    // directory forest, domain or domain controller.
-    //
     int ERROR_DS_VERSION_CHECK_FAILURE = 643;
-
-    //
-    // MessageId: ERROR_RANGE_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The specified range could not be found in the range list.
-    //
     int ERROR_RANGE_NOT_FOUND = 644;
-
-    //
-    // MessageId: ERROR_NOT_SAFE_MODE_DRIVER
-    //
-    // MessageText:
-    //
-    // The driver was not loaded because the system is booting into safe mode.
-    //
     int ERROR_NOT_SAFE_MODE_DRIVER = 646;
-
-    //
-    // MessageId: ERROR_FAILED_DRIVER_ENTRY
-    //
-    // MessageText:
-    //
-    // The driver was not loaded because it failed it's initialization call.
-    //
     int ERROR_FAILED_DRIVER_ENTRY = 647;
-
-    //
-    // MessageId: ERROR_DEVICE_ENUMERATION_ERROR
-    //
-    // MessageText:
-    //
-    // The "%hs" encountered an error while applying power or reading the device
-    // configuration.
-    // This may be caused by a failure of your hardware or by a poor connection.
-    //
     int ERROR_DEVICE_ENUMERATION_ERROR = 648;
-
-    //
-    // MessageId: ERROR_MOUNT_POINT_NOT_RESOLVED
-    //
-    // MessageText:
-    //
-    // The create operation failed because the name contained at least one mount
-    // point which resolves to a volume to which the specified device object is
-    // not attached.
-    //
     int ERROR_MOUNT_POINT_NOT_RESOLVED = 649;
-
-    //
-    // MessageId: ERROR_INVALID_DEVICE_OBJECT_PARAMETER
-    //
-    // MessageText:
-    //
-    // The device object parameter is either not a valid device object or is not
-    // attached to the volume specified by the file name.
-    //
     int ERROR_INVALID_DEVICE_OBJECT_PARAMETER = 650;
-
-    //
-    // MessageId: ERROR_MCA_OCCURED
-    //
-    // MessageText:
-    //
-    // A Machine Check Error has occurred. Please check the system eventlog for
-    // additional information.
-    //
     int ERROR_MCA_OCCURED = 651;
-
-    //
-    // MessageId: ERROR_DRIVER_DATABASE_ERROR
-    //
-    // MessageText:
-    //
-    // There was error [%2] processing the driver database.
-    //
     int ERROR_DRIVER_DATABASE_ERROR = 652;
-
-    //
-    // MessageId: ERROR_SYSTEM_HIVE_TOO_LARGE
-    //
-    // MessageText:
-    //
-    // System hive size has exceeded its limit.
-    //
     int ERROR_SYSTEM_HIVE_TOO_LARGE = 653;
-
-    //
-    // MessageId: ERROR_DRIVER_FAILED_PRIOR_UNLOAD
-    //
-    // MessageText:
-    //
-    // The driver could not be loaded because a previous version of the driver
-    // is still in memory.
-    //
     int ERROR_DRIVER_FAILED_PRIOR_UNLOAD = 654;
-
-    //
-    // MessageId: ERROR_VOLSNAP_PREPARE_HIBERNATE
-    //
-    // MessageText:
-    //
-    // {Volume Shadow Copy Service}
-    // Please wait while the Volume Shadow Copy Service prepares volume %hs for
-    // hibernation.
-    //
     int ERROR_VOLSNAP_PREPARE_HIBERNATE = 655;
-
-    //
-    // MessageId: ERROR_HIBERNATION_FAILURE
-    //
-    // MessageText:
-    //
-    // The system has failed to hibernate (The error code is %hs). Hibernation
-    // will be disabled until the system is restarted.
-    //
     int ERROR_HIBERNATION_FAILURE = 656;
-
-    //
-    // MessageId: ERROR_FILE_SYSTEM_LIMITATION
-    //
-    // MessageText:
-    //
-    // The requested operation could not be completed due to a file system
-    // limitation
-    //
     int ERROR_FILE_SYSTEM_LIMITATION = 665;
-
-    //
-    // MessageId: ERROR_ASSERTION_FAILURE
-    //
-    // MessageText:
-    //
-    // An assertion failure has occurred.
-    //
     int ERROR_ASSERTION_FAILURE = 668;
-
-    //
-    // MessageId: ERROR_ACPI_ERROR
-    //
-    // MessageText:
-    //
-    // An error occurred in the ACPI subsystem.
-    //
     int ERROR_ACPI_ERROR = 669;
-
-    //
-    // MessageId: ERROR_WOW_ASSERTION
-    //
-    // MessageText:
-    //
-    // WOW Assertion Error.
-    //
     int ERROR_WOW_ASSERTION = 670;
-
-    //
-    // MessageId: ERROR_PNP_BAD_MPS_TABLE
-    //
-    // MessageText:
-    //
-    // A device is missing in the system BIOS MPS table. This device will not be
-    // used.
-    // Please contact your system vendor for system BIOS update.
-    //
     int ERROR_PNP_BAD_MPS_TABLE = 671;
-
-    //
-    // MessageId: ERROR_PNP_TRANSLATION_FAILED
-    //
-    // MessageText:
-    //
-    // A translator failed to translate resources.
-    //
     int ERROR_PNP_TRANSLATION_FAILED = 672;
-
-    //
-    // MessageId: ERROR_PNP_IRQ_TRANSLATION_FAILED
-    //
-    // MessageText:
-    //
-    // A IRQ translator failed to translate resources.
-    //
     int ERROR_PNP_IRQ_TRANSLATION_FAILED = 673;
-
-    //
-    // MessageId: ERROR_PNP_INVALID_ID
-    //
-    // MessageText:
-    //
-    // Driver %2 returned invalid ID for a child device (%3).
-    //
     int ERROR_PNP_INVALID_ID = 674;
-
-    //
-    // MessageId: ERROR_WAKE_SYSTEM_DEBUGGER
-    //
-    // MessageText:
-    //
-    // {Kernel Debugger Awakened}
-    // the system debugger was awakened by an interrupt.
-    //
     int ERROR_WAKE_SYSTEM_DEBUGGER = 675;
-
-    //
-    // MessageId: ERROR_HANDLES_CLOSED
-    //
-    // MessageText:
-    //
-    // {Handles Closed}
-    // Handles to objects have been automatically closed as a result of the
-    // requested operation.
-    //
     int ERROR_HANDLES_CLOSED = 676;
-
-    //
-    // MessageId: ERROR_EXTRANEOUS_INFORMATION
-    //
-    // MessageText:
-    //
-    // {Too Much Information}
-    // The specified access control list (AC; contained more information than
-    // was expected.
-    //
     int ERROR_EXTRANEOUS_INFORMATION = 677;
-
-    //
-    // MessageId: ERROR_RXACT_COMMIT_NECESSARY
-    //
-    // MessageText:
-    //
-    // This warning level status indicates that the transaction state already
-    // exists for the registry sub-tree, but that a transaction commit was
-    // previously aborted.
-    // The commit has NOT been completed, but has not been rolled back either
-    // (so it may still be committed if desired).
-    //
     int ERROR_RXACT_COMMIT_NECESSARY = 678;
-
-    //
-    // MessageId: ERROR_MEDIA_CHECK
-    //
-    // MessageText:
-    //
-    // {Media Changed}
-    // The media may have changed.
-    //
     int ERROR_MEDIA_CHECK = 679;
-
-    //
-    // MessageId: ERROR_GUID_SUBSTITUTION_MADE
-    //
-    // MessageText:
-    //
-    // {GUID Substitution}
-    // During the translation of a global identifier (GUID) to a Windows
-    // security ID (SID), no administratively-defined GUID prefix was found.
-    // A substitute prefix was used, which will not compromise system security.
-    // However, this may provide a more restrictive access than intended.
-    //
     int ERROR_GUID_SUBSTITUTION_MADE = 680;
-
-    //
-    // MessageId: ERROR_STOPPED_ON_SYMLINK
-    //
-    // MessageText:
-    //
-    // The create operation stopped after reaching a symbolic link
-    //
     int ERROR_STOPPED_ON_SYMLINK = 681;
-
-    //
-    // MessageId: ERROR_LONGJUMP
-    //
-    // MessageText:
-    //
-    // A long jump has been executed.
-    //
     int ERROR_LONGJUMP = 682;
-
-    //
-    // MessageId: ERROR_PLUGPLAY_QUERY_VETOED
-    //
-    // MessageText:
-    //
-    // The Plug and Play query operation was not successful.
-    //
     int ERROR_PLUGPLAY_QUERY_VETOED = 683;
-
-    //
-    // MessageId: ERROR_UNWIND_CONSOLIDATE
-    //
-    // MessageText:
-    //
-    // A frame consolidation has been executed.
-    //
     int ERROR_UNWIND_CONSOLIDATE = 684;
-
-    //
-    // MessageId: ERROR_REGISTRY_HIVE_RECOVERED
-    //
-    // MessageText:
-    //
-    // {Registry Hive Recovered}
-    // Registry hive (file):
-    // %hs
-    // was corrupted and it has been recovered. Some data might have been lost.
-    //
     int ERROR_REGISTRY_HIVE_RECOVERED = 685;
-
-    //
-    // MessageId: ERROR_DLL_MIGHT_BE_INSECURE
-    //
-    // MessageText:
-    //
-    // The application is attempting to run executable code from the module %hs.
-    // This may be insecure. An alternative, %hs, is available. Should the
-    // application use the secure module %hs?
-    //
     int ERROR_DLL_MIGHT_BE_INSECURE = 686;
-
-    //
-    // MessageId: ERROR_DLL_MIGHT_BE_INCOMPATIBLE
-    //
-    // MessageText:
-    //
-    // The application is loading executable code from the module %hs. This is
-    // secure, but may be incompatible with previous releases of the operating
-    // system. An alternative, %hs, is available. Should the application use the
-    // secure module %hs?
-    //
     int ERROR_DLL_MIGHT_BE_INCOMPATIBLE = 687;
-
-    //
-    // MessageId: ERROR_DBG_EXCEPTION_NOT_HANDLED
-    //
-    // MessageText:
-    //
-    // Debugger did not handle the exception.
-    //
-    int ERROR_DBG_EXCEPTION_NOT_HANDLED = 688; // winnt
-
-    //
-    // MessageId: ERROR_DBG_REPLY_LATER
-    //
-    // MessageText:
-    //
-    // Debugger will reply later.
-    //
+    int ERROR_DBG_EXCEPTION_NOT_HANDLED = 688;
     int ERROR_DBG_REPLY_LATER = 689;
-
-    //
-    // MessageId: ERROR_DBG_UNABLE_TO_PROVIDE_HANDLE
-    //
-    // MessageText:
-    //
-    // Debugger cannot provide handle.
-    //
     int ERROR_DBG_UNABLE_TO_PROVIDE_HANDLE = 690;
-
-    //
-    // MessageId: ERROR_DBG_TERMINATE_THREAD
-    //
-    // MessageText:
-    //
-    // Debugger terminated thread.
-    //
-    int ERROR_DBG_TERMINATE_THREAD = 691; // winnt
-
-    //
-    // MessageId: ERROR_DBG_TERMINATE_PROCESS
-    //
-    // MessageText:
-    //
-    // Debugger terminated process.
-    //
-    int ERROR_DBG_TERMINATE_PROCESS = 692; // winnt
-
-    //
-    // MessageId: ERROR_DBG_CONTROL_C
-    //
-    // MessageText:
-    //
-    // Debugger got control C.
-    //
-    int ERROR_DBG_CONTROL_C = 693; // winnt
-
-    //
-    // MessageId: ERROR_DBG_PRINTEXCEPTION_C
-    //
-    // MessageText:
-    //
-    // Debugger printed exception on control C.
-    //
+    int ERROR_DBG_TERMINATE_THREAD = 691;
+    int ERROR_DBG_TERMINATE_PROCESS = 692;
+    int ERROR_DBG_CONTROL_C = 693;
     int ERROR_DBG_PRINTEXCEPTION_C = 694;
-
-    //
-    // MessageId: ERROR_DBG_RIPEXCEPTION
-    //
-    // MessageText:
-    //
-    // Debugger received RIP exception.
-    //
     int ERROR_DBG_RIPEXCEPTION = 695;
-
-    //
-    // MessageId: ERROR_DBG_CONTROL_BREAK
-    //
-    // MessageText:
-    //
-    // Debugger received control break.
-    //
-    int ERROR_DBG_CONTROL_BREAK = 696; // winnt
-
-    //
-    // MessageId: ERROR_DBG_COMMAND_EXCEPTION
-    //
-    // MessageText:
-    //
-    // Debugger command communication exception.
-    //
-    int ERROR_DBG_COMMAND_EXCEPTION = 697; // winnt
-
-    //
-    // MessageId: ERROR_OBJECT_NAME_EXISTS
-    //
-    // MessageText:
-    //
-    // {Object Exists}
-    // An attempt was made to create an object and the object name already
-    // existed.
-    //
+    int ERROR_DBG_CONTROL_BREAK = 696;
+    int ERROR_DBG_COMMAND_EXCEPTION = 697;
     int ERROR_OBJECT_NAME_EXISTS = 698;
-
-    //
-    // MessageId: ERROR_THREAD_WAS_SUSPENDED
-    //
-    // MessageText:
-    //
-    // {Thread Suspended}
-    // A thread termination occurred while the thread was suspended. The thread
-    // was resumed, and termination proceeded.
-    //
     int ERROR_THREAD_WAS_SUSPENDED = 699;
-
-    //
-    // MessageId: ERROR_IMAGE_NOT_AT_BASE
-    //
-    // MessageText:
-    //
-    // {Image Relocated}
-    // An image file could not be mapped at the address specified in the image
-    // file. Local fixups must be performed on this image.
-    //
     int ERROR_IMAGE_NOT_AT_BASE = 700;
-
-    //
-    // MessageId: ERROR_RXACT_STATE_CREATED
-    //
-    // MessageText:
-    //
-    // This informational level status indicates that a specified registry
-    // sub-tree transaction state did not yet exist and had to be created.
-    //
     int ERROR_RXACT_STATE_CREATED = 701;
-
-    //
-    // MessageId: ERROR_SEGMENT_NOTIFICATION
-    //
-    // MessageText:
-    //
-    // {Segment Load}
-    // A virtual DOS machine (VDM) is loading, unloading, or moving an MS-DOS or
-    // Win16 program segment image.
-    // An exception is raised so a debugger can load, unload or track symbols
-    // and breakpoints within these=16-bit segments.
-    //
-    int ERROR_SEGMENT_NOTIFICATION = 702; // winnt
-
-    //
-    // MessageId: ERROR_BAD_CURRENT_DIRECTORY
-    //
-    // MessageText:
-    //
-    // {Invalid Current Directory}
-    // The process cannot switch to the startup current directory %hs.
-    // Select OK to set current directory to %hs, or select CANCEL to exit.
-    //
+    int ERROR_SEGMENT_NOTIFICATION = 702;
     int ERROR_BAD_CURRENT_DIRECTORY = 703;
-
-    //
-    // MessageId: ERROR_FT_READ_RECOVERY_FROM_BACKUP
-    //
-    // MessageText:
-    //
-    // {Redundant Read}
-    // To satisfy a read request, the NT fault-tolerant file system successfully
-    // read the requested data from a redundant copy.
-    // This was done because the file system encountered a failure on a member
-    // of the fault-tolerant volume, but was unable to reassign the failing area
-    // of the device.
-    //
     int ERROR_FT_READ_RECOVERY_FROM_BACKUP = 704;
-
-    //
-    // MessageId: ERROR_FT_WRITE_RECOVERY
-    //
-    // MessageText:
-    //
-    // {Redundant Write}
-    // To satisfy a write request, the NT fault-tolerant file system
-    // successfully wrote a redundant copy of the information.
-    // This was done because the file system encountered a failure on a member
-    // of the fault-tolerant volume, but was not able to reassign the failing
-    // area of the device.
-    //
     int ERROR_FT_WRITE_RECOVERY = 705;
-
-    //
-    // MessageId: ERROR_IMAGE_MACHINE_TYPE_MISMATCH
-    //
-    // MessageText:
-    //
-    // {Machine Type Mismatch}
-    // The image file %hs is valid, but is for a machine type other than the
-    // current machine. Select OK to continue, or CANCEL to fail the DLL load.
-    //
     int ERROR_IMAGE_MACHINE_TYPE_MISMATCH = 706;
-
-    //
-    // MessageId: ERROR_RECEIVE_PARTIAL
-    //
-    // MessageText:
-    //
-    // {Partial Data Received}
-    // The network transport returned partial data to its client. The remaining
-    // data will be sent later.
-    //
     int ERROR_RECEIVE_PARTIAL = 707;
-
-    //
-    // MessageId: ERROR_RECEIVE_EXPEDITED
-    //
-    // MessageText:
-    //
-    // {Expedited Data Received}
-    // The network transport returned data to its client that was marked as
-    // expedited by the remote system.
-    //
     int ERROR_RECEIVE_EXPEDITED = 708;
-
-    //
-    // MessageId: ERROR_RECEIVE_PARTIAL_EXPEDITED
-    //
-    // MessageText:
-    //
-    // {Partial Expedited Data Received}
-    // The network transport returned partial data to its client and this data
-    // was marked as expedited by the remote system. The remaining data will be
-    // sent later.
-    //
     int ERROR_RECEIVE_PARTIAL_EXPEDITED = 709;
-
-    //
-    // MessageId: ERROR_EVENT_DONE
-    //
-    // MessageText:
-    //
-    // {TDI Event Done}
-    // The TDI indication has completed successfully.
-    //
     int ERROR_EVENT_DONE = 710;
-
-    //
-    // MessageId: ERROR_EVENT_PENDING
-    //
-    // MessageText:
-    //
-    // {TDI Event Pending}
-    // The TDI indication has entered the pending state.
-    //
     int ERROR_EVENT_PENDING = 711;
-
-    //
-    // MessageId: ERROR_CHECKING_FILE_SYSTEM
-    //
-    // MessageText:
-    //
-    // Checking file system on %wZ
-    //
     int ERROR_CHECKING_FILE_SYSTEM = 712;
-
-    //
-    // MessageId: ERROR_FATAL_APP_EXIT
-    //
-    // MessageText:
-    //
-    // {Fatal Application Exit}
-    // %hs
-    //
     int ERROR_FATAL_APP_EXIT = 713;
-
-    //
-    // MessageId: ERROR_PREDEFINED_HANDLE
-    //
-    // MessageText:
-    //
-    // The specified registry key is referenced by a predefined handle.
-    //
     int ERROR_PREDEFINED_HANDLE = 714;
-
-    //
-    // MessageId: ERROR_WAS_UNLOCKED
-    //
-    // MessageText:
-    //
-    // {Page Unlocked}
-    // The page protection of a locked page was changed to 'No Access' and the
-    // page was unlocked from memory and from the process.
-    //
     int ERROR_WAS_UNLOCKED = 715;
-
-    //
-    // MessageId: ERROR_SERVICE_NOTIFICATION
-    //
-    // MessageText:
-    //
-    // %hs
-    //
     int ERROR_SERVICE_NOTIFICATION = 716;
-
-    //
-    // MessageId: ERROR_WAS_LOCKED
-    //
-    // MessageText:
-    //
-    // {Page Locked}
-    // One of the pages to lock was already locked.
-    //
     int ERROR_WAS_LOCKED = 717;
-
-    //
-    // MessageId: ERROR_LOG_HARD_ERROR
-    //
-    // MessageText:
-    //
-    // Application popup: %1 : %2
-    //
     int ERROR_LOG_HARD_ERROR = 718;
-
-    //
-    // MessageId: ERROR_ALREADY_WIN32
-    //
-    // MessageText:
-    //
-    // ERROR_ALREADY_WIN32
-    //
     int ERROR_ALREADY_WIN32 = 719;
-
-    //
-    // MessageId: ERROR_IMAGE_MACHINE_TYPE_MISMATCH_EXE
-    //
-    // MessageText:
-    //
-    // {Machine Type Mismatch}
-    // The image file %hs is valid, but is for a machine type other than the
-    // current machine.
-    //
     int ERROR_IMAGE_MACHINE_TYPE_MISMATCH_EXE = 720;
-
-    //
-    // MessageId: ERROR_NO_YIELD_PERFORMED
-    //
-    // MessageText:
-    //
-    // A yield execution was performed and no thread was available to run.
-    //
     int ERROR_NO_YIELD_PERFORMED = 721;
-
-    //
-    // MessageId: ERROR_TIMER_RESUME_IGNORED
-    //
-    // MessageText:
-    //
-    // The resumable flag to a timer API was ignored.
-    //
     int ERROR_TIMER_RESUME_IGNORED = 722;
-
-    //
-    // MessageId: ERROR_ARBITRATION_UNHANDLED
-    //
-    // MessageText:
-    //
-    // The arbiter has deferred arbitration of these resources to its parent
-    //
     int ERROR_ARBITRATION_UNHANDLED = 723;
-
-    //
-    // MessageId: ERROR_CARDBUS_NOT_SUPPORTED
-    //
-    // MessageText:
-    //
-    // The inserted CardBus device cannot be started because of a configuration
-    // error on "%hs".
-    //
     int ERROR_CARDBUS_NOT_SUPPORTED = 724;
-
-    //
-    // MessageId: ERROR_MP_PROCESSOR_MISMATCH
-    //
-    // MessageText:
-    //
-    // The CPUs in this multiprocessor system are not all the same revision
-    // level. To use all processors the operating system restricts itself to the
-    // features of the least capable processor in the system. Should problems
-    // occur with this system, contact the CPU manufacturer to see if this mix
-    // of processors is supported.
-    //
     int ERROR_MP_PROCESSOR_MISMATCH = 725;
-
-    //
-    // MessageId: ERROR_HIBERNATED
-    //
-    // MessageText:
-    //
-    // The system was put into hibernation.
-    //
     int ERROR_HIBERNATED = 726;
-
-    //
-    // MessageId: ERROR_RESUME_HIBERNATION
-    //
-    // MessageText:
-    //
-    // The system was resumed from hibernation.
-    //
     int ERROR_RESUME_HIBERNATION = 727;
-
-    //
-    // MessageId: ERROR_FIRMWARE_UPDATED
-    //
-    // MessageText:
-    //
-    // Windows has detected that the system firmware (BIOS) was updated
-    // [previous firmware date =%2, current firmware date %3].
-    //
     int ERROR_FIRMWARE_UPDATED = 728;
-
-    //
-    // MessageId: ERROR_DRIVERS_LEAKING_LOCKED_PAGES
-    //
-    // MessageText:
-    //
-    // A device driver is leaking locked I/O pages causing system degradation.
-    // The system has automatically enabled tracking code in order to try and
-    // catch the culprit.
-    //
     int ERROR_DRIVERS_LEAKING_LOCKED_PAGES = 729;
-
-    //
-    // MessageId: ERROR_WAKE_SYSTEM
-    //
-    // MessageText:
-    //
-    // The system has awoken
-    //
     int ERROR_WAKE_SYSTEM = 730;
-
-    //
-    // MessageId: ERROR_WAIT_1
-    //
-    // MessageText:
-    //
-    // ERROR_WAIT_1
-    //
     int ERROR_WAIT_1 = 731;
-
-    //
-    // MessageId: ERROR_WAIT_2
-    //
-    // MessageText:
-    //
-    // ERROR_WAIT_2
-    //
     int ERROR_WAIT_2 = 732;
-
-    //
-    // MessageId: ERROR_WAIT_3
-    //
-    // MessageText:
-    //
-    // ERROR_WAIT_3
-    //
     int ERROR_WAIT_3 = 733;
-
-    //
-    // MessageId: ERROR_WAIT_63
-    //
-    // MessageText:
-    //
-    // ERROR_WAIT_63
-    //
     int ERROR_WAIT_63 = 734;
-
-    //
-    // MessageId: ERROR_ABANDONED_WAIT_0
-    //
-    // MessageText:
-    //
-    // ERROR_ABANDONED_WAIT_0
-    //
-    int ERROR_ABANDONED_WAIT_0 = 735; // winnt
-
-    //
-    // MessageId: ERROR_ABANDONED_WAIT_63
-    //
-    // MessageText:
-    //
-    // ERROR_ABANDONED_WAIT_63
-    //
+    int ERROR_ABANDONED_WAIT_0 = 735;
     int ERROR_ABANDONED_WAIT_63 = 736;
-
-    //
-    // MessageId: ERROR_USER_APC
-    //
-    // MessageText:
-    //
-    // ERROR_USER_APC
-    //
-    int ERROR_USER_APC = 737; // winnt
-
-    //
-    // MessageId: ERROR_KERNEL_APC
-    //
-    // MessageText:
-    //
-    // ERROR_KERNEL_APC
-    //
+    int ERROR_USER_APC = 737;
     int ERROR_KERNEL_APC = 738;
-
-    //
-    // MessageId: ERROR_ALERTED
-    //
-    // MessageText:
-    //
-    // ERROR_ALERTED
-    //
     int ERROR_ALERTED = 739;
-
-    //
-    // MessageId: ERROR_ELEVATION_REQUIRED
-    //
-    // MessageText:
-    //
-    // The requested operation requires elevation.
-    //
     int ERROR_ELEVATION_REQUIRED = 740;
-
-    //
-    // MessageId: ERROR_REPARSE
-    //
-    // MessageText:
-    //
-    // A reparse should be performed by the Object Manager since the name of the
-    // file resulted in a symbolic link.
-    //
     int ERROR_REPARSE = 741;
-
-    //
-    // MessageId: ERROR_OPLOCK_BREAK_IN_PROGRESS
-    //
-    // MessageText:
-    //
-    // An open/create operation completed while an oplock break is underway.
-    //
     int ERROR_OPLOCK_BREAK_IN_PROGRESS = 742;
-
-    //
-    // MessageId: ERROR_VOLUME_MOUNTED
-    //
-    // MessageText:
-    //
-    // A new volume has been mounted by a file system.
-    //
     int ERROR_VOLUME_MOUNTED = 743;
-
-    //
-    // MessageId: ERROR_RXACT_COMMITTED
-    //
-    // MessageText:
-    //
-    // This success level status indicates that the transaction state already
-    // exists for the registry sub-tree, but that a transaction commit was
-    // previously aborted.
-    // The commit has now been completed.
-    //
     int ERROR_RXACT_COMMITTED = 744;
-
-    //
-    // MessageId: ERROR_NOTIFY_CLEANUP
-    //
-    // MessageText:
-    //
-    // This indicates that a notify change request has been completed due to
-    // closing the handle which made the notify change request.
-    //
     int ERROR_NOTIFY_CLEANUP = 745;
-
-    //
-    // MessageId: ERROR_PRIMARY_TRANSPORT_CONNECT_FAILED
-    //
-    // MessageText:
-    //
-    // {Connect Failure on Primary Transport}
-    // An attempt was made to connect to the remote server %hs on the primary
-    // transport, but the connection failed.
-    // The computer WAS able to connect on a secondary transport.
-    //
     int ERROR_PRIMARY_TRANSPORT_CONNECT_FAILED = 746;
-
-    //
-    // MessageId: ERROR_PAGE_FAULT_TRANSITION
-    //
-    // MessageText:
-    //
-    // Page fault was a transition fault.
-    //
     int ERROR_PAGE_FAULT_TRANSITION = 747;
-
-    //
-    // MessageId: ERROR_PAGE_FAULT_DEMAND_ZERO
-    //
-    // MessageText:
-    //
-    // Page fault was a demand zero fault.
-    //
     int ERROR_PAGE_FAULT_DEMAND_ZERO = 748;
-
-    //
-    // MessageId: ERROR_PAGE_FAULT_COPY_ON_WRITE
-    //
-    // MessageText:
-    //
-    // Page fault was a demand zero fault.
-    //
     int ERROR_PAGE_FAULT_COPY_ON_WRITE = 749;
-
-    //
-    // MessageId: ERROR_PAGE_FAULT_GUARD_PAGE
-    //
-    // MessageText:
-    //
-    // Page fault was a demand zero fault.
-    //
     int ERROR_PAGE_FAULT_GUARD_PAGE = 750;
-
-    //
-    // MessageId: ERROR_PAGE_FAULT_PAGING_FILE
-    //
-    // MessageText:
-    //
-    // Page fault was satisfied by reading from a secondary storage device.
-    //
     int ERROR_PAGE_FAULT_PAGING_FILE = 751;
-
-    //
-    // MessageId: ERROR_CACHE_PAGE_LOCKED
-    //
-    // MessageText:
-    //
-    // Cached page was locked during operation.
-    //
     int ERROR_CACHE_PAGE_LOCKED = 752;
-
-    //
-    // MessageId: ERROR_CRASH_DUMP
-    //
-    // MessageText:
-    //
-    // Crash dump exists in paging file.
-    //
     int ERROR_CRASH_DUMP = 753;
-
-    //
-    // MessageId: ERROR_BUFFER_ALL_ZEROS
-    //
-    // MessageText:
-    //
-    // Specified buffer contains all zeros.
-    //
     int ERROR_BUFFER_ALL_ZEROS = 754;
-
-    //
-    // MessageId: ERROR_REPARSE_OBJECT
-    //
-    // MessageText:
-    //
-    // A reparse should be performed by the Object Manager since the name of the
-    // file resulted in a symbolic link.
-    //
     int ERROR_REPARSE_OBJECT = 755;
-
-    //
-    // MessageId: ERROR_RESOURCE_REQUIREMENTS_CHANGED
-    //
-    // MessageText:
-    //
-    // The device has succeeded a query-stop and its resource requirements have
-    // changed.
-    //
     int ERROR_RESOURCE_REQUIREMENTS_CHANGED = 756;
-
-    //
-    // MessageId: ERROR_TRANSLATION_COMPLETE
-    //
-    // MessageText:
-    //
-    // The translator has translated these resources into the global space and
-    // no further translations should be performed.
-    //
     int ERROR_TRANSLATION_COMPLETE = 757;
-
-    //
-    // MessageId: ERROR_NOTHING_TO_TERMINATE
-    //
-    // MessageText:
-    //
-    // A process being terminated has no threads to terminate.
-    //
     int ERROR_NOTHING_TO_TERMINATE = 758;
-
-    //
-    // MessageId: ERROR_PROCESS_NOT_IN_JOB
-    //
-    // MessageText:
-    //
-    // The specified process is not part of a job.
-    //
     int ERROR_PROCESS_NOT_IN_JOB = 759;
-
-    //
-    // MessageId: ERROR_PROCESS_IN_JOB
-    //
-    // MessageText:
-    //
-    // The specified process is part of a job.
-    //
     int ERROR_PROCESS_IN_JOB = 760;
-
-    //
-    // MessageId: ERROR_VOLSNAP_HIBERNATE_READY
-    //
-    // MessageText:
-    //
-    // {Volume Shadow Copy Service}
-    // The system is now ready for hibernation.
-    //
     int ERROR_VOLSNAP_HIBERNATE_READY = 761;
-
-    //
-    // MessageId: ERROR_FSFILTER_OP_COMPLETED_SUCCESSFULLY
-    //
-    // MessageText:
-    //
-    // A file system or file system filter driver has successfully completed an
-    // FsFilter operation.
-    //
     int ERROR_FSFILTER_OP_COMPLETED_SUCCESSFULLY = 762;
-
-    //
-    // MessageId: ERROR_INTERRUPT_VECTOR_ALREADY_CONNECTED
-    //
-    // MessageText:
-    //
-    // The specified interrupt vector was already connected.
-    //
     int ERROR_INTERRUPT_VECTOR_ALREADY_CONNECTED = 763;
-
-    //
-    // MessageId: ERROR_INTERRUPT_STILL_CONNECTED
-    //
-    // MessageText:
-    //
-    // The specified interrupt vector is still connected.
-    //
     int ERROR_INTERRUPT_STILL_CONNECTED = 764;
-
-    //
-    // MessageId: ERROR_WAIT_FOR_OPLOCK
-    //
-    // MessageText:
-    //
-    // An operation is blocked waiting for an oplock.
-    //
     int ERROR_WAIT_FOR_OPLOCK = 765;
-
-    //
-    // MessageId: ERROR_DBG_EXCEPTION_HANDLED
-    //
-    // MessageText:
-    //
-    // Debugger handled exception
-    //
-    int ERROR_DBG_EXCEPTION_HANDLED = 766; // winnt
-
-    //
-    // MessageId: ERROR_DBG_CONTINUE
-    //
-    // MessageText:
-    //
-    // Debugger continued
-    //
-    int ERROR_DBG_CONTINUE = 767; // winnt
-
-    //
-    // MessageId: ERROR_CALLBACK_POP_STACK
-    //
-    // MessageText:
-    //
-    // An exception occurred in a user mode callback and the kernel callback
-    // frame should be removed.
-    //
+    int ERROR_DBG_EXCEPTION_HANDLED = 766;
+    int ERROR_DBG_CONTINUE = 767;
     int ERROR_CALLBACK_POP_STACK = 768;
-
-    //
-    // MessageId: ERROR_COMPRESSION_DISABLED
-    //
-    // MessageText:
-    //
-    // Compression is disabled for this volume.
-    //
     int ERROR_COMPRESSION_DISABLED = 769;
-
-    //
-    // MessageId: ERROR_CANTFETCHBACKWARDS
-    //
-    // MessageText:
-    //
-    // The data provider cannot fetch backwards through a result set.
-    //
     int ERROR_CANTFETCHBACKWARDS = 770;
-
-    //
-    // MessageId: ERROR_CANTSCROLLBACKWARDS
-    //
-    // MessageText:
-    //
-    // The data provider cannot scroll backwards through a result set.
-    //
     int ERROR_CANTSCROLLBACKWARDS = 771;
-
-    //
-    // MessageId: ERROR_ROWSNOTRELEASED
-    //
-    // MessageText:
-    //
-    // The data provider requires that previously fetched data is released
-    // before asking for more data.
-    //
     int ERROR_ROWSNOTRELEASED = 772;
-
-    //
-    // MessageId: ERROR_BAD_ACCESSOR_FLAGS
-    //
-    // MessageText:
-    //
-    // The data provider was not able to intrepret the flags set for a column
-    // binding in an accessor.
-    //
     int ERROR_BAD_ACCESSOR_FLAGS = 773;
-
-    //
-    // MessageId: ERROR_ERRORS_ENCOUNTERED
-    //
-    // MessageText:
-    //
-    // One or more errors occurred while processing the request.
-    //
     int ERROR_ERRORS_ENCOUNTERED = 774;
-
-    //
-    // MessageId: ERROR_NOT_CAPABLE
-    //
-    // MessageText:
-    //
-    // The implementation is not capable of performing the request.
-    //
     int ERROR_NOT_CAPABLE = 775;
-
-    //
-    // MessageId: ERROR_REQUEST_OUT_OF_SEQUENCE
-    //
-    // MessageText:
-    //
-    // The client of a component requested an operation which is not valid given
-    // the state of the component instance.
-    //
     int ERROR_REQUEST_OUT_OF_SEQUENCE = 776;
-
-    //
-    // MessageId: ERROR_VERSION_PARSE_ERROR
-    //
-    // MessageText:
-    //
-    // A version number could not be parsed.
-    //
     int ERROR_VERSION_PARSE_ERROR = 777;
-
-    //
-    // MessageId: ERROR_BADSTARTPOSITION
-    //
-    // MessageText:
-    //
-    // The iterator's start position is invalid.
-    //
     int ERROR_BADSTARTPOSITION = 778;
-
-    //
-    // MessageId: ERROR_MEMORY_HARDWARE
-    //
-    // MessageText:
-    //
-    // The hardware has reported an uncorrectable memory error.
-    //
     int ERROR_MEMORY_HARDWARE = 779;
-
-    //
-    // MessageId: ERROR_DISK_REPAIR_DISABLED
-    //
-    // MessageText:
-    //
-    // The attempted operation required self healing to be enabled.
-    //
     int ERROR_DISK_REPAIR_DISABLED = 780;
-
-    //
-    // MessageId: ERROR_INSUFFICIENT_RESOURCE_FOR_SPECIFIED_SHARED_SECTION_SIZE
-    //
-    // MessageText:
-    //
-    // The Desktop heap encountered an error while allocating session memory.
-    // There is more information in the system event log.
-    //
     int ERROR_INSUFFICIENT_RESOURCE_FOR_SPECIFIED_SHARED_SECTION_SIZE = 781;
-
-    //
-    // MessageId: ERROR_SYSTEM_POWERSTATE_TRANSITION
-    //
-    // MessageText:
-    //
-    // The system powerstate is transitioning from %2 to %3.
-    //
     int ERROR_SYSTEM_POWERSTATE_TRANSITION = 782;
-
-    //
-    // MessageId: ERROR_SYSTEM_POWERSTATE_COMPLEX_TRANSITION
-    //
-    // MessageText:
-    //
-    // The system powerstate is transitioning from %2 to %3 but could enter %4.
-    //
     int ERROR_SYSTEM_POWERSTATE_COMPLEX_TRANSITION = 783;
-
-    //
-    // MessageId: ERROR_MCA_EXCEPTION
-    //
-    // MessageText:
-    //
-    // A thread is getting dispatched with MCA EXCEPTION because of MCA.
-    //
     int ERROR_MCA_EXCEPTION = 784;
-
-    //
-    // MessageId: ERROR_ACCESS_AUDIT_BY_POLICY
-    //
-    // MessageText:
-    //
-    // Access to %1 is monitored by policy rule %2.
-    //
     int ERROR_ACCESS_AUDIT_BY_POLICY = 785;
-
-    //
-    // MessageId: ERROR_ACCESS_DISABLED_NO_SAFER_UI_BY_POLICY
-    //
-    // MessageText:
-    //
-    // Access to %1 has been restricted by your Administrator by policy rule %2.
-    //
     int ERROR_ACCESS_DISABLED_NO_SAFER_UI_BY_POLICY = 786;
-
-    //
-    // MessageId: ERROR_ABANDON_HIBERFILE
-    //
-    // MessageText:
-    //
-    // A valid hibernation file has been invalidated and should be abandoned.
-    //
     int ERROR_ABANDON_HIBERFILE = 787;
-
-    //
-    // MessageId: ERROR_LOST_WRITEBEHIND_DATA_NETWORK_DISCONNECTED
-    //
-    // MessageText:
-    //
-    // {Delayed Write Failed}
-    // Windows was unable to save all the data for the file %hs; the data has
-    // been lost.
-    // This error may be caused by network connectivity issues. Please try to
-    // save this file elsewhere.
-    //
     int ERROR_LOST_WRITEBEHIND_DATA_NETWORK_DISCONNECTED = 788;
-
-    //
-    // MessageId: ERROR_LOST_WRITEBEHIND_DATA_NETWORK_SERVER_ERROR
-    //
-    // MessageText:
-    //
-    // {Delayed Write Failed}
-    // Windows was unable to save all the data for the file %hs; the data has
-    // been lost.
-    // This error was returned by the server on which the file exists. Please
-    // try to save this file elsewhere.
-    //
     int ERROR_LOST_WRITEBEHIND_DATA_NETWORK_SERVER_ERROR = 789;
-
-    //
-    // MessageId: ERROR_LOST_WRITEBEHIND_DATA_LOCAL_DISK_ERROR
-    //
-    // MessageText:
-    //
-    // {Delayed Write Failed}
-    // Windows was unable to save all the data for the file %hs; the data has
-    // been lost.
-    // This error may be caused if the device has been removed or the media is
-    // write-protected.
-    //
     int ERROR_LOST_WRITEBEHIND_DATA_LOCAL_DISK_ERROR = 790;
-
-    //
-    // MessageId: ERROR_BAD_MCFG_TABLE
-    //
-    // MessageText:
-    //
-    // The resources required for this device conflict with the MCFG table.
-    //
     int ERROR_BAD_MCFG_TABLE = 791;
-
-    //
-    // MessageId: ERROR_EA_ACCESS_DENIED
-    //
-    // MessageText:
-    //
-    // Access to the extended attribute was denied.
-    //
     int ERROR_EA_ACCESS_DENIED = 994;
-
-    //
-    // MessageId: ERROR_OPERATION_ABORTED
-    //
-    // MessageText:
-    //
-    // The I/O operation has been aborted because of either a thread exit or an
-    // application request.
-    //
     int ERROR_OPERATION_ABORTED = 995;
-
-    //
-    // MessageId: ERROR_IO_INCOMPLETE
-    //
-    // MessageText:
-    //
-    // Overlapped I/O event is not in a signaled state.
-    //
     int ERROR_IO_INCOMPLETE = 996;
-
-    //
-    // MessageId: ERROR_IO_PENDING
-    //
-    // MessageText:
-    //
-    // Overlapped I/O operation is in progress.
-    //
-    int ERROR_IO_PENDING = 997; // dderror
-
-    //
-    // MessageId: ERROR_NOACCESS
-    //
-    // MessageText:
-    //
-    // Invalid access to memory location.
-    //
+    int ERROR_IO_PENDING = 997;
     int ERROR_NOACCESS = 998;
-
-    //
-    // MessageId: ERROR_SWAPERROR
-    //
-    // MessageText:
-    //
-    // Error performing inpage operation.
-    //
     int ERROR_SWAPERROR = 999;
-
-    //
-    // MessageId: ERROR_STACK_OVERFLOW
-    //
-    // MessageText:
-    //
-    // Recursion too deep; the stack overflowed.
-    //
     int ERROR_STACK_OVERFLOW = 1001;
-
-    //
-    // MessageId: ERROR_INVALID_MESSAGE
-    //
-    // MessageText:
-    //
-    // The window cannot act on the sent message.
-    //
     int ERROR_INVALID_MESSAGE = 1002;
-
-    //
-    // MessageId: ERROR_CAN_NOT_COMPLETE
-    //
-    // MessageText:
-    //
-    // Cannot complete this function.
-    //
     int ERROR_CAN_NOT_COMPLETE = 1003;
-
-    //
-    // MessageId: ERROR_INVALID_FLAGS
-    //
-    // MessageText:
-    //
-    // Invalid flags.
-    //
     int ERROR_INVALID_FLAGS = 1004;
-
-    //
-    // MessageId: ERROR_UNRECOGNIZED_VOLUME
-    //
-    // MessageText:
-    //
-    // The volume does not contain a recognized file system.
-    // Please make sure that all required file system drivers are loaded and
-    // that the volume is not corrupted.
-    //
     int ERROR_UNRECOGNIZED_VOLUME = 1005;
-
-    //
-    // MessageId: ERROR_FILE_INVALID
-    //
-    // MessageText:
-    //
-    // The volume for a file has been externally altered so that the opened file
-    // is no longer valid.
-    //
     int ERROR_FILE_INVALID = 1006;
-
-    //
-    // MessageId: ERROR_FULLSCREEN_MODE
-    //
-    // MessageText:
-    //
-    // The requested operation cannot be performed in full-screen mode.
-    //
     int ERROR_FULLSCREEN_MODE = 1007;
-
-    //
-    // MessageId: ERROR_NO_TOKEN
-    //
-    // MessageText:
-    //
-    // An attempt was made to reference a token that does not exist.
-    //
     int ERROR_NO_TOKEN = 1008;
-
-    //
-    // MessageId: ERROR_BADDB
-    //
-    // MessageText:
-    //
-    // The configuration registry database is corrupt.
-    //
     int ERROR_BADDB = 1009;
-
-    //
-    // MessageId: ERROR_BADKEY
-    //
-    // MessageText:
-    //
-    // The configuration registry key is invalid.
-    //
     int ERROR_BADKEY = 1010;
-
-    //
-    // MessageId: ERROR_CANTOPEN
-    //
-    // MessageText:
-    //
-    // The configuration registry key could not be opened.
-    //
     int ERROR_CANTOPEN = 1011;
-
-    //
-    // MessageId: ERROR_CANTREAD
-    //
-    // MessageText:
-    //
-    // The configuration registry key could not be read.
-    //
     int ERROR_CANTREAD = 1012;
-
-    //
-    // MessageId: ERROR_CANTWRITE
-    //
-    // MessageText:
-    //
-    // The configuration registry key could not be written.
-    //
     int ERROR_CANTWRITE = 1013;
-
-    //
-    // MessageId: ERROR_REGISTRY_RECOVERED
-    //
-    // MessageText:
-    //
-    // One of the files in the registry database had to be recovered by use of a
-    // log or alternate copy. The recovery was successful.
-    //
     int ERROR_REGISTRY_RECOVERED = 1014;
-
-    //
-    // MessageId: ERROR_REGISTRY_CORRUPT
-    //
-    // MessageText:
-    //
-    // The registry is corrupted. The structure of one of the files containing
-    // registry data is corrupted, or the system's memory image of the file is
-    // corrupted, or the file could not be recovered because the alternate copy
-    // or log was absent or corrupted.
-    //
     int ERROR_REGISTRY_CORRUPT = 1015;
-
-    //
-    // MessageId: ERROR_REGISTRY_IO_FAILED
-    //
-    // MessageText:
-    //
-    // An I/O operation initiated by the registry failed unrecoverably. The
-    // registry could not read in, or write out, or flush, one of the files that
-    // contain the system's image of the registry.
-    //
     int ERROR_REGISTRY_IO_FAILED = 1016;
-
-    //
-    // MessageId: ERROR_NOT_REGISTRY_FILE
-    //
-    // MessageText:
-    //
-    // The system has attempted to load or restore a file into the registry, but
-    // the specified file is not in a registry file format.
-    //
     int ERROR_NOT_REGISTRY_FILE = 1017;
-
-    //
-    // MessageId: ERROR_KEY_DELETED
-    //
-    // MessageText:
-    //
-    // Illegal operation attempted on a registry key that has been marked for
-    // deletion.
-    //
     int ERROR_KEY_DELETED = 1018;
-
-    //
-    // MessageId: ERROR_NO_LOG_SPACE
-    //
-    // MessageText:
-    //
-    // System could not allocate the required space in a registry log.
-    //
     int ERROR_NO_LOG_SPACE = 1019;
-
-    //
-    // MessageId: ERROR_KEY_HAS_CHILDREN
-    //
-    // MessageText:
-    //
-    // Cannot create a symbolic link in a registry key that already has subkeys
-    // or values.
-    //
     int ERROR_KEY_HAS_CHILDREN = 1020;
-
-    //
-    // MessageId: ERROR_CHILD_MUST_BE_VOLATILE
-    //
-    // MessageText:
-    //
-    // Cannot create a stable subkey under a volatile parent key.
-    //
     int ERROR_CHILD_MUST_BE_VOLATILE = 1021;
-
-    //
-    // MessageId: ERROR_NOTIFY_ENUM_DIR
-    //
-    // MessageText:
-    //
-    // A notify change request is being completed and the information is not
-    // being returned in the caller's buffer. The caller now needs to enumerate
-    // the files to find the changes.
-    //
     int ERROR_NOTIFY_ENUM_DIR = 1022;
-
-    //
-    // MessageId: ERROR_DEPENDENT_SERVICES_RUNNING
-    //
-    // MessageText:
-    //
-    // A stop control has been sent to a service that other running services are
-    // dependent on.
-    //
     int ERROR_DEPENDENT_SERVICES_RUNNING = 1051;
-
-    //
-    // MessageId: ERROR_INVALID_SERVICE_CONTROL
-    //
-    // MessageText:
-    //
-    // The requested control is not valid for this service.
-    //
     int ERROR_INVALID_SERVICE_CONTROL = 1052;
-
-    //
-    // MessageId: ERROR_SERVICE_REQUEST_TIMEOUT
-    //
-    // MessageText:
-    //
-    // The service did not respond to the start or control request in a timely
-    // fashion.
-    //
     int ERROR_SERVICE_REQUEST_TIMEOUT = 1053;
-
-    //
-    // MessageId: ERROR_SERVICE_NO_THREAD
-    //
-    // MessageText:
-    //
-    // A thread could not be created for the service.
-    //
     int ERROR_SERVICE_NO_THREAD = 1054;
-
-    //
-    // MessageId: ERROR_SERVICE_DATABASE_LOCKED
-    //
-    // MessageText:
-    //
-    // The service database is locked.
-    //
     int ERROR_SERVICE_DATABASE_LOCKED = 1055;
-
-    //
-    // MessageId: ERROR_SERVICE_ALREADY_RUNNING
-    //
-    // MessageText:
-    //
-    // An instance of the service is already running.
-    //
     int ERROR_SERVICE_ALREADY_RUNNING = 1056;
-
-    //
-    // MessageId: ERROR_INVALID_SERVICE_ACCOUNT
-    //
-    // MessageText:
-    //
-    // The account name is invalid or does not exist, or the password is invalid
-    // for the account name specified.
-    //
     int ERROR_INVALID_SERVICE_ACCOUNT = 1057;
-
-    //
-    // MessageId: ERROR_SERVICE_DISABLED
-    //
-    // MessageText:
-    //
-    // The service cannot be started, either because it is disabled or because
-    // it has no enabled devices associated with it.
-    //
     int ERROR_SERVICE_DISABLED = 1058;
-
-    //
-    // MessageId: ERROR_CIRCULAR_DEPENDENCY
-    //
-    // MessageText:
-    //
-    // Circular service dependency was specified.
-    //
     int ERROR_CIRCULAR_DEPENDENCY = 1059;
-
-    //
-    // MessageId: ERROR_SERVICE_DOES_NOT_EXIST
-    //
-    // MessageText:
-    //
-    // The specified service does not exist as an installed service.
-    //
     int ERROR_SERVICE_DOES_NOT_EXIST = 1060;
-
-    //
-    // MessageId: ERROR_SERVICE_CANNOT_ACCEPT_CTRL
-    //
-    // MessageText:
-    //
-    // The service cannot accept control messages at this time.
-    //
     int ERROR_SERVICE_CANNOT_ACCEPT_CTRL = 1061;
-
-    //
-    // MessageId: ERROR_SERVICE_NOT_ACTIVE
-    //
-    // MessageText:
-    //
-    // The service has not been started.
-    //
     int ERROR_SERVICE_NOT_ACTIVE = 1062;
-
-    //
-    // MessageId: ERROR_FAILED_SERVICE_CONTROLLER_CONNECT
-    //
-    // MessageText:
-    //
-    // The service process could not connect to the service controller.
-    //
     int ERROR_FAILED_SERVICE_CONTROLLER_CONNECT = 1063;
-
-    //
-    // MessageId: ERROR_EXCEPTION_IN_SERVICE
-    //
-    // MessageText:
-    //
-    // An exception occurred in the service when handling the control request.
-    //
     int ERROR_EXCEPTION_IN_SERVICE = 1064;
-
-    //
-    // MessageId: ERROR_DATABASE_DOES_NOT_EXIST
-    //
-    // MessageText:
-    //
-    // The database specified does not exist.
-    //
     int ERROR_DATABASE_DOES_NOT_EXIST = 1065;
-
-    //
-    // MessageId: ERROR_SERVICE_SPECIFIC_ERROR
-    //
-    // MessageText:
-    //
-    // The service has returned a service-specific error code.
-    //
     int ERROR_SERVICE_SPECIFIC_ERROR = 1066;
-
-    //
-    // MessageId: ERROR_PROCESS_ABORTED
-    //
-    // MessageText:
-    //
-    // The process terminated unexpectedly.
-    //
     int ERROR_PROCESS_ABORTED = 1067;
-
-    //
-    // MessageId: ERROR_SERVICE_DEPENDENCY_FAIL
-    //
-    // MessageText:
-    //
-    // The dependency service or group failed to start.
-    //
     int ERROR_SERVICE_DEPENDENCY_FAIL = 1068;
-
-    //
-    // MessageId: ERROR_SERVICE_LOGON_FAILED
-    //
-    // MessageText:
-    //
-    // The service did not start due to a logon failure.
-    //
     int ERROR_SERVICE_LOGON_FAILED = 1069;
-
-    //
-    // MessageId: ERROR_SERVICE_START_HANG
-    //
-    // MessageText:
-    //
-    // After starting, the service hung in a start-pending state.
-    //
     int ERROR_SERVICE_START_HANG = 1070;
-
-    //
-    // MessageId: ERROR_INVALID_SERVICE_LOCK
-    //
-    // MessageText:
-    //
-    // The specified service database lock is invalid.
-    //
     int ERROR_INVALID_SERVICE_LOCK = 1071;
-
-    //
-    // MessageId: ERROR_SERVICE_MARKED_FOR_DELETE
-    //
-    // MessageText:
-    //
-    // The specified service has been marked for deletion.
-    //
     int ERROR_SERVICE_MARKED_FOR_DELETE = 1072;
-
-    //
-    // MessageId: ERROR_SERVICE_EXISTS
-    //
-    // MessageText:
-    //
-    // The specified service already exists.
-    //
     int ERROR_SERVICE_EXISTS = 1073;
-
-    //
-    // MessageId: ERROR_ALREADY_RUNNING_LKG
-    //
-    // MessageText:
-    //
-    // The system is currently running with the last-known-good configuration.
-    //
     int ERROR_ALREADY_RUNNING_LKG = 1074;
-
-    //
-    // MessageId: ERROR_SERVICE_DEPENDENCY_DELETED
-    //
-    // MessageText:
-    //
-    // The dependency service does not exist or has been marked for deletion.
-    //
     int ERROR_SERVICE_DEPENDENCY_DELETED = 1075;
-
-    //
-    // MessageId: ERROR_BOOT_ALREADY_ACCEPTED
-    //
-    // MessageText:
-    //
-    // The current boot has already been accepted for use as the last-known-good
-    // control set.
-    //
     int ERROR_BOOT_ALREADY_ACCEPTED = 1076;
-
-    //
-    // MessageId: ERROR_SERVICE_NEVER_STARTED
-    //
-    // MessageText:
-    //
-    // No attempts to start the service have been made since the last boot.
-    //
     int ERROR_SERVICE_NEVER_STARTED = 1077;
-
-    //
-    // MessageId: ERROR_DUPLICATE_SERVICE_NAME
-    //
-    // MessageText:
-    //
-    // The name is already in use as either a service name or a service display
-    // name.
-    //
     int ERROR_DUPLICATE_SERVICE_NAME = 1078;
-
-    //
-    // MessageId: ERROR_DIFFERENT_SERVICE_ACCOUNT
-    //
-    // MessageText:
-    //
-    // The account specified for this service is different from the account
-    // specified for other services running in the same process.
-    //
     int ERROR_DIFFERENT_SERVICE_ACCOUNT = 1079;
-
-    //
-    // MessageId: ERROR_CANNOT_DETECT_DRIVER_FAILURE
-    //
-    // MessageText:
-    //
-    // Failure actions can only be set for Win32 services, not for drivers.
-    //
     int ERROR_CANNOT_DETECT_DRIVER_FAILURE = 1080;
-
-    //
-    // MessageId: ERROR_CANNOT_DETECT_PROCESS_ABORT
-    //
-    // MessageText:
-    //
-    // This service runs in the same process as the service control manager.
-    // Therefore, the service control manager cannot take action if this
-    // service's process terminates unexpectedly.
-    //
     int ERROR_CANNOT_DETECT_PROCESS_ABORT = 1081;
-
-    //
-    // MessageId: ERROR_NO_RECOVERY_PROGRAM
-    //
-    // MessageText:
-    //
-    // No recovery program has been configured for this service.
-    //
     int ERROR_NO_RECOVERY_PROGRAM = 1082;
-
-    //
-    // MessageId: ERROR_SERVICE_NOT_IN_EXE
-    //
-    // MessageText:
-    //
-    // The executable program that this service is configured to run in does not
-    // implement the service.
-    //
     int ERROR_SERVICE_NOT_IN_EXE = 1083;
-
-    //
-    // MessageId: ERROR_NOT_SAFEBOOT_SERVICE
-    //
-    // MessageText:
-    //
-    // This service cannot be started in Safe Mode
-    //
     int ERROR_NOT_SAFEBOOT_SERVICE = 1084;
-
-    //
-    // MessageId: ERROR_END_OF_MEDIA
-    //
-    // MessageText:
-    //
-    // The physical end of the tape has been reached.
-    //
     int ERROR_END_OF_MEDIA = 1100;
-
-    //
-    // MessageId: ERROR_FILEMARK_DETECTED
-    //
-    // MessageText:
-    //
-    // A tape access reached a filemark.
-    //
     int ERROR_FILEMARK_DETECTED = 1101;
-
-    //
-    // MessageId: ERROR_BEGINNING_OF_MEDIA
-    //
-    // MessageText:
-    //
-    // The beginning of the tape or a partition was encountered.
-    //
     int ERROR_BEGINNING_OF_MEDIA = 1102;
-
-    //
-    // MessageId: ERROR_SETMARK_DETECTED
-    //
-    // MessageText:
-    //
-    // A tape access reached the end of a set of files.
-    //
     int ERROR_SETMARK_DETECTED = 1103;
-
-    //
-    // MessageId: ERROR_NO_DATA_DETECTED
-    //
-    // MessageText:
-    //
-    // No more data is on the tape.
-    //
     int ERROR_NO_DATA_DETECTED = 1104;
-
-    //
-    // MessageId: ERROR_PARTITION_FAILURE
-    //
-    // MessageText:
-    //
-    // Tape could not be partitioned.
-    //
     int ERROR_PARTITION_FAILURE = 1105;
-
-    //
-    // MessageId: ERROR_INVALID_BLOCK_LENGTH
-    //
-    // MessageText:
-    //
-    // When accessing a new tape of a multivolume partition, the current block
-    // size is incorrect.
-    //
     int ERROR_INVALID_BLOCK_LENGTH = 1106;
-
-    //
-    // MessageId: ERROR_DEVICE_NOT_PARTITIONED
-    //
-    // MessageText:
-    //
-    // Tape partition information could not be found when loading a tape.
-    //
     int ERROR_DEVICE_NOT_PARTITIONED = 1107;
-
-    //
-    // MessageId: ERROR_UNABLE_TO_LOCK_MEDIA
-    //
-    // MessageText:
-    //
-    // Unable to lock the media eject mechanism.
-    //
     int ERROR_UNABLE_TO_LOCK_MEDIA = 1108;
-
-    //
-    // MessageId: ERROR_UNABLE_TO_UNLOAD_MEDIA
-    //
-    // MessageText:
-    //
-    // Unable to unload the media.
-    //
     int ERROR_UNABLE_TO_UNLOAD_MEDIA = 1109;
-
-    //
-    // MessageId: ERROR_MEDIA_CHANGED
-    //
-    // MessageText:
-    //
-    // The media in the drive may have changed.
-    //
     int ERROR_MEDIA_CHANGED = 1110;
-
-    //
-    // MessageId: ERROR_BUS_RESET
-    //
-    // MessageText:
-    //
-    // The I/O bus was reset.
-    //
     int ERROR_BUS_RESET = 1111;
-
-    //
-    // MessageId: ERROR_NO_MEDIA_IN_DRIVE
-    //
-    // MessageText:
-    //
-    // No media in drive.
-    //
     int ERROR_NO_MEDIA_IN_DRIVE = 1112;
-
-    //
-    // MessageId: ERROR_NO_UNICODE_TRANSLATION
-    //
-    // MessageText:
-    //
-    // No mapping for the Unicode character exists in the target multi-byte code
-    // page.
-    //
     int ERROR_NO_UNICODE_TRANSLATION = 1113;
-
-    //
-    // MessageId: ERROR_DLL_INIT_FAILED
-    //
-    // MessageText:
-    //
-    // A dynamic link library (DL; initialization routine failed.
-    //
     int ERROR_DLL_INIT_FAILED = 1114;
-
-    //
-    // MessageId: ERROR_SHUTDOWN_IN_PROGRESS
-    //
-    // MessageText:
-    //
-    // A system shutdown is in progress.
-    //
     int ERROR_SHUTDOWN_IN_PROGRESS = 1115;
-
-    //
-    // MessageId: ERROR_NO_SHUTDOWN_IN_PROGRESS
-    //
-    // MessageText:
-    //
-    // Unable to abort the system shutdown because no shutdown was in progress.
-    //
     int ERROR_NO_SHUTDOWN_IN_PROGRESS = 1116;
-
-    //
-    // MessageId: ERROR_IO_DEVICE
-    //
-    // MessageText:
-    //
-    // The request could not be performed because of an I/O device error.
-    //
     int ERROR_IO_DEVICE = 1117;
-
-    //
-    // MessageId: ERROR_SERIAL_NO_DEVICE
-    //
-    // MessageText:
-    //
-    // No serial device was successfully initialized. The serial driver will
-    // unload.
-    //
     int ERROR_SERIAL_NO_DEVICE = 1118;
-
-    //
-    // MessageId: ERROR_IRQ_BUSY
-    //
-    // MessageText:
-    //
-    // Unable to open a device that was sharing an interrupt request (IRQ) with
-    // other devices. At least one other device that uses that IRQ was already
-    // opened.
-    //
     int ERROR_IRQ_BUSY = 1119;
-
-    //
-    // MessageId: ERROR_MORE_WRITES
-    //
-    // MessageText:
-    //
-    // A serial I/O operation was completed by another write to the serial port.
-    // (The IOCTL_SERIAL_XOFF_COUNTER reached zero.)
-    //
     int ERROR_MORE_WRITES = 1120;
-
-    //
-    // MessageId: ERROR_COUNTER_TIMEOUT
-    //
-    // MessageText:
-    //
-    // A serial I/O operation completed because the timeout period expired.
-    // (The IOCTL_SERIAL_XOFF_COUNTER did not reach zero.)
-    //
     int ERROR_COUNTER_TIMEOUT = 1121;
-
-    //
-    // MessageId: ERROR_FLOPPY_ID_MARK_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // No ID address mark was found on the floppy disk.
-    //
     int ERROR_FLOPPY_ID_MARK_NOT_FOUND = 1122;
-
-    //
-    // MessageId: ERROR_FLOPPY_WRONG_CYLINDER
-    //
-    // MessageText:
-    //
-    // Mismatch between the floppy disk sector ID field and the floppy disk
-    // controller track address.
-    //
     int ERROR_FLOPPY_WRONG_CYLINDER = 1123;
-
-    //
-    // MessageId: ERROR_FLOPPY_UNKNOWN_ERROR
-    //
-    // MessageText:
-    //
-    // The floppy disk controller reported an error that is not recognized by
-    // the floppy disk driver.
-    //
     int ERROR_FLOPPY_UNKNOWN_ERROR = 1124;
-
-    //
-    // MessageId: ERROR_FLOPPY_BAD_REGISTERS
-    //
-    // MessageText:
-    //
-    // The floppy disk controller returned inconsistent results in its
-    // registers.
-    //
     int ERROR_FLOPPY_BAD_REGISTERS = 1125;
-
-    //
-    // MessageId: ERROR_DISK_RECALIBRATE_FAILED
-    //
-    // MessageText:
-    //
-    // While accessing the hard disk, a recalibrate operation failed, even after
-    // retries.
-    //
     int ERROR_DISK_RECALIBRATE_FAILED = 1126;
-
-    //
-    // MessageId: ERROR_DISK_OPERATION_FAILED
-    //
-    // MessageText:
-    //
-    // While accessing the hard disk, a disk operation failed even after
-    // retries.
-    //
     int ERROR_DISK_OPERATION_FAILED = 1127;
-
-    //
-    // MessageId: ERROR_DISK_RESET_FAILED
-    //
-    // MessageText:
-    //
-    // While accessing the hard disk, a disk controller reset was needed, but
-    // even that failed.
-    //
     int ERROR_DISK_RESET_FAILED = 1128;
-
-    //
-    // MessageId: ERROR_EOM_OVERFLOW
-    //
-    // MessageText:
-    //
-    // Physical end of tape encountered.
-    //
     int ERROR_EOM_OVERFLOW = 1129;
-
-    //
-    // MessageId: ERROR_NOT_ENOUGH_SERVER_MEMORY
-    //
-    // MessageText:
-    //
-    // Not enough server storage is available to process this command.
-    //
     int ERROR_NOT_ENOUGH_SERVER_MEMORY = 1130;
-
-    //
-    // MessageId: ERROR_POSSIBLE_DEADLOCK
-    //
-    // MessageText:
-    //
-    // A potential deadlock condition has been detected.
-    //
     int ERROR_POSSIBLE_DEADLOCK = 1131;
-
-    //
-    // MessageId: ERROR_MAPPED_ALIGNMENT
-    //
-    // MessageText:
-    //
-    // The base address or the file offset specified does not have the proper
-    // alignment.
-    //
     int ERROR_MAPPED_ALIGNMENT = 1132;
-
-    //
-    // MessageId: ERROR_SET_POWER_STATE_VETOED
-    //
-    // MessageText:
-    //
-    // An attempt to change the system power state was vetoed by another
-    // application or driver.
-    //
     int ERROR_SET_POWER_STATE_VETOED = 1140;
-
-    //
-    // MessageId: ERROR_SET_POWER_STATE_FAILED
-    //
-    // MessageText:
-    //
-    // The system BIOS failed an attempt to change the system power state.
-    //
     int ERROR_SET_POWER_STATE_FAILED = 1141;
-
-    //
-    // MessageId: ERROR_TOO_MANY_LINKS
-    //
-    // MessageText:
-    //
-    // An attempt was made to create more links on a file than the file system
-    // supports.
-    //
     int ERROR_TOO_MANY_LINKS = 1142;
-
-    //
-    // MessageId: ERROR_OLD_WIN_VERSION
-    //
-    // MessageText:
-    //
-    // The specified program requires a newer version of Windows.
-    //
     int ERROR_OLD_WIN_VERSION = 1150;
-
-    //
-    // MessageId: ERROR_APP_WRONG_OS
-    //
-    // MessageText:
-    //
-    // The specified program is not a Windows or MS-DOS program.
-    //
     int ERROR_APP_WRONG_OS = 1151;
-
-    //
-    // MessageId: ERROR_SINGLE_INSTANCE_APP
-    //
-    // MessageText:
-    //
-    // Cannot start more than one instance of the specified program.
-    //
     int ERROR_SINGLE_INSTANCE_APP = 1152;
-
-    //
-    // MessageId: ERROR_RMODE_APP
-    //
-    // MessageText:
-    //
-    // The specified program was written for an earlier version of Windows.
-    //
     int ERROR_RMODE_APP = 1153;
-
-    //
-    // MessageId: ERROR_INVALID_DLL
-    //
-    // MessageText:
-    //
-    // One of the library files needed to run this application is damaged.
-    //
     int ERROR_INVALID_DLL = 1154;
-
-    //
-    // MessageId: ERROR_NO_ASSOCIATION
-    //
-    // MessageText:
-    //
-    // No application is associated with the specified file for this operation.
-    //
     int ERROR_NO_ASSOCIATION = 1155;
-
-    //
-    // MessageId: ERROR_DDE_FAIL
-    //
-    // MessageText:
-    //
-    // An error occurred in sending the command to the application.
-    //
     int ERROR_DDE_FAIL = 1156;
-
-    //
-    // MessageId: ERROR_DLL_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // One of the library files needed to run this application cannot be found.
-    //
     int ERROR_DLL_NOT_FOUND = 1157;
-
-    //
-    // MessageId: ERROR_NO_MORE_USER_HANDLES
-    //
-    // MessageText:
-    //
-    // The current process has used all of its system allowance of handles for
-    // Window Manager objects.
-    //
     int ERROR_NO_MORE_USER_HANDLES = 1158;
-
-    //
-    // MessageId: ERROR_MESSAGE_SYNC_ONLY
-    //
-    // MessageText:
-    //
-    // The message can be used only with synchronous operations.
-    //
     int ERROR_MESSAGE_SYNC_ONLY = 1159;
-
-    //
-    // MessageId: ERROR_SOURCE_ELEMENT_EMPTY
-    //
-    // MessageText:
-    //
-    // The indicated source element has no media.
-    //
     int ERROR_SOURCE_ELEMENT_EMPTY = 1160;
-
-    //
-    // MessageId: ERROR_DESTINATION_ELEMENT_FULL
-    //
-    // MessageText:
-    //
-    // The indicated destination element already contains media.
-    //
     int ERROR_DESTINATION_ELEMENT_FULL = 1161;
-
-    //
-    // MessageId: ERROR_ILLEGAL_ELEMENT_ADDRESS
-    //
-    // MessageText:
-    //
-    // The indicated element does not exist.
-    //
     int ERROR_ILLEGAL_ELEMENT_ADDRESS = 1162;
-
-    //
-    // MessageId: ERROR_MAGAZINE_NOT_PRESENT
-    //
-    // MessageText:
-    //
-    // The indicated element is part of a magazine that is not present.
-    //
     int ERROR_MAGAZINE_NOT_PRESENT = 1163;
-
-    //
-    // MessageId: ERROR_DEVICE_REINITIALIZATION_NEEDED
-    //
-    // MessageText:
-    //
-    // The indicated device requires reinitialization due to hardware errors.
-    //
-    int ERROR_DEVICE_REINITIALIZATION_NEEDED = 1164; // dderror
-
-    //
-    // MessageId: ERROR_DEVICE_REQUIRES_CLEANING
-    //
-    // MessageText:
-    //
-    // The device has indicated that cleaning is required before further
-    // operations are attempted.
-    //
+    int ERROR_DEVICE_REINITIALIZATION_NEEDED = 1164;
     int ERROR_DEVICE_REQUIRES_CLEANING = 1165;
-
-    //
-    // MessageId: ERROR_DEVICE_DOOR_OPEN
-    //
-    // MessageText:
-    //
-    // The device has indicated that its door is open.
-    //
     int ERROR_DEVICE_DOOR_OPEN = 1166;
-
-    //
-    // MessageId: ERROR_DEVICE_NOT_CONNECTED
-    //
-    // MessageText:
-    //
-    // The device is not connected.
-    //
     int ERROR_DEVICE_NOT_CONNECTED = 1167;
-
-    //
-    // MessageId: ERROR_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // Element not found.
-    //
     int ERROR_NOT_FOUND = 1168;
-
-    //
-    // MessageId: ERROR_NO_MATCH
-    //
-    // MessageText:
-    //
-    // There was no match for the specified key in the index.
-    //
     int ERROR_NO_MATCH = 1169;
-
-    //
-    // MessageId: ERROR_SET_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The property set specified does not exist on the object.
-    //
     int ERROR_SET_NOT_FOUND = 1170;
-
-    //
-    // MessageId: ERROR_POINT_NOT_FOUND
-    //
-    // MessageText:
-    //
-    // The point passed to GetMouseMovePoints is not in the buffer.
-    //
     int ERROR_POINT_NOT_FOUND = 1171;
-
-    //
-    // MessageId: ERROR_NO_TRACKING_SERVICE
-    //
-    // MessageText:
-    //
-    // The tracking (workstation) service is not running.
-    //
     int ERROR_NO_TRACKING_SERVICE = 1172;
-
-    //
-    // MessageId: ERROR_NO_VOLUME_ID
-    //
-    // MessageText:
-    //
-    // The Volume ID could not be found.
-    //
     int ERROR_NO_VOLUME_ID = 1173;
-
-    //
-    // MessageId: ERROR_UNABLE_TO_REMOVE_REPLACED
-    //
-    // MessageText:
-    //
-    // Unable to remove the file to be replaced.
-    //
     int ERROR_UNABLE_TO_REMOVE_REPLACED = 1175;
-
-    //
-    // MessageId: ERROR_UNABLE_TO_MOVE_REPLACEMENT
-    //
-    // MessageText:
-    //
-    // Unable to move the replacement file to the file to be replaced. The file
-    // to be replaced has retained its original name.
-    //
     int ERROR_UNABLE_TO_MOVE_REPLACEMENT = 1176;
-
-    //
-    // MessageId: ERROR_UNABLE_TO_MOVE_REPLACEMENT_2
-    //
-    // MessageText:
-    //
-    // Unable to move the replacement file to the file to be replaced. The file
-    // to be replaced has been renamed using the backup name.
-    //
     int ERROR_UNABLE_TO_MOVE_REPLACEMENT_2 = 1177;
-
-    //
-    // MessageId: ERROR_JOURNAL_DELETE_IN_PROGRESS
-    //
-    // MessageText:
-    //
-    // The volume change journal is being deleted.
-    //
     int ERROR_JOURNAL_DELETE_IN_PROGRESS = 1178;
-
-    //
-    // MessageId: ERROR_JOURNAL_NOT_ACTIVE
-    //
-    // MessageText:
-    //
-    // The volume change journal is not active.
-    //
     int ERROR_JOURNAL_NOT_ACTIVE = 1179;
-
-    //
-    // MessageId: ERROR_POTENTIAL_FILE_FOUND
-    //
-    // MessageText:
-    //
-    // A file was found, but it may not be the correct file.
-    //
     int ERROR_POTENTIAL_FILE_FOUND = 1180;
-
-    //
-    // MessageId: ERROR_JOURNAL_ENTRY_DELETED
-    //
-    // MessageText:
-    //
-    // The journal entry has been deleted from the journal.
-    //
     int ERROR_JOURNAL_ENTRY_DELETED = 1181;
-
-    //
-    // MessageId: ERROR_SHUTDOWN_IS_SCHEDULED
-    //
-    // MessageText:
-    //
-    // A system shutdown has already been scheduled.
-    //
     int ERROR_SHUTDOWN_IS_SCHEDULED = 1190;
-
-    //
-    // MessageId: ERROR_SHUTDOWN_USERS_LOGGED_ON
-    //
-    // MessageText:
-    //
-    // The system shutdown cannot be initiated because there are other users
-    // logged on to the computer.
-    //
     int ERROR_SHUTDOWN_USERS_LOGGED_ON = 1191;
     int ERROR_BAD_DEVICE = 1200;
     int ERROR_CONNECTION_UNAVAIL = 1201;
