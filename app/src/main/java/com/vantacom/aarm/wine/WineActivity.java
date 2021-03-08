@@ -21,7 +21,6 @@ import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
-import com.vantacom.aarm.libraries.jna.Kernel32;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.ProcessManager;
@@ -30,12 +29,6 @@ import com.vantacom.aarm.wine.controls.Controls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
-
-
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Platform;
-import com.sun.jna.Pointer;
 
 
 public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
@@ -204,11 +197,6 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.e("path", FileManager.getDriveCPath(this, "prefix"));
-        Log.e("ee", ConsoleManager.runCommandWithLog("man wineserver"));
-        Kernel32 lib = (Kernel32)Native.synchronizedLibrary(Kernel32.INSTANCE);
-        Log.e("Ticks", String.valueOf(lib.GetTickCount()));
-//        Log.e("Ticks", Kernel32Util.getComputerName());
         if (!isSystemPaused()) {
             boolean b = xserver.getKeyboard().pressKey(event);
             if (!b) {
