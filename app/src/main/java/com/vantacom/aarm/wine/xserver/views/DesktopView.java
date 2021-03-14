@@ -64,16 +64,17 @@ public class DesktopView extends ViewGroup {
     }
 
     private float getRealX() {
-        return getX() - layoutWidth * xserver.getScale() * scaleView / 2f + layoutWidth / 2f;
+        return getX() - screenWidth * xserver.getScale() * scaleView / 2f + screenWidth / 2f;
     }
 
     private float getRealY() {
-        return getY() - layoutHeight * xserver.getScale() * scaleView / 2f + layoutHeight / 2f;
+        return getY() - screenHeight * xserver.getScale() * scaleView / 2f + screenHeight / 2f;
     }
 
     public PointF getDesktopCords(float eventX, float eventY) {
-        float x = (eventX - getRealX()) / xserver.getScale() / scaleView;
-        float y = (eventY - getRealY()) / xserver.getScale() / scaleView;
+        float x, y;
+        x = (eventX - getRealX()) / xserver.getScale() / scaleView;
+        y = (eventY - getRealY()) / xserver.getScale() / scaleView;
         return new PointF(x, y);
     }
 
@@ -82,12 +83,12 @@ public class DesktopView extends ViewGroup {
             setScaleX(scaleView);
             setScaleY(scaleView);
             if (screenWidth > layoutWidth) {
-                setX((layoutWidth - width) / 2f * scaleView - (screenWidth - layoutWidth) / 10f / scaleView);
+                setX((layoutWidth - width) / 2f);
             } else {
                 setX((layoutWidth - width) / 2f * scaleView);
             }
             if (screenHeight > layoutHeight) {
-                setY((layoutHeight - height) / 2f * scaleView - (screenHeight - layoutHeight) / 10f / scaleView);
+                setY((layoutHeight - height) / 2f);
             } else {
                 setY((layoutHeight - height) / 2f * scaleView);
             }

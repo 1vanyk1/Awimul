@@ -23,8 +23,8 @@ import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
+import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
-import com.vantacom.aarm.managers.SaveFilesManager;
 import com.vantacom.aarm.wine.controls.Controls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
@@ -37,8 +37,9 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     private String wineABI;
     private LibraryManager wineActivity;
     private ProcessManager processManager;
-    private SaveFilesManager saveFilesManager;
+    private PackageDBManager sqLiteManager;
     private XServerManager xserver;
+    private String packageName;
 
     private View keyboard, exit;
 
@@ -96,8 +97,8 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         if (pwd.charAt(pwd.length() - 1) != '/') {
             pwd = pwd + '/';
         }
-        if (saveFilesManager.getIsFirstLoad()) {
-            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefix") + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
+        if (sqLiteManager.isBool("firstLoad")) {
+            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
             FileManager.createFile(pwd + "logpixels.reg",
                     "REGEDIT4\n" +
                     "\n" +
@@ -108,7 +109,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                     "\"LogPixels\"=dword:00000060");
             ConsoleManager.runCommand("wine regedit logpixels.reg");
             FileManager.deleteFile(pwd + "logpixels.reg");
-            saveFilesManager.setIsFirstLoad(false);
+            sqLiteManager.setBool("firstLoad", false);
         }
         runOnUiThread(new Runnable() {
             public void run() {
@@ -123,7 +124,8 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_wine);
-        saveFilesManager = new SaveFilesManager(this, "prefix");
+        sqLiteManager = PackageDBManager.getInstance(this);
+        packageName = getIntent().getStringExtra("package");
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
 
@@ -139,8 +141,16 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-        int desktopWidth = getIntent().getIntExtra("width", screenWidth);
-        int desktopHeight = getIntent().getIntExtra("height", screenHeight);
+        String size = sqLiteManager.getString(packageName, "size");
+        int desktopWidth, desktopHeight;
+        if (size.equals("native")) {
+            desktopWidth = screenWidth;
+            desktopHeight = screenHeight;
+        } else {
+            String[] sizes = size.split("x");
+            desktopWidth = Integer.parseInt(sizes[0]);
+            desktopHeight = Integer.parseInt(sizes[1]);
+        }
         int w = screenWidth, h = screenHeight;
         if (desktopWidth > screenWidth) {
             w = desktopWidth;
@@ -211,7 +221,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     public void loadWine(String path2file) {
         File binDir = new File(filesDir, wineABI + "/bin");
         File libraryDir = new File(filesDir, wineABI + "/lib");
-        File winePrefix = new File(filesDir, "prefix");
+        File winePrefix = new File(filesDir, sqLiteManager.getString(packageName, "prefix"));
         String[] wineSettings = StartupManager.getWineSetting(binDir, libraryDir, winePrefix, getApplicationInfo());
         if (path2file == null) {
             path2file = StartupManager.getFilePath(winePrefix, "explorer");
