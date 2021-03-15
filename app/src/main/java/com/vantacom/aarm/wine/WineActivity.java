@@ -97,7 +97,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         if (pwd.charAt(pwd.length() - 1) != '/') {
             pwd = pwd + '/';
         }
-        if (sqLiteManager.isBool("firstLoad")) {
+        if (sqLiteManager.isBool(packageName, "firstLoad")) {
             ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
             FileManager.createFile(pwd + "logpixels.reg",
                     "REGEDIT4\n" +
@@ -109,7 +109,8 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                     "\"LogPixels\"=dword:00000060");
             ConsoleManager.runCommand("wine regedit logpixels.reg");
             FileManager.deleteFile(pwd + "logpixels.reg");
-            sqLiteManager.setBool("firstLoad", false);
+            Log.e("!", "|");
+            sqLiteManager.setBool(packageName, "firstLoad", false);
         }
         runOnUiThread(new Runnable() {
             public void run() {

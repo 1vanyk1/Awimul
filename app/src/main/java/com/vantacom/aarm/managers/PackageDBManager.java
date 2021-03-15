@@ -45,20 +45,20 @@ public class PackageDBManager {
         }
     }
 
-    public boolean isBool(String name) {
+    public boolean isBool(String name, String string) {
         Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo WHERE name = '" + name + "';", null);
         boolean line = cursor.moveToFirst();
         if (!line) { return false; }
-        String value = cursor.getString(cursor.getColumnIndex("value"));
+        String value = cursor.getString(cursor.getColumnIndex(string));
         cursor.close();
         return value.equals("1");
     }
 
-    public void setBool(String name, boolean value) {
+    public void setBool(String name, String string, boolean value) {
         String res;
         if (value) {    res = "1";
         } else {        res = "0";}
-        db.execSQL("UPDATE PackageInfo SET value='" + res + "' WHERE name = '" + name + "';");
+        db.execSQL("UPDATE PackageInfo SET " + string + "='" + res + "' WHERE name = '" + name + "';");
     }
 
     public String getString(String name, String string) {
