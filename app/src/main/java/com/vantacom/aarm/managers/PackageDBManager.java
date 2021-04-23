@@ -26,15 +26,30 @@ public class PackageDBManager {
 
     private void createTables() {
         db.execSQL("CREATE TABLE IF NOT EXISTS PackageInfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR NOT NULL UNIQUE, prefix VARCHAR NOT NULL, firstLoad VARCHAR, size VARCHAR, colorDepth INTEGER);");
-        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo", null);
+//        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo", null);
+//        boolean line = cursor.moveToFirst();
+//        if (!line) {
+//            addPackage();
+//        }
+    }
+
+    public void addPackage() {
+        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo;", null);
         boolean line = cursor.moveToFirst();
         if (!line) {
-            addPackage("prefix");
+            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('prefix0', 'prefix0', '1', 'native', 32);");
+        } else {
+            cursor.moveToLast();
+            int num = Integer.parseInt(cursor.getString(cursor.getColumnIndex("prefix")).substring(6));
+            while (db.rawQuery("SELECT * FROM PackageInfo WHERE name = 'prefix" + (num + 1) + "';", null).moveToFirst()) {
+                num++;
+            }
+            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('prefix" + (num + 1) + "', 'prefix" + (num + 1) + "', '1', 'native', 32);");
         }
     }
 
     public void addPackage(String name) {
-        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo WHERE name = '" + name + "';", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo;", null);
         boolean line = cursor.moveToFirst();
         if (!line) {
             db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('" + name + "', 'prefix0', '1', 'native', 32);");
@@ -43,6 +58,10 @@ public class PackageDBManager {
             int num = Integer.parseInt(cursor.getString(cursor.getColumnIndex("prefix")).substring(6));
             db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('" + name + "', 'prefix" + (num + 1) + "', '1', 'native', 32);");
         }
+    }
+
+    public void deletePackage(String name) {
+        db.execSQL("DELETE FROM PackageInfo WHERE name = '" + name + "';");
     }
 
     public boolean isBool(String name, String string) {

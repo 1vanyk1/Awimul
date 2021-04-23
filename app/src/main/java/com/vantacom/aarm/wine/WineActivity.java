@@ -98,7 +98,9 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
             pwd = pwd + '/';
         }
         if (sqLiteManager.isBool(packageName, "firstLoad")) {
-            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath()));
+            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
+            if (!file.exists()) file.mkdir();
+            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
             FileManager.createFile(pwd + "logpixels.reg",
                     "REGEDIT4\n" +
                     "\n" +
@@ -222,7 +224,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     public void loadWine(String path2file) {
         File binDir = new File(filesDir, wineABI + "/bin");
         File libraryDir = new File(filesDir, wineABI + "/lib");
-        File winePrefix = new File(filesDir, sqLiteManager.getString(packageName, "prefix"));
+        File winePrefix = new File(filesDir, "prefixes/" + sqLiteManager.getString(packageName, "prefix"));
         String[] wineSettings = StartupManager.getWineSetting(binDir, libraryDir, winePrefix, getApplicationInfo());
         if (path2file == null) {
             path2file = StartupManager.getFilePath(winePrefix, "explorer");

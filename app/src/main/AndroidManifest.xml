@@ -25,6 +25,9 @@
             android:screenOrientation="landscape"
             android:name=".wine.WineActivity">
         </activity>
+        <activity
+            android:name=".UserActivity">
+        </activity>
     </application>
 
 </manifest>

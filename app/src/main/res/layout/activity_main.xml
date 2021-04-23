@@ -1,56 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/generate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recreate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/recreate" />
 
     <Button
-        android:id="@+id/load"
+        android:id="@+id/add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Load"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generate" />
+        android:text="@string/add_a_new_user" />
 
-    <LinearLayout
-        android:id="@+id/changeSize"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/load">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/setSize"
-            android:textColor="@color/black"
-            android:layout_weight="2"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/changeSize2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="native"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:layout_weight="3"
-            android:textSize="24sp" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
