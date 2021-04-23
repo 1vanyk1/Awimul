@@ -30,6 +30,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         packageName = getIntent().getStringExtra("package");
+        Log.e("1", packageName);
         packageManager = PackageDBManager.getInstance(this);
         load = findViewById(R.id.load);
         load.setOnClickListener(this);
@@ -57,7 +58,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
             wineActivity.putExtra("package", packageName);
             startActivity(wineActivity);
         } else if (v.getId() == R.id.changeSize) {
-            SelectSizeDialog dialog = new SelectSizeDialog(this, packageManager);
+            SelectSizeDialog dialog = new SelectSizeDialog(this, packageManager, packageName);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             dialog.show(transaction, "dialog");
