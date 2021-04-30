@@ -35,7 +35,6 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         catch (NullPointerException e) {}
         setContentView(R.layout.activity_user);
         packageName = getIntent().getStringExtra("package");
-        Log.e("1", packageName);
         packageManager = PackageDBManager.getInstance(this);
         loadButton = findViewById(R.id.load);
         loadButton.setOnClickListener(this);
