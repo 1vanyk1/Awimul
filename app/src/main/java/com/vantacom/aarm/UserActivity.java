@@ -35,6 +35,9 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         catch (NullPointerException e) {}
         setContentView(R.layout.activity_user);
         packageName = getIntent().getStringExtra("package");
+        if (savedInstanceState != null) {
+            packageName = savedInstanceState.getString("package", packageName);
+        }
         packageManager = PackageDBManager.getInstance(this);
         loadButton = findViewById(R.id.load);
         loadButton.setOnClickListener(this);
@@ -53,11 +56,25 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         updateChangeSizeText(size);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("package", packageName);
+    }
+
     public void deleteUser() {
         DeletingPackageDialog dialog = new DeletingPackageDialog(this, packageName);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         dialog.show(transaction, "dialog");
+    }
+
+    public void updateName(String packageName) {
+        this.packageName = packageName;
+        workInBG.setChecked(packageManager.isBool(packageName, "workInBackground"));
+        String size = packageManager.getString(packageName, "size");
+        updateChangeSizeText(size);
+        textViewName.setText(packageName);
     }
 
     @Override

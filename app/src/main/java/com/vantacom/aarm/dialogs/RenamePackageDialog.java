@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import com.vantacom.aarm.R;
 import com.vantacom.aarm.UserActivity;
 import com.vantacom.aarm.managers.PackageDBManager;
 
-public class RenamePackageDialog extends DialogFragment implements View.OnClickListener {
+public class RenamePackageDialog extends DialogFragment implements View.OnClickListener, View.OnKeyListener {
     private UserActivity activity;
     private EditText renameText;
     private Dialog dialog;
@@ -37,25 +38,25 @@ public class RenamePackageDialog extends DialogFragment implements View.OnClickL
         builder.setView(view);
         renameText = view.findViewById(R.id.rename);
         renameText.setText(packageName);
+        renameText.setOnKeyListener(this);
         ok = view.findViewById(R.id.ok);
         ok.setOnClickListener(this);
         cancel = view.findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
-        // Остальной код
         dialog = builder.create();
         return dialog;
+    }
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setTitle(R.string.warning);
-//        builder.setMessage(R.string.obbWarning);
-//        builder.setCancelable(false);
-//        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id) {
-//                dialog.cancel();
-//                activity.finishAndRemoveTask();
-//            }
-//        });
-//        return builder.create();
+    public void rename() {
+        String res = renameText.getText().toString().trim();
+        if (res.equals(packageName) || res.equals("")) {
+            dialog.cancel();
+        }
+        if (packageManager.getString(res, "name").equals("")) {
+            packageManager.setString(packageName, "name", res);
+            activity.updateName(res);
+            dialog.cancel();
+        }
     }
 
     @Override
@@ -63,13 +64,15 @@ public class RenamePackageDialog extends DialogFragment implements View.OnClickL
         if (v.getId() == R.id.cancel) {
             dialog.cancel();
         } else if (v.getId() == R.id.ok) {
-            String res = renameText.getText().toString().trim();
-            if (res.equals(packageName) || res.equals("")) {
-                dialog.cancel();
-            }
-            if (packageManager.getString(res, "name").equals("")) {
-                dialog.cancel();
-            }
+            rename();
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == 66) {
+            rename();
+        }
+        return false;
     }
 }
