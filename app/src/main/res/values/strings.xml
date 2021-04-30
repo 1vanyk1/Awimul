@@ -3,6 +3,8 @@
     <string name="unpackLText">Unpacking files, please wait.</string>
     <string name="wineLTitle">Loading...</string>
     <string name="wineLText">Loading wine, please wait.</string>
+    <string name="packageDTitle">Deleting...</string>
+    <string name="packageDText">Deleting package, please wait.</string>
     <string name="warning">Warning</string>
     <string name="obbWarning">There is no obb file. Please install it and reload app.</string>
     <string name="ok">OK</string>
@@ -15,4 +17,7 @@
     <string name="add_a_new_user">Add a new user</string>
     <string name="load">Load</string>
     <string name="delete">Delete</string>
+    <string name="work_in_background">Work in background</string>
+    <string name="rename">Rename</string>
+    <string name="cancel">Cancel</string>
 </resources>

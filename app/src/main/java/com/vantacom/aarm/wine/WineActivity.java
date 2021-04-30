@@ -40,9 +40,9 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     private PackageDBManager sqLiteManager;
     private XServerManager xserver;
     private String packageName;
+    private boolean workInBG;
 
     private View keyboard, exit;
-
     private View touchView, topPanel;
 
     private boolean ifTurnedOff = false;
@@ -68,7 +68,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     protected void onPause() {
         super.onPause();
-        if (processManager != null) {
+        if (processManager != null && !workInBG) {
             processManager.pauseSystem();
         }
         xserver.getKeyboard().hideKeyboard();
@@ -77,7 +77,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (processManager != null) {
+        if (processManager != null && !workInBG) {
             processManager.resumeSystem();
         }
         hideSystemUI();
@@ -101,17 +101,6 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
             File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
             if (!file.exists()) file.mkdir();
             ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
-            FileManager.createFile(pwd + "logpixels.reg",
-                    "REGEDIT4\n" +
-                    "\n" +
-                    "[HKEY_CURRENT_USER\\Control Panel\\Desktop]\n" +
-                    "\"LogPixels\"=dword:00000060\n" +
-                    "\n" +
-                    "[HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Hardware Profiles\\Current\\Software\\Fonts]\n" +
-                    "\"LogPixels\"=dword:00000060");
-            ConsoleManager.runCommand("wine regedit logpixels.reg");
-            FileManager.deleteFile(pwd + "logpixels.reg");
-            Log.e("!", "|");
             sqLiteManager.setBool(packageName, "firstLoad", false);
         }
         runOnUiThread(new Runnable() {
@@ -119,6 +108,9 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                 topPanel.setVisibility(View.VISIBLE);
             }
         });
+//        Log.e("1", "1");
+//        ConsoleManager.runCommandWithLog("iptables -L -n -v");
+//        Log.e("1", "1");
     }
 
     @Override
@@ -129,6 +121,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         setContentView(R.layout.activity_wine);
         sqLiteManager = PackageDBManager.getInstance(this);
         packageName = getIntent().getStringExtra("package");
+        workInBG = sqLiteManager.isBool(packageName, "workInBackground");
         wineABI = "armeabi-v7a";
         filesDir = getFilesDir();
 

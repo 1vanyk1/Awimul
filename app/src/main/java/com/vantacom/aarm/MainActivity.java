@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new UserAdapter(names);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
-        Log.e("names", names.toString());
     }
 
     @Override

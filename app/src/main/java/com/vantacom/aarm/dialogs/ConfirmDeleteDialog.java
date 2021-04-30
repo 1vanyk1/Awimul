@@ -12,7 +12,7 @@ import com.vantacom.aarm.UserActivity;
 import com.vantacom.aarm.wine.WineActivity;
 
 public class ConfirmDeleteDialog extends DialogFragment {
-    UserActivity activity;
+    private UserActivity activity;
 
     public ConfirmDeleteDialog(UserActivity activity) {
         this.activity = activity;

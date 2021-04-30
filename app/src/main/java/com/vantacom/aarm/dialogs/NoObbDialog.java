@@ -11,7 +11,7 @@ import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
 
 public class NoObbDialog extends DialogFragment {
-    MainActivity activity;
+    private MainActivity activity;
 
     public NoObbDialog(MainActivity activity) {
         this.activity = activity;

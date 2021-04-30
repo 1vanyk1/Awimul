@@ -3,6 +3,7 @@ package com.vantacom.aarm.managers;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -25,26 +26,25 @@ public class PackageDBManager {
     }
 
     private void createTables() {
-        db.execSQL("CREATE TABLE IF NOT EXISTS PackageInfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR NOT NULL UNIQUE, prefix VARCHAR NOT NULL, firstLoad VARCHAR, size VARCHAR, colorDepth INTEGER);");
-//        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo", null);
-//        boolean line = cursor.moveToFirst();
-//        if (!line) {
-//            addPackage();
-//        }
+        db.execSQL("CREATE TABLE IF NOT EXISTS PackageInfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR NOT NULL UNIQUE, prefix VARCHAR NOT NULL, firstLoad VARCHAR, size VARCHAR, colorDepth INTEGER, workInBackground VARCHAR default '0');");
+        Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo LIMIT 0,1", null);
+        if (cursor.getColumnIndex("workInBackground") == -1) {
+            db.execSQL("ALTER TABLE PackageInfo ADD COLUMN workInBackground VARCHAR default '0';");
+        }
     }
 
     public void addPackage() {
         Cursor cursor = db.rawQuery("SELECT * FROM PackageInfo;", null);
         boolean line = cursor.moveToFirst();
         if (!line) {
-            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('prefix0', 'prefix0', '1', 'native', 32);");
+            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth, workInBackground) VALUES('prefix0', 'prefix0', '1', 'native', 32, '0');");
         } else {
             cursor.moveToLast();
             int num = Integer.parseInt(cursor.getString(cursor.getColumnIndex("prefix")).substring(6));
             while (db.rawQuery("SELECT * FROM PackageInfo WHERE name = 'prefix" + (num + 1) + "';", null).moveToFirst()) {
                 num++;
             }
-            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth) VALUES('prefix" + (num + 1) + "', 'prefix" + (num + 1) + "', '1', 'native', 32);");
+            db.execSQL("INSERT INTO PackageInfo(name, prefix, firstLoad, size, colorDepth, workInBackground) VALUES('prefix" + (num + 1) + "', 'prefix" + (num + 1) + "', '1', 'native', 32, '0');");
         }
     }
 

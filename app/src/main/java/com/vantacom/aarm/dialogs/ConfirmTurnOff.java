@@ -11,7 +11,7 @@ import com.vantacom.aarm.R;
 import com.vantacom.aarm.wine.WineActivity;
 
 public class ConfirmTurnOff extends DialogFragment {
-    WineActivity activity;
+    private WineActivity activity;
 
     public ConfirmTurnOff(WineActivity activity) {
         this.activity = activity;

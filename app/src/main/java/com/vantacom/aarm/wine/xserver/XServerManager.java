@@ -155,7 +155,7 @@ public class XServerManager {
         addWindow(hwnd, desktopView.getDesktopWindow());
         changeFocus(desktopView.getDesktopWindow());
         try {
-            wineActivity.invoke("wine_config_changed", activity.getResources().getConfiguration().densityDpi);
+            wineActivity.invoke("wine_config_changed", 96);
         } catch (Exception e) {
             Log.e("wine", e.toString());
         }

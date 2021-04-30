@@ -231,6 +231,10 @@ public class FileManager {
         return context.getFilesDir() + String.format("/%s", prefix);
     }
 
+    public static String getCanonicalPrefixPath(Context context, String prefix) throws IOException {
+        return context.getFilesDir().getCanonicalPath() + String.format("/%s", prefix);
+    }
+
     public static void createFile(String path, String text) {
         File saveFile = new File(path);
         try {
@@ -258,5 +262,27 @@ public class FileManager {
     public static void deleteFile(String path) {
         File saveFile = new File(path);
         saveFile.delete();
+    }
+
+    public static void deleteFolder(Context context, File folder) {
+        String[] files = folder.list();
+        try {
+            if (!folder.getCanonicalPath().contains(FileManager.getCanonicalPrefixPath(context, "prefixes"))) {
+                ConsoleManager.runCommand(String.format("rm %s", folder.getAbsolutePath()));
+                return;
+            }
+        } catch (Exception e) {}
+        if (files != null) {
+            for (String filename : files) {
+                File srcFile = new File(folder, filename);
+                deleteFolder(context, srcFile);
+            }
+        }
+        folder.delete();
+    }
+
+    public static void deleteFolder(Context context, String folder) {
+        File folderFile = new File(folder);
+        deleteFolder(context, folderFile);
     }
 }
