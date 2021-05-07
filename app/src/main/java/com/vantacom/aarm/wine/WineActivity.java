@@ -1,9 +1,16 @@
  package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,12 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.vantacom.aarm.BackgroundService;
 import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
@@ -25,24 +35,27 @@ import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
-import com.vantacom.aarm.wine.controls.Controls;
+import com.vantacom.aarm.wine.controls.touchscreen.BaseControls;
+import com.vantacom.aarm.wine.controls.touchscreen.MouseControls;
+import com.vantacom.aarm.wine.controls.touchscreen.TouchControls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 import java.io.File;
 
 
 public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
-    private File filesDir;
     private ConstraintLayout view;
     private String wineABI;
     private LibraryManager wineActivity;
     private ProcessManager processManager;
     private PackageDBManager sqLiteManager;
     private XServerManager xserver;
+    private BaseControls controls;
     private String packageName;
-    private boolean workInBG;
+    private boolean workInBG, showCursor;
+    private String inputType;
 
-    private View keyboard, exit;
+    private ImageView keyboard, inputTypeView, exit;
     private View touchView, topPanel;
 
     private boolean ifTurnedOff = false;
@@ -58,29 +71,42 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
+    private boolean mShouldUnbind;
+
+    private Messenger mService;
+
+    private ServiceConnection mConnection;
+
+    void doBindService() {
+        if (bindService(new Intent(WineActivity.this, BackgroundService.class), mConnection, Context.BIND_AUTO_CREATE)) {
+            mShouldUnbind = true;
+        } else {
+            Log.e("WA", "The requested service doesn't exist, or this client isn't allowed access to it.");
+        }
+    }
+
+    void doUnbindService() {
+        if (mShouldUnbind) {
+            unbindService(mConnection);
+            mShouldUnbind = false;
+        }
+    }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isSystemPaused() {
         if (processManager == null || !processManager.getIsPaused()) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (processManager != null && !workInBG) {
-            processManager.pauseSystem();
-        }
-        xserver.getKeyboard().hideKeyboard();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (processManager != null && !workInBG) {
-            processManager.resumeSystem();
-        }
-        hideSystemUI();
     }
 
     @Override
@@ -91,45 +117,52 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
-    public void onWineLoad() {
-        processManager = new ProcessManager();
-        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
-        if (pwd.charAt(pwd.length() - 1) != '/') {
-            pwd = pwd + '/';
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ifTurnedOff = false;
+        if (processManager != null && !workInBG) {
+            processManager.resumeSystem();
         }
-        if (sqLiteManager.isBool(packageName, "firstLoad")) {
-            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
-            if (!file.exists()) file.mkdir();
-            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
-            sqLiteManager.setBool(packageName, "firstLoad", false);
-        }
-        runOnUiThread(new Runnable() {
-            public void run() {
-                topPanel.setVisibility(View.VISIBLE);
-            }
-        });
-//        Log.e("1", "1");
-//        ConsoleManager.runCommandWithLog("iptables -L -n -v");
-//        Log.e("1", "1");
+        hideSystemUI();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent service = new Intent(this, BackgroundService.class);
+        startService(service);
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                mService = new Messenger(service);
+                Toast.makeText(WineActivity.this, "connected",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+                mService = null;
+                Toast.makeText(WineActivity.this, "disconnected",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        try {this.getSupportActionBar().hide();}
+        catch (NullPointerException e) {}
         setContentView(R.layout.activity_wine);
         sqLiteManager = PackageDBManager.getInstance(this);
         packageName = getIntent().getStringExtra("package");
         workInBG = sqLiteManager.isBool(packageName, "workInBackground");
+        showCursor = sqLiteManager.isBool(packageName, "showCursor");
         wineABI = "armeabi-v7a";
-        filesDir = getFilesDir();
 
         view = findViewById(R.id.mainLayout);
         touchView = findViewById(R.id.touchView);
         topPanel = findViewById(R.id.topPanel);
         keyboard = findViewById(R.id.keyboard);
         keyboard.setOnTouchListener(this);
+        inputTypeView = findViewById(R.id.input_type);
+        inputTypeView.setOnTouchListener(this);
         exit = findViewById(R.id.exit);
         exit.setOnTouchListener(this);
 
@@ -157,21 +190,60 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         view.setLayoutParams(new ConstraintLayout.LayoutParams(w, h));
         try {
             wineActivity = new LibraryManager("org.winehq.wine.WineActivity");
-            wineActivity.invoke("init", this, new File(filesDir, wineABI + "/lib"));
+            wineActivity.invoke("init", this, new File(getFilesDir(), wineABI + "/lib"));
         } catch (Exception e) {
             Log.e("WA", e.toString());
         }
         xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, this, wineActivity);
-        touchView.setOnTouchListener(new Controls(this, xserver));
+        changeInputType("touch");
         dialog = new LoadingWineDialog(this);
         dialog.show();
         hideSystemUI();
+        doBindService();
+
+        mYourService = new BackgroundService();
+        Intent mServiceIntent = new Intent(this, mYourService.getClass());
+        if (!isServiceRunning(mYourService.getClass())) {
+            startService(mServiceIntent);
+        }
+
         new Thread(new Runnable() {
             public void run() {
-                loadWine(null);
+                loadWine(null, getFilesDir());
             }
         }).start();
     }
+
+    public void onWineLoad() {
+        processManager = new ProcessManager();
+        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
+        if (pwd.charAt(pwd.length() - 1) != '/') {
+            pwd = pwd + '/';
+        }
+        if (sqLiteManager.isBool(packageName, "firstLoad")) {
+            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
+            if (!file.exists()) file.mkdir();
+            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
+            sqLiteManager.setBool(packageName, "firstLoad", false);
+        }
+        runOnUiThread(new Runnable() {
+            public void run() {
+                topPanel.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ifTurnedOff = true;
+        if (processManager != null && !workInBG) {
+            processManager.pauseSystem();
+        }
+        xserver.getKeyboard().hideKeyboard();
+    }
+
+    private BackgroundService mYourService;
 
     @Override
     protected void onDestroy() {
@@ -182,9 +254,11 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void onTurnOff() {
+        doUnbindService();
+        Intent service = new Intent(this, BackgroundService.class);
+        stopService(service);
         view.removeAllViews();
         xserver.destroy();
-
         ConsoleManager.runCommand("wineserver -k");
         wineActivity.destroy();
         wineActivity = null;
@@ -214,7 +288,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
-    public void loadWine(String path2file) {
+    public void loadWine(String path2file, File filesDir) {
         File binDir = new File(filesDir, wineABI + "/bin");
         File libraryDir = new File(filesDir, wineABI + "/lib");
         File winePrefix = new File(filesDir, "prefixes/" + sqLiteManager.getString(packageName, "prefix"));
@@ -287,9 +361,36 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 dialog.show(transaction, "dialog");
+            } else if (v.getId() == R.id.input_type) {
+                if (inputType.equals("touch")) {
+                    changeInputType("mouse");
+                } else {
+                    changeInputType("touch");
+                }
             }
         }
         return true;
+    }
+
+    private void changeInputType(String inputType) {
+        this.inputType = inputType;
+        if (controls != null) {
+            controls.stopMoving();
+        }
+        if (inputType.equals("mouse")) {
+            xserver.getCursor().setVisibility(true);
+            inputTypeView.setImageResource(R.drawable.mouse);
+            controls = new MouseControls(this, xserver);
+        } else {
+            if (showCursor) {
+                xserver.getCursor().setVisibility(true);
+            } else {
+                xserver.getCursor().setVisibility(false);
+            }
+            inputTypeView.setImageResource(R.drawable.tap);
+            controls = new TouchControls(this, xserver);
+        }
+        touchView.setOnTouchListener(controls);
     }
 
     public void toggleTopBar() {

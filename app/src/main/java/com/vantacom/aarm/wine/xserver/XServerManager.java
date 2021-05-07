@@ -26,6 +26,9 @@ public class XServerManager {
     private ArrayList<Integer> zOrder;
     private ResizeManager resizeManager;
     private Window focusedWindow;
+    private Mouse cursor;
+
+    private static int LOG_PIXELS = 96;
 
     public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, LibraryManager wineActivity) {
         this.screenWidth = screenWidth;
@@ -37,6 +40,7 @@ public class XServerManager {
         this.keyboard = new Keyboard(activity, this);
         zOrder = new ArrayList<Integer>();
         resizeManager = new ResizeManager(this);
+        cursor = new Mouse(this, desktopWidth / 2, desktopHeight / 2);
     }
 
     public Context getContext() { return activity; }
@@ -44,6 +48,8 @@ public class XServerManager {
     public LibraryManager getWineActivity() { return wineActivity; }
 
     public Keyboard getKeyboard() { return keyboard; }
+
+    public Mouse getCursor() { return cursor; }
 
     public DesktopView getDesktopView() { return desktopView; }
 
@@ -119,8 +125,7 @@ public class XServerManager {
         return (wg.getLeft() <= x && wg.getRight() >= x && wg.getTop() <= y && wg.getBottom() >= y);
     }
 
-    public Window getTouchedWindow(float x, float y) {
-        PointF point = desktopView.getDesktopCords(x, y);
+    private Window getTouchedWindow(PointF point) {
         Window window;
         for (int i = 0; i < zOrder.size(); i++) {
             if (zOrder.get(i) == desktopView.getDesktopWindow().getHWND()) {
@@ -134,6 +139,14 @@ public class XServerManager {
             }
         }
         return desktopView.getDesktopWindow();
+    }
+
+    public Window getTouchedWindow(float x, float y) {
+        return getTouchedWindow(desktopView.getDesktopCords(x, y));
+    }
+
+    public Window getTouchedWindow(Mouse mouse) {
+        return getTouchedWindow(new PointF(mouse.getX(), mouse.getY()));
     }
 
     public Window getFocusedWindow() {
@@ -155,7 +168,7 @@ public class XServerManager {
         addWindow(hwnd, desktopView.getDesktopWindow());
         changeFocus(desktopView.getDesktopWindow());
         try {
-            wineActivity.invoke("wine_config_changed", 96);
+            wineActivity.invoke("wine_config_changed", LOG_PIXELS);
         } catch (Exception e) {
             Log.e("wine", e.toString());
         }

@@ -9,12 +9,17 @@ import androidx.fragment.app.DialogFragment;
 
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.UserActivity;
-import com.vantacom.aarm.wine.WineActivity;
 
 public class ConfirmDeleteDialog extends DialogFragment {
     private UserActivity activity;
 
     public ConfirmDeleteDialog(UserActivity activity) {
+        this.activity = activity;
+    }
+
+    public ConfirmDeleteDialog() {}
+
+    public void init(UserActivity activity) {
         this.activity = activity;
     }
 

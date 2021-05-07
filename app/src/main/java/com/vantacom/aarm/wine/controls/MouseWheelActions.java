@@ -1,8 +1,8 @@
 package com.vantacom.aarm.wine.controls;
 
-import android.graphics.PointF;
 import android.view.MotionEvent;
 
+import com.vantacom.aarm.wine.xserver.Mouse;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class MouseWheelActions {
@@ -14,16 +14,20 @@ public class MouseWheelActions {
     }
 
     public void setStartY(MotionEvent event) {
-        this.y = event.getY();
+        try {
+            this.y = event.getY();
+        } catch (Exception e) {
+            this.y = 0;
+        }
     }
 
-    public void move(PointF mousePos, MotionEvent event) {
+    public void move(Mouse mouse, MotionEvent event) {
         float eventY = event.getY();
         if (eventY + 5 < y) {
-            MouseActions.scroll(mousePos.x, mousePos.y, xserver.getWineActivity(), xserver.getFocusedWindow(), -1);
+            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), -1);
             y = eventY;
         } else if (eventY - 5 > y) {
-            MouseActions.scroll(mousePos.x, mousePos.y, xserver.getWineActivity(), xserver.getFocusedWindow(), 1);
+            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), 1);
             y = eventY;
         }
     }

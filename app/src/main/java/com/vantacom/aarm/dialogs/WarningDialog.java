@@ -10,18 +10,21 @@ import androidx.fragment.app.DialogFragment;
 import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
 
-public class NoObbDialog extends DialogFragment {
+public class WarningDialog extends DialogFragment {
     private MainActivity activity;
+    private int warning;
 
-    public NoObbDialog(MainActivity activity) {
+    public WarningDialog(MainActivity activity, int warning) {
         this.activity = activity;
+        this.warning = warning;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setRetainInstance(true);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.warning);
-        builder.setMessage(R.string.obbWarning);
+        builder.setMessage(warning);
         builder.setCancelable(false);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

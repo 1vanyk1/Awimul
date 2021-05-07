@@ -46,6 +46,13 @@
             app:srcCompat="@drawable/keyboard" />
 
         <ImageView
+            android:id="@+id/input_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/tap" />
+
+        <ImageView
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

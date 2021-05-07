@@ -28,6 +28,7 @@ public class DesktopView extends ViewGroup {
         this.xserver = xserver;
         this.wineActivity = wineActivity;
         createDesktopWindow(hwnd);
+        addView(xserver.getCursor().getView());
     }
 
     public void createDesktopWindow(int hwnd) {

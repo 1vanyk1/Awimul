@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.UserActivity;
 import com.vantacom.aarm.managers.PackageDBManager;
@@ -21,6 +20,19 @@ public class SelectSizeDialog extends DialogFragment {
     private final String[] proportions = {null, "4:3",     "3:2",     "4:3",     "3:2",     "4:3",     "4:3",     "4:3",      "16:9",     "16:10",    "4:3",      "5:4",       "16:10",    "16:9",     "4:3",       "16:10",     "16:9"};
 
     public SelectSizeDialog(UserActivity activity, PackageDBManager packageManager, String packageName) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+        sizes[0] = String.format("%s (%dx%d)", sizes[0], screenWidth, screenHeight);
+        this.activity = activity;
+        this.packageManager = packageManager;
+        this.packageName = packageName;
+    }
+
+    public SelectSizeDialog() {}
+
+    public void init(UserActivity activity, PackageDBManager packageManager, String packageName) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;

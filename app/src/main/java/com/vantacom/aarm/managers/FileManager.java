@@ -285,4 +285,10 @@ public class FileManager {
         File folderFile = new File(folder);
         deleteFolder(context, folderFile);
     }
+
+    public static void deleteUser(Context activity, String packageName) {
+        PackageDBManager packageManager = PackageDBManager.getInstance(activity);
+        FileManager.deleteFolder(activity, FileManager.getPrefixPath(activity, "prefixes/" + packageManager.getString(packageName, "prefix")));
+        packageManager.deletePackage(packageName);
+    }
 }

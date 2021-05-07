@@ -3,7 +3,6 @@ package com.vantacom.aarm.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,22 @@ public class RenamePackageDialog extends DialogFragment implements View.OnClickL
     private String packageName;
     PackageDBManager packageManager;
 
-    public RenamePackageDialog(UserActivity activity, String packageName, PackageDBManager packageManager) {
+    public RenamePackageDialog(UserActivity activity, PackageDBManager packageManager, String packageName) {
+        this.activity = activity;
+        this.packageName = packageName;
+        this.packageManager = packageManager;
+    }
+
+    public RenamePackageDialog() {}
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("text", renameText.getText().toString().trim());
+        dialog.dismiss();
+    }
+
+    public void init(UserActivity activity, PackageDBManager packageManager, String packageName) {
         this.activity = activity;
         this.packageName = packageName;
         this.packageManager = packageManager;
@@ -37,7 +51,11 @@ public class RenamePackageDialog extends DialogFragment implements View.OnClickL
         View view = inflater.inflate(R.layout.fragment_rename_prefix, null);
         builder.setView(view);
         renameText = view.findViewById(R.id.rename);
-        renameText.setText(packageName);
+        if (savedInstanceState == null) {
+            renameText.setText(packageName);
+        } else {
+            renameText.setText(savedInstanceState.getString("text", packageName));
+        }
         renameText.setOnKeyListener(this);
         ok = view.findViewById(R.id.ok);
         ok.setOnClickListener(this);

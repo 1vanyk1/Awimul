@@ -24,7 +24,12 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private View changeSize;
     private TextView textViewName;
     private Button loadButton, deleteButton, renameButton;
-    private Switch workInBG;
+    private Switch workInBG, showCursor;
+
+    private SelectSizeDialog dialogSS;
+    private RenamePackageDialog dialogRP;
+    private ConfirmDeleteDialog dialogCD;
+    private DeletingPackageDialog dialogDP;
 
     private String packageName = "prefix";
 
@@ -34,18 +39,37 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         try {this.getSupportActionBar().hide();}
         catch (NullPointerException e) {}
         setContentView(R.layout.activity_user);
+        packageManager = PackageDBManager.getInstance(this);
         packageName = getIntent().getStringExtra("package");
         if (savedInstanceState != null) {
             packageName = savedInstanceState.getString("package", packageName);
+            dialogSS = (SelectSizeDialog)getSupportFragmentManager().getFragment(savedInstanceState, "dialogSS");
+            if (dialogSS != null) {
+                dialogSS.init(this, packageManager, packageName);
+            }
+            dialogRP = (RenamePackageDialog) getSupportFragmentManager().getFragment(savedInstanceState, "dialogRP");
+            if (dialogRP != null) {
+                dialogRP.init(this, packageManager, packageName);
+            }
+            dialogCD = (ConfirmDeleteDialog) getSupportFragmentManager().getFragment(savedInstanceState, "dialogCD");
+            if (dialogCD != null) {
+                dialogCD.init(this);
+            }
+            dialogDP = (DeletingPackageDialog) getSupportFragmentManager().getFragment(savedInstanceState, "dialogDP");
+            if (dialogDP != null) {
+                dialogDP.init(this, packageName);
+            }
         }
-        packageManager = PackageDBManager.getInstance(this);
         loadButton = findViewById(R.id.load);
         loadButton.setOnClickListener(this);
         deleteButton = findViewById(R.id.delete);
         deleteButton.setOnClickListener(this);
-        workInBG = findViewById(R.id.workInBG);
+        workInBG = findViewById(R.id.work_in_bg);
         workInBG.setChecked(packageManager.isBool(packageName, "workInBackground"));
         workInBG.setOnCheckedChangeListener(this);
+        showCursor = findViewById(R.id.show_cursor);
+        showCursor.setChecked(packageManager.isBool(packageName, "showCursor"));
+        showCursor.setOnCheckedChangeListener(this);
         changeSize = findViewById(R.id.changeSize);
         changeSize.setOnClickListener(this);
         renameButton = findViewById(R.id.rename);
@@ -60,13 +84,26 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("package", packageName);
+        if (dialogSS != null) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogSS", dialogSS);
+        }
+        if (dialogRP != null) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogRP", dialogRP);
+        }
+        if (dialogCD != null) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogCD", dialogCD);
+        }
+        if (dialogDP != null) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogDP", dialogDP);
+        }
     }
 
     public void deleteUser() {
-        DeletingPackageDialog dialog = new DeletingPackageDialog(this, packageName);
+        dialogCD = null;
+        dialogDP = new DeletingPackageDialog(this, packageName);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        dialog.show(transaction, "dialog");
+        dialogDP.show(transaction, "dialog");
     }
 
     public void updateName(String packageName) {
@@ -75,6 +112,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         String size = packageManager.getString(packageName, "size");
         updateChangeSizeText(size);
         textViewName.setText(packageName);
+        dialogRP = null;
     }
 
     @Override
@@ -84,32 +122,35 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
             wineActivity.putExtra("package", packageName);
             startActivity(wineActivity);
         } else if (v.getId() == R.id.changeSize) {
-            SelectSizeDialog dialog = new SelectSizeDialog(this, packageManager, packageName);
+            dialogSS = new SelectSizeDialog(this, packageManager, packageName);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            dialog.show(transaction, "dialog");
+            dialogSS.show(transaction, "dialog");
         } else if (v.getId() == R.id.delete) {
-            ConfirmDeleteDialog dialog = new ConfirmDeleteDialog(this);
+            dialogCD = new ConfirmDeleteDialog(this);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            dialog.show(transaction, "dialog");
+            dialogCD.show(transaction, "dialog");
         } else if (v.getId() == R.id.rename) {
-            RenamePackageDialog dialog = new RenamePackageDialog(this, packageName, packageManager);
+            dialogRP = new RenamePackageDialog(this, packageManager, packageName);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            dialog.show(transaction, "dialog");
+            dialogRP.show(transaction, "dialog");
         }
     }
 
     public void updateChangeSizeText(String size) {
         TextView changeSize2 = findViewById(R.id.changeSize2);
         changeSize2.setText(size);
+        dialogSS = null;
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (buttonView.getId() == R.id.workInBG) {
+        if (buttonView.getId() == R.id.work_in_bg) {
             packageManager.setBool(packageName, "workInBackground", isChecked);
+        } else if (buttonView.getId() == R.id.show_cursor) {
+            packageManager.setBool(packageName, "showCursor", isChecked);
         }
     }
 }

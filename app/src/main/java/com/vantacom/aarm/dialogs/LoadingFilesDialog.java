@@ -1,33 +1,30 @@
 package com.vantacom.aarm.dialogs;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.managers.AppDBManager;
 import com.vantacom.aarm.managers.FileManager;
 
-public class DeletingPackageDialog extends DialogFragment {
-    private Activity activity;
-    private String packageName;
+public class LoadingFilesDialog extends DialogFragment {
+    private Context context;
     private Dialog dialog;
     private String status = null;
 
-    public DeletingPackageDialog(Activity activity, String packageName) {
-        this.activity = activity;
-        this.packageName = packageName;
+    public LoadingFilesDialog(Context context) {
+        this.context = context;
     }
 
-    public DeletingPackageDialog() {}
-
-    public void init(Activity activity, String packageName) {
-        this.activity = activity;
-        this.packageName = packageName;
+    public LoadingFilesDialog() {
+        this.context = getContext();
     }
 
     @Override
@@ -36,11 +33,10 @@ public class DeletingPackageDialog extends DialogFragment {
         setRetainInstance(true);
         if (savedInstanceState != null) {
             status = savedInstanceState.getString("status", null);
-            packageName = savedInstanceState.getString("packageName", packageName);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_deleting_prefix, null);
+        View view = inflater.inflate(R.layout.fragment_loading_files, null);
         builder.setView(view);
         builder.setCancelable(false);
         if (dialog != null) {
@@ -53,7 +49,6 @@ public class DeletingPackageDialog extends DialogFragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("status", status);
-        savedInstanceState.putString("packageName", packageName);
         dialog.dismiss();
     }
 
@@ -77,12 +72,26 @@ public class DeletingPackageDialog extends DialogFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                status = "r";
-                FileManager.deleteUser(activity, packageName);
+                if (context != null) {
+                    status = "r";
+                    FileManager.copyAPKExpansionFiles(context, 1, 0, context.getFilesDir() + "/");
+                    AppDBManager sqLiteManager = AppDBManager.getInstance(context);
+                    Log.e("stop", "stop");
+                    sqLiteManager.setBool("firstLoad", false);
+                    status = null;
+                }
                 dialog.dismiss();
-                activity.finish();
-                status = null;
+                dismiss();
             }
         }).start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        Dialog dialog = getDialog();
+        if (dialog != null && getRetainInstance()) {
+            dialog.setDismissMessage(null);
+        }
+        super.onDestroyView();
     }
 }
