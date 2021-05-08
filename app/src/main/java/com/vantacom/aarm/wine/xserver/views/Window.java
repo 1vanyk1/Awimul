@@ -16,11 +16,16 @@ public class Window {
     private boolean visible;
     private float scale;
     private Window parent;
-    public Rect windowRect, clientRect;
+    private Rect windowRect, clientRect;
     private XServerManager xserver;
     private Surface windowSurface, clientSurface;
     private WindowsGroup windowGroup, clientGroup;
     private SurfaceTexture windowSurfTex, clientSurfTex;
+
+    private int vis = 0;
+    private int next_hwnd = -3;
+    private int style = 0;
+    private int owner = 0;
 
     private boolean canMove = true;
 
@@ -61,7 +66,23 @@ public class Window {
 
     public Window getView(int index) { return children.get(index); }
 
-    protected void removeViewFromParent() { parent.clientGroup.removeView(windowGroup); }
+    public Rect getWindowRect() { return windowRect; }
+
+    public Rect getClientRect() { return clientRect; }
+
+    public int getVis() { return vis; }
+
+    public int getNextHWND() { return next_hwnd; }
+
+    public int getStyle() { return style; }
+
+    public int getOwner() { return owner; }
+
+    public SurfaceTexture getClientSurfTex() { return clientSurfTex; }
+
+    public SurfaceTexture getWindowSurfTex() { return windowSurfTex; }
+
+    private void removeViewFromParent() { parent.clientGroup.removeView(windowGroup); }
 
     public WindowsGroup getGroup(boolean isClient) {
         if (isClient) { return clientGroup; }
@@ -78,6 +99,26 @@ public class Window {
         windowGroup.createContentView(false).layout(0, 0, Math.round((windowRect.right - windowRect.left) * scale), Math.round((windowRect.bottom - windowRect.top) * scale));
         windowGroup.setScale(scale);
         return windowGroup;
+    }
+
+    public void disconnectSurface() {
+        if (windowGroup != null) {
+            if (parent != null && parent.clientGroup != null) {
+                removeViewFromParent();
+            }
+            windowGroup.destroyContentView();
+            windowGroup = null;
+        }
+        if (clientGroup != null) {
+            clientGroup.destroyContentView();
+            clientGroup = null;
+        }
+        if (clientSurfTex != null) {
+            xserver.getWineActivity().invoke("wine_surface_changed", hwnd, null, true);
+        }
+        if (windowSurfTex != null) {
+            xserver.getWineActivity().invoke("wine_surface_changed", hwnd, null, false);
+        }
     }
 
     public void destroy() {
@@ -150,6 +191,10 @@ public class Window {
         if (canMove) {
             canMove = false;
             boolean visible = this.visible;
+            this.vis = vis;
+            this.next_hwnd = next_hwnd;
+            this.style = style;
+            this.owner = owner;
             this.windowRect = windowRect;
             this.clientRect = clientRect;
             this.visible = (style & 0x10000000) != 0;
@@ -192,7 +237,10 @@ public class Window {
     public void setSurface(SurfaceTexture surface, boolean isClient) {
         if (isClient) {
             if (surface == null) {
-                clientSurface = null;
+                if (clientSurface != null) {
+                    clientSurface.release();
+                    clientSurface = null;
+                }
             } else {
                 if (surface != clientSurfTex) {
                     clientSurfTex = surface;
@@ -202,7 +250,10 @@ public class Window {
             xserver.getWineActivity().invoke("wine_surface_changed", hwnd, clientSurface, true);
         } else {
             if (surface == null) {
-                windowSurface = null;
+                if (windowSurface != null) {
+                    windowSurface.release();
+                    windowSurface = null;
+                }
             } else {
                 if (surface != windowSurfTex) {
                     windowSurfTex = surface;

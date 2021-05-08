@@ -37,6 +37,10 @@ public class DesktopView extends ViewGroup {
         desktopWindow.getGroup(true).bringToFront();
     }
 
+    public void disconnectCursor() {
+        removeView(xserver.getCursor().getView());
+    }
+
     public void destroy() {
         desktopWindow.destroy();
         desktopWindow = null;

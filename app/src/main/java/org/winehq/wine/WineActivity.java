@@ -1,18 +1,20 @@
 package org.winehq.wine;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.Surface;
+
+import androidx.fragment.app.Fragment;
+
+import com.vantacom.aarm.wine.WineService;
 
 import java.io.File;
 
-public class WineActivity extends Activity {
-    com.vantacom.aarm.wine.WineActivity activity;
+public class WineActivity extends Fragment {
+    WineIStream activity;
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
-    public WineActivity(com.vantacom.aarm.wine.WineActivity activity, File libraryDir) {
+    public WineActivity(WineService activity, File libraryDir) {
         this.activity = activity;
         try {
             System.loadLibrary("wine");
@@ -24,7 +26,7 @@ public class WineActivity extends Activity {
     public WineActivity() {}
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
-    public void init(com.vantacom.aarm.wine.WineActivity activity, File libraryDir) {
+    public void init(WineService activity, File libraryDir) {
         this.activity = activity;
         try {
             System.loadLibrary("wine");
@@ -35,7 +37,6 @@ public class WineActivity extends Activity {
 
     @Override
     public void finalize() throws Throwable {
-        Log.e("wine", "WineActivity was finalized");
         super.finalize();
     }
 
@@ -56,8 +57,8 @@ public class WineActivity extends Activity {
         activity.onWineLoad();
     }
 
-    public void createWindow(int hwnd, boolean isClient, int paramInt2, float scale, int i) {
-        activity.createWindow(hwnd, isClient, paramInt2, scale);
+    public void createWindow(int hwnd, boolean isClient, int parent, float scale, int i) {
+        activity.createWindow(hwnd, isClient, parent, scale);
     }
 
     public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, int win_l, int win_t, int win_r, int win_b, int client_l, int client_t, int client_r, int client_b, int vis_l, int vis_t, int vis_r, int vis_b) {
@@ -81,6 +82,6 @@ public class WineActivity extends Activity {
 
     public void destroy() throws Throwable {
         activity = null;
-        this.finish();
+//        this.finish();
     }
 }

@@ -3,6 +3,7 @@ package com.vantacom.aarm.wine.xserver;
 import android.content.Context;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.SurfaceTexture;
 import android.util.Log;
 
 import com.vantacom.aarm.LibraryManager;
@@ -28,7 +29,7 @@ public class XServerManager {
     private Window focusedWindow;
     private Mouse cursor;
 
-    private static int LOG_PIXELS = 96;
+    private final static int LOG_PIXELS = 96;
 
     public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, LibraryManager wineActivity) {
         this.screenWidth = screenWidth;
@@ -42,6 +43,81 @@ public class XServerManager {
         resizeManager = new ResizeManager(this);
         cursor = new Mouse(this, desktopWidth / 2, desktopHeight / 2);
     }
+
+    public void updateActivity(WineActivity activity) {
+        Window window;
+        this.activity = activity;
+        this.keyboard = new Keyboard(activity, this);
+        SurfaceTexture clientSurfTex = desktopView.getDesktopWindow().getClientSurfTex();
+        SurfaceTexture windowSurfTex = desktopView.getDesktopWindow().getWindowSurfTex();
+        int desktopHWND = desktopView.getDesktopWindow().getHWND();
+        window = desktopView.getDesktopWindow();
+        int parent = -3;
+        int vis = window.getVis();
+        int next_hwnd = window.getNextHWND();
+        int owner = window.getOwner();
+        int style = window.getStyle();
+        Rect clientRect = window.getClientRect();
+        Rect windowRect = window.getWindowRect();
+        window.disconnectSurface();
+        desktopView.disconnectCursor();
+        this.desktopView = new DesktopView(this, wineActivity, activity, desktopHWND, desktopWidth, desktopHeight, screenWidth, screenHeight);
+        window = desktopView.getDesktopWindow();
+        window.createWindowGroups();
+        window.createWindowView();
+        window.createClientView();
+        if (clientSurfTex != null) {
+            window.setSurface(clientSurfTex, true);
+        }
+        if (windowSurfTex != null) {
+            window.setSurface(windowSurfTex, false);
+        }
+        window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect);
+        changeFocus(window);
+        windowsHM.put(desktopHWND, window);
+        Log.e("wine", String.valueOf(desktopHWND));
+        for (int i = 0; i < zOrder.size(); i++) {
+            window = getWindow(zOrder.get(i));
+            if (window != null && window.getHWND() != desktopView.getDesktopWindow().getHWND()) {
+                int hwnd = window.getHWND();
+                parent = -3;
+                vis = window.getVis();
+                next_hwnd = window.getNextHWND();
+                owner = window.getOwner();
+                style = window.getStyle();
+                clientSurfTex = window.getClientSurfTex();
+                windowSurfTex = window.getWindowSurfTex();
+                clientRect = window.getClientRect();
+                windowRect = window.getWindowRect();
+                if (window.getParent() != null) {
+                    parent = window.getParent().getHWND();
+                }
+                float scale = window.getScale();
+                window.disconnectSurface();
+                window = new Window(this, hwnd, getWindow(parent), scale);
+                windowsHM.put(zOrder.get(i), window);
+                if (parent != -3) {
+                    window.setParent(getWindow(parent), scale);
+                }
+                window.createWindowGroups();
+                if (window.getParent() == desktopView.getDesktopWindow()) {
+                    window.createWindowView();
+                }
+                window.createClientView();
+                if (clientSurfTex != null) {
+                    window.setSurface(clientSurfTex, true);
+                }
+                if (windowSurfTex != null) {
+                    window.setSurface(windowSurfTex, false);
+                }
+                window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect);
+            }
+        }
+    }
+
+    public int getDesktopWidth() { return desktopWidth; }
+
+    public int getDesktopHeight() { return desktopHeight; }
 
     public Context getContext() { return activity; }
 

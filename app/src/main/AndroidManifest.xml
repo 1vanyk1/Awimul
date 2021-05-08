@@ -23,14 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="landscape"
+            android:screenOrientation="userLandscape"
+            android:launchMode="singleTop"
             android:name=".wine.WineActivity">
         </activity>
         <activity
             android:name=".UserActivity">
         </activity>
         <service
-            android:name=".BackgroundService"
+            android:name=".wine.WineService"
             android:enabled="true">
         </service>
     </application>
