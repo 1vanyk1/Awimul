@@ -187,7 +187,7 @@ public class Window {
         parent.clientGroup.addView(windowGroup, pos + 1);
     }
 
-    public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect) {
+    public void posChanged(int vis, int next_hwnd, int owner, int style, Rect clientRect, Rect windowRect, boolean changeZOrder) {
         if (canMove) {
             canMove = false;
             boolean visible = this.visible;
@@ -199,7 +199,7 @@ public class Window {
             this.clientRect = clientRect;
             this.visible = (style & 0x10000000) != 0;
             if ((vis & View.INVISIBLE) == 0 && parent != null) {
-                setZOrder(xserver.getWindow(next_hwnd));
+                setZOrder(xserver.getWindow(next_hwnd), changeZOrder);
             }
             if (windowGroup != null) {
                 windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
@@ -207,11 +207,15 @@ public class Window {
                     if (visible || ((style & 0x10000000) == 0)) {
                         if (visible && ((style & 0x10000000) == 0)) {
                             removeViewFromParent();
-                            xserver.syncViewsZOrder();
+                            if (changeZOrder) {
+                                xserver.syncViewsZOrder();
+                            }
                         }
                     } else {
                         addViewToParent();
-                        xserver.syncViewsZOrder();
+                        if (changeZOrder) {
+                            xserver.syncViewsZOrder();
+                        }
                     }
                 }
             }
@@ -222,14 +226,16 @@ public class Window {
         }
     }
 
-    public void setZOrder(Window window) {
+    public void setZOrder(Window window, boolean changeZOrder) {
         int index = 0;
         parent.removeView(this);
-        if (window != null) {
-            index = parent.getIndexOFView(window);
-            xserver.changeZOrder(hwnd, window.getHWND());
-        } else {
-            xserver.changeZOrder(hwnd, parent.getHWND());
+        if (changeZOrder) {
+            if (window != null) {
+                index = parent.getIndexOFView(window);
+                xserver.changeZOrder(hwnd, window.getHWND());
+            } else {
+                xserver.changeZOrder(hwnd, parent.getHWND());
+            }
         }
         parent.addView(index, this);
     }

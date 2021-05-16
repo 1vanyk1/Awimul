@@ -37,7 +37,7 @@ public class ProcessManager {
                 isPaused = true;
                 for (int i = 1; i < processes.length; i++) {
                     process = processes[i].split("\\s+");
-                    if (!process[name_pos].equals("com.vantacom.aarm") && !process[name_pos].equals("wineserver") && !process[name_pos].equals("ps")) {
+                    if (!process[name_pos].equals("com.vantacom.aarm") && !process[name_pos].equals("ps")) {
                         pausedProcesses.add(process[pid_pos]);
                         ConsoleManager.runCommand(String.format("kill -STOP %s", process[pid_pos]));
                     }

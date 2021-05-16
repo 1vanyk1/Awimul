@@ -6,6 +6,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -26,6 +27,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
+import com.vantacom.aarm.UserActivity;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
@@ -63,7 +65,7 @@ public class WineService extends Service implements WineIStream {
 
     @Override
     public void createDesktopWindow(int hwnd) {
-        activity.createDesktopWindow(xserver, hwnd);
+        xserver.createDesktopWindow(hwnd);
     }
 
     @Override
@@ -74,22 +76,22 @@ public class WineService extends Service implements WineIStream {
 
     @Override
     public void createWindow(int hwnd, boolean isClient, int parent, float scale) {
-        activity.createWindow(xserver, hwnd, isClient, parent, scale);
+        xserver.createWindow(hwnd, isClient, parent, scale);
     }
 
     @Override
     public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, Rect win_rect, Rect client_rect, Rect visible_rect) {
-        activity.windowPosChanged(xserver, hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
+        xserver.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
     }
 
     @Override
     public void destroyWindow(int hwnd) {
-        activity.destroyWindow(xserver, hwnd);
+        xserver.destroyWindow(hwnd);
     }
 
     @Override
     public void setWindowParent(int hwnd, int hwnd_parent, float scale) {
-        activity.setWindowParent(xserver, hwnd, hwnd_parent, scale);
+        xserver.setWindowParent(hwnd, hwnd_parent, scale);
     }
 
     private final class ServiceHandler extends Handler {
@@ -129,7 +131,7 @@ public class WineService extends Service implements WineIStream {
                     break;
                 case UPDATE_ACTIVITY:
                     activity = (WineActivity) msg.obj;
-                    xserver.updateActivity(activity);
+                    xserver.updateActivity(activity, wineLoaded);
                     if (msg.replyTo != null) {
                         try {
                             Message message = Message.obtain(null, WineService.UPDATE_ACTIVITY, 1, 1);
@@ -183,7 +185,7 @@ public class WineService extends Service implements WineIStream {
     }
 
     private void startWine() {
-        startForeground(NOTIFY_ID, Notify.generate(activity, packageName, wineLoaded));
+        startForeground(NOTIFY_ID, Notify.generate(activity, packageName));
         try {
             wineActivity = new LibraryManager("org.winehq.wine.WineActivity");
             wineActivity.invoke("init", this, new File(getFilesDir(), wineABI + "/lib"));
@@ -249,7 +251,7 @@ public class WineService extends Service implements WineIStream {
     }
 
     private static class Notify {
-        public static Notification generate(Context context, String packageName, boolean wineLoaded) {
+        public static Notification generate(Context context, String packageName) {
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context, CHANNEL_ID)
                             .setSmallIcon(R.drawable.arror)
@@ -271,7 +273,14 @@ public class WineService extends Service implements WineIStream {
             }
             Intent notifyIntent = new Intent(context, WineActivity.class);
             notifyIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent notifyPendingIntent = PendingIntent.getActivity(context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent mainActivity = new Intent(context, MainActivity.class);
+            Intent userActivity = new Intent(context, UserActivity.class);
+            userActivity.putExtra("package", packageName);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addNextIntent(mainActivity);
+            stackBuilder.addNextIntent(userActivity);
+            stackBuilder.addNextIntent(notifyIntent);
+            PendingIntent notifyPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             builder.setContentIntent(notifyPendingIntent);
             Notification notification = builder.build();
@@ -279,6 +288,4 @@ public class WineService extends Service implements WineIStream {
             return notification;
         }
     }
-
-
 }

@@ -4,13 +4,11 @@ import android.content.Context;
 import android.graphics.PointF;
 import android.view.ViewGroup;
 
-import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class DesktopView extends ViewGroup {
     private Window desktopWindow;
     private XServerManager xserver;
-    private LibraryManager wineActivity;
     private boolean isCreated = false;
 
     private float scaleView = 1f;
@@ -19,14 +17,13 @@ public class DesktopView extends ViewGroup {
     private float layoutWidth, layoutHeight;
     private float screenWidth, screenHeight;
 
-    public DesktopView(XServerManager xserver, LibraryManager wineActivity, Context context, int hwnd, int width, int height, int layoutWidth, int layoutHeight) {
+    public DesktopView(XServerManager xserver, Context context, int hwnd, int width, int height, int layoutWidth, int layoutHeight) {
         super(context);
         this.width = width;
         this.height = height;
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
         this.xserver = xserver;
-        this.wineActivity = wineActivity;
         createDesktopWindow(hwnd);
         addView(xserver.getCursor().getView());
     }
@@ -45,7 +42,6 @@ public class DesktopView extends ViewGroup {
         desktopWindow.destroy();
         desktopWindow = null;
         xserver = null;
-        wineActivity = null;
     }
 
     public Window getDesktopWindow() {
@@ -63,7 +59,6 @@ public class DesktopView extends ViewGroup {
             screenHeight = h;
             scaleView = Math.min(layoutWidth / width, layoutHeight / height);
             super.onSizeChanged(width, height, oldw, oldh);
-            wineActivity.invoke("wine_desktop_changed", width, height);
             resizeLayout(1f);
         }
     }

@@ -2,7 +2,6 @@ package com.vantacom.aarm.wine.controls.touchscreen;
 
 import android.content.Context;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -96,7 +95,9 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
                         isMultiTouch = true;
                         if (event.getPointerCount() == 2) {
                             xserver.getResizeManager().setStartDistance(event, point2);
-                            MouseActions.setLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+//                            MouseActions.setLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+                            event.setAction(MotionEvent.ACTION_UP);
+                            gDetector.onTouchEvent(event);
                         } else if (event.getPointerCount() == 3) {
                             isTripleTouch = true;
                             xserver.toggleTopBar();
@@ -125,16 +126,6 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
                     if (!isMultiTouch) {
                         float x = mouseStart.x - pointStart.x + eventPos.x;
                         float y = mouseStart.y - pointStart.y + eventPos.y;
-                        if (x < 0) {
-                            x = 0;
-                        } else if (x > xserver.getDesktopWidth()) {
-                            x = xserver.getDesktopWidth();
-                        }
-                        if (y < 0) {
-                            y = 0;
-                        } else if (y > xserver.getDesktopHeight()) {
-                            y = xserver.getDesktopHeight();
-                        }
                         mouse.setPosition(x, y);
                         pointReal = new PointF(mouse.getX(), mouse.getY());
                         try {

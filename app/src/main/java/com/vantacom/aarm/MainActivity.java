@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.vantacom.aarm.dialogs.LoadingFilesDialog;
 import com.vantacom.aarm.dialogs.WarningDialog;
@@ -23,8 +22,8 @@ import com.vantacom.aarm.managers.PackageDBManager;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, UserAdapter.ItemClickListener {
-    private Button add;
-    private Intent wineActivity;
+    private View add;
+    private Intent userActivity;
     private RecyclerView recyclerView;
     private UserAdapter adapter;
     private AppDBManager sqLiteManager;
@@ -117,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(View view, int position) {
-        wineActivity = new Intent(MainActivity.this, UserActivity.class);
+        userActivity = new Intent(MainActivity.this, UserActivity.class);
         String name = names.get(position);
-        wineActivity.putExtra("package", name);
-        startActivity(wineActivity);
+        userActivity.putExtra("package", name);
+        startActivity(userActivity);
     }
 }

@@ -44,74 +44,79 @@ public class XServerManager {
         cursor = new Mouse(this, desktopWidth / 2, desktopHeight / 2);
     }
 
-    public void updateActivity(WineActivity activity) {
+    public void updateActivity(WineActivity activity, boolean wineLoaded) {
         Window window;
         this.activity = activity;
         this.keyboard = new Keyboard(activity, this);
-        SurfaceTexture clientSurfTex = desktopView.getDesktopWindow().getClientSurfTex();
-        SurfaceTexture windowSurfTex = desktopView.getDesktopWindow().getWindowSurfTex();
-        int desktopHWND = desktopView.getDesktopWindow().getHWND();
-        window = desktopView.getDesktopWindow();
-        int parent = -3;
-        int vis = window.getVis();
-        int next_hwnd = window.getNextHWND();
-        int owner = window.getOwner();
-        int style = window.getStyle();
-        Rect clientRect = window.getClientRect();
-        Rect windowRect = window.getWindowRect();
-        window.disconnectSurface();
-        desktopView.disconnectCursor();
-        this.desktopView = new DesktopView(this, wineActivity, activity, desktopHWND, desktopWidth, desktopHeight, screenWidth, screenHeight);
-        window = desktopView.getDesktopWindow();
-        window.createWindowGroups();
-        window.createWindowView();
-        window.createClientView();
-        if (clientSurfTex != null) {
-            window.setSurface(clientSurfTex, true);
-        }
-        if (windowSurfTex != null) {
-            window.setSurface(windowSurfTex, false);
-        }
-        window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect);
-        changeFocus(window);
-        windowsHM.put(desktopHWND, window);
-        Log.e("wine", String.valueOf(desktopHWND));
-        for (int i = 0; i < zOrder.size(); i++) {
-            window = getWindow(zOrder.get(i));
-            if (window != null && window.getHWND() != desktopView.getDesktopWindow().getHWND()) {
-                int hwnd = window.getHWND();
-                parent = -3;
-                vis = window.getVis();
-                next_hwnd = window.getNextHWND();
-                owner = window.getOwner();
-                style = window.getStyle();
-                clientSurfTex = window.getClientSurfTex();
-                windowSurfTex = window.getWindowSurfTex();
-                clientRect = window.getClientRect();
-                windowRect = window.getWindowRect();
-                if (window.getParent() != null) {
-                    parent = window.getParent().getHWND();
-                }
-                float scale = window.getScale();
-                window.disconnectSurface();
-                window = new Window(this, hwnd, getWindow(parent), scale);
-                windowsHM.put(zOrder.get(i), window);
-                if (parent != -3) {
-                    window.setParent(getWindow(parent), scale);
-                }
-                window.createWindowGroups();
-                if (window.getParent() == desktopView.getDesktopWindow()) {
-                    window.createWindowView();
-                }
-                window.createClientView();
+        if (wineLoaded) {
+            int hwndFocus = focusedWindow.getHWND();
+            SurfaceTexture clientSurfTex = desktopView.getDesktopWindow().getClientSurfTex();
+            SurfaceTexture windowSurfTex = desktopView.getDesktopWindow().getWindowSurfTex();
+            int desktopHWND = desktopView.getDesktopWindow().getHWND();
+            window = desktopView.getDesktopWindow();
+            int parent = -3;
+            int vis = window.getVis();
+            int next_hwnd = window.getNextHWND();
+            int owner = window.getOwner();
+            int style = window.getStyle();
+            Rect clientRect = window.getClientRect();
+            Rect windowRect = window.getWindowRect();
+            window.disconnectSurface();
+            desktopView.disconnectCursor();
+            this.desktopView = new DesktopView(this, activity, desktopHWND, desktopWidth, desktopHeight, screenWidth, screenHeight);
+            window = desktopView.getDesktopWindow();
+            window.createWindowGroups();
+            window.createWindowView();
+            window.createClientView();
+            if (zOrder.contains(desktopHWND)) {
                 if (clientSurfTex != null) {
                     window.setSurface(clientSurfTex, true);
                 }
                 if (windowSurfTex != null) {
                     window.setSurface(windowSurfTex, false);
                 }
-                window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect);
+                window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect, false);
             }
+            addWindow(desktopHWND, window);
+            for (int i = 0; i < zOrder.size(); i++) {
+                window = getWindow(zOrder.get(i));
+                if (window != null && window.getHWND() != desktopView.getDesktopWindow().getHWND()) {
+                    int hwnd = window.getHWND();
+                    parent = -3;
+                    vis = window.getVis();
+                    next_hwnd = window.getNextHWND();
+                    owner = window.getOwner();
+                    style = window.getStyle();
+                    clientSurfTex = window.getClientSurfTex();
+                    windowSurfTex = window.getWindowSurfTex();
+                    clientRect = window.getClientRect();
+                    windowRect = window.getWindowRect();
+                    if (window.getParent() != null) {
+                        parent = window.getParent().getHWND();
+                    }
+                    float scale = window.getScale();
+                    window.disconnectSurface();
+                    window = new Window(this, hwnd, getWindow(parent), scale);
+                    addWindow(zOrder.get(i), window);
+                    if (parent >= 0) {
+                        window.setParent(getWindow(parent), scale);
+                    }
+                    window.createWindowGroups();
+                    if (window.getParent() == desktopView.getDesktopWindow()) {
+                        window.createWindowView();
+                    }
+                    window.createClientView();
+                    if (clientSurfTex != null) {
+                        window.setSurface(clientSurfTex, true);
+                    }
+                    if (windowSurfTex != null) {
+                        window.setSurface(windowSurfTex, false);
+                    }
+                    window.posChanged(vis, next_hwnd, owner, style, clientRect, windowRect, false);
+                }
+            }
+            changeFocus(windowsHM.get(hwndFocus));
+            syncViewsZOrder();
         }
     }
 
@@ -240,63 +245,152 @@ public class XServerManager {
     }
 
     public void createDesktopWindow(int hwnd) {
-        this.desktopView = new DesktopView(this, wineActivity, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
-        addWindow(hwnd, desktopView.getDesktopWindow());
-        changeFocus(desktopView.getDesktopWindow());
-        try {
-            wineActivity.invoke("wine_config_changed", LOG_PIXELS);
-        } catch (Exception e) {
-            Log.e("wine", e.toString());
+        if (activity == null) {
+            this.desktopView = new DesktopView(this, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
+            addWindow(hwnd, desktopView.getDesktopWindow());
+            changeFocus(desktopView.getDesktopWindow());
+            try {
+                wineActivity.invoke("wine_config_changed", LOG_PIXELS);
+            } catch (Exception e) {
+                Log.e("wine", e.toString());
+            }
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    XServerManager.this.desktopView = new DesktopView(XServerManager.this, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
+                    addWindow(hwnd, desktopView.getDesktopWindow());
+                    changeFocus(desktopView.getDesktopWindow());
+                    try {
+                        wineActivity.invoke("wine_config_changed", LOG_PIXELS);
+                    } catch (Exception e) {
+                        Log.e("wine", e.toString());
+                    }
+                }
+            });
+            activity.createDesktopWindow(XServerManager.this);
+            wineActivity.invoke("wine_desktop_changed", desktopWidth, desktopHeight);
         }
     }
 
     public void createWindow(int hwnd, boolean isClient, int parent, float scale) {
-        Window window = getWindow(hwnd);
-        if (!zOrder.contains(hwnd)) {
-            zOrder.add(hwnd);
-        }
-        if (window == null) {
-            window = new Window(this, hwnd, getWindow(parent), scale);
-            addWindow(hwnd, window);
-            window.createWindowGroups();
-            if (window.getParent() == desktopView.getDesktopWindow()) {
-                changeFocus(window);
-                window.createWindowView();
+        if (activity == null) {
+            Window window = getWindow(hwnd);
+            if (!zOrder.contains(hwnd)) {
+                zOrder.add(hwnd);
             }
-        }
-        if (isClient) {
-            window.createClientView();
+            if (window == null) {
+                window = new Window(this, hwnd, getWindow(parent), scale);
+                addWindow(hwnd, window);
+                window.createWindowGroups();
+                if (window.getParent() == desktopView.getDesktopWindow()) {
+                    changeFocus(window);
+                    window.createWindowView();
+                }
+            }
+            if (isClient) {
+                window.createClientView();
+            }
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Window window = getWindow(hwnd);
+                    if (!zOrder.contains(hwnd)) {
+                        zOrder.add(hwnd);
+                    }
+                    if (window == null) {
+                        window = new Window(XServerManager.this, hwnd, getWindow(parent), scale);
+                        addWindow(hwnd, window);
+                        window.createWindowGroups();
+                        if (window.getParent() == desktopView.getDesktopWindow()) {
+                            changeFocus(window);
+                            window.createWindowView();
+                        }
+                    }
+                    if (isClient) {
+                        window.createClientView();
+                    }
+                }
+            });
         }
     }
 
     public void destroyWindow(int hwnd) {
-        Window window = getWindow(hwnd);
-        if (window != null) {
-            if (focusedWindow == window) {
-                changeFocus(getDesktopView().getDesktopWindow());
+        if (activity == null) {
+            Window window = getWindow(hwnd);
+            if (window != null) {
+                if (focusedWindow == window) {
+                    changeFocus(getDesktopView().getDesktopWindow());
+                }
+                removeWindow(window);
+                if (zOrder.contains(hwnd)) {
+                    zOrder.remove((Object) hwnd);
+                }
+                window.destroy();
             }
-            removeWindow(window);
-            if (zOrder.contains(hwnd)) {
-                zOrder.remove((Object)hwnd);
-            }
-            window.destroy();
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Window window = getWindow(hwnd);
+                    if (window != null) {
+                        if (focusedWindow == window) {
+                            changeFocus(getDesktopView().getDesktopWindow());
+                        }
+                        removeWindow(window);
+                        if (zOrder.contains(hwnd)) {
+                            zOrder.remove((Object) hwnd);
+                        }
+                        window.destroy();
+                    }
+                }
+            });
         }
     }
 
-    public void setWindowsParent(int hwnd, int hwnd_parent, float scale) {
-        Window window = getWindow(hwnd);
-        if (window != null) {
-            window.setParent(getWindow(hwnd_parent), scale);
-            if (window.getParent() == desktopView.getDesktopWindow()) {
-                window.createWindowView();
+    public void setWindowParent(int hwnd, int hwnd_parent, float scale) {
+        if (activity == null) {
+            Window window = getWindow(hwnd);
+            if (window != null) {
+                window.setParent(getWindow(hwnd_parent), scale);
+                if (window.getParent() == desktopView.getDesktopWindow()) {
+                    window.createWindowView();
+                }
             }
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Window window = getWindow(hwnd);
+                    if (window != null) {
+                        window.setParent(getWindow(hwnd_parent), scale);
+                        if (window.getParent() == desktopView.getDesktopWindow()) {
+                            window.createWindowView();
+                        }
+                    }
+                }
+            });
         }
+
     }
 
     public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, Rect win_rect, Rect client_rect, Rect visible_rect) {
-        Window window = getWindow(hwnd);
-        if (window != null) {
-            window.posChanged(vis, next_hwnd, owner, style, client_rect, visible_rect);
+        if (activity == null) {
+            Window window = getWindow(hwnd);
+            if (window != null) {
+                window.posChanged(vis, next_hwnd, owner, style, client_rect, visible_rect, true);
+            }
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Window window = getWindow(hwnd);
+                    if (window != null) {
+                        window.posChanged(vis, next_hwnd, owner, style, client_rect, visible_rect, true);
+                    }
+                }
+            });
         }
     }
 

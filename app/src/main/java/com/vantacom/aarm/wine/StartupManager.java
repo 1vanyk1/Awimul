@@ -37,7 +37,7 @@ public class StartupManager {
             writer.close();
         } catch (FileNotFoundException e) {}
         appendWineSetting(wineSettings, "WINEDEBUGLOG", logfile.toString());
-        Log.i("WA", "logging to " + logfile.toString());
+        Log.i("WS", "logging to " + logfile.toString());
         return wineSettings.toArray(new String[0]);
     }
 

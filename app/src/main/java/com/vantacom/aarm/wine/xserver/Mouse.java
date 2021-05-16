@@ -1,5 +1,6 @@
 package com.vantacom.aarm.wine.xserver;
 
+import android.graphics.PointF;
 import android.view.View;
 
 import com.vantacom.aarm.wine.xserver.views.CursorView;
@@ -25,13 +26,29 @@ public class Mouse {
     }
 
     public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-        view.updatePosition(x, y);
+        if (x < 0) {
+            this.x = 0;
+        } else if (x > xserver.getDesktopWidth()) {
+            this.x = xserver.getDesktopWidth();
+        } else {
+            this.x = x;
+        }
+        if (y < 0) {
+            this.y = 0;
+        } else if (y > xserver.getDesktopHeight()) {
+            this.y = xserver.getDesktopHeight();
+        } else {
+            this.y = y;
+        }
+        view.updatePosition(this.x, this.y);
     }
 
     public void setPosition(float x, float y) {
         setPosition((int) x, (int) y);
+    }
+
+    public void setPosition(PointF point) {
+        setPosition(point.x, point.y);
     }
 
     public CursorView getView() {

@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -122,16 +120,6 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
-    public void sendSimpleMessage(int message_type, Object obj) {
-        try {
-            Message message = Message.obtain(null, message_type, 1, 1);
-            message.obj = obj;
-            msgService.send(message);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void startWineService(int[] screenInfo) {
         new Thread(new Runnable() {
             @Override
@@ -226,8 +214,10 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
                     showCursor = sqLiteManager.isBool(packageName, "showCursor");
                     updateScreenInfo();
                     if (!wineLoaded) {
-                        dialog = new LoadingWineDialog(WineActivity.this);
-                        dialog.show();
+                        dialog = new LoadingWineDialog();
+                        FragmentManager manager = getSupportFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        dialog.show(transaction, "dialog");
                     } else {
                         processManager = new ProcessManager();
                         processManager.pauseSystem();
@@ -293,6 +283,9 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         if (processManager != null && !workInBG) {
             processManager.resumeSystem();
         }
+        if (xserver != null) {
+            connectWineService();
+        }
         hideSystemUI();
     }
 
@@ -327,8 +320,10 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         showCursor = sqLiteManager.isBool(packageName, "showCursor");
         int[] screenInfo = updateScreenInfo();
         if (!wineLoaded) {
-            dialog = new LoadingWineDialog(this);
-            dialog.show();
+            dialog = new LoadingWineDialog();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            dialog.show(transaction, "dialog");
         }
         hideSystemUI();
         startService(new Intent(this, WineService.class));
@@ -351,17 +346,21 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         }
         runOnUiThread(new Runnable() {
             public void run() {
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
+                dialog.hide();
                 topPanel.setVisibility(View.VISIBLE);
             }
         });
+        if (ifTurnedOff && !workInBG) {
+            processManager.pauseSystem();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (dialog != null) {
+            dialog.hide();
+        }
         ifTurnedOff = true;
         if (processManager != null && !workInBG) {
             processManager.pauseSystem();
@@ -407,43 +406,10 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         return super.dispatchKeyEvent(event);
     }
 
-    public void createDesktopWindow(XServerManager xserver, int hwnd) {
+    public void createDesktopWindow(XServerManager xserver) {
         runOnUiThread(new Runnable() {
             public void run() {
-                xserver.createDesktopWindow(hwnd);
                 view.addView(xserver.getDesktopView());
-            }
-        });
-    }
-
-    public void createWindow(XServerManager xserver, int hwnd, boolean isClient, int parent, float scale) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                xserver.createWindow(hwnd, isClient, parent, scale);
-            }
-        });
-    }
-
-    public void destroyWindow(XServerManager xserver, int hwnd) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                xserver.destroyWindow(hwnd);
-            }
-        });
-    }
-
-    public void setWindowParent(XServerManager xserver, int hwnd, int hwnd_parent, float scale) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                xserver.setWindowsParent(hwnd, hwnd_parent, scale);
-            }
-        });
-    }
-
-    public void windowPosChanged(XServerManager xserver, int hwnd, int vis, int next_hwnd, int owner, int style, Rect win_rect, Rect client_rect, Rect visible_rect) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                xserver.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
             }
         });
     }
