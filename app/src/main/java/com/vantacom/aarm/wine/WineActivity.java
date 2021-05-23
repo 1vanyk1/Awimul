@@ -1,6 +1,5 @@
  package com.vantacom.aarm.wine;
 
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -251,16 +250,6 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
-    private boolean isServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isSystemPaused() {
         if (processManager == null || !processManager.getIsPaused()) {
             return false;
@@ -294,6 +283,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         try {this.getSupportActionBar().hide();}
         catch (NullPointerException e) {}
         setContentView(R.layout.activity_wine);
@@ -309,7 +299,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
 
         sqLiteManager = PackageDBManager.getInstance(this);
         wineABI = "armeabi-v7a";
-        if (isServiceRunning(WineService.class)) {
+        if (WineService.isServiceRunning(this)) {
             doBindService();
             connectWineService();
             return;

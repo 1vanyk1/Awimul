@@ -11,11 +11,11 @@ import com.vantacom.aarm.wine.WineService;
 import java.io.File;
 
 public class WineActivity extends Fragment {
-    WineIStream activity;
+    WineIStream oStream;
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
-    public WineActivity(WineService activity, File libraryDir) {
-        this.activity = activity;
+    public WineActivity(WineService oStream, File libraryDir) {
+        this.oStream = oStream;
         try {
             System.loadLibrary("wine");
         } catch (UnsatisfiedLinkError e) {
@@ -26,8 +26,8 @@ public class WineActivity extends Fragment {
     public WineActivity() {}
 
     @SuppressLint("UnsafeDynamicallyLoadedCode")
-    public void init(WineService activity, File libraryDir) {
-        this.activity = activity;
+    public void init(WineService oStream, File libraryDir) {
+        this.oStream = oStream;
         try {
             System.loadLibrary("wine");
         } catch (UnsatisfiedLinkError e) {
@@ -53,27 +53,27 @@ public class WineActivity extends Fragment {
     public native void wine_surface_changed(int hwnd, Surface surface, boolean isClient);
 
     public void createDesktopWindow(int hwnd) {
-        activity.createDesktopWindow(hwnd);
-        activity.onWineLoad();
+        oStream.createDesktopWindow(hwnd);
+        oStream.onWineLoad();
     }
 
     public void createWindow(int hwnd, boolean isClient, int parent, float scale, int i) {
-        activity.createWindow(hwnd, isClient, parent, scale);
+        oStream.createWindow(hwnd, isClient, parent, scale);
     }
 
     public void windowPosChanged(int hwnd, int vis, int next_hwnd, int owner, int style, int win_l, int win_t, int win_r, int win_b, int client_l, int client_t, int client_r, int client_b, int vis_l, int vis_t, int vis_r, int vis_b) {
         Rect win_rect = new Rect(win_l, win_t, win_r, win_b);
         Rect client_rect = new Rect(client_l, client_t, client_r, client_b);
         Rect visible_rect = new Rect(vis_l, vis_t, vis_r, vis_b);
-        activity.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
+        oStream.windowPosChanged(hwnd, vis, next_hwnd, owner, style, win_rect, client_rect, visible_rect);
     }
 
     public void destroyWindow(int hwnd) {
-        activity.destroyWindow(hwnd);
+        oStream.destroyWindow(hwnd);
     }
 
     public void setParent(int hwnd, int hwnd_parent, float scale, int int1) {
-        activity.setWindowParent(hwnd, hwnd_parent, scale);
+        oStream.setWindowParent(hwnd, hwnd_parent, scale);
     }
 
     public void setCursor(int int1, int int2, int int3, int int4, int int5, int[] int_array)  {
@@ -81,7 +81,6 @@ public class WineActivity extends Fragment {
     }
 
     public void destroy() throws Throwable {
-        activity = null;
-//        this.finish();
+        oStream = null;
     }
 }

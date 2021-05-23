@@ -1,6 +1,8 @@
 package com.vantacom.aarm.wine;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -287,5 +289,15 @@ public class WineService extends Service implements WineIStream {
             notification.flags = notification.flags | Notification.FLAG_ONGOING_EVENT;
             return notification;
         }
+    }
+
+    public static boolean isServiceRunning(Activity activity) {
+        ActivityManager manager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (WineService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -3,6 +3,7 @@ package com.vantacom.aarm.wine.xserver.views;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 
@@ -12,10 +13,11 @@ import java.util.ArrayList;
 
 public class Window {
     private ArrayList<Window> children;
+    private ArrayList<Window> ownedWindows;
     private int hwnd;
     private boolean visible;
     private float scale;
-    private Window parent;
+    private Window parent, ownerWindow;
     private Rect windowRect, clientRect;
     private XServerManager xserver;
     private Surface windowSurface, clientSurface;
@@ -39,10 +41,21 @@ public class Window {
         this.parent = parent;
         this.scale = scale;
         this.children = new ArrayList<Window>();
+        this.ownedWindows = new ArrayList<Window>();
         if (parent != null) {
             parent.addView(this);
         }
     }
+
+    public void addOwnedWindow(Window window) { ownedWindows.add(window); }
+
+    public void addOwnedWindow(int index, Window window) { ownedWindows.add(index, window); }
+
+    public int getCountOfOwnedWindow() { return ownedWindows.size(); }
+
+    public void removeOwnedWindow(Window window) { ownedWindows.remove(window); }
+
+    public Window getOwnedWindow(int index) { return ownedWindows.get(index); }
 
     public void setCanMove(boolean canMove) { this.canMove = canMove; }
 
@@ -60,9 +73,9 @@ public class Window {
 
     public void removeView(Window window) { children.remove(window); }
 
-    public int getIndexOFView(Window window) { return children.indexOf(window); }
+    public int getIndexOfView(Window window) { return children.indexOf(window); }
 
-    public int getCountOFViews() { return children.size(); }
+    public int getCountOfViews() { return children.size(); }
 
     public Window getView(int index) { return children.get(index); }
 
@@ -76,7 +89,9 @@ public class Window {
 
     public int getStyle() { return style; }
 
-    public int getOwner() { return owner; }
+    public int getOwnerHWND() { return owner; }
+
+    public Window getOwner() { return ownerWindow; }
 
     public SurfaceTexture getClientSurfTex() { return clientSurfTex; }
 
@@ -125,6 +140,9 @@ public class Window {
         visible = false;
         if (parent != null) {
             parent.removeView(this);
+        }
+        if (ownerWindow != null) {
+            ownerWindow.removeOwnedWindow(this);
         }
         if (windowGroup != null) {
             if (parent != null && parent.clientGroup != null) {
@@ -177,7 +195,7 @@ public class Window {
             pos -= 1;
         }
         Window window;
-        for (int i = 0; i < parent.getCountOFViews() && pos >= 0; i++) {
+        for (int i = 0; i < parent.getCountOfViews() && pos >= 0; i++) {
             window = parent.getView(i);
             if (window == this) { break; }
             if (window.visible && window == ((WindowsGroup)parent.clientGroup.getChildAt(pos)).getWindow()) {
@@ -191,15 +209,29 @@ public class Window {
         if (canMove) {
             canMove = false;
             boolean visible = this.visible;
+            this.visible = (style & 0x10000000) != 0;
             this.vis = vis;
-            this.next_hwnd = next_hwnd;
+            if (this.visible) {
+                this.next_hwnd = next_hwnd;
+            }
             this.style = style;
+            if (ownerWindow != null) {
+                ownerWindow.removeOwnedWindow(this);
+            }
             this.owner = owner;
+            if (this.owner != 0) {
+                this.ownerWindow = xserver.getWindow(owner);
+                ownerWindow.addOwnedWindow(this);
+            }
             this.windowRect = windowRect;
             this.clientRect = clientRect;
-            this.visible = (style & 0x10000000) != 0;
-            if ((vis & View.INVISIBLE) == 0 && parent != null) {
-                setZOrder(xserver.getWindow(next_hwnd), changeZOrder);
+
+            if (this.parent != null) {
+                if (this.next_hwnd < 0) {
+                    setZOrder(null, changeZOrder);
+                } else if ((vis & View.INVISIBLE) == 0) {
+                    setZOrder(xserver.getWindow(next_hwnd), changeZOrder);
+                }
             }
             if (windowGroup != null) {
                 windowGroup.setLayout(windowRect.left, windowRect.top, windowRect.right, windowRect.bottom);
@@ -231,13 +263,32 @@ public class Window {
         parent.removeView(this);
         if (changeZOrder) {
             if (window != null) {
-                index = parent.getIndexOFView(window);
-                xserver.changeZOrder(hwnd, window.getHWND());
+                index = parent.getIndexOfView(window);
+                xserver.changeZOrder(hwnd, window.getHWND(), true);
             } else {
-                xserver.changeZOrder(hwnd, parent.getHWND());
+                xserver.changeZOrder(hwnd, parent.getHWND(), true);
+            }
+            if (ownerWindow != null) {
+                int currentZOrder = xserver.getZOrderByWindow(this);
+                Window window1;
+                ownerWindow.removeOwnedWindow(this);
+                boolean added = false;
+                for (int i = 0; i < ownerWindow.getCountOfOwnedWindow(); i++) {
+                    window1 = ownerWindow.getOwnedWindow(i);
+                    if (window1.getHWND() != hwnd && xserver.getZOrderByWindow(window1) > currentZOrder) {
+                        ownerWindow.addOwnedWindow(i, this);
+                        added = true;
+                        break;
+                    }
+                }
+                if (!added) {
+                    ownerWindow.addOwnedWindow(this);
+                }
             }
         }
-        parent.addView(index, this);
+        if (index >= 0) {
+            parent.addView(index, this);
+        }
     }
 
     public void setSurface(SurfaceTexture surface, boolean isClient) {

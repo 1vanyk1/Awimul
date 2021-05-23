@@ -18,6 +18,8 @@ import com.vantacom.aarm.dialogs.WarningDialog;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.AppDBManager;
 import com.vantacom.aarm.managers.PackageDBManager;
+import com.vantacom.aarm.wine.WineActivity;
+import com.vantacom.aarm.wine.WineService;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PackageDBManager packageManager;
     private ArrayList<String> names;
     private static int permissionNotGranted = 0;
+    private LoadingFilesDialog dialogLL;
+    private WarningDialog dialogW;
     public static String PACKAGE_NAME = "com.vantacom.aarm";
 
     @Override
@@ -57,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new UserAdapter(names);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        if (WineService.isServiceRunning(this)) {
+            Intent notifyIntent = new Intent(MainActivity.this, WineActivity.class);
+            notifyIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(notifyIntent);
+            return;
+        }
     }
 
     @Override
@@ -82,15 +92,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (sqLiteManager.isBool("firstLoad")) {
             if (FileManager.checkAPKExpansionFiles(this)) {
-                LoadingFilesDialog dialog = new LoadingFilesDialog(this);
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                dialog.show(transaction, "dialog");
+                if (dialogLL == null) {
+                    dialogLL = new LoadingFilesDialog(this);
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    dialogLL.show(transaction, "dialog");
+                }
+
             } else {
-                WarningDialog dialog = new WarningDialog(this, R.string.obbWarning);
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                dialog.show(transaction, "dialog");
+                if (dialogW == null) {
+                    dialogW = new WarningDialog(this, R.string.obbWarning);
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    dialogW.show(transaction, "dialog");
+                }
             }
         }
         names = packageManager.getPackageNames();
@@ -100,13 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-//        if (v.getId() == R.id.generate) {
-//            LoadingFilesDialog dialog = new LoadingFilesDialog(this);
-//            FragmentManager manager = getSupportFragmentManager();
-//            FragmentTransaction transaction = manager.beginTransaction();
-//            dialog.show(transaction, "dialog");
-//        }
-//        else
         if (v.getId() == R.id.add) {
             packageManager.addPackage();
             names = packageManager.getPackageNames();

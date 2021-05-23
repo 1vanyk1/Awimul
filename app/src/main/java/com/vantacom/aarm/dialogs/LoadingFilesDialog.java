@@ -74,9 +74,8 @@ public class LoadingFilesDialog extends DialogFragment {
             public void run() {
                 if (context != null) {
                     status = "r";
-                    FileManager.copyAPKExpansionFiles(context, 1, 0, context.getFilesDir() + "/");
+                    FileManager.copyAPKExpansionFiles(context, context.getFilesDir() + "/");
                     AppDBManager sqLiteManager = AppDBManager.getInstance(context);
-                    Log.e("stop", "stop");
                     sqLiteManager.setBool("firstLoad", false);
                     status = null;
                 }

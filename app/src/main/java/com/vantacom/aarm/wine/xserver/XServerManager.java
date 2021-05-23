@@ -57,7 +57,7 @@ public class XServerManager {
             int parent = -3;
             int vis = window.getVis();
             int next_hwnd = window.getNextHWND();
-            int owner = window.getOwner();
+            int owner = window.getOwnerHWND();
             int style = window.getStyle();
             Rect clientRect = window.getClientRect();
             Rect windowRect = window.getWindowRect();
@@ -85,7 +85,7 @@ public class XServerManager {
                     parent = -3;
                     vis = window.getVis();
                     next_hwnd = window.getNextHWND();
-                    owner = window.getOwner();
+                    owner = window.getOwnerHWND();
                     style = window.getStyle();
                     clientSurfTex = window.getClientSurfTex();
                     windowSurfTex = window.getWindowSurfTex();
@@ -138,6 +138,8 @@ public class XServerManager {
 
     private Window getWindowByZOrder(int i) { return windowsHM.get(zOrder.get(i)); }
 
+    public int getZOrderByWindow(Window window) { return zOrder.indexOf(window.getHWND()); }
+
     private void addWindow(int hwnd, Window window) { windowsHM.put(hwnd, window); }
 
     private void removeWindow(Window window) {
@@ -148,41 +150,32 @@ public class XServerManager {
         }
     }
 
-    private void changeZOrderC(int hwnd, int prev_hwnd) {
-        zOrder.remove((Object) hwnd);
-        for (int i = 0; i < zOrder.size(); i++) {
-            if (zOrder.get(i) == prev_hwnd) {
-                zOrder.add(i + 1, hwnd);
-                Window window = windowsHM.get(hwnd);
-                for (int j = 0; j < window.getCountOFViews(); j++) {
-                    if (j == 0) {
-                        changeZOrderC(window.getView(j).getHWND(), hwnd);
-                    } else {
-                        changeZOrderC(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    public void changeZOrder(int hwnd, int prev_hwnd) {
+    public void changeZOrder(int hwnd, int prev_hwnd, boolean isFirst) {
         zOrder.remove((Object)hwnd);
-        for (int i = 0; i < zOrder.size(); i++) {
-            if (zOrder.get(i) == prev_hwnd) {
-                zOrder.add(i + 1, hwnd);
-                Window window = windowsHM.get(hwnd);
-                for (int j = 0; j < window.getCountOFViews(); j++) {
-                    if (j == 0) {
-                        changeZOrderC(window.getView(j).getHWND(), hwnd);
-                    } else {
-                        changeZOrderC(window.getView(j).getHWND(), window.getView(j - 1).getHWND());
-                    }
+        int index = 0;
+        if (prev_hwnd != 0) {
+            for (int i = 0; i < zOrder.size(); i++) {
+                if (getWindowByZOrder(i).getNextHWND() < 0) {
+                    index++;
                 }
-                break;
+                if (zOrder.get(i) == prev_hwnd) {
+                    index = i + 1;
+                    break;
+                }
             }
         }
-        syncViewsZOrder();
+        zOrder.add(index, hwnd);
+        Window window = windowsHM.get(hwnd);
+        for (int j = 0; j < window.getCountOfViews(); j++) {
+            if (j == 0) {
+                changeZOrder(window.getView(j).getHWND(), hwnd, false);
+            } else {
+                changeZOrder(window.getView(j).getHWND(), window.getView(j - 1).getHWND(), false);
+            }
+        }
+        if (isFirst) {
+            syncViewsZOrder();
+        }
     }
 
     public void syncViewsZOrder() {
@@ -234,12 +227,24 @@ public class XServerManager {
         return focusedWindow;
     }
 
+    public void moveToFront(Window window) {
+        window.setZOrder(null, true);
+        for (int i = window.getCountOfOwnedWindow() - 1; i >= 0; i--) {
+            moveToFront(window.getOwnedWindow(i));
+        }
+    }
+
     public void changeFocus(Window w) {
         if (focusedWindow != w) {
             if (getDesktopView().getDesktopWindow() == w) {
                 focusedWindow = w;
             } else if (w.getParent() == getDesktopView().getDesktopWindow()) {
                 focusedWindow = w;
+                Window window = focusedWindow;
+                while (window.getOwnerHWND() != 0) {
+                    window = window.getOwner();
+                }
+                moveToFront(window);
             }
         }
     }

@@ -26,28 +26,21 @@ import java.util.zip.ZipInputStream;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class FileManager {
-    private final static String EXP_PATH = "/Android/obb/";
+    public final static String EXP_PATH = "/Android/obb/";
+    public final static int MAIN_VERSION = 1;
 
-    public static String[] copyAPKExpansionFiles(Context context, int mainVersion, int patchVersion, String dest) {
+    public static String[] copyAPKExpansionFiles(Context context, String dest) {
         String packageName = context.getPackageName();
         Vector<String> ret = new Vector<String>();
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File root = Environment.getExternalStorageDirectory();
             File expPath = new File(root.toString() + EXP_PATH + packageName);
             if (expPath.exists()) {
-                if (mainVersion > 0) {
-                    String strMainPath = expPath + File.separator + "main." + mainVersion + "." + packageName + ".obb";
+                if (MAIN_VERSION > 0) {
+                    String strMainPath = expPath + File.separator + "main." + MAIN_VERSION + "." + packageName + ".obb";
                     File main = new File(strMainPath);
                     if (main.isFile()) {
                         ret.add(strMainPath);
-                        unpackZip(main, dest);
-                    }
-                }
-                if (patchVersion > 0) {
-                    String strPatchPath = expPath + File.separator + "patch." + mainVersion + "." + packageName + ".obb";
-                    File main = new File(strPatchPath);
-                    if (main.isFile()) {
-                        ret.add(strPatchPath);
                         unpackZip(main, dest);
                     }
                 }
@@ -61,7 +54,7 @@ public class FileManager {
     public static boolean checkAPKExpansionFiles(Context context) {
         String packageName = context.getPackageName();
         File root = Environment.getExternalStorageDirectory();
-        File expPath = new File(root.toString() + EXP_PATH + packageName);
+        File expPath = new File(root.toString() + EXP_PATH + packageName + File.separator + "main." + MAIN_VERSION + "." + packageName + ".obb");
         return expPath.exists();
     }
 

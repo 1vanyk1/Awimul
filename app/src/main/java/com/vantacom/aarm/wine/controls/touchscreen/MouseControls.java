@@ -135,6 +135,7 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
                             if (xserver.getFocusedWindow().getCanMove()) {
                                 if (!isMoving) {
                                     isMoving = true;
+                                    updateWindow(event);
                                     MouseActions.setLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN);
                                 } else {
                                     MouseActions.setLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE);
