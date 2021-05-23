@@ -3,7 +3,6 @@ package com.vantacom.aarm.wine.xserver.views;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
-import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 
@@ -215,13 +214,15 @@ public class Window {
                 this.next_hwnd = next_hwnd;
             }
             this.style = style;
-            if (ownerWindow != null) {
-                ownerWindow.removeOwnedWindow(this);
-            }
-            this.owner = owner;
-            if (this.owner != 0) {
-                this.ownerWindow = xserver.getWindow(owner);
-                ownerWindow.addOwnedWindow(this);
+            if (owner != this.owner) {
+                if (ownerWindow != null) {
+                    ownerWindow.removeOwnedWindow(this);
+                }
+                this.owner = owner;
+                if (this.owner != 0) {
+                    this.ownerWindow = xserver.getWindow(owner);
+                    ownerWindow.addOwnedWindow(this);
+                }
             }
             this.windowRect = windowRect;
             this.clientRect = clientRect;
