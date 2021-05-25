@@ -12,6 +12,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
+import com.vantacom.aarm.dialogs.HelpMenuDialog;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
@@ -50,7 +52,7 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean workInBG, showCursor;
     private String inputType;
 
-    private ImageView keyboardView, inputTypeView, exitView;
+    private ImageView keyboardView, inputTypeView, helpMenuView, exitView;
     private View touchView, topPanel;
 
     private boolean ifTurnedOff = false;
@@ -294,6 +296,8 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
         keyboardView.setOnTouchListener(this);
         inputTypeView = findViewById(R.id.input_type);
         inputTypeView.setOnTouchListener(this);
+        helpMenuView = findViewById(R.id.help_menu);
+        helpMenuView.setOnTouchListener(this);
         exitView = findViewById(R.id.exit);
         exitView.setOnTouchListener(this);
 
@@ -406,11 +410,25 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_TOUCHSCREEN) != InputDevice.SOURCE_TOUCHSCREEN) {
+            return false;
+        }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v.getId() == R.id.keyboard) {
                 sendSimpleMessage(WineService.TOGGLE_KEYBOARD);
             } else if (v.getId() == R.id.exit) {
                 ConfirmTurnOff dialog = new ConfirmTurnOff(this);
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                dialog.show(transaction, "dialog");
+            } else if (v.getId() == R.id.help_menu) {
+                int menuId = -1;
+                if (inputType.equals("touch")) {
+                    menuId = HelpMenuDialog.TOUCH_SCREEN_HELP_MENU;
+                } else {
+                    menuId = HelpMenuDialog.MOUSE_HELP_MENU;
+                }
+                HelpMenuDialog dialog = new HelpMenuDialog(menuId);
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 dialog.show(transaction, "dialog");

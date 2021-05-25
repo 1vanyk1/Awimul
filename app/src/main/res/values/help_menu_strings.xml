@@ -1,0 +1,21 @@
+<resources>
+    <string name="help_menu_title_touchscreen">Touchscreen Controls</string>
+    <string name="help_menu_title_mouse">Mouse Controls</string>
+    <string name="move_mouse">Move Mouse</string>
+    <string name="left_button">Left Button</string>
+    <string name="right_button">Right Button</string>
+    <string name="mouse_wheel">Mouse Wheel</string>
+    <string name="drag_and_drop">Drag &amp; Drop (Left Button)</string>
+    <string name="zoom">Zoom</string>
+    <string name="toggle_keyboard">Toggle Keyboard</string>
+    <string name="toggle_title_bar">Toggle Title Bar</string>
+
+    <string name="move">Move</string>
+    <string name="short_tap">Short tap</string>
+    <string name="long_tap">Long tap</string>
+    <string name="short_tap_and_move">Short tap &amp; move</string>
+    <string name="long_tap_and_move">Long tap &amp; move</string>
+    <string name="two_taps_and_move">Two fingers tap &amp; move</string>
+    <string name="two_taps">Two fingers short tap</string>
+    <string name="three_taps">Three fingers short tap</string>
+</resources>

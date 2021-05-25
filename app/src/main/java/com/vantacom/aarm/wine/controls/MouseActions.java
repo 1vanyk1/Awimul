@@ -32,6 +32,11 @@ public class MouseActions {
         return (boolean)activity.invoke("wine_motion_event", window.getHWND(), action, eventPos[0], eventPos[1], LEFT_BUTTON, 0);
     }
 
+    public static boolean setButtonClick(float x, float y, LibraryManager activity, Window window, int action, int button) {
+        int[] eventPos = window.getEventPos(x, y);
+        return (boolean)activity.invoke("wine_motion_event", window.getHWND(), action, eventPos[0], eventPos[1], button, 0);
+    }
+
     public static void scroll(float x, float y, LibraryManager activity, Window window, int vscroll) {
         int[] eventPos = window.getEventPos(x, y);
         activity.invoke("wine_motion_event", window.getHWND(), MOUSE_SCROLL, eventPos[0], eventPos[1], 0, vscroll);

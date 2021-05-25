@@ -53,6 +53,13 @@
             app:srcCompat="@drawable/tap" />
 
         <ImageView
+            android:id="@+id/help_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/help" />
+
+        <ImageView
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

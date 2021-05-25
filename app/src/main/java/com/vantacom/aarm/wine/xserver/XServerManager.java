@@ -54,7 +54,7 @@ public class XServerManager {
             SurfaceTexture windowSurfTex = desktopView.getDesktopWindow().getWindowSurfTex();
             int desktopHWND = desktopView.getDesktopWindow().getHWND();
             window = desktopView.getDesktopWindow();
-            int parent = -3;
+            int parent = 0;
             int vis = window.getVis();
             int next_hwnd = window.getNextHWND();
             int owner = window.getOwnerHWND();
@@ -82,7 +82,7 @@ public class XServerManager {
                 window = getWindow(zOrder.get(i));
                 if (window != null && window.getHWND() != desktopView.getDesktopWindow().getHWND()) {
                     int hwnd = window.getHWND();
-                    parent = -3;
+                    parent = 0;
                     vis = window.getVis();
                     next_hwnd = window.getNextHWND();
                     owner = window.getOwnerHWND();
@@ -98,7 +98,7 @@ public class XServerManager {
                     window.disconnectSurface();
                     window = new Window(this, hwnd, getWindow(parent), scale);
                     addWindow(zOrder.get(i), window);
-                    if (parent >= 0) {
+                    if (parent > 0) {
                         window.setParent(getWindow(parent), scale);
                     }
                     window.createWindowGroups();
@@ -151,21 +151,19 @@ public class XServerManager {
     }
 
     public void changeZOrder(int hwnd, int prev_hwnd, boolean isFirst) {
+        Window window = windowsHM.get(hwnd);
+        if (isFirst && (hwnd == focusedWindow.getHWND() || window.getOwnerHWND() == focusedWindow.getHWND())) {
+            Window prew_window = getWindow(prev_hwnd);
+            if (prew_window.getOwnerHWND() != hwnd && window.getParent().getHWND() != prev_hwnd) {
+                prew_window.setZOrder(null, true);
+            }
+        }
         zOrder.remove((Object)hwnd);
         int index = 0;
         if (prev_hwnd != 0) {
-            for (int i = 0; i < zOrder.size(); i++) {
-                if (getWindowByZOrder(i).getNextHWND() < 0) {
-                    index++;
-                }
-                if (zOrder.get(i) == prev_hwnd) {
-                    index = i + 1;
-                    break;
-                }
-            }
+            index = zOrder.indexOf(prev_hwnd) + 1;
         }
         zOrder.add(index, hwnd);
-        Window window = windowsHM.get(hwnd);
         for (int j = 0; j < window.getCountOfViews(); j++) {
             if (j == 0) {
                 changeZOrder(window.getView(j).getHWND(), hwnd, false);

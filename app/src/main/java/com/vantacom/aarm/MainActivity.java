@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.vantacom.aarm.adapters.UserAdapter;
 import com.vantacom.aarm.dialogs.LoadingFilesDialog;
 import com.vantacom.aarm.dialogs.WarningDialog;
 import com.vantacom.aarm.managers.FileManager;

@@ -24,7 +24,7 @@ public class Window {
     private SurfaceTexture windowSurfTex, clientSurfTex;
 
     private int vis = 0;
-    private int next_hwnd = -3;
+    private int next_hwnd = 0;
     private int style = 0;
     private int owner = 0;
 
@@ -210,7 +210,7 @@ public class Window {
             boolean visible = this.visible;
             this.visible = (style & 0x10000000) != 0;
             this.vis = vis;
-            if (this.visible) {
+            if (this.next_hwnd >= 0 || next_hwnd != 0) {
                 this.next_hwnd = next_hwnd;
             }
             this.style = style;

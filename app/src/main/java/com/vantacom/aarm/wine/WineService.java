@@ -256,7 +256,7 @@ public class WineService extends Service implements WineIStream {
         public static Notification generate(Context context, String packageName) {
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context, CHANNEL_ID)
-                            .setSmallIcon(R.drawable.arror)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
                             .setContentTitle(context.getString(R.string.app_name))
                             .setContentText(context.getString(R.string.is_working))
                             .setAutoCancel(true)
