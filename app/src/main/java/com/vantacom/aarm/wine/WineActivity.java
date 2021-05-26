@@ -12,6 +12,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -41,7 +42,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
 import java.io.File;
 
 
-public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
+ public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
     private ConstraintLayout view;
     private String wineABI;
     private ProcessManager processManager;
@@ -333,10 +334,29 @@ public class WineActivity extends AppCompatActivity implements View.OnTouchListe
             pwd = pwd + '/';
         }
         if (sqLiteManager.isBool(packageName, "firstLoad")) {
+            File dir = new File(FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")));
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                Log.e("f", files[i].getName());
+            }
             File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
             if (!file.exists()) file.mkdir();
             ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
+            try {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String username = ConsoleManager.runCommandWithLog("wine cmd.exe /C echo %USERNAME%").trim();
+                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", String.format("C:/users/%s/Desktop/Notepad.lnk", username));
+                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", String.format("C:/users/%s/Desktop/Minesweeper.lnk", username));
+                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", String.format("C:/users/%s/Desktop/cmd.lnk", username));
+                    }
+                }).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             sqLiteManager.setBool(packageName, "firstLoad", false);
+
         }
         runOnUiThread(new Runnable() {
             public void run() {

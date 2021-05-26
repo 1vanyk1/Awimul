@@ -3,6 +3,7 @@ package com.vantacom.aarm.managers;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
+import android.system.Os;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -10,13 +11,21 @@ import com.vantacom.aarm.MainActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
@@ -283,5 +292,33 @@ public class FileManager {
         PackageDBManager packageManager = PackageDBManager.getInstance(activity);
         FileManager.deleteFolder(activity, FileManager.getPrefixPath(activity, "prefixes/" + packageManager.getString(packageName, "prefix")));
         packageManager.deletePackage(packageName);
+    }
+
+    public static boolean createSymLink(String symLinkFilePath, String originalFilePath) {
+        try {
+            Os.symlink(originalFilePath, symLinkFilePath);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void createWindowsLink(String winePrefix, String path2file, String path2link) {
+        String script = "Set sh = CreateObject(\"WScript.Shell\")\n"
+                +       "Set shortcut = sh.CreateShortcut(\"" + path2link + "\")\n"
+                +       "shortcut.TargetPath = \"" + path2file + "\"\n"
+                +       "shortcut.Save";
+        try {
+            String prefix = winePrefix + "/dosdevices/";
+            File file = new File(prefix, "c:/temp.vbs");
+            FileOutputStream fo = new FileOutputStream(file);
+            fo.write(script.getBytes());
+            fo.close();
+            Log.e("createDesktopFile", ConsoleManager.runCommandWithLog("wine cmd.exe /C C: && cd windows/system32 && wscript.exe " + "C:/temp.vbs"));
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
