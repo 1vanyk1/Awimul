@@ -74,7 +74,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
         isLongPress = false;
     }
 
-    private boolean onTouchTouchScreen(View v, MotionEvent event) {
+    protected boolean onTouchTouchScreen(MotionEvent event) {
         int action = event.getActionMasked();
         point1 = new PointF(event.getX(), event.getY());
         if (event.getPointerCount() >= 2) {
@@ -171,59 +171,67 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
         return true;
     }
 
-    private boolean onTouchMouse(View v, MotionEvent event) {
-        int action = event.getActionMasked();
-        point1 = new PointF(event.getX(), event.getY());
-        PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
-        try {
-            point = xserver.getFocusedWindow().convertDeskCordsToWin(point.x, point.y);
-            event.setLocation(point.x, point.y);
-        } catch (ClassNotFoundException e) {
-            return true;
-        }
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN, MouseActions.LEFT_BUTTON);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (xserver.getFocusedWindow().getCanMove()) {
-                    if (!isMoving) {
-                        isMoving = true;
-                        try {
-                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-                        } catch (ClassNotFoundException e) {}
-                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
-                    } else {
-                        try {
-                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-                        } catch (ClassNotFoundException e) {}
-                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (isMoving) {
-                    isMoving = false;
-                }
-                if (isLongPress) {
-                    isLongPress = false;
-                }
-                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP, MouseActions.LEFT_BUTTON);
-                xserver.getFocusedWindow().setCanMove(true);
-                break;
-        }
-        return true;
-    }
+//    private boolean onTouchMouse(MotionEvent event) {
+//        int action = event.getActionMasked();
+//        point1 = new PointF(event.getX(), event.getY());
+//        PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
+//        try {
+//            point = xserver.getFocusedWindow().convertDeskCordsToWin(point.x, point.y);
+//            event.setLocation(point.x, point.y);
+//        } catch (ClassNotFoundException e) {
+//            return true;
+//        }
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN, MouseActions.LEFT_BUTTON);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                if (xserver.getFocusedWindow().getCanMove()) {
+//                    if (!isMoving) {
+//                        isMoving = true;
+//                        try {
+//                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
+//                        } catch (ClassNotFoundException e) {}
+//                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
+//                    } else {
+//                        try {
+//                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
+//                        } catch (ClassNotFoundException e) {}
+//                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
+//                    }
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                if (isMoving) {
+//                    isMoving = false;
+//                }
+//                if (isLongPress) {
+//                    isLongPress = false;
+//                }
+//                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP, MouseActions.LEFT_BUTTON);
+//                xserver.getFocusedWindow().setCanMove(true);
+//                break;
+//        }
+//        return true;
+//    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (!xserver.isSystemPaused()) {
             if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_TOUCHSCREEN) == InputDevice.SOURCE_TOUCHSCREEN) {
-                return onTouchTouchScreen(v, event);
+                if (inputDevice != INPUT_TOUCH_SCREEN) {
+                    inputDevice = INPUT_TOUCH_SCREEN;
+                    isMultiTouch = false;
+                    isTripleTouch = false;
+                }
+                return onTouchTouchScreen(event);
             } else if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE) {
-                isMultiTouch = false;
-                isTripleTouch = false;
-                return onTouchMouse(v, event);
+                if (inputDevice != INPUT_MOUSE) {
+                    inputDevice = INPUT_MOUSE;
+                    isMultiTouch = false;
+                    isTripleTouch = false;
+                }
+                return onTouchMouse(event);
             }
         }
         return true;

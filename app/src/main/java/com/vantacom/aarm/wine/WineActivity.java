@@ -329,35 +329,6 @@ import java.io.File;
     public void onWineLoad() {
         processManager = new ProcessManager();
         changeInputType("touch");
-        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
-        if (pwd.charAt(pwd.length() - 1) != '/') {
-            pwd = pwd + '/';
-        }
-        if (sqLiteManager.isBool(packageName, "firstLoad")) {
-            File dir = new File(FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")));
-            File[] files = dir.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                Log.e("f", files[i].getName());
-            }
-            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
-            if (!file.exists()) file.mkdir();
-            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
-            try {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String username = ConsoleManager.runCommandWithLog("wine cmd.exe /C echo %USERNAME%").trim();
-                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", String.format("C:/users/%s/Desktop/Notepad.lnk", username));
-                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", String.format("C:/users/%s/Desktop/Minesweeper.lnk", username));
-                        FileManager.createWindowsLink(FileManager.getPrefixPath(WineActivity.this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", String.format("C:/users/%s/Desktop/cmd.lnk", username));
-                    }
-                }).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            sqLiteManager.setBool(packageName, "firstLoad", false);
-
-        }
         runOnUiThread(new Runnable() {
             public void run() {
                 dialog.hide();

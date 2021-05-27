@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -30,6 +31,8 @@ import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
 import com.vantacom.aarm.UserActivity;
+import com.vantacom.aarm.managers.ConsoleManager;
+import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
@@ -73,6 +76,22 @@ public class WineService extends Service implements WineIStream {
     @Override
     public void onWineLoad() {
         wineLoaded = true;
+        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
+        if (pwd.charAt(pwd.length() - 1) != '/') {
+            pwd = pwd + '/';
+        }
+        if (sqLiteManager.isBool(packageName, "firstLoad")) {
+            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
+            if (!file.exists()) file.mkdir();
+            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
+
+            String username = ConsoleManager.runCommandWithLog("wine cmd.exe /C echo %USERNAME%").trim();
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", String.format("C:/users/%s/Desktop/Notepad.lnk", username));
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", String.format("C:/users/%s/Desktop/Minesweeper.lnk", username));
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", String.format("C:/users/%s/Desktop/cmd.lnk", username));
+
+            sqLiteManager.setBool(packageName, "firstLoad", false);
+        }
         activity.onWineLoad();
     }
 
