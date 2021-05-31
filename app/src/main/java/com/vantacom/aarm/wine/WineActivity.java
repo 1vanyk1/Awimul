@@ -30,6 +30,7 @@ import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.HelpMenuDialog;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
+import com.vantacom.aarm.ipc.IPClib;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
@@ -406,6 +407,8 @@ import java.io.File;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v.getId() == R.id.keyboard) {
+                IPClib ipc = new IPClib();
+                ipc.init("");
                 sendSimpleMessage(WineService.TOGGLE_KEYBOARD);
             } else if (v.getId() == R.id.exit) {
                 ConfirmTurnOff dialog = new ConfirmTurnOff(this);

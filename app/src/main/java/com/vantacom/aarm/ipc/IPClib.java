@@ -7,7 +7,7 @@ public class IPClib {
 
     public native String string();
 
-    public native void init();
+    public native void init(String string);
 
     public native void sendSignal(int pid);
 }

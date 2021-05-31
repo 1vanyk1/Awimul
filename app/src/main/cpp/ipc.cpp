@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <dlfcn.h>
 #include <string>
-#include <windows.h>
 #include <android/log.h>
 
 #define ALOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
@@ -69,7 +68,7 @@ void sendSignal(JNIEnv* env, jobject thiz, jint pid)
 static JNINativeMethod methods[] = {
         {"string", "()Ljava/lang/String;", (void*)string },
         {"sendSignal", "(I)V", (void*)sendSignal },
-        {"init", "()V", (void*)init },
+        {"init", "(Ljava/lang/String;)V", (void*)init },
 };
 
 static const char *classPathName = "com/vantacom/aarm/ipc/IPClib";
