@@ -2,6 +2,8 @@
     <string name="app_name">Awimul</string>
     <string name="unpackLTitle">Unpacking...</string>
     <string name="unpackLText">Unpacking files, please wait.</string>
+    <string name="downLTitle">Downloading...</string>
+    <string name="downLText">Downloading files, please wait.</string>
     <string name="wineLTitle">Loading...</string>
     <string name="wineLText">Loading wine, please wait.</string>
     <string name="packageDTitle">Deleting...</string>
@@ -10,6 +12,8 @@
     <string name="obbWarning">There is no obb file. Please, install it and reload app.</string>
     <string name="permissionWarning">There is no permission for using external storage. Please, grant it and reload app.</string>
     <string name="ok">OK</string>
+    <string name="close">Close</string>
+    <string name="downloadObb">Download Obb</string>
     <string name="confirmTurnOff">Are you sure that you want to turn off the machine?</string>
     <string name="confirmDelete">Are you sure that you want to delete the user?</string>
     <string name="yes">yes</string>

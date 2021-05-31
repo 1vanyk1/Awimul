@@ -10,11 +10,11 @@ import androidx.fragment.app.DialogFragment;
 import com.vantacom.aarm.MainActivity;
 import com.vantacom.aarm.R;
 
-public class WarningDialog extends DialogFragment {
+public class NoObbDialog extends DialogFragment {
     private MainActivity activity;
     private int warning;
 
-    public WarningDialog(MainActivity activity, int warning) {
+    public NoObbDialog(MainActivity activity, int warning) {
         this.activity = activity;
         this.warning = warning;
     }
@@ -26,10 +26,16 @@ public class WarningDialog extends DialogFragment {
         builder.setTitle(R.string.warning);
         builder.setMessage(warning);
         builder.setCancelable(false);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
                 activity.finishAndRemoveTask();
+            }
+        });
+        builder.setNegativeButton(R.string.downloadObb, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                activity.downloadObb();
             }
         });
         return builder.create();

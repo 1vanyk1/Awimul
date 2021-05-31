@@ -24,10 +24,18 @@ public class AppDBManager {
 
     private void createTables() {
         db.execSQL("CREATE TABLE IF NOT EXISTS AppInfo (name VARCHAR NOT NULL UNIQUE, value VARCHAR);");
-        Cursor cursor = db.rawQuery("SELECT * FROM AppInfo WHERE name = 'firstLoad';", null);
-        boolean existence = cursor.moveToFirst();
+        Cursor cursor;
+        boolean existence;
+        cursor = db.rawQuery("SELECT * FROM AppInfo WHERE name = 'firstLoad';", null);
+        existence = cursor.moveToFirst();
         if (!existence) {
             db.execSQL("INSERT INTO AppInfo VALUES ('firstLoad', '1');");
+        }
+        cursor.close();
+        cursor = db.rawQuery("SELECT * FROM AppInfo WHERE name = 'downloading';", null);
+        existence = cursor.moveToFirst();
+        if (!existence) {
+            db.execSQL("INSERT INTO AppInfo VALUES ('downloading', '0');");
         }
         cursor.close();
     }

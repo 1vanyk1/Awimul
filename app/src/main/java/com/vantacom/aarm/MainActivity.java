@@ -14,8 +14,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.vantacom.aarm.adapters.UserAdapter;
+import com.vantacom.aarm.dialogs.DownloadFilesDialog;
 import com.vantacom.aarm.dialogs.LoadingFilesDialog;
-import com.vantacom.aarm.dialogs.WarningDialog;
+import com.vantacom.aarm.dialogs.NoObbDialog;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.AppDBManager;
 import com.vantacom.aarm.managers.PackageDBManager;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> names;
     private static int permissionNotGranted = 0;
     private LoadingFilesDialog dialogLL;
-    private WarningDialog dialogW;
+    private NoObbDialog dialogNO;
+    private DownloadFilesDialog dialogFD;
     public static String PACKAGE_NAME = "com.vantacom.aarm";
 
     @Override
@@ -52,6 +54,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         sqLiteManager = AppDBManager.getInstance(this);
         packageManager = PackageDBManager.getInstance(this);
+
+        if (savedInstanceState != null) {
+            dialogLL = (LoadingFilesDialog) getSupportFragmentManager().getFragment(savedInstanceState, "dialogLL");
+            if (dialogLL != null) {
+                dialogLL.init(this);
+            }
+            dialogFD = (DownloadFilesDialog) getSupportFragmentManager().getFragment(savedInstanceState, "dialogFD");
+            if (dialogFD != null) {
+                dialogFD.init(this);
+            }
+        }
 
         add = findViewById(R.id.add);
         add.setOnClickListener(this);
@@ -71,11 +84,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        if (dialogLL != null && dialogLL.isAdded()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogLL", dialogLL);
+        }
+        if (dialogFD != null && dialogFD.isAdded()) {
+            getSupportFragmentManager().putFragment(savedInstanceState, "dialogFD", dialogFD);
+        }
+    }
+
+    public void downloadObb() {
+        if (dialogFD == null) {
+            dialogFD = new DownloadFilesDialog(this);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            dialogFD.show(transaction, "dialog");
+        }
+    }
+
+    public void loadObb() {
+        if (dialogLL == null) {
+            dialogLL = new LoadingFilesDialog(this);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            dialogLL.show(transaction, "dialog");
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if ((ContextCompat.checkSelfPermission( this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) && (ContextCompat.checkSelfPermission( this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED )) {
             if (permissionNotGranted >= 8) {
-                WarningDialog dialog = new WarningDialog(this, R.string.permissionWarning);
+                NoObbDialog dialog = new NoObbDialog(this, R.string.permissionWarning);
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 dialog.show(transaction, "dialog");
@@ -91,21 +133,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return;
         }
-        if (sqLiteManager.isBool("firstLoad")) {
+        if (sqLiteManager.isBool("downloading")) {
+            if (dialogNO == null && dialogFD == null) {
+                dialogNO = new NoObbDialog(this, R.string.obbWarning);
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                dialogNO.show(transaction, "dialog");
+            }
+        } else if (sqLiteManager.isBool("firstLoad")) {
             if (FileManager.checkAPKExpansionFiles(this)) {
-                if (dialogLL == null) {
+                if (dialogLL == null && dialogFD == null) {
                     dialogLL = new LoadingFilesDialog(this);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     dialogLL.show(transaction, "dialog");
                 }
-
             } else {
-                if (dialogW == null) {
-                    dialogW = new WarningDialog(this, R.string.obbWarning);
+                if (dialogNO == null && dialogFD == null) {
+                    dialogNO = new NoObbDialog(this, R.string.obbWarning);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
-                    dialogW.show(transaction, "dialog");
+                    dialogNO.show(transaction, "dialog");
                 }
             }
         }

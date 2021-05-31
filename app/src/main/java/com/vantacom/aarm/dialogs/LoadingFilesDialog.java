@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -25,6 +24,10 @@ public class LoadingFilesDialog extends DialogFragment {
 
     public LoadingFilesDialog() {
         this.context = getContext();
+    }
+
+    public void init(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -55,20 +58,18 @@ public class LoadingFilesDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (status != null && status.equals("r")) {
-            dialog.show();
-            dialog.setCancelable(false);
-        }
+        dialog.show();
+        dialog.setCancelable(false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        dialog.show();
+        dialog.setCancelable(false);
         if (status != null && status.equals("r")) {
             return;
         }
-        dialog.show();
-        dialog.setCancelable(false);
         new Thread(new Runnable() {
             @Override
             public void run() {
