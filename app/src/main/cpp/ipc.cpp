@@ -35,7 +35,6 @@ jstring string(JNIEnv* env, jobject thiz)
 
 void init(JNIEnv* env, jobject thiz, jstring jpath)
 {
-
     void *handle;
     void *cosine;
     char *error;
@@ -46,12 +45,13 @@ void init(JNIEnv* env, jobject thiz, jstring jpath)
         exit(1);
     }
     dlerror();
-    cosine = dlsym(handle, "cos");
+    unsigned int (*fptr)();
+    *(void **)(&fptr) = dlsym(handle, "GetTickCount");
     if ((error = dlerror()) != NULL)  {
         ALOGE("%s\n", error);
 //        exit(1);
     }
-//    ALOGE("%f\n", (*cosine)(2.0));
+    ALOGE("%d\n", (*fptr)());
     dlclose(handle);
 }
 

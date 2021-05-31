@@ -408,7 +408,7 @@ import java.io.File;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v.getId() == R.id.keyboard) {
                 IPClib ipc = new IPClib();
-                ipc.init("");
+                ipc.init(getFilesDir().getAbsolutePath() + "/armeabi-v7a/lib/wine/kernel32.dll.so");
                 sendSimpleMessage(WineService.TOGGLE_KEYBOARD);
             } else if (v.getId() == R.id.exit) {
                 ConfirmTurnOff dialog = new ConfirmTurnOff(this);
