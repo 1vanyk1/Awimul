@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -32,15 +30,12 @@ import com.vantacom.aarm.dialogs.HelpMenuDialog;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.ipc.IPClib;
 import com.vantacom.aarm.managers.ConsoleManager;
-import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
 import com.vantacom.aarm.wine.controls.touchscreen.BaseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.MouseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.TouchControls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
-
-import java.io.File;
 
 
  public class WineActivity extends AppCompatActivity implements View.OnTouchListener {

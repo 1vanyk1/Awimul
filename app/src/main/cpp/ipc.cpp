@@ -42,14 +42,14 @@ void init(JNIEnv* env, jobject thiz, jstring jpath)
     handle = dlopen (path, RTLD_LAZY);
     if (!handle) {
         ALOGE("%s\n", dlerror());
-        exit(1);
+        return;
     }
     dlerror();
     unsigned int (*fptr)();
     *(void **)(&fptr) = dlsym(handle, "GetTickCount");
     if ((error = dlerror()) != NULL)  {
         ALOGE("%s\n", error);
-        exit(1);
+        return;
     }
     ALOGE("%d\n", (*fptr)());
     dlclose(handle);
