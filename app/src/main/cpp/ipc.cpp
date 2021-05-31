@@ -49,7 +49,7 @@ void init(JNIEnv* env, jobject thiz, jstring jpath)
     *(void **)(&fptr) = dlsym(handle, "GetTickCount");
     if ((error = dlerror()) != NULL)  {
         ALOGE("%s\n", error);
-//        exit(1);
+        exit(1);
     }
     ALOGE("%d\n", (*fptr)());
     dlclose(handle);
