@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.10.2)
-add_library( ipc
-             SHARED
-             ipc.cpp )
-find_library(log-lib
-             log )
-target_link_libraries(ipc
-            ${log-lib} )
+set(CMAKE_CXX_STANDARD 11)
+add_library(ipc SHARED ipc.cpp ipc.h)
+add_library( xserver SHARED window_manager.cpp window_manager.h util.cpp util.h xlib2.h)
+find_library(log-lib log )
+target_link_libraries(ipc ${log-lib} )
