@@ -42,9 +42,6 @@ public class ProcessManager {
                     process = processes[i].split("\\s+");
                     if (!process[name_pos].equals("com.vantacom.aarm") && !process[name_pos].equals("ps")) {
                         pausedProcesses.add(process[pid_pos]);
-
-//                        ipc.sendSignal(Integer.parseInt(process[pid_pos]));
-
                         ConsoleManager.runCommand(String.format("kill -STOP %s", process[pid_pos]));
                     }
                 }

@@ -6,14 +6,12 @@
 #define AWIMUL_WINDOW_MANAGER_H
 
 
-extern "C" {
-#include <X11/Xlib.h>
-}
+#include "x11/headers/xlib.h"
 #include <memory>
 #include <mutex>
 #include <string>
 #include <unordered_map>
-#include "util.hpp"
+#include "util.h"
 
 class WindowManager {
 public:

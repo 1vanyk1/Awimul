@@ -28,9 +28,6 @@
 #define READ   0
 #define WRITE  1
 
-JavaVM *java_vm = NULL;
-jobject java_object = NULL;
-
 bool isPathExist(const std::string &s)
 {
     struct stat buffer;
@@ -402,7 +399,6 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
     uenv.venv = NULL;
     jint result = -1;
     JNIEnv* env = NULL;
-    java_vm = vm;
 
     if (vm->GetEnv(&uenv.venv, JNI_VERSION_1_4) != JNI_OK) {
         goto bail;

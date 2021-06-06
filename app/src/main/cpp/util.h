@@ -1,9 +1,7 @@
 #ifndef AWIMUL_UTIL_H
 #define AWIMUL_UTIL_H
 
-extern "C" {
-#include <X11/Xlib.h>
-}
+#include "x11/headers/xlib.h"
 #include <ostream>
 #include <string>
 

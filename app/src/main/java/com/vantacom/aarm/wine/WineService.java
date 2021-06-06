@@ -35,6 +35,7 @@ import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.wine.xserver.XServerManager;
+import com.vantacom.aarm.xserver.WM;
 
 import org.winehq.wine.WineIStream;
 
@@ -234,6 +235,15 @@ public class WineService extends Service implements WineIStream {
         for (int i = 0; i < wineSettings.length; i += 2) {
             Log.i("WS/wineSettings", String.format("%s: %s", wineSettings[i], wineSettings[i + 1]));
         }
+//        WM wm = new WM();
+        File xserverDir = new File(activity.getFilesDir(), "X11");
+        xserverDir.mkdirs();
+        try {
+            new File(xserverDir, "X99").createNewFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        wm.init(xserverDir.getAbsolutePath() + "/" + "X");
         wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
     }
 

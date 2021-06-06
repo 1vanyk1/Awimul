@@ -3,17 +3,10 @@ plugins {
 }
 
 android {
+    ndkVersion '21.3.6528147'
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
-    ndkVersion "21.3.6528147"
-
-    externalNativeBuild {
-        cmake {
-            path "src/main/cpp/CMakeLists.txt"
-            version "3.10.2"
-        }
-    }
 
     defaultConfig {
         applicationId "com.vantacom.aarm"
@@ -22,17 +15,10 @@ android {
         versionCode 1
         versionName "1.0"
 
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++11"
-                cppFlags "-fexceptions"
-            }
-        }
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
     }
 
