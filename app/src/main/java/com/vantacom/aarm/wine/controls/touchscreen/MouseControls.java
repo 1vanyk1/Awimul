@@ -88,6 +88,9 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
         } catch (ClassNotFoundException e) {}
         switch (action) {
             default:
+                if (isMultiTouch) {
+                    return gDetector.onTouchEvent(event);
+                }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (!isMoving) {
@@ -95,8 +98,9 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
                     if (event.getPointerCount() == 2) {
                         xserver.getResizeManager().setStartDistance(event, point2);
 //                            MouseActions.setLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+                        isLongPress = false;
                         event.setAction(MotionEvent.ACTION_UP);
-                        gDetector.onTouchEvent(event);
+                        return gDetector.onTouchEvent(event);
                     } else if (event.getPointerCount() == 3) {
                         isTripleTouch = true;
                         xserver.toggleTopBar();
@@ -205,7 +209,10 @@ public class MouseControls extends BaseControls implements GestureDetector.OnGes
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-        return MouseActions.singleLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow());
+        if (!isMoving) {
+            return MouseActions.singleLeftButtonClick(pointReal.x, pointReal.y, wineActivity, xserver.getFocusedWindow());
+        }
+        return true;
     }
 
     @Override

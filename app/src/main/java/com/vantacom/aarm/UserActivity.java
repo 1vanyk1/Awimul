@@ -84,16 +84,16 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("package", packageName);
-        if (dialogSS != null) {
+        if (dialogSS != null && dialogSS.isAdded()) {
             getSupportFragmentManager().putFragment(savedInstanceState, "dialogSS", dialogSS);
         }
-        if (dialogRP != null) {
+        if (dialogRP != null && dialogRP.isAdded()) {
             getSupportFragmentManager().putFragment(savedInstanceState, "dialogRP", dialogRP);
         }
-        if (dialogCD != null) {
+        if (dialogCD != null && dialogCD.isAdded()) {
             getSupportFragmentManager().putFragment(savedInstanceState, "dialogCD", dialogCD);
         }
-        if (dialogDP != null) {
+        if (dialogDP != null && dialogDP.isAdded()) {
             getSupportFragmentManager().putFragment(savedInstanceState, "dialogDP", dialogDP);
         }
     }

@@ -2,7 +2,7 @@
 
 # Awimul
 Awimul - это программа для запуска Windows RT приложений на Android, основанная на Wine.
-Демонстрация работоспособности: https://www.youtube.com/watch?v=gAKdpCWfb8k
+Демонстрация работоспособности: https://www.youtube.com/watch?v=BWMDZPFjT-E
 
 # Как это работает
 Awimul запускает Wine, находящийся в корне приложения, с помощью wine_init. Awimul отрпвляет запросы с помощью нативных библиотек, а принимает с помощью функций, вызываемых Wine'ом.

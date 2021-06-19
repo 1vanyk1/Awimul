@@ -85,10 +85,9 @@ public class WineService extends Service implements WineIStream {
             if (!file.exists()) file.mkdir();
             ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
 
-            String username = ConsoleManager.runCommandWithLog("wine cmd.exe /C echo %USERNAME%").trim();
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", String.format("C:/users/%s/Desktop/Notepad.lnk", username));
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", String.format("C:/users/%s/Desktop/Minesweeper.lnk", username));
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", String.format("C:/users/%s/Desktop/cmd.lnk", username));
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", "Notepad");
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", "Minesweeper");
+            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", "cmd");
 
             sqLiteManager.setBool(packageName, "firstLoad", false);
         }

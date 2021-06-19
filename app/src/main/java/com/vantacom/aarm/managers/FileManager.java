@@ -296,10 +296,12 @@ public class FileManager {
         return false;
     }
 
-    public static void createWindowsLink(String winePrefix, String path2file, String path2link) {
-        String script = "Set sh = CreateObject(\"WScript.Shell\")\n"
-                +       "Set shortcut = sh.CreateShortcut(\"" + path2link + "\")\n"
+    public static void createWindowsLink(String winePrefix, String path2file, String linkName) {
+        String script = "FileName = \"" + linkName + "\"\n"
+                +       "Set sh = CreateObject(\"WScript.Shell\")\n"
+                +       "Set shortcut = sh.CreateShortcut(CreateObject(\"WScript.Shell\").SpecialFolders(\"Desktop\") & + \"\\\" + FileName + \".lnk\")\n"
                 +       "shortcut.TargetPath = \"" + path2file + "\"\n"
+                +       "shortcut.WindowStyle = 1\n"
                 +       "shortcut.Save";
         try {
             String prefix = winePrefix + "/dosdevices/";
