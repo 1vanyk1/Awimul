@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.core.view.GestureDetectorCompat;
 
-import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.controls.MouseActions;
 import com.vantacom.aarm.wine.controls.MouseWheelActions;
 import com.vantacom.aarm.wine.xserver.Mouse;
@@ -18,9 +17,6 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
 
 public class TouchControls extends BaseControls implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private GestureDetectorCompat gDetector;
-    private LibraryManager wineActivity;
-    private XServerManager xserver;
-    private Mouse mouse;
     private MouseWheelActions wheelActions;
 
     private boolean isMoving = false;
@@ -28,7 +24,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
     private boolean isTripleTouch = false;
     private boolean isLongPress = false;
 
-    private PointF point1, point2;
+    private PointF point2;
 
     public TouchControls(Context context, XServerManager xserver) {
         this.wineActivity = xserver.getWineActivity();
@@ -170,50 +166,6 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
         }
         return true;
     }
-
-//    private boolean onTouchMouse(MotionEvent event) {
-//        int action = event.getActionMasked();
-//        point1 = new PointF(event.getX(), event.getY());
-//        PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
-//        try {
-//            point = xserver.getFocusedWindow().convertDeskCordsToWin(point.x, point.y);
-//            event.setLocation(point.x, point.y);
-//        } catch (ClassNotFoundException e) {
-//            return true;
-//        }
-//        switch (action) {
-//            case MotionEvent.ACTION_DOWN:
-//                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN, MouseActions.LEFT_BUTTON);
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                if (xserver.getFocusedWindow().getCanMove()) {
-//                    if (!isMoving) {
-//                        isMoving = true;
-//                        try {
-//                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-//                        } catch (ClassNotFoundException e) {}
-//                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
-//                    } else {
-//                        try {
-//                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-//                        } catch (ClassNotFoundException e) {}
-//                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
-//                    }
-//                }
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                if (isMoving) {
-//                    isMoving = false;
-//                }
-//                if (isLongPress) {
-//                    isLongPress = false;
-//                }
-//                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP, MouseActions.LEFT_BUTTON);
-//                xserver.getFocusedWindow().setCanMove(true);
-//                break;
-//        }
-//        return true;
-//    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

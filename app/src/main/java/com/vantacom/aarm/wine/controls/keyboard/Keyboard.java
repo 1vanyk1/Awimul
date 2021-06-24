@@ -3,7 +3,6 @@ package com.vantacom.aarm.wine.controls.keyboard;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Build;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -85,13 +84,45 @@ public class Keyboard implements OnKeyboardVisibilityListener {
         keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public boolean pressKey(KeyEvent event) {
-        if (event.isShiftPressed()) {
-            isShiftPressed = true;
-        } else {
-            isShiftPressed = false;
+    private int getSpecialKeyCode(int keycode) {
+        switch (keycode) {
+            default:
+                return keycode;
+            case 17:
+                return 15;
+            case 18:
+                return 10;
+            case 77:
+                return 9;
+            case 81:
+                return 70;
         }
-        return pressKey(event.getAction(), event.getKeyCode(), event.getMetaState());
+    }
+
+    public boolean pressKey(KeyEvent event) {
+        int key;
+        switch (event.getKeyCode()) {
+            default:
+                key = event.getKeyCode();
+                if (event.isShiftPressed()) {
+                    isShiftPressed = true;
+                } else {
+                    isShiftPressed = false;
+                }
+                break;
+            case 17:
+            case 18:
+            case 77:
+            case 81:
+                key = getSpecialKeyCode(event.getKeyCode());
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    isShiftPressed = true;
+                } else {
+                    isShiftPressed = event.isShiftPressed();
+                }
+                break;
+        }
+        return pressKey(event.getAction(), key, event.getMetaState());
     }
 
     public boolean pressKey(int action, int key, int metaState) {

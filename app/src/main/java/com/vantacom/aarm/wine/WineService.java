@@ -22,7 +22,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.KeyEvent;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -55,6 +54,8 @@ public class WineService extends Service implements WineIStream {
 
     private boolean wineLoaded = false;
 
+    private static final String ACTION_STOP_SERVER = "action_stop_listen";
+
     public final static int SET_SCREEN_SIZE = 101;
     public final static int SET_WINE_ABI = 102;
     public final static int SET_ACTIVITY = 111;
@@ -65,7 +66,6 @@ public class WineService extends Service implements WineIStream {
     public final static int TOGGLE_KEYBOARD = 500;
     public final static int SHOW_KEYBOARD = 501;
     public final static int HIDE_KEYBOARD = 502;
-    public final static int PRESS_KEY = 503;
     public final static int CHANGE_INPUT_TYPE = 600;
 
     @Override
@@ -177,17 +177,6 @@ public class WineService extends Service implements WineIStream {
                 case HIDE_KEYBOARD:
                     xserver.getKeyboard().hideKeyboard();
                     break;
-                case PRESS_KEY:
-                    if (msg.obj.getClass().equals(KeyEvent.class)) {
-                        xserver.getKeyboard().pressKey((KeyEvent) msg.obj);
-                    } else {
-                        int[] obj = (int[]) msg.obj;
-                        int action = obj[0];
-                        int key = obj[1];
-                        int metaState = obj[1];
-                        xserver.getKeyboard().pressKey(action, key, metaState);
-                    }
-                    break;
                 case CHANGE_INPUT_TYPE:
                     xserver.getCursor().setVisibility((Boolean)msg.obj);
                     if (msg.replyTo != null) {
@@ -249,6 +238,14 @@ public class WineService extends Service implements WineIStream {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+        if (intent != null && ACTION_STOP_SERVER.equals(intent.getAction())) {
+            stopForeground(true);
+            stopSelf();
+            if (activity != null) {
+                activity.onTurnOff();
+            }
+            return START_NOT_STICKY;
+        }
         return START_NOT_STICKY;
     }
 
@@ -272,20 +269,24 @@ public class WineService extends Service implements WineIStream {
 
     private static class Notify {
         public static Notification generate(Context context, String packageName) {
+            Intent stopServiceIntent = new Intent(context, WineService.class);
+            stopServiceIntent.setAction(ACTION_STOP_SERVER);
+            PendingIntent stopServerPendingIntent = PendingIntent.getService(context, 123, stopServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
                             .setContentTitle(context.getString(R.string.app_name))
                             .setContentText(context.getString(R.string.is_working))
                             .setAutoCancel(true)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            .setPriority(NotificationCompat.PRIORITY_LOW)
+                            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                            .addAction(0, "Turn Off", stopServerPendingIntent)
                             .setVibrate(null)
                             .setSound(null);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 CharSequence name = context.getString(R.string.app_name);
                 String description = context.getString(R.string.is_working);
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                int importance = NotificationManager.IMPORTANCE_LOW;
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
                 channel.setDescription(description);
                 NotificationManager notificationManager = context.getSystemService(NotificationManager.class);

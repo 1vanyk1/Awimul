@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -31,15 +29,13 @@ import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.HelpMenuDialog;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
-import com.vantacom.aarm.managers.FileManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
+import com.vantacom.aarm.wine.controls.MouseActions;
 import com.vantacom.aarm.wine.controls.touchscreen.BaseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.MouseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.TouchControls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
-
-import java.io.File;
 
 
  public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
@@ -116,7 +112,9 @@ import java.io.File;
     public void sendSimpleMessage(int message_type) {
         try {
             Message message = Message.obtain(null, message_type, 1, 1);
-            msgService.send(message);
+            if (msgService != null) {
+                msgService.send(message);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -326,7 +324,13 @@ import java.io.File;
         startWineService(screenInfo);
     }
 
-    public void onWineLoad() {
+     @Override
+     public void onSaveInstanceState(Bundle savedInstanceState) {
+         super.onSaveInstanceState(savedInstanceState);
+         savedInstanceState.putBoolean("mShouldUnbind", mShouldUnbind);
+     }
+
+     public void onWineLoad() {
         processManager = new ProcessManager();
         changeInputType("touch");
         runOnUiThread(new Runnable() {
@@ -377,15 +381,19 @@ import java.io.File;
     @Override
     public void onBackPressed() {
         hideSystemUI();
-        if (!isSystemPaused()) {
-            xserver.getKeyboard().pressKey(0, 111, 0);
-            xserver.getKeyboard().pressKey(1, 111, 0);
-        }
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (!isSystemPaused()) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (event.getDeviceId() < 0) {
+                xserver.getKeyboard().pressKey(event.getAction(), 111, 0);
+            } else if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE) {
+                if (event.getAction() == KeyEvent.ACTION_UP) {
+                    MouseActions.singleRightButtonClick(xserver.getCursor().getX(), xserver.getCursor().getY(), xserver.getWineActivity(), xserver.getFocusedWindow());
+                }
+            }
+        } else if (!isSystemPaused()) {
             xserver.getKeyboard().pressKey(event);
         }
         return super.dispatchKeyEvent(event);
@@ -452,6 +460,7 @@ import java.io.File;
                     controls = new TouchControls(WineActivity.this, xserver);
                 }
                 touchView.setOnTouchListener(controls);
+                touchView.setOnGenericMotionListener(controls);
             }
         });
     }

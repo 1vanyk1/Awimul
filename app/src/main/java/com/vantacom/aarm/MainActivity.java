@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void downloadObb() {
-        if (dialogFD == null) {
+        if (dialogFD == null || !dialogFD.isAdded()) {
             dialogFD = new DownloadFilesDialog(this);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -104,11 +104,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void loadObb() {
-        if (dialogLL == null) {
+        if (dialogLL == null || !dialogLL.isAdded()) {
             dialogLL = new LoadingFilesDialog(this);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             dialogLL.show(transaction, "dialog");
+        }
+    }
+
+    public void noObb() {
+        if (dialogNO == null || !dialogNO.isAdded()) {
+            dialogNO = new NoObbDialog(this, R.string.obbWarning);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            dialogNO.show(transaction, "dialog");
         }
     }
 

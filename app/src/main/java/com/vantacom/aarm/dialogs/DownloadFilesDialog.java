@@ -18,6 +18,7 @@ import com.vantacom.aarm.managers.AppDBManager;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -26,7 +27,7 @@ import java.net.URLConnection;
 import static com.vantacom.aarm.managers.FileManager.EXP_PATH;
 import static com.vantacom.aarm.managers.FileManager.MAIN_VERSION;
 
-public class DownloadFilesDialog extends DialogFragment {
+public class DownloadFilesDialog extends DialogFragment implements View.OnClickListener {
     private MainActivity activity;
     private Dialog dialog;
     private ProgressBar progressBar;
@@ -35,6 +36,9 @@ public class DownloadFilesDialog extends DialogFragment {
     private long lengthOfFile = -1;
     private long totalLength = 0;
     private String progress;
+    private View cancel;
+
+    private Thread downloadThread;
 
     public DownloadFilesDialog(MainActivity activity) {
         this.activity = activity;
@@ -61,6 +65,8 @@ public class DownloadFilesDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_downloading_files, null);
+        cancel = view.findViewById(R.id.cancel);
+        cancel.setOnClickListener(this);
         progressBar = view.findViewById(R.id.progressBar);
         progressText = view.findViewById(R.id.progressText);
         if (lengthOfFile > 0) {
@@ -121,7 +127,7 @@ public class DownloadFilesDialog extends DialogFragment {
         if (status != null && status.equals("r")) {
             return;
         }
-        new Thread(new Runnable() {
+        downloadThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (activity != null) {
@@ -160,7 +166,7 @@ public class DownloadFilesDialog extends DialogFragment {
                         output.flush();
                         output.close();
                         input.close();
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                         status = "e";
                     } finally {
@@ -168,6 +174,7 @@ public class DownloadFilesDialog extends DialogFragment {
                             status = null;
                             dialog.dismiss();
                             dismiss();
+                            activity.noObb();
                         } else {
                             status = null;
                             dialog.dismiss();
@@ -181,7 +188,8 @@ public class DownloadFilesDialog extends DialogFragment {
                     dismiss();
                 }
             }
-        }).start();
+        });
+        downloadThread.start();
     }
 
     @Override
@@ -191,5 +199,14 @@ public class DownloadFilesDialog extends DialogFragment {
             dialog.setDismissMessage(null);
         }
         super.onDestroyView();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.cancel) {
+            downloadThread.interrupt();
+            dialog.cancel();
+            activity.noObb();
+        }
     }
 }

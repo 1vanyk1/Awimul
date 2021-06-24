@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.core.view.GestureDetectorCompat;
 
-import com.vantacom.aarm.LibraryManager;
 import com.vantacom.aarm.wine.controls.MouseActions;
 import com.vantacom.aarm.wine.controls.MouseWheelActions;
 import com.vantacom.aarm.wine.xserver.Mouse;
@@ -18,9 +17,6 @@ import com.vantacom.aarm.wine.xserver.views.Window;
 
 public class MouseControls extends BaseControls implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private GestureDetectorCompat gDetector;
-    private LibraryManager wineActivity;
-    private XServerManager xserver;
-    private Mouse mouse;
     private MouseWheelActions wheelActions;
 
     private boolean isMoving = false;
