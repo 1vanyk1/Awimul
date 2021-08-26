@@ -9,7 +9,7 @@ import com.vantacom.aarm.wine.controls.MouseActions;
 import com.vantacom.aarm.wine.xserver.Mouse;
 import com.vantacom.aarm.wine.xserver.XServerManager;
 
-public abstract class BaseControls implements View.OnTouchListener {
+public abstract class BaseControls implements View.OnTouchListener, View.OnGenericMotionListener {
     protected LibraryManager wineActivity;
     protected XServerManager xserver;
     protected Mouse mouse;
@@ -46,16 +46,11 @@ public abstract class BaseControls implements View.OnTouchListener {
                 if (xserver.getFocusedWindow().getCanMove()) {
                     if (!isMoving) {
                         isMoving = true;
-                        try {
-                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-                        } catch (ClassNotFoundException e) {}
-                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
-                    } else {
-                        try {
-                            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
-                        } catch (ClassNotFoundException e) {}
-                        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
                     }
+                    try {
+                        mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
+                    } catch (ClassNotFoundException e) {}
+                    MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -67,5 +62,36 @@ public abstract class BaseControls implements View.OnTouchListener {
                 break;
         }
         return true;
+    }
+
+    protected boolean onMoveMouse(MotionEvent event) {
+        point1 = new PointF(event.getX(), event.getY());
+        PointF point = xserver.getDesktopView().getDesktopCords(event.getX(), event.getY());
+        try {
+            point = xserver.getFocusedWindow().convertDeskCordsToWin(point.x, point.y);
+            event.setLocation(point.x, point.y);
+        } catch (ClassNotFoundException e) {
+            return true;
+        }
+        try {
+            mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
+        } catch (ClassNotFoundException e) {}
+        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
+        if (event.getAction() == MotionEvent.ACTION_SCROLL) {
+            if (event.getAxisValue(MotionEvent.AXIS_VSCROLL) < 0.0f) {
+                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), -1);
+            } else {
+                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), 1);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onGenericMotion(View v, MotionEvent event) {
+        if (event.getToolType(0) == MotionEvent.TOOL_TYPE_MOUSE) {
+            return onMoveMouse(event);
+        }
+        return false;
     }
 }

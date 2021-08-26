@@ -31,6 +31,7 @@ import com.vantacom.aarm.dialogs.LoadingWineDialog;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
+import com.vantacom.aarm.wine.controls.MouseActions;
 import com.vantacom.aarm.wine.controls.touchscreen.BaseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.MouseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.TouchControls;
@@ -111,7 +112,9 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
     public void sendSimpleMessage(int message_type) {
         try {
             Message message = Message.obtain(null, message_type, 1, 1);
-            msgService.send(message);
+            if (msgService != null) {
+                msgService.send(message);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -321,7 +324,13 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
         startWineService(screenInfo);
     }
 
-    public void onWineLoad() {
+     @Override
+     public void onSaveInstanceState(Bundle savedInstanceState) {
+         super.onSaveInstanceState(savedInstanceState);
+         savedInstanceState.putBoolean("mShouldUnbind", mShouldUnbind);
+     }
+
+     public void onWineLoad() {
         processManager = new ProcessManager();
         changeInputType("touch");
         runOnUiThread(new Runnable() {
@@ -372,15 +381,19 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
     @Override
     public void onBackPressed() {
         hideSystemUI();
-        if (!isSystemPaused()) {
-            xserver.getKeyboard().pressKey(0, 111, 0);
-            xserver.getKeyboard().pressKey(1, 111, 0);
-        }
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (!isSystemPaused()) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (event.getDeviceId() < 0) {
+                xserver.getKeyboard().pressKey(event.getAction(), 111, 0);
+            } else if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE) {
+                if (event.getAction() == KeyEvent.ACTION_UP) {
+                    MouseActions.singleRightButtonClick(xserver.getCursor().getX(), xserver.getCursor().getY(), xserver.getWineActivity(), xserver.getFocusedWindow());
+                }
+            }
+        } else if (!isSystemPaused()) {
             xserver.getKeyboard().pressKey(event);
         }
         return super.dispatchKeyEvent(event);
@@ -447,6 +460,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
                     controls = new TouchControls(WineActivity.this, xserver);
                 }
                 touchView.setOnTouchListener(controls);
+                touchView.setOnGenericMotionListener(controls);
             }
         });
     }

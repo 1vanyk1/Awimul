@@ -16,14 +16,20 @@ public class SelectSizeDialog extends DialogFragment {
     private UserActivity activity;
     private PackageDBManager packageManager;
     private String packageName;
-    private final String[] sizes = {"native",   "320x240", "480x320", "640x480", "720x480", "768x576", "800x600", "1024x768", "1280x720", "1280x800", "1280x960", "1280x1024", "1440x900", "1600x900", "1600x1200", "1680x1050", "1920x1080"};
-    private final String[] proportions = {null, "4:3",     "3:2",     "4:3",     "3:2",     "4:3",     "4:3",     "4:3",      "16:9",     "16:10",    "4:3",      "5:4",       "16:10",    "16:9",     "4:3",       "16:10",     "16:9"};
+    private final String[] sizes = {"native",   "320x240", "480x320", "640x480", "640x360", "720x480", "768x576", "800x600", "1024x768", "1280x720", "1280x800", "1280x960", "1280x1024", "1440x900", "1600x900", "1600x1200", "1680x1050", "1920x1080"};
+    private final String[] proportions = {null, "4:3",     "3:2",     "4:3",     "16:9",     "3:2",     "4:3",     "4:3",     "4:3",      "16:9",     "16:10",    "4:3",      "5:4",       "16:10",    "16:9",     "4:3",       "16:10",     "16:9"};
 
     public SelectSizeDialog(UserActivity activity, PackageDBManager packageManager, String packageName) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int screenWidth = displayMetrics.widthPixels;
-        int screenHeight = displayMetrics.heightPixels;
+        int screenWidth, screenHeight;
+        if (displayMetrics.widthPixels < displayMetrics.heightPixels) {
+            screenWidth = displayMetrics.heightPixels;
+            screenHeight = displayMetrics.widthPixels;
+        } else {
+            screenWidth = displayMetrics.widthPixels;
+            screenHeight = displayMetrics.heightPixels;
+        }
         sizes[0] = String.format("%s (%dx%d)", sizes[0], screenWidth, screenHeight);
         this.activity = activity;
         this.packageManager = packageManager;
