@@ -5,5 +5,9 @@ public class WM {
         System.loadLibrary("xserver");
     }
 
-    public native int init(String path);
+    public native int init(String path, String tmp);
+
+    public native boolean checkXServerIsLoaded(String tmp);
+
+    public native int startWM(String tmp);
 }

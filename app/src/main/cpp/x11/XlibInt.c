@@ -1973,5 +1973,5 @@ void (**_XUnlockMutex_fn_p)(LockInfoPtr
 #endif
         ) = &_XUnlockMutex_fn;
 LockInfoPtr *_Xglobal_lock_p = &_Xglobal_lock;
-int (*_XIOErrorFunction)() = _XIOError;
-int (*_XErrorFunction)() = _XError;
+//int (*_XIOErrorFunction)() = _XIOError;
+//int (*_XErrorFunction)() = _XError;

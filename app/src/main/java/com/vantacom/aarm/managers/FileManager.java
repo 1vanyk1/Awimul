@@ -2,6 +2,7 @@ package com.vantacom.aarm.managers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Environment;
 import android.system.Os;
 import android.text.TextUtils;
@@ -195,15 +196,9 @@ public class FileManager {
     }
 
     public static void copyFile(String source, String dest) {
-        try {
-            File inFile = new File(source);
-            FileInputStream is = new FileInputStream(inFile);
-            File outFile = new File(dest);
-            OutputStream os = new FileOutputStream(outFile);
-            copyFile(is, os);
-        } catch (IOException e) {
-            Log.e("copyFile", e.toString());
-        }
+        File inFile = new File(source);
+        File outFile = new File(dest);
+        copyFile(inFile, outFile);
     }
 
     public static void copyFromAssetFile(Context context, String source, String dest) {
@@ -212,6 +207,9 @@ public class FileManager {
             File outFile = new File(dest);
             OutputStream os = new FileOutputStream(outFile);
             copyFile(is, os);
+            outFile.setWritable(true);
+            outFile.setExecutable(true);
+            outFile.setReadable(true);
         } catch (IOException e) {
             Log.e("copyFile", e.toString());
         }

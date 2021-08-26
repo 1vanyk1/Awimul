@@ -7,6 +7,22 @@
 
 #include "windows2.h" // FIXED
 
+#ifndef _SYSTEMTIME_DEFINITION
+#define _SYSTEMTIME_DEFINITION
+
+typedef struct _SYSTEMTIME {
+    WORD wYear;
+    WORD wMonth;
+    WORD wDayOfWeek;
+    WORD wDay;
+    WORD wHour;
+    WORD wMinute;
+    WORD wSecond;
+    WORD wMilliseconds;
+} SYSTEMTIME;
+
+#endif //_SYSTEMTIME_DEFINITION
+
 #ifndef CONST
 #define CONST const
 #endif
@@ -23,8 +39,8 @@
 
 #define WINAPI
 
-#undef BOOL
-typedef int BOOL;
+//#undef BOOL
+//typedef int BOOL;
 
 /* BEGIN #include <winnt.h> */
 /* BEGIN <winerror.h> */
@@ -82,6 +98,15 @@ typedef BYTE BOOLEAN;
 #ifndef __int64
 #define __int64 long long
 #endif
+#ifndef __int32
+#define __int32 long
+#endif
+#ifndef __int16
+#define __int16 int
+#endif
+#ifndef __int8
+#define __int8 short
+#endif
 typedef unsigned __int64 UINT64;
 typedef __int64 INT64;
 /* END #include <basetsd.h> */
@@ -115,17 +140,6 @@ typedef __int64 INT64;
 #define WAIT_OBJECT_0 0
 #define INFINITE	0xFFFFFFFF
 
-typedef struct _SYSTEMTIME {
-    WORD wYear;
-    WORD wMonth;
-    WORD wDayOfWeek;
-    WORD wDay;
-    WORD wHour;
-    WORD wMinute;
-    WORD wSecond;
-    WORD wMilliseconds;
-} SYSTEMTIME;
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -152,7 +166,7 @@ DWORD WINAPI GetTickCount(VOID);
 #define CP_UTF8  65001
 
 /* #include <unknwn.h> */
-#include <basetyps.h>
+#include "basetyps.h"
 struct IEnumSTATPROPSTG;
 
 typedef struct  tagSTATPROPSTG {

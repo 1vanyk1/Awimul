@@ -151,7 +151,7 @@ public class XServerManager {
     }
 
     public void changeZOrder(int hwnd, int prev_hwnd, boolean isFirst) {
-        Window window = windowsHM.get(hwnd);
+        Window window = getWindow(hwnd);
         if (isFirst && (hwnd == focusedWindow.getHWND() || window.getOwnerHWND() == focusedWindow.getHWND())) {
             Window prew_window = getWindow(prev_hwnd);
             if (prew_window.getOwnerHWND() != hwnd && window.getParent().getHWND() != prev_hwnd) {

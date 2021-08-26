@@ -40,6 +40,7 @@ import com.vantacom.aarm.xserver.WM;
 import org.winehq.wine.WineIStream;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class WineService extends Service implements WineIStream {
     public static final int NOTIFY_ID = 1239132112;
@@ -235,16 +236,56 @@ public class WineService extends Service implements WineIStream {
         for (int i = 0; i < wineSettings.length; i += 2) {
             Log.i("WS/wineSettings", String.format("%s: %s", wineSettings[i], wineSettings[i + 1]));
         }
-//        WM wm = new WM();
-        File xserverDir = new File(activity.getFilesDir(), "X11");
+        WM wm = new WM();
+        File xserverDir = new File(activity.getFilesDir(), "tmp");
         xserverDir.mkdirs();
-        try {
-            new File(xserverDir, "X99").createNewFile();
-        } catch (Exception e) {
-            e.printStackTrace();
+//        try {
+//            new File(xserverDir, "X99").createNewFile();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        Log.e("123", xserverDir.getAbsolutePath());
+        File xkbDir = new File(activity.getFilesDir(), "xkb");
+        if (!xkbDir.exists()) {
+            FileManager.copyFromAssetFolder(activity, "xkb", xkbDir.getAbsolutePath());
         }
-//        wm.init(xserverDir.getAbsolutePath() + "/" + "X");
-        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
+        FileManager.copyFromAssetFolder(activity, "xkb", xkbDir.getAbsolutePath());
+        File compiledDir = new File(activity.getFilesDir(), "compiled");
+        compiledDir.mkdirs();
+        Thread xserverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                wm.init(xserverDir.getAbsolutePath() + "/" + "X", xserverDir.getAbsolutePath());
+            }
+        });
+        xserverThread.start();
+
+        Thread checkThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean isRunning = true;
+                while (isRunning) {
+                    try{
+                        Thread.sleep(1000);
+                        if (wm.checkXServerIsLoaded(xserverDir.getAbsolutePath())) {
+                            isRunning = false;
+//                            Thread.sleep(1000);
+                            wm.startWM(xserverDir.getAbsolutePath());
+                        } else {
+                            System.out.println("Loading...");
+                        }
+                    }
+                    catch(InterruptedException e){
+                        isRunning = false;
+                        System.out.println("Thread has been interrupted");
+                    }
+                }
+
+            }
+        });
+        checkThread.start();
+//        wm.init(xserverDir.getAbsolutePath() + "/" + "X", xserverDir.getAbsolutePath());
+//        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
     }
 
     @Override

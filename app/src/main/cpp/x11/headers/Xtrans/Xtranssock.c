@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <strings.h>
 
+#include "Xtrans.h"
+
+#include "Xtransutil.c"
+
 #define TRANS_CLIENT
 
 #ifdef XTHREADS
@@ -9,6 +13,11 @@
 #endif
 
 #ifndef WIN32
+
+#define TCPCONN
+#define UNIXCONN
+#define LOCALCONN
+#define TRANS_REOPEN
 
 #if defined(TCPCONN) || defined(UNIXCONN)
 #include <sys/socket.h>
@@ -134,22 +143,24 @@ static int TRANS(SocketINETClose) (XtransConnInfo ciptr);
 
 #ifdef UNIXCONN
 
+#define UNIX_PATH AWIMUL_FILES_PATH"/tmp/.null-unix/X"
+#define UNIX_DIR AWIMUL_FILES_PATH"/tmp/.null-unix"
 
 #if defined(X11_t)
-#define UNIX_PATH "/tmp/.X11-unix/X"
-#define UNIX_DIR "/tmp/.X11-unix"
+#define UNIX_PATH AWIMUL_FILES_PATH"/tmp/.X11-unix/X"
+#define UNIX_DIR AWIMUL_FILES_PATH"/tmp/.X11-unix"
 #endif /* X11_t */
 #if defined(XIM_t)
-#define UNIX_PATH "/tmp/.XIM-unix/XIM"
-#define UNIX_DIR "/tmp/.XIM-unix"
+#define UNIX_PATH AWIMUL_FILES_PATH"/tmp/.XIM-unix/XIM"
+#define UNIX_DIR AWIMUL_FILES_PATH"/tmp/.XIM-unix"
 #endif /* XIM_t */
 #if defined(FS_t) || defined(FONT_t)
-#define UNIX_PATH "/tmp/.font-unix/fs"
-#define UNIX_DIR "/tmp/.font-unix"
+#define UNIX_PATH AWIMUL_FILES_PATH"/tmp/.font-unix/fs"
+#define UNIX_DIR AWIMUL_FILES_PATH"/tmp/.font-unix"
 #endif /* FS_t || FONT_t */
 #if defined(ICE_t)
-#define UNIX_PATH "/tmp/.ICE-unix/"
-#define UNIX_DIR "/tmp/.ICE-unix"
+#define UNIX_PATH AWIMUL_FILES_PATH"/tmp/.ICE-unix/"
+#define UNIX_DIR AWIMUL_FILES_PATH"/tmp/.ICE-unix"
 #endif /* ICE_t */
 
 
@@ -329,7 +340,6 @@ TRANS(SocketOpen) (int i, int type)
         prmsg (1, "SocketOpen: malloc failed\n");
         return NULL;
     }
-
     if ((ciptr->fd = socket(Sockettrans2devtab[i].family, type,
                             Sockettrans2devtab[i].protocol)) < 0
 #ifndef WIN32

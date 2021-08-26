@@ -28,7 +28,6 @@ import com.vantacom.aarm.R;
 import com.vantacom.aarm.dialogs.ConfirmTurnOff;
 import com.vantacom.aarm.dialogs.HelpMenuDialog;
 import com.vantacom.aarm.dialogs.LoadingWineDialog;
-import com.vantacom.aarm.ipc.IPClib;
 import com.vantacom.aarm.managers.ConsoleManager;
 import com.vantacom.aarm.managers.PackageDBManager;
 import com.vantacom.aarm.managers.ProcessManager;
@@ -402,8 +401,6 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v.getId() == R.id.keyboard) {
-                IPClib ipc = new IPClib();
-                ipc.init(getFilesDir().getAbsolutePath() + "/armeabi-v7a/lib/wine/kernel32.dll.so");
                 sendSimpleMessage(WineService.TOGGLE_KEYBOARD);
             } else if (v.getId() == R.id.exit) {
                 ConfirmTurnOff dialog = new ConfirmTurnOff(this);

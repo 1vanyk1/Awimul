@@ -1,6 +1,8 @@
 #ifndef _XIMTRINT_H
 #define _XIMTRINT_H
 
+#define UNIXCONN
+
 #include "Ximint.h"
 
 typedef struct {

@@ -2,6 +2,8 @@
 #define _XTRANSINT_H_
 
 #define TRANS_CLIENT
+#define TRANS_SERVER
+#define TRANS_REOPEN
 
 /*
  * XTRANSDEBUG will enable the PRMSG() macros used in the X Transport
@@ -21,6 +23,8 @@
  * message.
  */
 
+#  define XTRANS_TRANSPORT_C
+
 #if !defined(XTRANSDEBUG) && defined(XTRANS_TRANSPORT_C)
 #  define XTRANSDEBUG 1
 #endif
@@ -30,6 +34,7 @@
 #endif
 
 #include "Xtrans.h"
+#include "../../../main_wm.h"
 
 #ifndef _X_UNUSED  /* Defined in Xfuncproto.h in xproto >= 7.0.22 */
 # define _X_UNUSED  /* */
@@ -72,9 +77,9 @@
 
 #include <stddef.h>
 
-#ifdef X11_t
+//#ifdef X11_t
 #define X_TCP_PORT	6000
-#endif
+//#endif
 
 #if XTRANS_SEND_FDS
 
@@ -87,129 +92,112 @@ struct _XtransConnFd {
 #endif
 
 struct _XtransConnInfo {
-    struct _Xtransport     *transptr;
-    int		index;
-    char	*priv;
-    int		flags;
-    int		fd;
-    char	*port;
-    int		family;
-    char	*addr;
-    int		addrlen;
-    char	*peeraddr;
-    int		peeraddrlen;
-    struct _XtransConnFd        *recv_fds;
-    struct _XtransConnFd        *send_fds;
+	struct _Xtransport     *transptr;
+	int		index;
+	char	*priv;
+	int		flags;
+	int		fd;
+	char	*port;
+	int		family;
+	char	*addr;
+	int		addrlen;
+	char	*peeraddr;
+	int		peeraddrlen;
+	struct _XtransConnFd        *recv_fds;
+	struct _XtransConnFd        *send_fds;
 };
 
 #define XTRANS_OPEN_COTS_CLIENT       1
 #define XTRANS_OPEN_COTS_SERVER       2
 
 typedef struct _Xtransport {
-    const char	*TransName;
-    int		flags;
+	const char	*TransName;
+	int		flags;
 
 #ifdef TRANS_CLIENT
 
-    XtransConnInfo (*OpenCOTSClient)(
-	struct _Xtransport *,	/* transport */
-	const char *,		/* protocol */
-	const char *,		/* host */
-	const char *		/* port */
-    );
+	XtransConnInfo (*OpenCOTSClient)(
+			struct _Xtransport *,	/* transport */
+			const char *,		/* protocol */
+			const char *,		/* host */
+			const char *		/* port */
+	);
 
 #endif /* TRANS_CLIENT */
+	const char **	nolisten;
+	XtransConnInfo (*OpenCOTSServer)(
+			struct _Xtransport *,	/* transport */
+			const char *,		/* protocol */
+			const char *,		/* host */
+			const char *		/* port */
+	);
 
-#ifdef TRANS_SERVER
-    const char **	nolisten;
-    XtransConnInfo (*OpenCOTSServer)(
-	struct _Xtransport *,	/* transport */
-	const char *,		/* protocol */
-	const char *,		/* host */
-	const char *		/* port */
-    );
-
-#endif /* TRANS_SERVER */
-
-#ifdef TRANS_REOPEN
-
-    XtransConnInfo (*ReopenCOTSServer)(
-	struct _Xtransport *,	/* transport */
-        int,			/* fd */
-        const char *		/* port */
-    );
-
-#endif /* TRANS_REOPEN */
+	XtransConnInfo (*ReopenCOTSServer)(
+			struct _Xtransport *,	/* transport */
+			int,			/* fd */
+			const char *		/* port */
+	);
 
 
-    int	(*SetOption)(
-            XtransConnInfo,		/* connection */
-            int,			/* option */
-            int			/* arg */
-    );
-
-#ifdef TRANS_SERVER
-    /* Flags */
+	int	(*SetOption)(
+			XtransConnInfo,		/* connection */
+			int,			/* option */
+			int			/* arg */
+	);
 # define ADDR_IN_USE_ALLOWED	1
 
-    int	(*CreateListener)(
-	XtransConnInfo,		/* connection */
-	const char *,		/* port */
-	unsigned int		/* flags */
-    );
+	int	(*CreateListener)(
+			XtransConnInfo,		/* connection */
+			const char *,		/* port */
+			unsigned int		/* flags */
+	);
 
-    int	(*ResetListener)(
-	XtransConnInfo		/* connection */
-    );
+	int	(*ResetListener)(
+			XtransConnInfo		/* connection */
+	);
 
-    XtransConnInfo (*Accept)(
-	XtransConnInfo,		/* connection */
-        int *			/* status */
-    );
+	XtransConnInfo (*Accept)(
+			XtransConnInfo,		/* connection */
+			int *			/* status */
+	);
 
-#endif /* TRANS_SERVER */
+	int	(*Connect)(
+			XtransConnInfo,		/* connection */
+			const char *,		/* host */
+			const char *		/* port */
+	);
 
-#ifdef TRANS_CLIENT
+	int	(*BytesReadable)(
+			XtransConnInfo,		/* connection */
+			BytesReadable_t *	/* pend */
+	);
 
-    int	(*Connect)(
-	XtransConnInfo,		/* connection */
-	const char *,		/* host */
-	const char *		/* port */
-    );
+	int	(*Read)(
+			XtransConnInfo,		/* connection */
+			char *,			/* buf */
+			int			/* size */
+	);
 
-#endif /* TRANS_CLIENT */
+	int	(*Write)(
+			XtransConnInfo,		/* connection */
+			char *,			/* buf */
+			int			/* size */
+	);
 
-    int	(*BytesReadable)(
-            XtransConnInfo,		/* connection */
-            BytesReadable_t *	/* pend */
-    );
+	int	(*Readv)(
+			XtransConnInfo,		/* connection */
+			struct iovec *,		/* buf */
+			int			/* size */
+	);
 
-    int	(*Read)(
-            XtransConnInfo,		/* connection */
-            char *,			/* buf */
-            int			/* size */
-    );
-
-    int	(*Write)(
-            XtransConnInfo,		/* connection */
-            char *,			/* buf */
-            int			/* size */
-    );
-
-    int	(*Readv)(
-            XtransConnInfo,		/* connection */
-            struct iovec *,		/* buf */
-            int			/* size */
-    );
-
-    int	(*Writev)(
-            XtransConnInfo,		/* connection */
-            struct iovec *,		/* buf */
-            int			/* size */
-    );
+	int	(*Writev)(
+			XtransConnInfo,		/* connection */
+			struct iovec *,		/* buf */
+			int			/* size */
+	);
 
 #if XTRANS_SEND_FDS
-    int (*SendFd)(
+	int (*SendFd)(
 	XtransConnInfo,		/* connection */
         int,                    /* fd */
         int                     /* do_close */
@@ -220,24 +208,24 @@ typedef struct _Xtransport {
     );
 #endif
 
-    int	(*Disconnect)(
-            XtransConnInfo		/* connection */
-    );
+	int	(*Disconnect)(
+			XtransConnInfo		/* connection */
+	);
 
-    int	(*Close)(
-            XtransConnInfo		/* connection */
-    );
+	int	(*Close)(
+			XtransConnInfo		/* connection */
+	);
 
-    int	(*CloseForCloning)(
-            XtransConnInfo		/* connection */
-    );
+	int	(*CloseForCloning)(
+			XtransConnInfo		/* connection */
+	);
 
 } Xtransport;
 
 
 typedef struct _Xtransport_table {
-    Xtransport	*transport;
-    int		transport_id;
+	Xtransport	*transport;
+	int		transport_id;
 } Xtransport_table;
 
 
@@ -303,7 +291,7 @@ static int TRANS(WriteV)(
 
 
 static int is_numeric (
-        const char *	/* str */
+    const char *	/* str */
 );
 
 #ifdef TRANS_SERVER
@@ -322,7 +310,6 @@ static int trans_mkdir (
  */
 
 #ifdef XTRANSDEBUG
-
 #include <stdarg.h>
 
 /*
@@ -330,7 +317,8 @@ static int trans_mkdir (
  * xtrans, we provide our own simple versions.
  */
 # if defined(XSERV_t) && defined(TRANS_SERVER)
-#  include "os.h"
+#  include "../os.h"
+
 # else
 static inline void _X_ATTRIBUTE_PRINTF(1, 0)
 VErrorF(const char *f, va_list args)
@@ -351,31 +339,33 @@ ErrorF(const char *f, ...)
 # endif /* xserver */
 #endif /* XTRANSDEBUG */
 
-static inline void  _X_ATTRIBUTE_PRINTF(2, 3)
-prmsg(int lvl, const char *f, ...)
-{
-#ifdef XTRANSDEBUG
-    va_list args;
+#define prmsg(lvl, ...) ALOGI(__VA_ARGS__)
 
-    va_start(args, f);
-    if (lvl <= XTRANSDEBUG) {
-        int saveerrno = errno;
-
-        ErrorF("%s", __xtransname);
-        VErrorF(f, args);
-
-# ifdef XTRANSDEBUGTIMESTAMP
-        {
-	    struct timeval tp;
-	    gettimeofday(&tp, 0);
-	    ErrorF("timestamp (ms): %d\n",
-		   tp.tv_sec * 1000 + tp.tv_usec / 1000);
-	}
-# endif
-        errno = saveerrno;
-    }
-    va_end(args);
-#endif /* XTRANSDEBUG */
-}
+//static inline void  _X_ATTRIBUTE_PRINTF(2, 3)
+//prmsg(int lvl, const char *f, ...)
+//{
+//#ifdef XTRANSDEBUG
+//	va_list args;
+//	va_list args1;
+//
+//    va_start(args, f);
+//    if (lvl <= XTRANSDEBUG) {
+//	int saveerrno = errno;
+//	ErrorF("%s", "_XTrans");
+//	VErrorF(f, args);
+//
+//# ifdef XTRANSDEBUGTIMESTAMP
+//	{
+//	    struct timeval tp;
+//	    gettimeofday(&tp, 0);
+//	    ErrorF("timestamp (ms): %d\n",
+//		   tp.tv_sec * 1000 + tp.tv_usec / 1000);
+//	}
+//# endif
+//	errno = saveerrno;
+//    }
+//    va_end(args);
+//#endif /* XTRANSDEBUG */
+//}
 
 #endif /* _XTRANSINT_H_ */

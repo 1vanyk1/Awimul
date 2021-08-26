@@ -1,0 +1,1 @@
+void ZLIB_INTERNAL inflate_fast(z_stream *strm, unsigned int start);

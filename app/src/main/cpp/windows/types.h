@@ -37,7 +37,6 @@ typedef int SRes;
 
 typedef int WRes;
 typedef void * HANDLE;
-#endif
 
 #ifndef RINOK
 #define RINOK(x) { int __result__ = (x); if (__result__ != 0) return __result__; }

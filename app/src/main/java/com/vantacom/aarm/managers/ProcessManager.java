@@ -2,8 +2,6 @@ package com.vantacom.aarm.managers;
 
 import android.util.Log;
 
-import com.vantacom.aarm.ipc.IPClib;
-
 import java.util.ArrayList;
 
 public class ProcessManager {
@@ -37,7 +35,6 @@ public class ProcessManager {
                 String[] processes = ConsoleManager.runCommandWithLog("ps").split("\n");
                 String[] process;
                 isPaused = true;
-                IPClib ipc = new IPClib();
                 for (int i = 1; i < processes.length; i++) {
                     process = processes[i].split("\\s+");
                     if (!process[name_pos].equals("com.vantacom.aarm") && !process[name_pos].equals("ps")) {

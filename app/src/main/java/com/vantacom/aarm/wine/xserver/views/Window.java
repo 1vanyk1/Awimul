@@ -226,7 +226,6 @@ public class Window {
             }
             this.windowRect = windowRect;
             this.clientRect = clientRect;
-
             if (this.parent != null) {
                 if (this.next_hwnd < 0) {
                     setZOrder(null, changeZOrder);

@@ -1,6 +1,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#define XIM_t 1
 #include <stdio.h>
 #include "../x11/headers/xatom.h"
 #include "../x11/headers/xmd.h"

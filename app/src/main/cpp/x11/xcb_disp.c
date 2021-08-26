@@ -72,12 +72,10 @@ int _XConnectXCB(Display *dpy, _Xconst char *display, int *screenp)
 
     dpy->xcb = Xcalloc(1, sizeof(_X11XCBPrivate));
     if(!dpy->xcb) {
-        ALOGE("XCB 1");
         return 0;
     }
 
     if(!xcb_parse_display(display, &host, &n, screenp)) {
-        ALOGE("XCB 2");
         return 0;
     }
     /* host and n are unused, but xcb_parse_display requires them */
@@ -98,12 +96,10 @@ int _XConnectXCB(Display *dpy, _Xconst char *display, int *screenp)
     dpy->xcb->event_notify = xcondition_malloc();
     dpy->xcb->reply_notify = xcondition_malloc();
     if (!dpy->xcb->event_notify || !dpy->xcb->reply_notify) {
-        ALOGE("XCB 3");
         return 0;
     }
     xcondition_init(dpy->xcb->event_notify);
     xcondition_init(dpy->xcb->reply_notify);
-    ALOGE("XCB 4");
     return !xcb_connection_has_error(c);
 }
 

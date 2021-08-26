@@ -7,16 +7,10 @@
 #include "headers/xresource.h"
 #include <stdio.h>
 #include "Xintconn.h"
+#include "../xcb/xcb.h"
 
 
 #include <android/log.h>
-
-#define LOG_TAG "WM"
-#define ALOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
-#define ALOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define ALOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
-#define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 
 #ifdef XKB
@@ -79,7 +73,6 @@ XOpenDisplay (
     if (display == NULL || *display == '\0') {
         if ((display_name = getenv("DISPLAY")) == NULL) {
             /* Oops! No DISPLAY environment variable - error. */
-            ALOGE("1");
             return(NULL);
         }
     }
@@ -99,13 +92,11 @@ XOpenDisplay (
  * Attempt to allocate a display structure. Return NULL if allocation fails.
  */
     if ((dpy = Xcalloc(1, sizeof(Display))) == NULL) {
-        ALOGE("2");
         return(NULL);
     }
 
     if ((dpy->display_name = strdup(display_name)) == NULL) {
         OutOfMemory(dpy);
-        ALOGE("3");
         return(NULL);
     }
 
@@ -116,7 +107,6 @@ XOpenDisplay (
 
     if(!_XConnectXCB(dpy, display, &iscreen)) {
         OutOfMemory(dpy);
-        ALOGE("4");
         return NULL;
     }
 
@@ -197,13 +187,11 @@ XOpenDisplay (
     /* Initialize the display lock */
     if (InitDisplayLock(dpy) != 0) {
         OutOfMemory (dpy);
-        ALOGE("5");
         return(NULL);
     }
 
     if (!_XPollfdCacheInit(dpy)) {
         OutOfMemory (dpy);
-        ALOGE("6");
         return(NULL);
     }
 
@@ -230,7 +218,6 @@ XOpenDisplay (
 
     if ((dpy->bufptr = dpy->buffer = Xcalloc(1, conn_buf_size)) == NULL) {
         OutOfMemory (dpy);
-        ALOGE("7");
         return(NULL);
     }
     dpy->xcb->real_bufmax = dpy->buffer + conn_buf_size;
@@ -243,7 +230,6 @@ XOpenDisplay (
     /* Set up free-function record */
     if ((dpy->free_funcs = Xcalloc(1, sizeof(_XFreeFuncRec))) == NULL) {
         OutOfMemory (dpy);
-        ALOGE("8");
         return(NULL);
     }
 
@@ -263,7 +249,6 @@ XOpenDisplay (
     if (setuplength < usedbytes ) {
         fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
         OutOfMemory(dpy);
-        ALOGE("9");
         return (NULL);
     }
 
@@ -293,7 +278,6 @@ XOpenDisplay (
         fprintf (stderr, "Xlib: connection to \"%s\" invalid setup\n",
                  dpy->display_name);
         OutOfMemory(dpy);
-        ALOGE("10");
         return (NULL);
     }
 
@@ -309,14 +293,12 @@ XOpenDisplay (
     /* Check for a sane vendor string length */
     if (u.setup->nbytesVendor > 256) {
         OutOfMemory(dpy);
-        ALOGE("11");
         return (NULL);
     }
 
     dpy->vendor = Xmalloc(u.setup->nbytesVendor + 1);
     if (dpy->vendor == NULL) {
         OutOfMemory(dpy);
-        ALOGE("12");
         return (NULL);
     }
     vendorlen = u.setup->nbytesVendor;
@@ -328,7 +310,6 @@ XOpenDisplay (
     if (setuplength < usedbytes) {
         fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
         OutOfMemory(dpy);
-        ALOGE("13");
         return (NULL);
     }
 
@@ -344,7 +325,6 @@ XOpenDisplay (
     dpy->pixmap_format = Xcalloc(dpy->nformats, sizeof(ScreenFormat));
     if (dpy->pixmap_format == NULL) {
         OutOfMemory (dpy);
-        ALOGE("14");
         return(NULL);
     }
 /*
@@ -355,7 +335,6 @@ XOpenDisplay (
     if (setuplength < usedbytes) {
         fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
         OutOfMemory (dpy);
-        ALOGE("15");
         return(NULL);
     }
 
@@ -374,7 +353,6 @@ XOpenDisplay (
     dpy->screens = Xcalloc(dpy->nscreens, sizeof(Screen));
     if (dpy->screens == NULL) {
         OutOfMemory (dpy);
-        ALOGE("16");
         return(NULL);
     }
 
@@ -389,7 +367,6 @@ XOpenDisplay (
         if (setuplength < usedbytes) {
             fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
             OutOfMemory (dpy);
-            ALOGE("17");
             return(NULL);
         }
 
@@ -418,7 +395,6 @@ XOpenDisplay (
         sp->depths = Xcalloc(sp->ndepths, sizeof(Depth));
         if (sp->depths == NULL) {
             OutOfMemory (dpy);
-            ALOGE("18");
             return(NULL);
         }
         /*
@@ -431,7 +407,6 @@ XOpenDisplay (
             if (setuplength < usedbytes) {
                 fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
                 OutOfMemory (dpy);
-                ALOGE("19");
                 return(NULL);
             }
 
@@ -442,7 +417,6 @@ XOpenDisplay (
                 dp->visuals = Xcalloc(dp->nvisuals, sizeof(Visual));
                 if (dp->visuals == NULL) {
                     OutOfMemory (dpy);
-                    ALOGE("20");
                     return(NULL);
                 }
                 for (k = 0; k < dp->nvisuals; k++) {
@@ -452,7 +426,6 @@ XOpenDisplay (
                     if (setuplength < usedbytes) {
                         fprintf (stderr, "Xlib: Broken initial reply: Too short (%ld)\n", setuplength);
                         OutOfMemory (dpy);
-                        ALOGE("21");
                         return(NULL);
                     }
 
@@ -486,7 +459,6 @@ XOpenDisplay (
                         "parsed: %ld, message: %ld\n",
                 usedbytes, setuplength);
         OutOfMemory(dpy);
-        ALOGE("22");
         return(NULL);
     }
 
@@ -499,7 +471,6 @@ XOpenDisplay (
  */
     if (iscreen >= dpy->nscreens) {
         OutOfMemory(dpy);
-        ALOGE("23");
         return(NULL);
     }
 
@@ -522,7 +493,6 @@ XOpenDisplay (
                                          GCForeground|GCBackground,
                                          &values)) == NULL) {
             OutOfMemory(dpy);
-            ALOGE("24");
             return (NULL);
         }
     }

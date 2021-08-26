@@ -11,6 +11,8 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include "Xtransint.h"
+#include "Xtransutil.c"
+#include "../../../impl/stropts.h"
 
 /*
  * The local transports should be treated the same as a UNIX domain socket
@@ -24,6 +26,11 @@
 #include <sys/un.h>
 #endif
 
+
+# define SVR4
+# define TRANS_CLIENT
+# define TRANS_SERVER
+# define TRANS_REOPEN
 
 /* Types of local connections supported:
  *  - PTS
@@ -141,25 +148,27 @@ TRANS(FillAddrInfo)(XtransConnInfo ciptr,
 
 
 #ifndef X11_t
-#define X_STREAMS_DIR	"/dev/X"
+#define X_STREAMS_DIR	AWIMUL_FILES_PATH"/dev/X"
 #else
-#define X_STREAMS_DIR	"/tmp/.X11-pipe"
+#define X_STREAMS_DIR	AWIMUL_FILES_PATH"/tmp/.X11-pipe"
 #endif
 
 #define DEV_PTMX	"/dev/ptmx"
 
+#define NAMEDNODENAME AWIMUL_FILES_PATH"/tmp/.XIM-pipe/XIM"
+
 #if defined(X11_t)
 
-#define NAMEDNODENAME "/tmp/.X11-pipe/X"
+#define NAMEDNODENAME AWIMUL_FILES_PATH"/tmp/.X11-pipe/X"
 #endif
 #if defined(XIM_t)
-#define NAMEDNODENAME "/tmp/.XIM-pipe/XIM"
+#define NAMEDNODENAME AWIMUL_FILES_PATH"/tmp/.XIM-pipe/XIM"
 #endif
 #if defined(FS_t) || defined (FONT_t)
-#define NAMEDNODENAME	"/tmp/.font-pipe/fs"
+#define NAMEDNODENAME	AWIMUL_FILES_PATH"/tmp/.font-pipe/fs"
 #endif
 #if defined(ICE_t)
-#define NAMEDNODENAME	"/tmp/.ICE-pipe/"
+#define NAMEDNODENAME	AWIMUL_FILES_PATH"/tmp/.ICE-pipe/"
 #endif
 
 
@@ -1277,26 +1286,26 @@ static const char * local_aliases[] = {
 
 Xtransport	TRANS(LocalFuncs) = {
 /* Local Interface */
-"local",
-TRANS_ALIAS | TRANS_LOCAL,
+        "local",
+        TRANS_ALIAS | TRANS_LOCAL,
 #ifdef TRANS_CLIENT
-TRANS(LocalOpenCOTSClient),
+        TRANS(LocalOpenCOTSClient),
 #endif /* TRANS_CLIENT */
 #ifdef TRANS_SERVER
-local_aliases,
+        local_aliases,
 	TRANS(LocalOpenCOTSServer),
 #endif /* TRANS_SERVER */
 #ifdef TRANS_REOPEN
-TRANS(LocalReopenCOTSServer),
+        TRANS(LocalReopenCOTSServer),
 #endif
-TRANS(LocalSetOption),
+        TRANS(LocalSetOption),
 #ifdef TRANS_SERVER
-TRANS(LocalCreateListener),
+        TRANS(LocalCreateListener),
 	TRANS(LocalResetListener),
 	TRANS(LocalAccept),
 #endif /* TRANS_SERVER */
 #ifdef TRANS_CLIENT
-TRANS(LocalConnect),
+        TRANS(LocalConnect),
 #endif /* TRANS_CLIENT */
         TRANS(LocalBytesReadable),
         TRANS(LocalRead),
@@ -1304,7 +1313,7 @@ TRANS(LocalConnect),
         TRANS(LocalReadv),
         TRANS(LocalWritev),
 #if XTRANS_SEND_FDS
-TRANS(LocalSendFdInvalid),
+        TRANS(LocalSendFdInvalid),
 	TRANS(LocalRecvFdInvalid),
 #endif
         TRANS(LocalDisconnect),

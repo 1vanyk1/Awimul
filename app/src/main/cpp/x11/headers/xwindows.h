@@ -4,6 +4,10 @@
 # undef XFree86Server
 #endif
 
+typedef int wBOOL;
+typedef int WINBOOL;
+
+
 #define NOMINMAX
 #define BOOL wBOOL
 #define INT32 wINT32
@@ -12,7 +16,7 @@
 #define ATOM wATOM
 #define BYTE wBYTE
 #define FreeResource wFreeResource
-#include "windows/windows.h"
+#include "../../windows/windows.h"
 #undef NOMINMAX
 #undef Status
 #define Status int

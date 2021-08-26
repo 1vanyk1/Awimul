@@ -1,0 +1,3 @@
+#define MESA_GIT_SHA1 ""
+#define PACKAGE_VERSION ""
+#define PACKAGE_BUGREPORT ""

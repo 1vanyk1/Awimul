@@ -8,7 +8,7 @@
 #include "headers/xfuncproto.h"
 
 #ifndef HAVE_REALLOCARRAY
-extern _X_HIDDEN void *xreallocarray(void *optr, size_t nmemb, size_t size);
+extern void *xreallocarray(void *optr, size_t nmemb, size_t size);
 # define reallocarray(ptr, n, size)	xreallocarray((ptr), (size_t)(n), (size_t)(size))
 #endif
 

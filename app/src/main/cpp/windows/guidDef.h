@@ -11,6 +11,15 @@ typedef struct {
     unsigned char Data4[8];
 } GUID;
 
+typedef HANDLE HDWP;
+
+typedef GUID FMTID;
+
+#ifndef _REFFMTID_DEFINED
+#define _REFFMTID_DEFINED
+#define REFFMTID const IID &
+#endif
+
 #ifdef __cplusplus
 #define REFGUID const GUID &
 #else

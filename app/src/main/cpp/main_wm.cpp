@@ -3,14 +3,18 @@
 #include <cstdlib>
 #include <string>
 #include "window_manager.h"
+#include "x11/headers/dix.h"
+#include "impl/sys/shm.h"
 
-#define ALOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
-#define ALOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define ALOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
-#define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+extern "C" {
+int main_stubmain(int, char**, char**);
+};
 
-char *xserver_loc = "/tmp/.X11-unix/X";
+char *xserver_loc = "/tmp/.X11-unix/X0";
+
+char *tmp_loc = "/data/data/com.vantacom.aarm/files/tmp";
+
+static const char *classPathName = "com/vantacom/aarm/xserver/WM";
 
 using ::std::unique_ptr;
 
@@ -28,25 +32,63 @@ const char* ConvertJString(JNIEnv* env, jstring str)
     return strChars;
 }
 
-jint start_wm(JNIEnv* env, jobject thiz, jstring jstring) {
+jboolean checkXServerIsLoaded(JNIEnv* env, jobject thiz, jstring tmp) {
+    char* display_str;
+    tmp_loc = const_cast<char *>(ConvertJString(env, tmp));
+    display_str = static_cast<char *>(malloc(strlen(":") + strlen(XSERVER_PORT) + 1));
+    strcpy(display_str, ":");
+    strcat(display_str, XSERVER_PORT);
+    const char* display_c_str = display_str;
+    Display* display = XOpenDisplay(display_c_str);
+    if (display == nullptr) {
+        ALOGE("Failed to open X display %s", XDisplayName(display_c_str));
+        return 0;
+    }
+    ALOGE("Opened X display %s", XDisplayName(display_c_str));
+    XCloseDisplay(display);
+    return 1;
+}
 
-    xserver_loc = const_cast<char *>(ConvertJString(env, jstring));
+jint start_xserver(JNIEnv* env, jobject thiz, jstring jstring1, jstring tmp) {
+    tmp_loc = const_cast<char *>(ConvertJString(env, tmp));
+    ALOGE("%s", tmp_loc);
     char* display_str;
     display_str = static_cast<char *>(malloc(strlen(":") + strlen(XSERVER_PORT) + 1));
     strcpy(display_str, ":");
     strcat(display_str, XSERVER_PORT);
-
     setenv("DISPLAY", display_str,1);
+    char *argv[] {"main_stubmain", display_str, "-screen", "0", "800x600x16"};
+    char *envp[] {};
+    ALOGE("1");
+    main_stubmain(5, argv, envp);
+    ALOGE("1");
+    xserver_loc = const_cast<char *>(ConvertJString(env, jstring1));
+
+//    unique_ptr<WindowManager> window_manager = WindowManager::Create();
+//    if (!window_manager) {
+//        ALOGE("Failed to initialize window manager.");
+//        return EXIT_FAILURE;
+//    }
+//    ALOGE("EXIT_SUCCESS");
+//    window_manager->Run();
+
+    return EXIT_SUCCESS;
+}
+
+
+jint start_wm(JNIEnv* env, jobject thiz, jstring jstring1) {
+    xserver_loc = const_cast<char *>(ConvertJString(env, jstring1));
+
     unique_ptr<WindowManager> window_manager = WindowManager::Create();
     if (!window_manager) {
         ALOGE("Failed to initialize window manager.");
         return EXIT_FAILURE;
     }
-    ALOGE("EXIT_SUCCESS");
     window_manager->Run();
-
+    ALOGE("EXIT_SUCCESS");
     return EXIT_SUCCESS;
 }
+
 
 typedef union {
     JNIEnv* env;
@@ -54,10 +96,10 @@ typedef union {
 } UnionJNIEnvToVoid;
 
 static JNINativeMethod methods[] = {
-        {"init", "(Ljava/lang/String;)I", (void*)start_wm },
+        {"init", "(Ljava/lang/String;Ljava/lang/String;)I", (void*)start_xserver },
+        {"checkXServerIsLoaded", "(Ljava/lang/String;)Z", (void*)checkXServerIsLoaded },
+        {"startWM", "(Ljava/lang/String;)I", (void*)start_wm },
 };
-
-static const char *classPathName = "com/vantacom/aarm/xserver/WM";
 
 static int registerNativeMethods(JNIEnv* env, const char* className, JNINativeMethod* gMethods, int numMethods)
 {

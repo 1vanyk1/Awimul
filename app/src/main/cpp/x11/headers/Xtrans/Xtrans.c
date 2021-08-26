@@ -19,8 +19,6 @@
  * Always add to the end of the list.
  */
 
-#define TRANS_CLIENT
-
 #define TRANS_TLI_INET_INDEX		1
 #define TRANS_TLI_TCP_INDEX		2
 #define TRANS_TLI_TLI_INDEX		3
@@ -424,9 +422,6 @@ TRANS(Open) (int type, const char *address)
     return ciptr;
 }
 
-
-#ifdef TRANS_REOPEN
-
 /*
  * We might want to create an XtransConnInfo object based on a previously
  * opened connection.  For example, the font server may clone itself and
@@ -492,8 +487,6 @@ TRANS(Reopen) (int type, int trans_id, int fd, const char *port)
     return ciptr;
 }
 
-#endif /* TRANS_REOPEN */
-
 
 
 /*
@@ -527,9 +520,6 @@ TRANS(OpenCOTSServer) (const char *address)
 
 #endif /* TRANS_SERVER */
 
-
-#ifdef TRANS_REOPEN
-
 XtransConnInfo
 TRANS(ReopenCOTSServer) (int trans_id, int fd, const char *port)
 
@@ -559,9 +549,6 @@ TRANS(GetReopenInfo) (XtransConnInfo ciptr,
 
     return 0;
 }
-
-#endif /* TRANS_REOPEN */
-
 
 int
 TRANS(SetOption) (XtransConnInfo ciptr, int option, int arg)
@@ -594,18 +581,18 @@ TRANS(SetOption) (XtransConnInfo ciptr, int option, int arg)
 
 #if defined(O_NONBLOCK)
                     ret = fcntl (fd, F_GETFL, 0);
-	    if (ret != -1)
-		ret = fcntl (fd, F_SETFL, ret | O_NONBLOCK);
+                    if (ret != -1)
+                        ret = fcntl (fd, F_SETFL, ret | O_NONBLOCK);
 #else
-#ifdef FIOSNBIO
-                    {
+                    #ifdef FIOSNBIO
+	{
 	    int arg;
 	    arg = 1;
 	    ret = ioctl (fd, FIOSNBIO, &arg);
 	}
 #else
 #if defined(WIN32)
-                    {
+	{
 #ifdef WIN32
 	    u_long arg;
 #else
@@ -617,11 +604,11 @@ TRANS(SetOption) (XtransConnInfo ciptr, int option, int arg)
 	    ret = ioctl (fd, FIONBIO, &arg);
 	}
 #else
-                    ret = fcntl (fd, F_GETFL, 0);
+	    ret = fcntl (fd, F_GETFL, 0);
 #ifdef FNDELAY
-                    ret = fcntl (fd, F_SETFL, ret | FNDELAY);
+	    ret = fcntl (fd, F_SETFL, ret | FNDELAY);
 #else
-                    ret = fcntl (fd, F_SETFL, ret | O_NDELAY);
+	    ret = fcntl (fd, F_SETFL, ret | O_NDELAY);
 #endif
 #endif /* AIXV3  || uniosu */
 #endif /* FIOSNBIO */
@@ -634,10 +621,10 @@ TRANS(SetOption) (XtransConnInfo ciptr, int option, int arg)
             break;
         case TRANS_CLOSEONEXEC:
 #ifdef F_SETFD
-            #ifdef FD_CLOEXEC
-	ret = fcntl (fd, F_SETFD, FD_CLOEXEC);
+#ifdef FD_CLOEXEC
+            ret = fcntl (fd, F_SETFD, FD_CLOEXEC);
 #else
-	ret = fcntl (fd, F_SETFD, 1);
+            ret = fcntl (fd, F_SETFD, 1);
 #endif /* FD_CLOEXEC */
 #endif /* F_SETFD */
             break;
@@ -795,9 +782,9 @@ TRANS(Connect) (XtransConnInfo ciptr, const char *address)
 
     if (TRANS(ParseAddress) (address, &protocol, &host, &port) == 0)
     {
-	prmsg (1,"Connect: Unable to Parse address %s\n",
-	       address);
-	return -1;
+        prmsg (1,"Connect: Unable to Parse address %s\n",
+               address);
+        return -1;
     }
 
 #ifdef HAVE_LAUNCHD
@@ -806,11 +793,11 @@ TRANS(Connect) (XtransConnInfo ciptr, const char *address)
 
     if (!port || !*port)
     {
-	prmsg (1,"Connect: Missing port specification in %s\n",
-	      address);
-	if (protocol) free (protocol);
-	if (host) free (host);
-	return -1;
+        prmsg (1,"Connect: Missing port specification in %s\n",
+               address);
+        if (protocol) free (protocol);
+        if (host) free (host);
+        return -1;
     }
 
     ret = ciptr->transptr->Connect (ciptr, host, port);

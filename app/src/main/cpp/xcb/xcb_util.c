@@ -28,6 +28,7 @@
 #include "xcbext.h"
 #include "xcbint.h"
 #include "../main_wm.h"
+#include "../x11/headers/Xprintf.h"
 
 #if defined(HAVE_TSOL_LABEL_H) && defined(HAVE_IS_SYSTEM_LABELED)
 # include <tsol/label.h>
@@ -37,15 +38,6 @@
 #ifdef HAVE_LAUNCHD
 #include <sys/stat.h>
 #endif
-
-#include <android/log.h>
-
-#define LOG_TAG "xcb_util"
-#define ALOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
-#define ALOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define ALOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
-#define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 
 int xcb_popcount(uint32_t mask)
@@ -137,7 +129,6 @@ static int _xcb_parse_display(const char *name, char **host, char **protocol,
 #endif
 
     slash = strrchr(name, '/');
-
     if (slash) {
         len = slash - name;
         if (protocol) {
@@ -208,22 +199,23 @@ static int _xcb_open_abstract(char *protocol, const char *file, size_t filelen);
 #endif
 
 #include <string.h>
+#include <dirent.h>
 
-extern char *xserver_loc;
+extern char *tmp_loc;
 
 static int _xcb_open(const char *host, char *protocol, const int display)
 {
     int fd;
-//#ifdef __hpux
-//    static const char unix_base[] = "/usr/spool/sockets/X11/";
-//#else
-//    static const char unix_base[] = get_xserver_loc();
-//#endif
-    const char *base = xserver_loc;
+#ifdef __hpux
+    static const char unix_base[] = "/usr/spool/sockets/X11/";
+#else
+    static const char unix_base[] = "/.X11-unix/X";
+#endif
+    char *base;
+    Xasprintf(&base, "%s%s", tmp_loc, unix_base);
     size_t filelen;
     char *file = NULL;
     int actual_filelen;
-
     /* If protocol or host is "unix", fall through to Unix socket code below */
     if ((!protocol || (strcmp("unix",protocol) != 0)) &&
         (*host != '\0') && (strcmp("unix",host) != 0))
@@ -262,7 +254,6 @@ static int _xcb_open(const char *host, char *protocol, const int display)
         filelen = strlen(base) + 1 + sizeof(display) * 3 + 1;
         file = malloc(filelen);
         if(file == NULL) {
-            ALOGE("11");
             return -1;
         }
 
@@ -273,7 +264,6 @@ static int _xcb_open(const char *host, char *protocol, const int display)
     if(actual_filelen < 0)
     {
         free(file);
-        ALOGE("12");
         return -1;
     }
     /* snprintf may truncate the file */
@@ -289,7 +279,6 @@ static int _xcb_open(const char *host, char *protocol, const int display)
 #endif
     fd = _xcb_open_unix(protocol, file);
     free(file);
-    ALOGE("13 %d", fd);
     if (fd < 0 && !protocol && *host == '\0') {
         unsigned short port = X_TCP_PORT + display;
         fd = _xcb_open_tcp(host, protocol, port);
@@ -327,7 +316,6 @@ static int _xcb_do_connect(int fd, const struct sockaddr* addr, int addrlen) {
 
     setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on));
     setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &on, sizeof(on));
-
     return connect(fd, addr, addrlen);
 }
 
@@ -345,8 +333,9 @@ static int _xcb_open_tcp(const char *host, char *protocol, const unsigned short 
         #ifdef AF_INET6
         && strcmp("inet6",protocol)
 #endif
-            )
+            ) {
         return -1;
+    }
 
     if (*host == '\0')
         host = "localhost";
@@ -425,7 +414,6 @@ static int _xcb_open_unix(char *protocol, const char *file)
     int val;
 
     if (protocol && strcmp("unix",protocol)) {
-        ALOGE("unix 1");
         return -1;
     }
 
@@ -436,7 +424,6 @@ static int _xcb_open_unix(char *protocol, const char *file)
 #endif
     fd = _xcb_socket(AF_UNIX, SOCK_STREAM, 0);
     if(fd == -1) {
-        ALOGE("unix 2");
         return -1;
     }
     if(getsockopt(fd, SOL_SOCKET, SO_SNDBUF, &val, &len) == 0 && val < 64 * 1024)
@@ -446,7 +433,6 @@ static int _xcb_open_unix(char *protocol, const char *file)
     }
     if(connect(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
         close(fd);
-        ALOGE("unix 3, %s", addr.sun_path);
         return -1;
     }
     return fd;
@@ -492,15 +478,12 @@ xcb_connection_t *xcb_connect_to_display_with_auth_info(const char *displayname,
     char *protocol = NULL;
     xcb_auth_info_t ourauth;
     xcb_connection_t *c;
-
     int parsed = _xcb_parse_display(displayname, &host, &protocol, &display, screenp);
 
     if(!parsed) {
-        ALOGE("1");
         c = _xcb_conn_ret_error(XCB_CONN_CLOSED_PARSE_ERR);
         goto out;
     }
-
 #ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -512,14 +495,12 @@ xcb_connection_t *xcb_connect_to_display_with_auth_info(const char *displayname,
     fd = _xcb_open(host, protocol, display);
 
     if(fd == -1) {
-        ALOGE("2");
         c = _xcb_conn_ret_error(XCB_CONN_ERROR);
 #ifdef _WIN32
         WSACleanup();
 #endif
         goto out;
     }
-
     if(auth) {
         c = xcb_connect_to_fd(fd, auth);
         goto out;
@@ -533,14 +514,11 @@ xcb_connection_t *xcb_connect_to_display_with_auth_info(const char *displayname,
     }
     else
         c = xcb_connect_to_fd(fd, 0);
-
     if(c->has_error)
         goto out;
-
     /* Make sure requested screen number is in bounds for this server */
     if((screenp != NULL) && (*screenp >= (int) c->setup->roots_len)) {
         xcb_disconnect(c);
-        ALOGE("3");
         c = _xcb_conn_ret_error(XCB_CONN_CLOSED_INVALID_SCREEN);
         goto out;
     }

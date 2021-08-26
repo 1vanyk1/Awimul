@@ -1,0 +1,2907 @@
+///* Automatically generated from gl.xml - DO NOT EDIT */
+//
+//void glCullFace(GLenum mode_)
+//{
+//  typedef void (* PFNGLCULLFACEPROC)( GLenum mode_);
+//  RESOLVE(PFNGLCULLFACEPROC, "glCullFace");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glFrontFace(GLenum mode_)
+//{
+//  typedef void (* PFNGLFRONTFACEPROC)( GLenum mode_);
+//  RESOLVE(PFNGLFRONTFACEPROC, "glFrontFace");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glHint(GLenum target_, GLenum mode_)
+//{
+//  typedef void (* PFNGLHINTPROC)( GLenum target_,  GLenum mode_);
+//  RESOLVE(PFNGLHINTPROC, "glHint");
+//  RESOLVED_PROC(target_, mode_ );
+//}
+//
+//void glLineWidth(GLfloat width_)
+//{
+//  typedef void (* PFNGLLINEWIDTHPROC)( GLfloat width_);
+//  RESOLVE(PFNGLLINEWIDTHPROC, "glLineWidth");
+//  RESOLVED_PROC(width_ );
+//}
+//
+//void glPointSize(GLfloat size_)
+//{
+//  typedef void (* PFNGLPOINTSIZEPROC)( GLfloat size_);
+//  RESOLVE(PFNGLPOINTSIZEPROC, "glPointSize");
+//  RESOLVED_PROC(size_ );
+//}
+//
+//void glPolygonMode(GLenum face_, GLenum mode_)
+//{
+//  typedef void (* PFNGLPOLYGONMODEPROC)( GLenum face_,  GLenum mode_);
+//  RESOLVE(PFNGLPOLYGONMODEPROC, "glPolygonMode");
+//  RESOLVED_PROC(face_, mode_ );
+//}
+//
+//void glScissor(GLint x_, GLint y_, GLsizei width_, GLsizei height_)
+//{
+//  typedef void (* PFNGLSCISSORPROC)( GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_);
+//  RESOLVE(PFNGLSCISSORPROC, "glScissor");
+//  RESOLVED_PROC(x_, y_, width_, height_ );
+//}
+//
+//void glTexParameterf(GLenum target_, GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLTEXPARAMETERFPROC)( GLenum target_,  GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLTEXPARAMETERFPROC, "glTexParameterf");
+//  RESOLVED_PROC(target_, pname_, param_ );
+//}
+//
+//void glTexParameterfv(GLenum target_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLTEXPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLTEXPARAMETERFVPROC, "glTexParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glTexParameteri(GLenum target_, GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLTEXPARAMETERIPROC)( GLenum target_,  GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLTEXPARAMETERIPROC, "glTexParameteri");
+//  RESOLVED_PROC(target_, pname_, param_ );
+//}
+//
+//void glTexParameteriv(GLenum target_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLTEXPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLTEXPARAMETERIVPROC, "glTexParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glTexImage1D(GLenum target_, GLint level_, GLint internalformat_, GLsizei width_, GLint border_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXIMAGE1DPROC)( GLenum target_,  GLint level_,  GLint internalformat_,  GLsizei width_,  GLint border_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXIMAGE1DPROC, "glTexImage1D");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, border_, format_, type_, pixels_ );
+//}
+//
+//void glTexImage2D(GLenum target_, GLint level_, GLint internalformat_, GLsizei width_, GLsizei height_, GLint border_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXIMAGE2DPROC)( GLenum target_,  GLint level_,  GLint internalformat_,  GLsizei width_,  GLsizei height_,  GLint border_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXIMAGE2DPROC, "glTexImage2D");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, height_, border_, format_, type_, pixels_ );
+//}
+//
+//void glDrawBuffer(GLenum buf_)
+//{
+//  typedef void (* PFNGLDRAWBUFFERPROC)( GLenum buf_);
+//  RESOLVE(PFNGLDRAWBUFFERPROC, "glDrawBuffer");
+//  RESOLVED_PROC(buf_ );
+//}
+//
+//void glClear(GLbitfield mask_)
+//{
+//  typedef void (* PFNGLCLEARPROC)( GLbitfield mask_);
+//  RESOLVE(PFNGLCLEARPROC, "glClear");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glClearColor(GLfloat red_, GLfloat green_, GLfloat blue_, GLfloat alpha_)
+//{
+//  typedef void (* PFNGLCLEARCOLORPROC)( GLfloat red_,  GLfloat green_,  GLfloat blue_,  GLfloat alpha_);
+//  RESOLVE(PFNGLCLEARCOLORPROC, "glClearColor");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glClearStencil(GLint s_)
+//{
+//  typedef void (* PFNGLCLEARSTENCILPROC)( GLint s_);
+//  RESOLVE(PFNGLCLEARSTENCILPROC, "glClearStencil");
+//  RESOLVED_PROC(s_ );
+//}
+//
+//void glClearDepth(GLdouble depth_)
+//{
+//  typedef void (* PFNGLCLEARDEPTHPROC)( GLdouble depth_);
+//  RESOLVE(PFNGLCLEARDEPTHPROC, "glClearDepth");
+//  RESOLVED_PROC(depth_ );
+//}
+//
+//void glStencilMask(GLuint mask_)
+//{
+//  typedef void (* PFNGLSTENCILMASKPROC)( GLuint mask_);
+//  RESOLVE(PFNGLSTENCILMASKPROC, "glStencilMask");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glColorMask(GLboolean red_, GLboolean green_, GLboolean blue_, GLboolean alpha_)
+//{
+//  typedef void (* PFNGLCOLORMASKPROC)( GLboolean red_,  GLboolean green_,  GLboolean blue_,  GLboolean alpha_);
+//  RESOLVE(PFNGLCOLORMASKPROC, "glColorMask");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glDepthMask(GLboolean flag_)
+//{
+//  typedef void (* PFNGLDEPTHMASKPROC)( GLboolean flag_);
+//  RESOLVE(PFNGLDEPTHMASKPROC, "glDepthMask");
+//  RESOLVED_PROC(flag_ );
+//}
+//
+//void glDisable(GLenum cap_)
+//{
+//  typedef void (* PFNGLDISABLEPROC)( GLenum cap_);
+//  RESOLVE(PFNGLDISABLEPROC, "glDisable");
+//  RESOLVED_PROC(cap_ );
+//}
+//
+//void glEnable(GLenum cap_)
+//{
+//  typedef void (* PFNGLENABLEPROC)( GLenum cap_);
+//  RESOLVE(PFNGLENABLEPROC, "glEnable");
+//  RESOLVED_PROC(cap_ );
+//}
+//
+//void glFinish(void)
+//{
+//  typedef void (* PFNGLFINISHPROC)(void);
+//  RESOLVE(PFNGLFINISHPROC, "glFinish");
+//  RESOLVED_PROC( );
+//}
+//
+//void glFlush(void)
+//{
+//  typedef void (* PFNGLFLUSHPROC)(void);
+//  RESOLVE(PFNGLFLUSHPROC, "glFlush");
+//  RESOLVED_PROC( );
+//}
+//
+//void glBlendFunc(GLenum sfactor_, GLenum dfactor_)
+//{
+//  typedef void (* PFNGLBLENDFUNCPROC)( GLenum sfactor_,  GLenum dfactor_);
+//  RESOLVE(PFNGLBLENDFUNCPROC, "glBlendFunc");
+//  RESOLVED_PROC(sfactor_, dfactor_ );
+//}
+//
+//void glLogicOp(GLenum opcode_)
+//{
+//  typedef void (* PFNGLLOGICOPPROC)( GLenum opcode_);
+//  RESOLVE(PFNGLLOGICOPPROC, "glLogicOp");
+//  RESOLVED_PROC(opcode_ );
+//}
+//
+//void glStencilFunc(GLenum func_, GLint ref_, GLuint mask_)
+//{
+//  typedef void (* PFNGLSTENCILFUNCPROC)( GLenum func_,  GLint ref_,  GLuint mask_);
+//  RESOLVE(PFNGLSTENCILFUNCPROC, "glStencilFunc");
+//  RESOLVED_PROC(func_, ref_, mask_ );
+//}
+//
+//void glStencilOp(GLenum fail_, GLenum zfail_, GLenum zpass_)
+//{
+//  typedef void (* PFNGLSTENCILOPPROC)( GLenum fail_,  GLenum zfail_,  GLenum zpass_);
+//  RESOLVE(PFNGLSTENCILOPPROC, "glStencilOp");
+//  RESOLVED_PROC(fail_, zfail_, zpass_ );
+//}
+//
+//void glDepthFunc(GLenum func_)
+//{
+//  typedef void (* PFNGLDEPTHFUNCPROC)( GLenum func_);
+//  RESOLVE(PFNGLDEPTHFUNCPROC, "glDepthFunc");
+//  RESOLVED_PROC(func_ );
+//}
+//
+//void glPixelStoref(GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLPIXELSTOREFPROC)( GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLPIXELSTOREFPROC, "glPixelStoref");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glPixelStorei(GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLPIXELSTOREIPROC)( GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLPIXELSTOREIPROC, "glPixelStorei");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glReadBuffer(GLenum src_)
+//{
+//  typedef void (* PFNGLREADBUFFERPROC)( GLenum src_);
+//  RESOLVE(PFNGLREADBUFFERPROC, "glReadBuffer");
+//  RESOLVED_PROC(src_ );
+//}
+//
+//void glReadPixels(GLint x_, GLint y_, GLsizei width_, GLsizei height_, GLenum format_, GLenum type_, void * pixels_)
+//{
+//  typedef void (* PFNGLREADPIXELSPROC)( GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_,  GLenum format_,  GLenum type_,  void * pixels_);
+//  RESOLVE(PFNGLREADPIXELSPROC, "glReadPixels");
+//  RESOLVED_PROC(x_, y_, width_, height_, format_, type_, pixels_ );
+//}
+//
+//void glGetBooleanv(GLenum pname_, GLboolean* data_)
+//{
+//  typedef void (* PFNGLGETBOOLEANVPROC)( GLenum pname_,  GLboolean* data_);
+//  RESOLVE(PFNGLGETBOOLEANVPROC, "glGetBooleanv");
+//  RESOLVED_PROC(pname_, data_ );
+//}
+//
+//void glGetDoublev(GLenum pname_, GLdouble* data_)
+//{
+//  typedef void (* PFNGLGETDOUBLEVPROC)( GLenum pname_,  GLdouble* data_);
+//  RESOLVE(PFNGLGETDOUBLEVPROC, "glGetDoublev");
+//  RESOLVED_PROC(pname_, data_ );
+//}
+//
+//GLenum glGetError(void)
+//{
+//  typedef GLenum (* PFNGLGETERRORPROC)(void);
+//  RESOLVE_RET(PFNGLGETERRORPROC, "glGetError", 0);
+//  return RESOLVED_PROC( );
+//}
+//
+//void glGetFloatv(GLenum pname_, GLfloat* data_)
+//{
+//  typedef void (* PFNGLGETFLOATVPROC)( GLenum pname_,  GLfloat* data_);
+//  RESOLVE(PFNGLGETFLOATVPROC, "glGetFloatv");
+//  RESOLVED_PROC(pname_, data_ );
+//}
+//
+//void glGetIntegerv(GLenum pname_, GLint* data_)
+//{
+//  typedef void (* PFNGLGETINTEGERVPROC)( GLenum pname_,  GLint* data_);
+//  RESOLVE(PFNGLGETINTEGERVPROC, "glGetIntegerv");
+//  RESOLVED_PROC(pname_, data_ );
+//}
+//
+//const GLubyte * glGetString(GLenum name_)
+//{
+//  typedef const GLubyte * (* PFNGLGETSTRINGPROC)( GLenum name_);
+//  RESOLVE_RET(PFNGLGETSTRINGPROC, "glGetString", 0);
+//  return RESOLVED_PROC(name_ );
+//}
+//
+//void glGetTexImage(GLenum target_, GLint level_, GLenum format_, GLenum type_, void * pixels_)
+//{
+//  typedef void (* PFNGLGETTEXIMAGEPROC)( GLenum target_,  GLint level_,  GLenum format_,  GLenum type_,  void * pixels_);
+//  RESOLVE(PFNGLGETTEXIMAGEPROC, "glGetTexImage");
+//  RESOLVED_PROC(target_, level_, format_, type_, pixels_ );
+//}
+//
+//void glGetTexParameterfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETTEXPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETTEXPARAMETERFVPROC, "glGetTexParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetTexParameteriv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETTEXPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETTEXPARAMETERIVPROC, "glGetTexParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetTexLevelParameterfv(GLenum target_, GLint level_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETTEXLEVELPARAMETERFVPROC)( GLenum target_,  GLint level_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETTEXLEVELPARAMETERFVPROC, "glGetTexLevelParameterfv");
+//  RESOLVED_PROC(target_, level_, pname_, params_ );
+//}
+//
+//void glGetTexLevelParameteriv(GLenum target_, GLint level_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETTEXLEVELPARAMETERIVPROC)( GLenum target_,  GLint level_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETTEXLEVELPARAMETERIVPROC, "glGetTexLevelParameteriv");
+//  RESOLVED_PROC(target_, level_, pname_, params_ );
+//}
+//
+//GLboolean glIsEnabled(GLenum cap_)
+//{
+//  typedef GLboolean (* PFNGLISENABLEDPROC)( GLenum cap_);
+//  RESOLVE_RET(PFNGLISENABLEDPROC, "glIsEnabled", 0);
+//  return RESOLVED_PROC(cap_ );
+//}
+//
+//void glDepthRange(GLdouble n_, GLdouble f_)
+//{
+//  typedef void (* PFNGLDEPTHRANGEPROC)( GLdouble n_,  GLdouble f_);
+//  RESOLVE(PFNGLDEPTHRANGEPROC, "glDepthRange");
+//  RESOLVED_PROC(n_, f_ );
+//}
+//
+//void glViewport(GLint x_, GLint y_, GLsizei width_, GLsizei height_)
+//{
+//  typedef void (* PFNGLVIEWPORTPROC)( GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_);
+//  RESOLVE(PFNGLVIEWPORTPROC, "glViewport");
+//  RESOLVED_PROC(x_, y_, width_, height_ );
+//}
+//
+//void glNewList(GLuint list_, GLenum mode_)
+//{
+//  typedef void (* PFNGLNEWLISTPROC)( GLuint list_,  GLenum mode_);
+//  RESOLVE(PFNGLNEWLISTPROC, "glNewList");
+//  RESOLVED_PROC(list_, mode_ );
+//}
+//
+//void glEndList(void)
+//{
+//  typedef void (* PFNGLENDLISTPROC)(void);
+//  RESOLVE(PFNGLENDLISTPROC, "glEndList");
+//  RESOLVED_PROC( );
+//}
+//
+//void glCallList(GLuint list_)
+//{
+//  typedef void (* PFNGLCALLLISTPROC)( GLuint list_);
+//  RESOLVE(PFNGLCALLLISTPROC, "glCallList");
+//  RESOLVED_PROC(list_ );
+//}
+//
+//void glCallLists(GLsizei n_, GLenum type_, const void * lists_)
+//{
+//  typedef void (* PFNGLCALLLISTSPROC)( GLsizei n_,  GLenum type_,  const void * lists_);
+//  RESOLVE(PFNGLCALLLISTSPROC, "glCallLists");
+//  RESOLVED_PROC(n_, type_, lists_ );
+//}
+//
+//void glDeleteLists(GLuint list_, GLsizei range_)
+//{
+//  typedef void (* PFNGLDELETELISTSPROC)( GLuint list_,  GLsizei range_);
+//  RESOLVE(PFNGLDELETELISTSPROC, "glDeleteLists");
+//  RESOLVED_PROC(list_, range_ );
+//}
+//
+//GLuint glGenLists(GLsizei range_)
+//{
+//  typedef GLuint (* PFNGLGENLISTSPROC)( GLsizei range_);
+//  RESOLVE_RET(PFNGLGENLISTSPROC, "glGenLists", 0);
+//  return RESOLVED_PROC(range_ );
+//}
+//
+//void glListBase(GLuint base_)
+//{
+//  typedef void (* PFNGLLISTBASEPROC)( GLuint base_);
+//  RESOLVE(PFNGLLISTBASEPROC, "glListBase");
+//  RESOLVED_PROC(base_ );
+//}
+//
+//void glBegin(GLenum mode_)
+//{
+//  typedef void (* PFNGLBEGINPROC)( GLenum mode_);
+//  RESOLVE(PFNGLBEGINPROC, "glBegin");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glBitmap(GLsizei width_, GLsizei height_, GLfloat xorig_, GLfloat yorig_, GLfloat xmove_, GLfloat ymove_, const GLubyte* bitmap_)
+//{
+//  typedef void (* PFNGLBITMAPPROC)( GLsizei width_,  GLsizei height_,  GLfloat xorig_,  GLfloat yorig_,  GLfloat xmove_,  GLfloat ymove_,  const GLubyte* bitmap_);
+//  RESOLVE(PFNGLBITMAPPROC, "glBitmap");
+//  RESOLVED_PROC(width_, height_, xorig_, yorig_, xmove_, ymove_, bitmap_ );
+//}
+//
+//void glColor3b(GLbyte red_, GLbyte green_, GLbyte blue_)
+//{
+//  typedef void (* PFNGLCOLOR3BPROC)( GLbyte red_,  GLbyte green_,  GLbyte blue_);
+//  RESOLVE(PFNGLCOLOR3BPROC, "glColor3b");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3bv(const GLbyte* v_)
+//{
+//  typedef void (* PFNGLCOLOR3BVPROC)( const GLbyte* v_);
+//  RESOLVE(PFNGLCOLOR3BVPROC, "glColor3bv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3d(GLdouble red_, GLdouble green_, GLdouble blue_)
+//{
+//  typedef void (* PFNGLCOLOR3DPROC)( GLdouble red_,  GLdouble green_,  GLdouble blue_);
+//  RESOLVE(PFNGLCOLOR3DPROC, "glColor3d");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLCOLOR3DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLCOLOR3DVPROC, "glColor3dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3f(GLfloat red_, GLfloat green_, GLfloat blue_)
+//{
+//  typedef void (* PFNGLCOLOR3FPROC)( GLfloat red_,  GLfloat green_,  GLfloat blue_);
+//  RESOLVE(PFNGLCOLOR3FPROC, "glColor3f");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLCOLOR3FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLCOLOR3FVPROC, "glColor3fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3i(GLint red_, GLint green_, GLint blue_)
+//{
+//  typedef void (* PFNGLCOLOR3IPROC)( GLint red_,  GLint green_,  GLint blue_);
+//  RESOLVE(PFNGLCOLOR3IPROC, "glColor3i");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLCOLOR3IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLCOLOR3IVPROC, "glColor3iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3s(GLshort red_, GLshort green_, GLshort blue_)
+//{
+//  typedef void (* PFNGLCOLOR3SPROC)( GLshort red_,  GLshort green_,  GLshort blue_);
+//  RESOLVE(PFNGLCOLOR3SPROC, "glColor3s");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLCOLOR3SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLCOLOR3SVPROC, "glColor3sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3ub(GLubyte red_, GLubyte green_, GLubyte blue_)
+//{
+//  typedef void (* PFNGLCOLOR3UBPROC)( GLubyte red_,  GLubyte green_,  GLubyte blue_);
+//  RESOLVE(PFNGLCOLOR3UBPROC, "glColor3ub");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3ubv(const GLubyte* v_)
+//{
+//  typedef void (* PFNGLCOLOR3UBVPROC)( const GLubyte* v_);
+//  RESOLVE(PFNGLCOLOR3UBVPROC, "glColor3ubv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3ui(GLuint red_, GLuint green_, GLuint blue_)
+//{
+//  typedef void (* PFNGLCOLOR3UIPROC)( GLuint red_,  GLuint green_,  GLuint blue_);
+//  RESOLVE(PFNGLCOLOR3UIPROC, "glColor3ui");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3uiv(const GLuint* v_)
+//{
+//  typedef void (* PFNGLCOLOR3UIVPROC)( const GLuint* v_);
+//  RESOLVE(PFNGLCOLOR3UIVPROC, "glColor3uiv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor3us(GLushort red_, GLushort green_, GLushort blue_)
+//{
+//  typedef void (* PFNGLCOLOR3USPROC)( GLushort red_,  GLushort green_,  GLushort blue_);
+//  RESOLVE(PFNGLCOLOR3USPROC, "glColor3us");
+//  RESOLVED_PROC(red_, green_, blue_ );
+//}
+//
+//void glColor3usv(const GLushort* v_)
+//{
+//  typedef void (* PFNGLCOLOR3USVPROC)( const GLushort* v_);
+//  RESOLVE(PFNGLCOLOR3USVPROC, "glColor3usv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4b(GLbyte red_, GLbyte green_, GLbyte blue_, GLbyte alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4BPROC)( GLbyte red_,  GLbyte green_,  GLbyte blue_,  GLbyte alpha_);
+//  RESOLVE(PFNGLCOLOR4BPROC, "glColor4b");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4bv(const GLbyte* v_)
+//{
+//  typedef void (* PFNGLCOLOR4BVPROC)( const GLbyte* v_);
+//  RESOLVE(PFNGLCOLOR4BVPROC, "glColor4bv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4d(GLdouble red_, GLdouble green_, GLdouble blue_, GLdouble alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4DPROC)( GLdouble red_,  GLdouble green_,  GLdouble blue_,  GLdouble alpha_);
+//  RESOLVE(PFNGLCOLOR4DPROC, "glColor4d");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLCOLOR4DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLCOLOR4DVPROC, "glColor4dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4f(GLfloat red_, GLfloat green_, GLfloat blue_, GLfloat alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4FPROC)( GLfloat red_,  GLfloat green_,  GLfloat blue_,  GLfloat alpha_);
+//  RESOLVE(PFNGLCOLOR4FPROC, "glColor4f");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLCOLOR4FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLCOLOR4FVPROC, "glColor4fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4i(GLint red_, GLint green_, GLint blue_, GLint alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4IPROC)( GLint red_,  GLint green_,  GLint blue_,  GLint alpha_);
+//  RESOLVE(PFNGLCOLOR4IPROC, "glColor4i");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLCOLOR4IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLCOLOR4IVPROC, "glColor4iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4s(GLshort red_, GLshort green_, GLshort blue_, GLshort alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4SPROC)( GLshort red_,  GLshort green_,  GLshort blue_,  GLshort alpha_);
+//  RESOLVE(PFNGLCOLOR4SPROC, "glColor4s");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLCOLOR4SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLCOLOR4SVPROC, "glColor4sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4ub(GLubyte red_, GLubyte green_, GLubyte blue_, GLubyte alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4UBPROC)( GLubyte red_,  GLubyte green_,  GLubyte blue_,  GLubyte alpha_);
+//  RESOLVE(PFNGLCOLOR4UBPROC, "glColor4ub");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4ubv(const GLubyte* v_)
+//{
+//  typedef void (* PFNGLCOLOR4UBVPROC)( const GLubyte* v_);
+//  RESOLVE(PFNGLCOLOR4UBVPROC, "glColor4ubv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4ui(GLuint red_, GLuint green_, GLuint blue_, GLuint alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4UIPROC)( GLuint red_,  GLuint green_,  GLuint blue_,  GLuint alpha_);
+//  RESOLVE(PFNGLCOLOR4UIPROC, "glColor4ui");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4uiv(const GLuint* v_)
+//{
+//  typedef void (* PFNGLCOLOR4UIVPROC)( const GLuint* v_);
+//  RESOLVE(PFNGLCOLOR4UIVPROC, "glColor4uiv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glColor4us(GLushort red_, GLushort green_, GLushort blue_, GLushort alpha_)
+//{
+//  typedef void (* PFNGLCOLOR4USPROC)( GLushort red_,  GLushort green_,  GLushort blue_,  GLushort alpha_);
+//  RESOLVE(PFNGLCOLOR4USPROC, "glColor4us");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glColor4usv(const GLushort* v_)
+//{
+//  typedef void (* PFNGLCOLOR4USVPROC)( const GLushort* v_);
+//  RESOLVE(PFNGLCOLOR4USVPROC, "glColor4usv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glEdgeFlag(GLboolean flag_)
+//{
+//  typedef void (* PFNGLEDGEFLAGPROC)( GLboolean flag_);
+//  RESOLVE(PFNGLEDGEFLAGPROC, "glEdgeFlag");
+//  RESOLVED_PROC(flag_ );
+//}
+//
+//void glEdgeFlagv(const GLboolean* flag_)
+//{
+//  typedef void (* PFNGLEDGEFLAGVPROC)( const GLboolean* flag_);
+//  RESOLVE(PFNGLEDGEFLAGVPROC, "glEdgeFlagv");
+//  RESOLVED_PROC(flag_ );
+//}
+//
+//void glEnd(void)
+//{
+//  typedef void (* PFNGLENDPROC)(void);
+//  RESOLVE(PFNGLENDPROC, "glEnd");
+//  RESOLVED_PROC( );
+//}
+//
+//void glIndexd(GLdouble c_)
+//{
+//  typedef void (* PFNGLINDEXDPROC)( GLdouble c_);
+//  RESOLVE(PFNGLINDEXDPROC, "glIndexd");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexdv(const GLdouble* c_)
+//{
+//  typedef void (* PFNGLINDEXDVPROC)( const GLdouble* c_);
+//  RESOLVE(PFNGLINDEXDVPROC, "glIndexdv");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexf(GLfloat c_)
+//{
+//  typedef void (* PFNGLINDEXFPROC)( GLfloat c_);
+//  RESOLVE(PFNGLINDEXFPROC, "glIndexf");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexfv(const GLfloat* c_)
+//{
+//  typedef void (* PFNGLINDEXFVPROC)( const GLfloat* c_);
+//  RESOLVE(PFNGLINDEXFVPROC, "glIndexfv");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexi(GLint c_)
+//{
+//  typedef void (* PFNGLINDEXIPROC)( GLint c_);
+//  RESOLVE(PFNGLINDEXIPROC, "glIndexi");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexiv(const GLint* c_)
+//{
+//  typedef void (* PFNGLINDEXIVPROC)( const GLint* c_);
+//  RESOLVE(PFNGLINDEXIVPROC, "glIndexiv");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexs(GLshort c_)
+//{
+//  typedef void (* PFNGLINDEXSPROC)( GLshort c_);
+//  RESOLVE(PFNGLINDEXSPROC, "glIndexs");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexsv(const GLshort* c_)
+//{
+//  typedef void (* PFNGLINDEXSVPROC)( const GLshort* c_);
+//  RESOLVE(PFNGLINDEXSVPROC, "glIndexsv");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glNormal3b(GLbyte nx_, GLbyte ny_, GLbyte nz_)
+//{
+//  typedef void (* PFNGLNORMAL3BPROC)( GLbyte nx_,  GLbyte ny_,  GLbyte nz_);
+//  RESOLVE(PFNGLNORMAL3BPROC, "glNormal3b");
+//  RESOLVED_PROC(nx_, ny_, nz_ );
+//}
+//
+//void glNormal3bv(const GLbyte* v_)
+//{
+//  typedef void (* PFNGLNORMAL3BVPROC)( const GLbyte* v_);
+//  RESOLVE(PFNGLNORMAL3BVPROC, "glNormal3bv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glNormal3d(GLdouble nx_, GLdouble ny_, GLdouble nz_)
+//{
+//  typedef void (* PFNGLNORMAL3DPROC)( GLdouble nx_,  GLdouble ny_,  GLdouble nz_);
+//  RESOLVE(PFNGLNORMAL3DPROC, "glNormal3d");
+//  RESOLVED_PROC(nx_, ny_, nz_ );
+//}
+//
+//void glNormal3dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLNORMAL3DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLNORMAL3DVPROC, "glNormal3dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glNormal3f(GLfloat nx_, GLfloat ny_, GLfloat nz_)
+//{
+//  typedef void (* PFNGLNORMAL3FPROC)( GLfloat nx_,  GLfloat ny_,  GLfloat nz_);
+//  RESOLVE(PFNGLNORMAL3FPROC, "glNormal3f");
+//  RESOLVED_PROC(nx_, ny_, nz_ );
+//}
+//
+//void glNormal3fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLNORMAL3FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLNORMAL3FVPROC, "glNormal3fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glNormal3i(GLint nx_, GLint ny_, GLint nz_)
+//{
+//  typedef void (* PFNGLNORMAL3IPROC)( GLint nx_,  GLint ny_,  GLint nz_);
+//  RESOLVE(PFNGLNORMAL3IPROC, "glNormal3i");
+//  RESOLVED_PROC(nx_, ny_, nz_ );
+//}
+//
+//void glNormal3iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLNORMAL3IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLNORMAL3IVPROC, "glNormal3iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glNormal3s(GLshort nx_, GLshort ny_, GLshort nz_)
+//{
+//  typedef void (* PFNGLNORMAL3SPROC)( GLshort nx_,  GLshort ny_,  GLshort nz_);
+//  RESOLVE(PFNGLNORMAL3SPROC, "glNormal3s");
+//  RESOLVED_PROC(nx_, ny_, nz_ );
+//}
+//
+//void glNormal3sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLNORMAL3SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLNORMAL3SVPROC, "glNormal3sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos2d(GLdouble x_, GLdouble y_)
+//{
+//  typedef void (* PFNGLRASTERPOS2DPROC)( GLdouble x_,  GLdouble y_);
+//  RESOLVE(PFNGLRASTERPOS2DPROC, "glRasterPos2d");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glRasterPos2dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS2DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLRASTERPOS2DVPROC, "glRasterPos2dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos2f(GLfloat x_, GLfloat y_)
+//{
+//  typedef void (* PFNGLRASTERPOS2FPROC)( GLfloat x_,  GLfloat y_);
+//  RESOLVE(PFNGLRASTERPOS2FPROC, "glRasterPos2f");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glRasterPos2fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS2FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLRASTERPOS2FVPROC, "glRasterPos2fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos2i(GLint x_, GLint y_)
+//{
+//  typedef void (* PFNGLRASTERPOS2IPROC)( GLint x_,  GLint y_);
+//  RESOLVE(PFNGLRASTERPOS2IPROC, "glRasterPos2i");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glRasterPos2iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS2IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLRASTERPOS2IVPROC, "glRasterPos2iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos2s(GLshort x_, GLshort y_)
+//{
+//  typedef void (* PFNGLRASTERPOS2SPROC)( GLshort x_,  GLshort y_);
+//  RESOLVE(PFNGLRASTERPOS2SPROC, "glRasterPos2s");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glRasterPos2sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS2SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLRASTERPOS2SVPROC, "glRasterPos2sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos3d(GLdouble x_, GLdouble y_, GLdouble z_)
+//{
+//  typedef void (* PFNGLRASTERPOS3DPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_);
+//  RESOLVE(PFNGLRASTERPOS3DPROC, "glRasterPos3d");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glRasterPos3dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS3DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLRASTERPOS3DVPROC, "glRasterPos3dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos3f(GLfloat x_, GLfloat y_, GLfloat z_)
+//{
+//  typedef void (* PFNGLRASTERPOS3FPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_);
+//  RESOLVE(PFNGLRASTERPOS3FPROC, "glRasterPos3f");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glRasterPos3fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS3FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLRASTERPOS3FVPROC, "glRasterPos3fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos3i(GLint x_, GLint y_, GLint z_)
+//{
+//  typedef void (* PFNGLRASTERPOS3IPROC)( GLint x_,  GLint y_,  GLint z_);
+//  RESOLVE(PFNGLRASTERPOS3IPROC, "glRasterPos3i");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glRasterPos3iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS3IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLRASTERPOS3IVPROC, "glRasterPos3iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos3s(GLshort x_, GLshort y_, GLshort z_)
+//{
+//  typedef void (* PFNGLRASTERPOS3SPROC)( GLshort x_,  GLshort y_,  GLshort z_);
+//  RESOLVE(PFNGLRASTERPOS3SPROC, "glRasterPos3s");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glRasterPos3sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS3SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLRASTERPOS3SVPROC, "glRasterPos3sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos4d(GLdouble x_, GLdouble y_, GLdouble z_, GLdouble w_)
+//{
+//  typedef void (* PFNGLRASTERPOS4DPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_,  GLdouble w_);
+//  RESOLVE(PFNGLRASTERPOS4DPROC, "glRasterPos4d");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glRasterPos4dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS4DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLRASTERPOS4DVPROC, "glRasterPos4dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos4f(GLfloat x_, GLfloat y_, GLfloat z_, GLfloat w_)
+//{
+//  typedef void (* PFNGLRASTERPOS4FPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_,  GLfloat w_);
+//  RESOLVE(PFNGLRASTERPOS4FPROC, "glRasterPos4f");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glRasterPos4fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS4FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLRASTERPOS4FVPROC, "glRasterPos4fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos4i(GLint x_, GLint y_, GLint z_, GLint w_)
+//{
+//  typedef void (* PFNGLRASTERPOS4IPROC)( GLint x_,  GLint y_,  GLint z_,  GLint w_);
+//  RESOLVE(PFNGLRASTERPOS4IPROC, "glRasterPos4i");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glRasterPos4iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS4IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLRASTERPOS4IVPROC, "glRasterPos4iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRasterPos4s(GLshort x_, GLshort y_, GLshort z_, GLshort w_)
+//{
+//  typedef void (* PFNGLRASTERPOS4SPROC)( GLshort x_,  GLshort y_,  GLshort z_,  GLshort w_);
+//  RESOLVE(PFNGLRASTERPOS4SPROC, "glRasterPos4s");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glRasterPos4sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLRASTERPOS4SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLRASTERPOS4SVPROC, "glRasterPos4sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glRectd(GLdouble x1_, GLdouble y1_, GLdouble x2_, GLdouble y2_)
+//{
+//  typedef void (* PFNGLRECTDPROC)( GLdouble x1_,  GLdouble y1_,  GLdouble x2_,  GLdouble y2_);
+//  RESOLVE(PFNGLRECTDPROC, "glRectd");
+//  RESOLVED_PROC(x1_, y1_, x2_, y2_ );
+//}
+//
+//void glRectdv(const GLdouble* v1_, const GLdouble* v2_)
+//{
+//  typedef void (* PFNGLRECTDVPROC)( const GLdouble* v1_,  const GLdouble* v2_);
+//  RESOLVE(PFNGLRECTDVPROC, "glRectdv");
+//  RESOLVED_PROC(v1_, v2_ );
+//}
+//
+//void glRectf(GLfloat x1_, GLfloat y1_, GLfloat x2_, GLfloat y2_)
+//{
+//  typedef void (* PFNGLRECTFPROC)( GLfloat x1_,  GLfloat y1_,  GLfloat x2_,  GLfloat y2_);
+//  RESOLVE(PFNGLRECTFPROC, "glRectf");
+//  RESOLVED_PROC(x1_, y1_, x2_, y2_ );
+//}
+//
+//void glRectfv(const GLfloat* v1_, const GLfloat* v2_)
+//{
+//  typedef void (* PFNGLRECTFVPROC)( const GLfloat* v1_,  const GLfloat* v2_);
+//  RESOLVE(PFNGLRECTFVPROC, "glRectfv");
+//  RESOLVED_PROC(v1_, v2_ );
+//}
+//
+//void glRecti(GLint x1_, GLint y1_, GLint x2_, GLint y2_)
+//{
+//  typedef void (* PFNGLRECTIPROC)( GLint x1_,  GLint y1_,  GLint x2_,  GLint y2_);
+//  RESOLVE(PFNGLRECTIPROC, "glRecti");
+//  RESOLVED_PROC(x1_, y1_, x2_, y2_ );
+//}
+//
+//void glRectiv(const GLint* v1_, const GLint* v2_)
+//{
+//  typedef void (* PFNGLRECTIVPROC)( const GLint* v1_,  const GLint* v2_);
+//  RESOLVE(PFNGLRECTIVPROC, "glRectiv");
+//  RESOLVED_PROC(v1_, v2_ );
+//}
+//
+//void glRects(GLshort x1_, GLshort y1_, GLshort x2_, GLshort y2_)
+//{
+//  typedef void (* PFNGLRECTSPROC)( GLshort x1_,  GLshort y1_,  GLshort x2_,  GLshort y2_);
+//  RESOLVE(PFNGLRECTSPROC, "glRects");
+//  RESOLVED_PROC(x1_, y1_, x2_, y2_ );
+//}
+//
+//void glRectsv(const GLshort* v1_, const GLshort* v2_)
+//{
+//  typedef void (* PFNGLRECTSVPROC)( const GLshort* v1_,  const GLshort* v2_);
+//  RESOLVE(PFNGLRECTSVPROC, "glRectsv");
+//  RESOLVED_PROC(v1_, v2_ );
+//}
+//
+//void glTexCoord1d(GLdouble s_)
+//{
+//  typedef void (* PFNGLTEXCOORD1DPROC)( GLdouble s_);
+//  RESOLVE(PFNGLTEXCOORD1DPROC, "glTexCoord1d");
+//  RESOLVED_PROC(s_ );
+//}
+//
+//void glTexCoord1dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD1DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLTEXCOORD1DVPROC, "glTexCoord1dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord1f(GLfloat s_)
+//{
+//  typedef void (* PFNGLTEXCOORD1FPROC)( GLfloat s_);
+//  RESOLVE(PFNGLTEXCOORD1FPROC, "glTexCoord1f");
+//  RESOLVED_PROC(s_ );
+//}
+//
+//void glTexCoord1fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD1FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLTEXCOORD1FVPROC, "glTexCoord1fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord1i(GLint s_)
+//{
+//  typedef void (* PFNGLTEXCOORD1IPROC)( GLint s_);
+//  RESOLVE(PFNGLTEXCOORD1IPROC, "glTexCoord1i");
+//  RESOLVED_PROC(s_ );
+//}
+//
+//void glTexCoord1iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD1IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLTEXCOORD1IVPROC, "glTexCoord1iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord1s(GLshort s_)
+//{
+//  typedef void (* PFNGLTEXCOORD1SPROC)( GLshort s_);
+//  RESOLVE(PFNGLTEXCOORD1SPROC, "glTexCoord1s");
+//  RESOLVED_PROC(s_ );
+//}
+//
+//void glTexCoord1sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD1SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLTEXCOORD1SVPROC, "glTexCoord1sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord2d(GLdouble s_, GLdouble t_)
+//{
+//  typedef void (* PFNGLTEXCOORD2DPROC)( GLdouble s_,  GLdouble t_);
+//  RESOLVE(PFNGLTEXCOORD2DPROC, "glTexCoord2d");
+//  RESOLVED_PROC(s_, t_ );
+//}
+//
+//void glTexCoord2dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD2DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLTEXCOORD2DVPROC, "glTexCoord2dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord2f(GLfloat s_, GLfloat t_)
+//{
+//  typedef void (* PFNGLTEXCOORD2FPROC)( GLfloat s_,  GLfloat t_);
+//  RESOLVE(PFNGLTEXCOORD2FPROC, "glTexCoord2f");
+//  RESOLVED_PROC(s_, t_ );
+//}
+//
+//void glTexCoord2fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD2FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLTEXCOORD2FVPROC, "glTexCoord2fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord2i(GLint s_, GLint t_)
+//{
+//  typedef void (* PFNGLTEXCOORD2IPROC)( GLint s_,  GLint t_);
+//  RESOLVE(PFNGLTEXCOORD2IPROC, "glTexCoord2i");
+//  RESOLVED_PROC(s_, t_ );
+//}
+//
+//void glTexCoord2iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD2IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLTEXCOORD2IVPROC, "glTexCoord2iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord2s(GLshort s_, GLshort t_)
+//{
+//  typedef void (* PFNGLTEXCOORD2SPROC)( GLshort s_,  GLshort t_);
+//  RESOLVE(PFNGLTEXCOORD2SPROC, "glTexCoord2s");
+//  RESOLVED_PROC(s_, t_ );
+//}
+//
+//void glTexCoord2sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD2SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLTEXCOORD2SVPROC, "glTexCoord2sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord3d(GLdouble s_, GLdouble t_, GLdouble r_)
+//{
+//  typedef void (* PFNGLTEXCOORD3DPROC)( GLdouble s_,  GLdouble t_,  GLdouble r_);
+//  RESOLVE(PFNGLTEXCOORD3DPROC, "glTexCoord3d");
+//  RESOLVED_PROC(s_, t_, r_ );
+//}
+//
+//void glTexCoord3dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD3DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLTEXCOORD3DVPROC, "glTexCoord3dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord3f(GLfloat s_, GLfloat t_, GLfloat r_)
+//{
+//  typedef void (* PFNGLTEXCOORD3FPROC)( GLfloat s_,  GLfloat t_,  GLfloat r_);
+//  RESOLVE(PFNGLTEXCOORD3FPROC, "glTexCoord3f");
+//  RESOLVED_PROC(s_, t_, r_ );
+//}
+//
+//void glTexCoord3fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD3FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLTEXCOORD3FVPROC, "glTexCoord3fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord3i(GLint s_, GLint t_, GLint r_)
+//{
+//  typedef void (* PFNGLTEXCOORD3IPROC)( GLint s_,  GLint t_,  GLint r_);
+//  RESOLVE(PFNGLTEXCOORD3IPROC, "glTexCoord3i");
+//  RESOLVED_PROC(s_, t_, r_ );
+//}
+//
+//void glTexCoord3iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD3IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLTEXCOORD3IVPROC, "glTexCoord3iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord3s(GLshort s_, GLshort t_, GLshort r_)
+//{
+//  typedef void (* PFNGLTEXCOORD3SPROC)( GLshort s_,  GLshort t_,  GLshort r_);
+//  RESOLVE(PFNGLTEXCOORD3SPROC, "glTexCoord3s");
+//  RESOLVED_PROC(s_, t_, r_ );
+//}
+//
+//void glTexCoord3sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD3SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLTEXCOORD3SVPROC, "glTexCoord3sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord4d(GLdouble s_, GLdouble t_, GLdouble r_, GLdouble q_)
+//{
+//  typedef void (* PFNGLTEXCOORD4DPROC)( GLdouble s_,  GLdouble t_,  GLdouble r_,  GLdouble q_);
+//  RESOLVE(PFNGLTEXCOORD4DPROC, "glTexCoord4d");
+//  RESOLVED_PROC(s_, t_, r_, q_ );
+//}
+//
+//void glTexCoord4dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD4DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLTEXCOORD4DVPROC, "glTexCoord4dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord4f(GLfloat s_, GLfloat t_, GLfloat r_, GLfloat q_)
+//{
+//  typedef void (* PFNGLTEXCOORD4FPROC)( GLfloat s_,  GLfloat t_,  GLfloat r_,  GLfloat q_);
+//  RESOLVE(PFNGLTEXCOORD4FPROC, "glTexCoord4f");
+//  RESOLVED_PROC(s_, t_, r_, q_ );
+//}
+//
+//void glTexCoord4fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD4FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLTEXCOORD4FVPROC, "glTexCoord4fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord4i(GLint s_, GLint t_, GLint r_, GLint q_)
+//{
+//  typedef void (* PFNGLTEXCOORD4IPROC)( GLint s_,  GLint t_,  GLint r_,  GLint q_);
+//  RESOLVE(PFNGLTEXCOORD4IPROC, "glTexCoord4i");
+//  RESOLVED_PROC(s_, t_, r_, q_ );
+//}
+//
+//void glTexCoord4iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD4IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLTEXCOORD4IVPROC, "glTexCoord4iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glTexCoord4s(GLshort s_, GLshort t_, GLshort r_, GLshort q_)
+//{
+//  typedef void (* PFNGLTEXCOORD4SPROC)( GLshort s_,  GLshort t_,  GLshort r_,  GLshort q_);
+//  RESOLVE(PFNGLTEXCOORD4SPROC, "glTexCoord4s");
+//  RESOLVED_PROC(s_, t_, r_, q_ );
+//}
+//
+//void glTexCoord4sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLTEXCOORD4SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLTEXCOORD4SVPROC, "glTexCoord4sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex2d(GLdouble x_, GLdouble y_)
+//{
+//  typedef void (* PFNGLVERTEX2DPROC)( GLdouble x_,  GLdouble y_);
+//  RESOLVE(PFNGLVERTEX2DPROC, "glVertex2d");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glVertex2dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLVERTEX2DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLVERTEX2DVPROC, "glVertex2dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex2f(GLfloat x_, GLfloat y_)
+//{
+//  typedef void (* PFNGLVERTEX2FPROC)( GLfloat x_,  GLfloat y_);
+//  RESOLVE(PFNGLVERTEX2FPROC, "glVertex2f");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glVertex2fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLVERTEX2FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLVERTEX2FVPROC, "glVertex2fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex2i(GLint x_, GLint y_)
+//{
+//  typedef void (* PFNGLVERTEX2IPROC)( GLint x_,  GLint y_);
+//  RESOLVE(PFNGLVERTEX2IPROC, "glVertex2i");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glVertex2iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLVERTEX2IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLVERTEX2IVPROC, "glVertex2iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex2s(GLshort x_, GLshort y_)
+//{
+//  typedef void (* PFNGLVERTEX2SPROC)( GLshort x_,  GLshort y_);
+//  RESOLVE(PFNGLVERTEX2SPROC, "glVertex2s");
+//  RESOLVED_PROC(x_, y_ );
+//}
+//
+//void glVertex2sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLVERTEX2SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLVERTEX2SVPROC, "glVertex2sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex3d(GLdouble x_, GLdouble y_, GLdouble z_)
+//{
+//  typedef void (* PFNGLVERTEX3DPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_);
+//  RESOLVE(PFNGLVERTEX3DPROC, "glVertex3d");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glVertex3dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLVERTEX3DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLVERTEX3DVPROC, "glVertex3dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex3f(GLfloat x_, GLfloat y_, GLfloat z_)
+//{
+//  typedef void (* PFNGLVERTEX3FPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_);
+//  RESOLVE(PFNGLVERTEX3FPROC, "glVertex3f");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glVertex3fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLVERTEX3FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLVERTEX3FVPROC, "glVertex3fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex3i(GLint x_, GLint y_, GLint z_)
+//{
+//  typedef void (* PFNGLVERTEX3IPROC)( GLint x_,  GLint y_,  GLint z_);
+//  RESOLVE(PFNGLVERTEX3IPROC, "glVertex3i");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glVertex3iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLVERTEX3IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLVERTEX3IVPROC, "glVertex3iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex3s(GLshort x_, GLshort y_, GLshort z_)
+//{
+//  typedef void (* PFNGLVERTEX3SPROC)( GLshort x_,  GLshort y_,  GLshort z_);
+//  RESOLVE(PFNGLVERTEX3SPROC, "glVertex3s");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glVertex3sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLVERTEX3SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLVERTEX3SVPROC, "glVertex3sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex4d(GLdouble x_, GLdouble y_, GLdouble z_, GLdouble w_)
+//{
+//  typedef void (* PFNGLVERTEX4DPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_,  GLdouble w_);
+//  RESOLVE(PFNGLVERTEX4DPROC, "glVertex4d");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glVertex4dv(const GLdouble* v_)
+//{
+//  typedef void (* PFNGLVERTEX4DVPROC)( const GLdouble* v_);
+//  RESOLVE(PFNGLVERTEX4DVPROC, "glVertex4dv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex4f(GLfloat x_, GLfloat y_, GLfloat z_, GLfloat w_)
+//{
+//  typedef void (* PFNGLVERTEX4FPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_,  GLfloat w_);
+//  RESOLVE(PFNGLVERTEX4FPROC, "glVertex4f");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glVertex4fv(const GLfloat* v_)
+//{
+//  typedef void (* PFNGLVERTEX4FVPROC)( const GLfloat* v_);
+//  RESOLVE(PFNGLVERTEX4FVPROC, "glVertex4fv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex4i(GLint x_, GLint y_, GLint z_, GLint w_)
+//{
+//  typedef void (* PFNGLVERTEX4IPROC)( GLint x_,  GLint y_,  GLint z_,  GLint w_);
+//  RESOLVE(PFNGLVERTEX4IPROC, "glVertex4i");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glVertex4iv(const GLint* v_)
+//{
+//  typedef void (* PFNGLVERTEX4IVPROC)( const GLint* v_);
+//  RESOLVE(PFNGLVERTEX4IVPROC, "glVertex4iv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glVertex4s(GLshort x_, GLshort y_, GLshort z_, GLshort w_)
+//{
+//  typedef void (* PFNGLVERTEX4SPROC)( GLshort x_,  GLshort y_,  GLshort z_,  GLshort w_);
+//  RESOLVE(PFNGLVERTEX4SPROC, "glVertex4s");
+//  RESOLVED_PROC(x_, y_, z_, w_ );
+//}
+//
+//void glVertex4sv(const GLshort* v_)
+//{
+//  typedef void (* PFNGLVERTEX4SVPROC)( const GLshort* v_);
+//  RESOLVE(PFNGLVERTEX4SVPROC, "glVertex4sv");
+//  RESOLVED_PROC(v_ );
+//}
+//
+//void glClipPlane(GLenum plane_, const GLdouble* equation_)
+//{
+//  typedef void (* PFNGLCLIPPLANEPROC)( GLenum plane_,  const GLdouble* equation_);
+//  RESOLVE(PFNGLCLIPPLANEPROC, "glClipPlane");
+//  RESOLVED_PROC(plane_, equation_ );
+//}
+//
+//void glColorMaterial(GLenum face_, GLenum mode_)
+//{
+//  typedef void (* PFNGLCOLORMATERIALPROC)( GLenum face_,  GLenum mode_);
+//  RESOLVE(PFNGLCOLORMATERIALPROC, "glColorMaterial");
+//  RESOLVED_PROC(face_, mode_ );
+//}
+//
+//void glFogf(GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLFOGFPROC)( GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLFOGFPROC, "glFogf");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glFogfv(GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLFOGFVPROC)( GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLFOGFVPROC, "glFogfv");
+//  RESOLVED_PROC(pname_, params_ );
+//}
+//
+//void glFogi(GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLFOGIPROC)( GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLFOGIPROC, "glFogi");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glFogiv(GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLFOGIVPROC)( GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLFOGIVPROC, "glFogiv");
+//  RESOLVED_PROC(pname_, params_ );
+//}
+//
+//void glLightf(GLenum light_, GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLLIGHTFPROC)( GLenum light_,  GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLLIGHTFPROC, "glLightf");
+//  RESOLVED_PROC(light_, pname_, param_ );
+//}
+//
+//void glLightfv(GLenum light_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLLIGHTFVPROC)( GLenum light_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLLIGHTFVPROC, "glLightfv");
+//  RESOLVED_PROC(light_, pname_, params_ );
+//}
+//
+//void glLighti(GLenum light_, GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLLIGHTIPROC)( GLenum light_,  GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLLIGHTIPROC, "glLighti");
+//  RESOLVED_PROC(light_, pname_, param_ );
+//}
+//
+//void glLightiv(GLenum light_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLLIGHTIVPROC)( GLenum light_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLLIGHTIVPROC, "glLightiv");
+//  RESOLVED_PROC(light_, pname_, params_ );
+//}
+//
+//void glLightModelf(GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLLIGHTMODELFPROC)( GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLLIGHTMODELFPROC, "glLightModelf");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glLightModelfv(GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLLIGHTMODELFVPROC)( GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLLIGHTMODELFVPROC, "glLightModelfv");
+//  RESOLVED_PROC(pname_, params_ );
+//}
+//
+//void glLightModeli(GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLLIGHTMODELIPROC)( GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLLIGHTMODELIPROC, "glLightModeli");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glLightModeliv(GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLLIGHTMODELIVPROC)( GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLLIGHTMODELIVPROC, "glLightModeliv");
+//  RESOLVED_PROC(pname_, params_ );
+//}
+//
+//void glLineStipple(GLint factor_, GLushort pattern_)
+//{
+//  typedef void (* PFNGLLINESTIPPLEPROC)( GLint factor_,  GLushort pattern_);
+//  RESOLVE(PFNGLLINESTIPPLEPROC, "glLineStipple");
+//  RESOLVED_PROC(factor_, pattern_ );
+//}
+//
+//void glMaterialf(GLenum face_, GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLMATERIALFPROC)( GLenum face_,  GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLMATERIALFPROC, "glMaterialf");
+//  RESOLVED_PROC(face_, pname_, param_ );
+//}
+//
+//void glMaterialfv(GLenum face_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLMATERIALFVPROC)( GLenum face_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLMATERIALFVPROC, "glMaterialfv");
+//  RESOLVED_PROC(face_, pname_, params_ );
+//}
+//
+//void glMateriali(GLenum face_, GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLMATERIALIPROC)( GLenum face_,  GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLMATERIALIPROC, "glMateriali");
+//  RESOLVED_PROC(face_, pname_, param_ );
+//}
+//
+//void glMaterialiv(GLenum face_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLMATERIALIVPROC)( GLenum face_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLMATERIALIVPROC, "glMaterialiv");
+//  RESOLVED_PROC(face_, pname_, params_ );
+//}
+//
+//void glPolygonStipple(const GLubyte* mask_)
+//{
+//  typedef void (* PFNGLPOLYGONSTIPPLEPROC)( const GLubyte* mask_);
+//  RESOLVE(PFNGLPOLYGONSTIPPLEPROC, "glPolygonStipple");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glShadeModel(GLenum mode_)
+//{
+//  typedef void (* PFNGLSHADEMODELPROC)( GLenum mode_);
+//  RESOLVE(PFNGLSHADEMODELPROC, "glShadeModel");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glTexEnvf(GLenum target_, GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLTEXENVFPROC)( GLenum target_,  GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLTEXENVFPROC, "glTexEnvf");
+//  RESOLVED_PROC(target_, pname_, param_ );
+//}
+//
+//void glTexEnvfv(GLenum target_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLTEXENVFVPROC)( GLenum target_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLTEXENVFVPROC, "glTexEnvfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glTexEnvi(GLenum target_, GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLTEXENVIPROC)( GLenum target_,  GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLTEXENVIPROC, "glTexEnvi");
+//  RESOLVED_PROC(target_, pname_, param_ );
+//}
+//
+//void glTexEnviv(GLenum target_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLTEXENVIVPROC)( GLenum target_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLTEXENVIVPROC, "glTexEnviv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glTexGend(GLenum coord_, GLenum pname_, GLdouble param_)
+//{
+//  typedef void (* PFNGLTEXGENDPROC)( GLenum coord_,  GLenum pname_,  GLdouble param_);
+//  RESOLVE(PFNGLTEXGENDPROC, "glTexGend");
+//  RESOLVED_PROC(coord_, pname_, param_ );
+//}
+//
+//void glTexGendv(GLenum coord_, GLenum pname_, const GLdouble* params_)
+//{
+//  typedef void (* PFNGLTEXGENDVPROC)( GLenum coord_,  GLenum pname_,  const GLdouble* params_);
+//  RESOLVE(PFNGLTEXGENDVPROC, "glTexGendv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//void glTexGenf(GLenum coord_, GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLTEXGENFPROC)( GLenum coord_,  GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLTEXGENFPROC, "glTexGenf");
+//  RESOLVED_PROC(coord_, pname_, param_ );
+//}
+//
+//void glTexGenfv(GLenum coord_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLTEXGENFVPROC)( GLenum coord_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLTEXGENFVPROC, "glTexGenfv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//void glTexGeni(GLenum coord_, GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLTEXGENIPROC)( GLenum coord_,  GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLTEXGENIPROC, "glTexGeni");
+//  RESOLVED_PROC(coord_, pname_, param_ );
+//}
+//
+//void glTexGeniv(GLenum coord_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLTEXGENIVPROC)( GLenum coord_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLTEXGENIVPROC, "glTexGeniv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//void glFeedbackBuffer(GLsizei size_, GLenum type_, GLfloat* buffer_)
+//{
+//  typedef void (* PFNGLFEEDBACKBUFFERPROC)( GLsizei size_,  GLenum type_,  GLfloat* buffer_);
+//  RESOLVE(PFNGLFEEDBACKBUFFERPROC, "glFeedbackBuffer");
+//  RESOLVED_PROC(size_, type_, buffer_ );
+//}
+//
+//void glSelectBuffer(GLsizei size_, GLuint* buffer_)
+//{
+//  typedef void (* PFNGLSELECTBUFFERPROC)( GLsizei size_,  GLuint* buffer_);
+//  RESOLVE(PFNGLSELECTBUFFERPROC, "glSelectBuffer");
+//  RESOLVED_PROC(size_, buffer_ );
+//}
+//
+//GLint glRenderMode(GLenum mode_)
+//{
+//  typedef GLint (* PFNGLRENDERMODEPROC)( GLenum mode_);
+//  RESOLVE_RET(PFNGLRENDERMODEPROC, "glRenderMode", 0);
+//  return RESOLVED_PROC(mode_ );
+//}
+//
+//void glInitNames(void)
+//{
+//  typedef void (* PFNGLINITNAMESPROC)(void);
+//  RESOLVE(PFNGLINITNAMESPROC, "glInitNames");
+//  RESOLVED_PROC( );
+//}
+//
+//void glLoadName(GLuint name_)
+//{
+//  typedef void (* PFNGLLOADNAMEPROC)( GLuint name_);
+//  RESOLVE(PFNGLLOADNAMEPROC, "glLoadName");
+//  RESOLVED_PROC(name_ );
+//}
+//
+//void glPassThrough(GLfloat token_)
+//{
+//  typedef void (* PFNGLPASSTHROUGHPROC)( GLfloat token_);
+//  RESOLVE(PFNGLPASSTHROUGHPROC, "glPassThrough");
+//  RESOLVED_PROC(token_ );
+//}
+//
+//void glPopName(void)
+//{
+//  typedef void (* PFNGLPOPNAMEPROC)(void);
+//  RESOLVE(PFNGLPOPNAMEPROC, "glPopName");
+//  RESOLVED_PROC( );
+//}
+//
+//void glPushName(GLuint name_)
+//{
+//  typedef void (* PFNGLPUSHNAMEPROC)( GLuint name_);
+//  RESOLVE(PFNGLPUSHNAMEPROC, "glPushName");
+//  RESOLVED_PROC(name_ );
+//}
+//
+//void glClearAccum(GLfloat red_, GLfloat green_, GLfloat blue_, GLfloat alpha_)
+//{
+//  typedef void (* PFNGLCLEARACCUMPROC)( GLfloat red_,  GLfloat green_,  GLfloat blue_,  GLfloat alpha_);
+//  RESOLVE(PFNGLCLEARACCUMPROC, "glClearAccum");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glClearIndex(GLfloat c_)
+//{
+//  typedef void (* PFNGLCLEARINDEXPROC)( GLfloat c_);
+//  RESOLVE(PFNGLCLEARINDEXPROC, "glClearIndex");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexMask(GLuint mask_)
+//{
+//  typedef void (* PFNGLINDEXMASKPROC)( GLuint mask_);
+//  RESOLVE(PFNGLINDEXMASKPROC, "glIndexMask");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glAccum(GLenum op_, GLfloat value_)
+//{
+//  typedef void (* PFNGLACCUMPROC)( GLenum op_,  GLfloat value_);
+//  RESOLVE(PFNGLACCUMPROC, "glAccum");
+//  RESOLVED_PROC(op_, value_ );
+//}
+//
+//void glPopAttrib(void)
+//{
+//  typedef void (* PFNGLPOPATTRIBPROC)(void);
+//  RESOLVE(PFNGLPOPATTRIBPROC, "glPopAttrib");
+//  RESOLVED_PROC( );
+//}
+//
+//void glPushAttrib(GLbitfield mask_)
+//{
+//  typedef void (* PFNGLPUSHATTRIBPROC)( GLbitfield mask_);
+//  RESOLVE(PFNGLPUSHATTRIBPROC, "glPushAttrib");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glMap1d(GLenum target_, GLdouble u1_, GLdouble u2_, GLint stride_, GLint order_, const GLdouble* points_)
+//{
+//  typedef void (* PFNGLMAP1DPROC)( GLenum target_,  GLdouble u1_,  GLdouble u2_,  GLint stride_,  GLint order_,  const GLdouble* points_);
+//  RESOLVE(PFNGLMAP1DPROC, "glMap1d");
+//  RESOLVED_PROC(target_, u1_, u2_, stride_, order_, points_ );
+//}
+//
+//void glMap1f(GLenum target_, GLfloat u1_, GLfloat u2_, GLint stride_, GLint order_, const GLfloat* points_)
+//{
+//  typedef void (* PFNGLMAP1FPROC)( GLenum target_,  GLfloat u1_,  GLfloat u2_,  GLint stride_,  GLint order_,  const GLfloat* points_);
+//  RESOLVE(PFNGLMAP1FPROC, "glMap1f");
+//  RESOLVED_PROC(target_, u1_, u2_, stride_, order_, points_ );
+//}
+//
+//void glMap2d(GLenum target_, GLdouble u1_, GLdouble u2_, GLint ustride_, GLint uorder_, GLdouble v1_, GLdouble v2_, GLint vstride_, GLint vorder_, const GLdouble* points_)
+//{
+//  typedef void (* PFNGLMAP2DPROC)( GLenum target_,  GLdouble u1_,  GLdouble u2_,  GLint ustride_,  GLint uorder_,  GLdouble v1_,  GLdouble v2_,  GLint vstride_,  GLint vorder_,  const GLdouble* points_);
+//  RESOLVE(PFNGLMAP2DPROC, "glMap2d");
+//  RESOLVED_PROC(target_, u1_, u2_, ustride_, uorder_, v1_, v2_, vstride_, vorder_, points_ );
+//}
+//
+//void glMap2f(GLenum target_, GLfloat u1_, GLfloat u2_, GLint ustride_, GLint uorder_, GLfloat v1_, GLfloat v2_, GLint vstride_, GLint vorder_, const GLfloat* points_)
+//{
+//  typedef void (* PFNGLMAP2FPROC)( GLenum target_,  GLfloat u1_,  GLfloat u2_,  GLint ustride_,  GLint uorder_,  GLfloat v1_,  GLfloat v2_,  GLint vstride_,  GLint vorder_,  const GLfloat* points_);
+//  RESOLVE(PFNGLMAP2FPROC, "glMap2f");
+//  RESOLVED_PROC(target_, u1_, u2_, ustride_, uorder_, v1_, v2_, vstride_, vorder_, points_ );
+//}
+//
+//void glMapGrid1d(GLint un_, GLdouble u1_, GLdouble u2_)
+//{
+//  typedef void (* PFNGLMAPGRID1DPROC)( GLint un_,  GLdouble u1_,  GLdouble u2_);
+//  RESOLVE(PFNGLMAPGRID1DPROC, "glMapGrid1d");
+//  RESOLVED_PROC(un_, u1_, u2_ );
+//}
+//
+//void glMapGrid1f(GLint un_, GLfloat u1_, GLfloat u2_)
+//{
+//  typedef void (* PFNGLMAPGRID1FPROC)( GLint un_,  GLfloat u1_,  GLfloat u2_);
+//  RESOLVE(PFNGLMAPGRID1FPROC, "glMapGrid1f");
+//  RESOLVED_PROC(un_, u1_, u2_ );
+//}
+//
+//void glMapGrid2d(GLint un_, GLdouble u1_, GLdouble u2_, GLint vn_, GLdouble v1_, GLdouble v2_)
+//{
+//  typedef void (* PFNGLMAPGRID2DPROC)( GLint un_,  GLdouble u1_,  GLdouble u2_,  GLint vn_,  GLdouble v1_,  GLdouble v2_);
+//  RESOLVE(PFNGLMAPGRID2DPROC, "glMapGrid2d");
+//  RESOLVED_PROC(un_, u1_, u2_, vn_, v1_, v2_ );
+//}
+//
+//void glMapGrid2f(GLint un_, GLfloat u1_, GLfloat u2_, GLint vn_, GLfloat v1_, GLfloat v2_)
+//{
+//  typedef void (* PFNGLMAPGRID2FPROC)( GLint un_,  GLfloat u1_,  GLfloat u2_,  GLint vn_,  GLfloat v1_,  GLfloat v2_);
+//  RESOLVE(PFNGLMAPGRID2FPROC, "glMapGrid2f");
+//  RESOLVED_PROC(un_, u1_, u2_, vn_, v1_, v2_ );
+//}
+//
+//void glEvalCoord1d(GLdouble u_)
+//{
+//  typedef void (* PFNGLEVALCOORD1DPROC)( GLdouble u_);
+//  RESOLVE(PFNGLEVALCOORD1DPROC, "glEvalCoord1d");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalCoord1dv(const GLdouble* u_)
+//{
+//  typedef void (* PFNGLEVALCOORD1DVPROC)( const GLdouble* u_);
+//  RESOLVE(PFNGLEVALCOORD1DVPROC, "glEvalCoord1dv");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalCoord1f(GLfloat u_)
+//{
+//  typedef void (* PFNGLEVALCOORD1FPROC)( GLfloat u_);
+//  RESOLVE(PFNGLEVALCOORD1FPROC, "glEvalCoord1f");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalCoord1fv(const GLfloat* u_)
+//{
+//  typedef void (* PFNGLEVALCOORD1FVPROC)( const GLfloat* u_);
+//  RESOLVE(PFNGLEVALCOORD1FVPROC, "glEvalCoord1fv");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalCoord2d(GLdouble u_, GLdouble v_)
+//{
+//  typedef void (* PFNGLEVALCOORD2DPROC)( GLdouble u_,  GLdouble v_);
+//  RESOLVE(PFNGLEVALCOORD2DPROC, "glEvalCoord2d");
+//  RESOLVED_PROC(u_, v_ );
+//}
+//
+//void glEvalCoord2dv(const GLdouble* u_)
+//{
+//  typedef void (* PFNGLEVALCOORD2DVPROC)( const GLdouble* u_);
+//  RESOLVE(PFNGLEVALCOORD2DVPROC, "glEvalCoord2dv");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalCoord2f(GLfloat u_, GLfloat v_)
+//{
+//  typedef void (* PFNGLEVALCOORD2FPROC)( GLfloat u_,  GLfloat v_);
+//  RESOLVE(PFNGLEVALCOORD2FPROC, "glEvalCoord2f");
+//  RESOLVED_PROC(u_, v_ );
+//}
+//
+//void glEvalCoord2fv(const GLfloat* u_)
+//{
+//  typedef void (* PFNGLEVALCOORD2FVPROC)( const GLfloat* u_);
+//  RESOLVE(PFNGLEVALCOORD2FVPROC, "glEvalCoord2fv");
+//  RESOLVED_PROC(u_ );
+//}
+//
+//void glEvalMesh1(GLenum mode_, GLint i1_, GLint i2_)
+//{
+//  typedef void (* PFNGLEVALMESH1PROC)( GLenum mode_,  GLint i1_,  GLint i2_);
+//  RESOLVE(PFNGLEVALMESH1PROC, "glEvalMesh1");
+//  RESOLVED_PROC(mode_, i1_, i2_ );
+//}
+//
+//void glEvalPoint1(GLint i_)
+//{
+//  typedef void (* PFNGLEVALPOINT1PROC)( GLint i_);
+//  RESOLVE(PFNGLEVALPOINT1PROC, "glEvalPoint1");
+//  RESOLVED_PROC(i_ );
+//}
+//
+//void glEvalMesh2(GLenum mode_, GLint i1_, GLint i2_, GLint j1_, GLint j2_)
+//{
+//  typedef void (* PFNGLEVALMESH2PROC)( GLenum mode_,  GLint i1_,  GLint i2_,  GLint j1_,  GLint j2_);
+//  RESOLVE(PFNGLEVALMESH2PROC, "glEvalMesh2");
+//  RESOLVED_PROC(mode_, i1_, i2_, j1_, j2_ );
+//}
+//
+//void glEvalPoint2(GLint i_, GLint j_)
+//{
+//  typedef void (* PFNGLEVALPOINT2PROC)( GLint i_,  GLint j_);
+//  RESOLVE(PFNGLEVALPOINT2PROC, "glEvalPoint2");
+//  RESOLVED_PROC(i_, j_ );
+//}
+//
+//void glAlphaFunc(GLenum func_, GLfloat ref_)
+//{
+//  typedef void (* PFNGLALPHAFUNCPROC)( GLenum func_,  GLfloat ref_);
+//  RESOLVE(PFNGLALPHAFUNCPROC, "glAlphaFunc");
+//  RESOLVED_PROC(func_, ref_ );
+//}
+//
+//void glPixelZoom(GLfloat xfactor_, GLfloat yfactor_)
+//{
+//  typedef void (* PFNGLPIXELZOOMPROC)( GLfloat xfactor_,  GLfloat yfactor_);
+//  RESOLVE(PFNGLPIXELZOOMPROC, "glPixelZoom");
+//  RESOLVED_PROC(xfactor_, yfactor_ );
+//}
+//
+//void glPixelTransferf(GLenum pname_, GLfloat param_)
+//{
+//  typedef void (* PFNGLPIXELTRANSFERFPROC)( GLenum pname_,  GLfloat param_);
+//  RESOLVE(PFNGLPIXELTRANSFERFPROC, "glPixelTransferf");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glPixelTransferi(GLenum pname_, GLint param_)
+//{
+//  typedef void (* PFNGLPIXELTRANSFERIPROC)( GLenum pname_,  GLint param_);
+//  RESOLVE(PFNGLPIXELTRANSFERIPROC, "glPixelTransferi");
+//  RESOLVED_PROC(pname_, param_ );
+//}
+//
+//void glPixelMapfv(GLenum map_, GLsizei mapsize_, const GLfloat* values_)
+//{
+//  typedef void (* PFNGLPIXELMAPFVPROC)( GLenum map_,  GLsizei mapsize_,  const GLfloat* values_);
+//  RESOLVE(PFNGLPIXELMAPFVPROC, "glPixelMapfv");
+//  RESOLVED_PROC(map_, mapsize_, values_ );
+//}
+//
+//void glPixelMapuiv(GLenum map_, GLsizei mapsize_, const GLuint* values_)
+//{
+//  typedef void (* PFNGLPIXELMAPUIVPROC)( GLenum map_,  GLsizei mapsize_,  const GLuint* values_);
+//  RESOLVE(PFNGLPIXELMAPUIVPROC, "glPixelMapuiv");
+//  RESOLVED_PROC(map_, mapsize_, values_ );
+//}
+//
+//void glPixelMapusv(GLenum map_, GLsizei mapsize_, const GLushort* values_)
+//{
+//  typedef void (* PFNGLPIXELMAPUSVPROC)( GLenum map_,  GLsizei mapsize_,  const GLushort* values_);
+//  RESOLVE(PFNGLPIXELMAPUSVPROC, "glPixelMapusv");
+//  RESOLVED_PROC(map_, mapsize_, values_ );
+//}
+//
+//void glCopyPixels(GLint x_, GLint y_, GLsizei width_, GLsizei height_, GLenum type_)
+//{
+//  typedef void (* PFNGLCOPYPIXELSPROC)( GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_,  GLenum type_);
+//  RESOLVE(PFNGLCOPYPIXELSPROC, "glCopyPixels");
+//  RESOLVED_PROC(x_, y_, width_, height_, type_ );
+//}
+//
+//void glDrawPixels(GLsizei width_, GLsizei height_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLDRAWPIXELSPROC)( GLsizei width_,  GLsizei height_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLDRAWPIXELSPROC, "glDrawPixels");
+//  RESOLVED_PROC(width_, height_, format_, type_, pixels_ );
+//}
+//
+//void glGetClipPlane(GLenum plane_, GLdouble* equation_)
+//{
+//  typedef void (* PFNGLGETCLIPPLANEPROC)( GLenum plane_,  GLdouble* equation_);
+//  RESOLVE(PFNGLGETCLIPPLANEPROC, "glGetClipPlane");
+//  RESOLVED_PROC(plane_, equation_ );
+//}
+//
+//void glGetLightfv(GLenum light_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETLIGHTFVPROC)( GLenum light_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETLIGHTFVPROC, "glGetLightfv");
+//  RESOLVED_PROC(light_, pname_, params_ );
+//}
+//
+//void glGetLightiv(GLenum light_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETLIGHTIVPROC)( GLenum light_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETLIGHTIVPROC, "glGetLightiv");
+//  RESOLVED_PROC(light_, pname_, params_ );
+//}
+//
+//void glGetMapdv(GLenum target_, GLenum query_, GLdouble* v_)
+//{
+//  typedef void (* PFNGLGETMAPDVPROC)( GLenum target_,  GLenum query_,  GLdouble* v_);
+//  RESOLVE(PFNGLGETMAPDVPROC, "glGetMapdv");
+//  RESOLVED_PROC(target_, query_, v_ );
+//}
+//
+//void glGetMapfv(GLenum target_, GLenum query_, GLfloat* v_)
+//{
+//  typedef void (* PFNGLGETMAPFVPROC)( GLenum target_,  GLenum query_,  GLfloat* v_);
+//  RESOLVE(PFNGLGETMAPFVPROC, "glGetMapfv");
+//  RESOLVED_PROC(target_, query_, v_ );
+//}
+//
+//void glGetMapiv(GLenum target_, GLenum query_, GLint* v_)
+//{
+//  typedef void (* PFNGLGETMAPIVPROC)( GLenum target_,  GLenum query_,  GLint* v_);
+//  RESOLVE(PFNGLGETMAPIVPROC, "glGetMapiv");
+//  RESOLVED_PROC(target_, query_, v_ );
+//}
+//
+//void glGetMaterialfv(GLenum face_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETMATERIALFVPROC)( GLenum face_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETMATERIALFVPROC, "glGetMaterialfv");
+//  RESOLVED_PROC(face_, pname_, params_ );
+//}
+//
+//void glGetMaterialiv(GLenum face_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETMATERIALIVPROC)( GLenum face_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETMATERIALIVPROC, "glGetMaterialiv");
+//  RESOLVED_PROC(face_, pname_, params_ );
+//}
+//
+//void glGetPixelMapfv(GLenum map_, GLfloat* values_)
+//{
+//  typedef void (* PFNGLGETPIXELMAPFVPROC)( GLenum map_,  GLfloat* values_);
+//  RESOLVE(PFNGLGETPIXELMAPFVPROC, "glGetPixelMapfv");
+//  RESOLVED_PROC(map_, values_ );
+//}
+//
+//void glGetPixelMapuiv(GLenum map_, GLuint* values_)
+//{
+//  typedef void (* PFNGLGETPIXELMAPUIVPROC)( GLenum map_,  GLuint* values_);
+//  RESOLVE(PFNGLGETPIXELMAPUIVPROC, "glGetPixelMapuiv");
+//  RESOLVED_PROC(map_, values_ );
+//}
+//
+//void glGetPixelMapusv(GLenum map_, GLushort* values_)
+//{
+//  typedef void (* PFNGLGETPIXELMAPUSVPROC)( GLenum map_,  GLushort* values_);
+//  RESOLVE(PFNGLGETPIXELMAPUSVPROC, "glGetPixelMapusv");
+//  RESOLVED_PROC(map_, values_ );
+//}
+//
+//void glGetPolygonStipple(GLubyte* mask_)
+//{
+//  typedef void (* PFNGLGETPOLYGONSTIPPLEPROC)( GLubyte* mask_);
+//  RESOLVE(PFNGLGETPOLYGONSTIPPLEPROC, "glGetPolygonStipple");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glGetTexEnvfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETTEXENVFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETTEXENVFVPROC, "glGetTexEnvfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetTexEnviv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETTEXENVIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETTEXENVIVPROC, "glGetTexEnviv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetTexGendv(GLenum coord_, GLenum pname_, GLdouble* params_)
+//{
+//  typedef void (* PFNGLGETTEXGENDVPROC)( GLenum coord_,  GLenum pname_,  GLdouble* params_);
+//  RESOLVE(PFNGLGETTEXGENDVPROC, "glGetTexGendv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//void glGetTexGenfv(GLenum coord_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETTEXGENFVPROC)( GLenum coord_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETTEXGENFVPROC, "glGetTexGenfv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//void glGetTexGeniv(GLenum coord_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETTEXGENIVPROC)( GLenum coord_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETTEXGENIVPROC, "glGetTexGeniv");
+//  RESOLVED_PROC(coord_, pname_, params_ );
+//}
+//
+//GLboolean glIsList(GLuint list_)
+//{
+//  typedef GLboolean (* PFNGLISLISTPROC)( GLuint list_);
+//  RESOLVE_RET(PFNGLISLISTPROC, "glIsList", 0);
+//  return RESOLVED_PROC(list_ );
+//}
+//
+//void glFrustum(GLdouble left_, GLdouble right_, GLdouble bottom_, GLdouble top_, GLdouble zNear_, GLdouble zFar_)
+//{
+//  typedef void (* PFNGLFRUSTUMPROC)( GLdouble left_,  GLdouble right_,  GLdouble bottom_,  GLdouble top_,  GLdouble zNear_,  GLdouble zFar_);
+//  RESOLVE(PFNGLFRUSTUMPROC, "glFrustum");
+//  RESOLVED_PROC(left_, right_, bottom_, top_, zNear_, zFar_ );
+//}
+//
+//void glLoadIdentity(void)
+//{
+//  typedef void (* PFNGLLOADIDENTITYPROC)(void);
+//  RESOLVE(PFNGLLOADIDENTITYPROC, "glLoadIdentity");
+//  RESOLVED_PROC( );
+//}
+//
+//void glLoadMatrixf(const GLfloat* m_)
+//{
+//  typedef void (* PFNGLLOADMATRIXFPROC)( const GLfloat* m_);
+//  RESOLVE(PFNGLLOADMATRIXFPROC, "glLoadMatrixf");
+//  RESOLVED_PROC(m_ );
+//}
+//
+//void glLoadMatrixd(const GLdouble* m_)
+//{
+//  typedef void (* PFNGLLOADMATRIXDPROC)( const GLdouble* m_);
+//  RESOLVE(PFNGLLOADMATRIXDPROC, "glLoadMatrixd");
+//  RESOLVED_PROC(m_ );
+//}
+//
+//void glMatrixMode(GLenum mode_)
+//{
+//  typedef void (* PFNGLMATRIXMODEPROC)( GLenum mode_);
+//  RESOLVE(PFNGLMATRIXMODEPROC, "glMatrixMode");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glMultMatrixf(const GLfloat* m_)
+//{
+//  typedef void (* PFNGLMULTMATRIXFPROC)( const GLfloat* m_);
+//  RESOLVE(PFNGLMULTMATRIXFPROC, "glMultMatrixf");
+//  RESOLVED_PROC(m_ );
+//}
+//
+//void glMultMatrixd(const GLdouble* m_)
+//{
+//  typedef void (* PFNGLMULTMATRIXDPROC)( const GLdouble* m_);
+//  RESOLVE(PFNGLMULTMATRIXDPROC, "glMultMatrixd");
+//  RESOLVED_PROC(m_ );
+//}
+//
+//void glOrtho(GLdouble left_, GLdouble right_, GLdouble bottom_, GLdouble top_, GLdouble zNear_, GLdouble zFar_)
+//{
+//  typedef void (* PFNGLORTHOPROC)( GLdouble left_,  GLdouble right_,  GLdouble bottom_,  GLdouble top_,  GLdouble zNear_,  GLdouble zFar_);
+//  RESOLVE(PFNGLORTHOPROC, "glOrtho");
+//  RESOLVED_PROC(left_, right_, bottom_, top_, zNear_, zFar_ );
+//}
+//
+//void glPopMatrix(void)
+//{
+//  typedef void (* PFNGLPOPMATRIXPROC)(void);
+//  RESOLVE(PFNGLPOPMATRIXPROC, "glPopMatrix");
+//  RESOLVED_PROC( );
+//}
+//
+//void glPushMatrix(void)
+//{
+//  typedef void (* PFNGLPUSHMATRIXPROC)(void);
+//  RESOLVE(PFNGLPUSHMATRIXPROC, "glPushMatrix");
+//  RESOLVED_PROC( );
+//}
+//
+//void glRotated(GLdouble angle_, GLdouble x_, GLdouble y_, GLdouble z_)
+//{
+//  typedef void (* PFNGLROTATEDPROC)( GLdouble angle_,  GLdouble x_,  GLdouble y_,  GLdouble z_);
+//  RESOLVE(PFNGLROTATEDPROC, "glRotated");
+//  RESOLVED_PROC(angle_, x_, y_, z_ );
+//}
+//
+//void glRotatef(GLfloat angle_, GLfloat x_, GLfloat y_, GLfloat z_)
+//{
+//  typedef void (* PFNGLROTATEFPROC)( GLfloat angle_,  GLfloat x_,  GLfloat y_,  GLfloat z_);
+//  RESOLVE(PFNGLROTATEFPROC, "glRotatef");
+//  RESOLVED_PROC(angle_, x_, y_, z_ );
+//}
+//
+//void glScaled(GLdouble x_, GLdouble y_, GLdouble z_)
+//{
+//  typedef void (* PFNGLSCALEDPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_);
+//  RESOLVE(PFNGLSCALEDPROC, "glScaled");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glScalef(GLfloat x_, GLfloat y_, GLfloat z_)
+//{
+//  typedef void (* PFNGLSCALEFPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_);
+//  RESOLVE(PFNGLSCALEFPROC, "glScalef");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glTranslated(GLdouble x_, GLdouble y_, GLdouble z_)
+//{
+//  typedef void (* PFNGLTRANSLATEDPROC)( GLdouble x_,  GLdouble y_,  GLdouble z_);
+//  RESOLVE(PFNGLTRANSLATEDPROC, "glTranslated");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glTranslatef(GLfloat x_, GLfloat y_, GLfloat z_)
+//{
+//  typedef void (* PFNGLTRANSLATEFPROC)( GLfloat x_,  GLfloat y_,  GLfloat z_);
+//  RESOLVE(PFNGLTRANSLATEFPROC, "glTranslatef");
+//  RESOLVED_PROC(x_, y_, z_ );
+//}
+//
+//void glDrawArrays(GLenum mode_, GLint first_, GLsizei count_)
+//{
+//  typedef void (* PFNGLDRAWARRAYSPROC)( GLenum mode_,  GLint first_,  GLsizei count_);
+//  RESOLVE(PFNGLDRAWARRAYSPROC, "glDrawArrays");
+//  RESOLVED_PROC(mode_, first_, count_ );
+//}
+//
+//void glDrawElements(GLenum mode_, GLsizei count_, GLenum type_, const void * indices_)
+//{
+//  typedef void (* PFNGLDRAWELEMENTSPROC)( GLenum mode_,  GLsizei count_,  GLenum type_,  const void * indices_);
+//  RESOLVE(PFNGLDRAWELEMENTSPROC, "glDrawElements");
+//  RESOLVED_PROC(mode_, count_, type_, indices_ );
+//}
+//
+//void glGetPointerv(GLenum pname_, void ** params_)
+//{
+//  typedef void (* PFNGLGETPOINTERVPROC)( GLenum pname_,  void ** params_);
+//  RESOLVE(PFNGLGETPOINTERVPROC, "glGetPointerv");
+//  RESOLVED_PROC(pname_, params_ );
+//}
+//
+//void glPolygonOffset(GLfloat factor_, GLfloat units_)
+//{
+//  typedef void (* PFNGLPOLYGONOFFSETPROC)( GLfloat factor_,  GLfloat units_);
+//  RESOLVE(PFNGLPOLYGONOFFSETPROC, "glPolygonOffset");
+//  RESOLVED_PROC(factor_, units_ );
+//}
+//
+//void glCopyTexImage1D(GLenum target_, GLint level_, GLenum internalformat_, GLint x_, GLint y_, GLsizei width_, GLint border_)
+//{
+//  typedef void (* PFNGLCOPYTEXIMAGE1DPROC)( GLenum target_,  GLint level_,  GLenum internalformat_,  GLint x_,  GLint y_,  GLsizei width_,  GLint border_);
+//  RESOLVE(PFNGLCOPYTEXIMAGE1DPROC, "glCopyTexImage1D");
+//  RESOLVED_PROC(target_, level_, internalformat_, x_, y_, width_, border_ );
+//}
+//
+//void glCopyTexImage2D(GLenum target_, GLint level_, GLenum internalformat_, GLint x_, GLint y_, GLsizei width_, GLsizei height_, GLint border_)
+//{
+//  typedef void (* PFNGLCOPYTEXIMAGE2DPROC)( GLenum target_,  GLint level_,  GLenum internalformat_,  GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_,  GLint border_);
+//  RESOLVE(PFNGLCOPYTEXIMAGE2DPROC, "glCopyTexImage2D");
+//  RESOLVED_PROC(target_, level_, internalformat_, x_, y_, width_, height_, border_ );
+//}
+//
+//void glCopyTexSubImage1D(GLenum target_, GLint level_, GLint xoffset_, GLint x_, GLint y_, GLsizei width_)
+//{
+//  typedef void (* PFNGLCOPYTEXSUBIMAGE1DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint x_,  GLint y_,  GLsizei width_);
+//  RESOLVE(PFNGLCOPYTEXSUBIMAGE1DPROC, "glCopyTexSubImage1D");
+//  RESOLVED_PROC(target_, level_, xoffset_, x_, y_, width_ );
+//}
+//
+//void glCopyTexSubImage2D(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLint x_, GLint y_, GLsizei width_, GLsizei height_)
+//{
+//  typedef void (* PFNGLCOPYTEXSUBIMAGE2DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_);
+//  RESOLVE(PFNGLCOPYTEXSUBIMAGE2DPROC, "glCopyTexSubImage2D");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, x_, y_, width_, height_ );
+//}
+//
+//void glTexSubImage1D(GLenum target_, GLint level_, GLint xoffset_, GLsizei width_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXSUBIMAGE1DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLsizei width_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXSUBIMAGE1DPROC, "glTexSubImage1D");
+//  RESOLVED_PROC(target_, level_, xoffset_, width_, format_, type_, pixels_ );
+//}
+//
+//void glTexSubImage2D(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLsizei width_, GLsizei height_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXSUBIMAGE2DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLsizei width_,  GLsizei height_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXSUBIMAGE2DPROC, "glTexSubImage2D");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, width_, height_, format_, type_, pixels_ );
+//}
+//
+//void glBindTexture(GLenum target_, GLuint texture_)
+//{
+//  typedef void (* PFNGLBINDTEXTUREPROC)( GLenum target_,  GLuint texture_);
+//  RESOLVE(PFNGLBINDTEXTUREPROC, "glBindTexture");
+//  RESOLVED_PROC(target_, texture_ );
+//}
+//
+//void glDeleteTextures(GLsizei n_, const GLuint* textures_)
+//{
+//  typedef void (* PFNGLDELETETEXTURESPROC)( GLsizei n_,  const GLuint* textures_);
+//  RESOLVE(PFNGLDELETETEXTURESPROC, "glDeleteTextures");
+//  RESOLVED_PROC(n_, textures_ );
+//}
+//
+//void glGenTextures(GLsizei n_, GLuint* textures_)
+//{
+//  typedef void (* PFNGLGENTEXTURESPROC)( GLsizei n_,  GLuint* textures_);
+//  RESOLVE(PFNGLGENTEXTURESPROC, "glGenTextures");
+//  RESOLVED_PROC(n_, textures_ );
+//}
+//
+//GLboolean glIsTexture(GLuint texture_)
+//{
+//  typedef GLboolean (* PFNGLISTEXTUREPROC)( GLuint texture_);
+//  RESOLVE_RET(PFNGLISTEXTUREPROC, "glIsTexture", 0);
+//  return RESOLVED_PROC(texture_ );
+//}
+//
+//void glArrayElement(GLint i_)
+//{
+//  typedef void (* PFNGLARRAYELEMENTPROC)( GLint i_);
+//  RESOLVE(PFNGLARRAYELEMENTPROC, "glArrayElement");
+//  RESOLVED_PROC(i_ );
+//}
+//
+//void glColorPointer(GLint size_, GLenum type_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLCOLORPOINTERPROC)( GLint size_,  GLenum type_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLCOLORPOINTERPROC, "glColorPointer");
+//  RESOLVED_PROC(size_, type_, stride_, pointer_ );
+//}
+//
+//void glDisableClientState(GLenum array_)
+//{
+//  typedef void (* PFNGLDISABLECLIENTSTATEPROC)( GLenum array_);
+//  RESOLVE(PFNGLDISABLECLIENTSTATEPROC, "glDisableClientState");
+//  RESOLVED_PROC(array_ );
+//}
+//
+//void glEdgeFlagPointer(GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLEDGEFLAGPOINTERPROC)( GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLEDGEFLAGPOINTERPROC, "glEdgeFlagPointer");
+//  RESOLVED_PROC(stride_, pointer_ );
+//}
+//
+//void glEnableClientState(GLenum array_)
+//{
+//  typedef void (* PFNGLENABLECLIENTSTATEPROC)( GLenum array_);
+//  RESOLVE(PFNGLENABLECLIENTSTATEPROC, "glEnableClientState");
+//  RESOLVED_PROC(array_ );
+//}
+//
+//void glIndexPointer(GLenum type_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLINDEXPOINTERPROC)( GLenum type_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLINDEXPOINTERPROC, "glIndexPointer");
+//  RESOLVED_PROC(type_, stride_, pointer_ );
+//}
+//
+//void glInterleavedArrays(GLenum format_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLINTERLEAVEDARRAYSPROC)( GLenum format_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLINTERLEAVEDARRAYSPROC, "glInterleavedArrays");
+//  RESOLVED_PROC(format_, stride_, pointer_ );
+//}
+//
+//void glNormalPointer(GLenum type_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLNORMALPOINTERPROC)( GLenum type_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLNORMALPOINTERPROC, "glNormalPointer");
+//  RESOLVED_PROC(type_, stride_, pointer_ );
+//}
+//
+//void glTexCoordPointer(GLint size_, GLenum type_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLTEXCOORDPOINTERPROC)( GLint size_,  GLenum type_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLTEXCOORDPOINTERPROC, "glTexCoordPointer");
+//  RESOLVED_PROC(size_, type_, stride_, pointer_ );
+//}
+//
+//void glVertexPointer(GLint size_, GLenum type_, GLsizei stride_, const void * pointer_)
+//{
+//  typedef void (* PFNGLVERTEXPOINTERPROC)( GLint size_,  GLenum type_,  GLsizei stride_,  const void * pointer_);
+//  RESOLVE(PFNGLVERTEXPOINTERPROC, "glVertexPointer");
+//  RESOLVED_PROC(size_, type_, stride_, pointer_ );
+//}
+//
+//GLboolean glAreTexturesResident(GLsizei n_, const GLuint* textures_, GLboolean* residences_)
+//{
+//  typedef GLboolean (* PFNGLARETEXTURESRESIDENTPROC)( GLsizei n_,  const GLuint* textures_,  GLboolean* residences_);
+//  RESOLVE_RET(PFNGLARETEXTURESRESIDENTPROC, "glAreTexturesResident", 0);
+//  return RESOLVED_PROC(n_, textures_, residences_ );
+//}
+//
+//void glPrioritizeTextures(GLsizei n_, const GLuint* textures_, const GLfloat* priorities_)
+//{
+//  typedef void (* PFNGLPRIORITIZETEXTURESPROC)( GLsizei n_,  const GLuint* textures_,  const GLfloat* priorities_);
+//  RESOLVE(PFNGLPRIORITIZETEXTURESPROC, "glPrioritizeTextures");
+//  RESOLVED_PROC(n_, textures_, priorities_ );
+//}
+//
+//void glIndexub(GLubyte c_)
+//{
+//  typedef void (* PFNGLINDEXUBPROC)( GLubyte c_);
+//  RESOLVE(PFNGLINDEXUBPROC, "glIndexub");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glIndexubv(const GLubyte* c_)
+//{
+//  typedef void (* PFNGLINDEXUBVPROC)( const GLubyte* c_);
+//  RESOLVE(PFNGLINDEXUBVPROC, "glIndexubv");
+//  RESOLVED_PROC(c_ );
+//}
+//
+//void glPopClientAttrib(void)
+//{
+//  typedef void (* PFNGLPOPCLIENTATTRIBPROC)(void);
+//  RESOLVE(PFNGLPOPCLIENTATTRIBPROC, "glPopClientAttrib");
+//  RESOLVED_PROC( );
+//}
+//
+//void glPushClientAttrib(GLbitfield mask_)
+//{
+//  typedef void (* PFNGLPUSHCLIENTATTRIBPROC)( GLbitfield mask_);
+//  RESOLVE(PFNGLPUSHCLIENTATTRIBPROC, "glPushClientAttrib");
+//  RESOLVED_PROC(mask_ );
+//}
+//
+//void glDrawRangeElements(GLenum mode_, GLuint start_, GLuint end_, GLsizei count_, GLenum type_, const void * indices_)
+//{
+//  typedef void (* PFNGLDRAWRANGEELEMENTSPROC)( GLenum mode_,  GLuint start_,  GLuint end_,  GLsizei count_,  GLenum type_,  const void * indices_);
+//  RESOLVE(PFNGLDRAWRANGEELEMENTSPROC, "glDrawRangeElements");
+//  RESOLVED_PROC(mode_, start_, end_, count_, type_, indices_ );
+//}
+//
+//void glTexImage3D(GLenum target_, GLint level_, GLint internalformat_, GLsizei width_, GLsizei height_, GLsizei depth_, GLint border_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXIMAGE3DPROC)( GLenum target_,  GLint level_,  GLint internalformat_,  GLsizei width_,  GLsizei height_,  GLsizei depth_,  GLint border_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXIMAGE3DPROC, "glTexImage3D");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, height_, depth_, border_, format_, type_, pixels_ );
+//}
+//
+//void glTexSubImage3D(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLint zoffset_, GLsizei width_, GLsizei height_, GLsizei depth_, GLenum format_, GLenum type_, const void * pixels_)
+//{
+//  typedef void (* PFNGLTEXSUBIMAGE3DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLint zoffset_,  GLsizei width_,  GLsizei height_,  GLsizei depth_,  GLenum format_,  GLenum type_,  const void * pixels_);
+//  RESOLVE(PFNGLTEXSUBIMAGE3DPROC, "glTexSubImage3D");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, zoffset_, width_, height_, depth_, format_, type_, pixels_ );
+//}
+//
+//void glCopyTexSubImage3D(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLint zoffset_, GLint x_, GLint y_, GLsizei width_, GLsizei height_)
+//{
+//  typedef void (* PFNGLCOPYTEXSUBIMAGE3DPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLint zoffset_,  GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_);
+//  RESOLVE(PFNGLCOPYTEXSUBIMAGE3DPROC, "glCopyTexSubImage3D");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, zoffset_, x_, y_, width_, height_ );
+//}
+//
+//void glBlendColor(GLfloat red_, GLfloat green_, GLfloat blue_, GLfloat alpha_)
+//{
+//  typedef void (* PFNGLBLENDCOLORPROC)( GLfloat red_,  GLfloat green_,  GLfloat blue_,  GLfloat alpha_);
+//  RESOLVE(PFNGLBLENDCOLORPROC, "glBlendColor");
+//  RESOLVED_PROC(red_, green_, blue_, alpha_ );
+//}
+//
+//void glBlendEquation(GLenum mode_)
+//{
+//  typedef void (* PFNGLBLENDEQUATIONPROC)( GLenum mode_);
+//  RESOLVE(PFNGLBLENDEQUATIONPROC, "glBlendEquation");
+//  RESOLVED_PROC(mode_ );
+//}
+//
+//void glColorTable(GLenum target_, GLenum internalformat_, GLsizei width_, GLenum format_, GLenum type_, const void * table_)
+//{
+//  typedef void (* PFNGLCOLORTABLEPROC)( GLenum target_,  GLenum internalformat_,  GLsizei width_,  GLenum format_,  GLenum type_,  const void * table_);
+//  RESOLVE(PFNGLCOLORTABLEPROC, "glColorTable");
+//  RESOLVED_PROC(target_, internalformat_, width_, format_, type_, table_ );
+//}
+//
+//void glColorTableParameterfv(GLenum target_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLCOLORTABLEPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLCOLORTABLEPARAMETERFVPROC, "glColorTableParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glColorTableParameteriv(GLenum target_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLCOLORTABLEPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLCOLORTABLEPARAMETERIVPROC, "glColorTableParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glCopyColorTable(GLenum target_, GLenum internalformat_, GLint x_, GLint y_, GLsizei width_)
+//{
+//  typedef void (* PFNGLCOPYCOLORTABLEPROC)( GLenum target_,  GLenum internalformat_,  GLint x_,  GLint y_,  GLsizei width_);
+//  RESOLVE(PFNGLCOPYCOLORTABLEPROC, "glCopyColorTable");
+//  RESOLVED_PROC(target_, internalformat_, x_, y_, width_ );
+//}
+//
+//void glGetColorTable(GLenum target_, GLenum format_, GLenum type_, void * table_)
+//{
+//  typedef void (* PFNGLGETCOLORTABLEPROC)( GLenum target_,  GLenum format_,  GLenum type_,  void * table_);
+//  RESOLVE(PFNGLGETCOLORTABLEPROC, "glGetColorTable");
+//  RESOLVED_PROC(target_, format_, type_, table_ );
+//}
+//
+//void glGetColorTableParameterfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETCOLORTABLEPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETCOLORTABLEPARAMETERFVPROC, "glGetColorTableParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetColorTableParameteriv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETCOLORTABLEPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETCOLORTABLEPARAMETERIVPROC, "glGetColorTableParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glColorSubTable(GLenum target_, GLsizei start_, GLsizei count_, GLenum format_, GLenum type_, const void * data_)
+//{
+//  typedef void (* PFNGLCOLORSUBTABLEPROC)( GLenum target_,  GLsizei start_,  GLsizei count_,  GLenum format_,  GLenum type_,  const void * data_);
+//  RESOLVE(PFNGLCOLORSUBTABLEPROC, "glColorSubTable");
+//  RESOLVED_PROC(target_, start_, count_, format_, type_, data_ );
+//}
+//
+//void glCopyColorSubTable(GLenum target_, GLsizei start_, GLint x_, GLint y_, GLsizei width_)
+//{
+//  typedef void (* PFNGLCOPYCOLORSUBTABLEPROC)( GLenum target_,  GLsizei start_,  GLint x_,  GLint y_,  GLsizei width_);
+//  RESOLVE(PFNGLCOPYCOLORSUBTABLEPROC, "glCopyColorSubTable");
+//  RESOLVED_PROC(target_, start_, x_, y_, width_ );
+//}
+//
+//void glConvolutionFilter1D(GLenum target_, GLenum internalformat_, GLsizei width_, GLenum format_, GLenum type_, const void * image_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONFILTER1DPROC)( GLenum target_,  GLenum internalformat_,  GLsizei width_,  GLenum format_,  GLenum type_,  const void * image_);
+//  RESOLVE(PFNGLCONVOLUTIONFILTER1DPROC, "glConvolutionFilter1D");
+//  RESOLVED_PROC(target_, internalformat_, width_, format_, type_, image_ );
+//}
+//
+//void glConvolutionFilter2D(GLenum target_, GLenum internalformat_, GLsizei width_, GLsizei height_, GLenum format_, GLenum type_, const void * image_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONFILTER2DPROC)( GLenum target_,  GLenum internalformat_,  GLsizei width_,  GLsizei height_,  GLenum format_,  GLenum type_,  const void * image_);
+//  RESOLVE(PFNGLCONVOLUTIONFILTER2DPROC, "glConvolutionFilter2D");
+//  RESOLVED_PROC(target_, internalformat_, width_, height_, format_, type_, image_ );
+//}
+//
+//void glConvolutionParameterf(GLenum target_, GLenum pname_, GLfloat params_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONPARAMETERFPROC)( GLenum target_,  GLenum pname_,  GLfloat params_);
+//  RESOLVE(PFNGLCONVOLUTIONPARAMETERFPROC, "glConvolutionParameterf");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glConvolutionParameterfv(GLenum target_, GLenum pname_, const GLfloat* params_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  const GLfloat* params_);
+//  RESOLVE(PFNGLCONVOLUTIONPARAMETERFVPROC, "glConvolutionParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glConvolutionParameteri(GLenum target_, GLenum pname_, GLint params_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONPARAMETERIPROC)( GLenum target_,  GLenum pname_,  GLint params_);
+//  RESOLVE(PFNGLCONVOLUTIONPARAMETERIPROC, "glConvolutionParameteri");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glConvolutionParameteriv(GLenum target_, GLenum pname_, const GLint* params_)
+//{
+//  typedef void (* PFNGLCONVOLUTIONPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  const GLint* params_);
+//  RESOLVE(PFNGLCONVOLUTIONPARAMETERIVPROC, "glConvolutionParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glCopyConvolutionFilter1D(GLenum target_, GLenum internalformat_, GLint x_, GLint y_, GLsizei width_)
+//{
+//  typedef void (* PFNGLCOPYCONVOLUTIONFILTER1DPROC)( GLenum target_,  GLenum internalformat_,  GLint x_,  GLint y_,  GLsizei width_);
+//  RESOLVE(PFNGLCOPYCONVOLUTIONFILTER1DPROC, "glCopyConvolutionFilter1D");
+//  RESOLVED_PROC(target_, internalformat_, x_, y_, width_ );
+//}
+//
+//void glCopyConvolutionFilter2D(GLenum target_, GLenum internalformat_, GLint x_, GLint y_, GLsizei width_, GLsizei height_)
+//{
+//  typedef void (* PFNGLCOPYCONVOLUTIONFILTER2DPROC)( GLenum target_,  GLenum internalformat_,  GLint x_,  GLint y_,  GLsizei width_,  GLsizei height_);
+//  RESOLVE(PFNGLCOPYCONVOLUTIONFILTER2DPROC, "glCopyConvolutionFilter2D");
+//  RESOLVED_PROC(target_, internalformat_, x_, y_, width_, height_ );
+//}
+//
+//void glGetConvolutionFilter(GLenum target_, GLenum format_, GLenum type_, void * image_)
+//{
+//  typedef void (* PFNGLGETCONVOLUTIONFILTERPROC)( GLenum target_,  GLenum format_,  GLenum type_,  void * image_);
+//  RESOLVE(PFNGLGETCONVOLUTIONFILTERPROC, "glGetConvolutionFilter");
+//  RESOLVED_PROC(target_, format_, type_, image_ );
+//}
+//
+//void glGetConvolutionParameterfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETCONVOLUTIONPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETCONVOLUTIONPARAMETERFVPROC, "glGetConvolutionParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetConvolutionParameteriv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETCONVOLUTIONPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETCONVOLUTIONPARAMETERIVPROC, "glGetConvolutionParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetSeparableFilter(GLenum target_, GLenum format_, GLenum type_, void * row_, void * column_, void * span_)
+//{
+//  typedef void (* PFNGLGETSEPARABLEFILTERPROC)( GLenum target_,  GLenum format_,  GLenum type_,  void * row_,  void * column_,  void * span_);
+//  RESOLVE(PFNGLGETSEPARABLEFILTERPROC, "glGetSeparableFilter");
+//  RESOLVED_PROC(target_, format_, type_, row_, column_, span_ );
+//}
+//
+//void glSeparableFilter2D(GLenum target_, GLenum internalformat_, GLsizei width_, GLsizei height_, GLenum format_, GLenum type_, const void * row_, const void * column_)
+//{
+//  typedef void (* PFNGLSEPARABLEFILTER2DPROC)( GLenum target_,  GLenum internalformat_,  GLsizei width_,  GLsizei height_,  GLenum format_,  GLenum type_,  const void * row_,  const void * column_);
+//  RESOLVE(PFNGLSEPARABLEFILTER2DPROC, "glSeparableFilter2D");
+//  RESOLVED_PROC(target_, internalformat_, width_, height_, format_, type_, row_, column_ );
+//}
+//
+//void glGetHistogram(GLenum target_, GLboolean reset_, GLenum format_, GLenum type_, void * values_)
+//{
+//  typedef void (* PFNGLGETHISTOGRAMPROC)( GLenum target_,  GLboolean reset_,  GLenum format_,  GLenum type_,  void * values_);
+//  RESOLVE(PFNGLGETHISTOGRAMPROC, "glGetHistogram");
+//  RESOLVED_PROC(target_, reset_, format_, type_, values_ );
+//}
+//
+//void glGetHistogramParameterfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETHISTOGRAMPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETHISTOGRAMPARAMETERFVPROC, "glGetHistogramParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetHistogramParameteriv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETHISTOGRAMPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETHISTOGRAMPARAMETERIVPROC, "glGetHistogramParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetMinmax(GLenum target_, GLboolean reset_, GLenum format_, GLenum type_, void * values_)
+//{
+//  typedef void (* PFNGLGETMINMAXPROC)( GLenum target_,  GLboolean reset_,  GLenum format_,  GLenum type_,  void * values_);
+//  RESOLVE(PFNGLGETMINMAXPROC, "glGetMinmax");
+//  RESOLVED_PROC(target_, reset_, format_, type_, values_ );
+//}
+//
+//void glGetMinmaxParameterfv(GLenum target_, GLenum pname_, GLfloat* params_)
+//{
+//  typedef void (* PFNGLGETMINMAXPARAMETERFVPROC)( GLenum target_,  GLenum pname_,  GLfloat* params_);
+//  RESOLVE(PFNGLGETMINMAXPARAMETERFVPROC, "glGetMinmaxParameterfv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glGetMinmaxParameteriv(GLenum target_, GLenum pname_, GLint* params_)
+//{
+//  typedef void (* PFNGLGETMINMAXPARAMETERIVPROC)( GLenum target_,  GLenum pname_,  GLint* params_);
+//  RESOLVE(PFNGLGETMINMAXPARAMETERIVPROC, "glGetMinmaxParameteriv");
+//  RESOLVED_PROC(target_, pname_, params_ );
+//}
+//
+//void glHistogram(GLenum target_, GLsizei width_, GLenum internalformat_, GLboolean sink_)
+//{
+//  typedef void (* PFNGLHISTOGRAMPROC)( GLenum target_,  GLsizei width_,  GLenum internalformat_,  GLboolean sink_);
+//  RESOLVE(PFNGLHISTOGRAMPROC, "glHistogram");
+//  RESOLVED_PROC(target_, width_, internalformat_, sink_ );
+//}
+//
+//void glMinmax(GLenum target_, GLenum internalformat_, GLboolean sink_)
+//{
+//  typedef void (* PFNGLMINMAXPROC)( GLenum target_,  GLenum internalformat_,  GLboolean sink_);
+//  RESOLVE(PFNGLMINMAXPROC, "glMinmax");
+//  RESOLVED_PROC(target_, internalformat_, sink_ );
+//}
+//
+//void glResetHistogram(GLenum target_)
+//{
+//  typedef void (* PFNGLRESETHISTOGRAMPROC)( GLenum target_);
+//  RESOLVE(PFNGLRESETHISTOGRAMPROC, "glResetHistogram");
+//  RESOLVED_PROC(target_ );
+//}
+//
+//void glResetMinmax(GLenum target_)
+//{
+//  typedef void (* PFNGLRESETMINMAXPROC)( GLenum target_);
+//  RESOLVE(PFNGLRESETMINMAXPROC, "glResetMinmax");
+//  RESOLVED_PROC(target_ );
+//}
+//
+//void glActiveTextureARB(GLenum texture_)
+//{
+//  typedef void (* PFNGLACTIVETEXTUREARBPROC)( GLenum texture_);
+//  RESOLVE(PFNGLACTIVETEXTUREARBPROC, "glActiveTextureARB");
+//  RESOLVED_PROC(texture_ );
+//}
+//
+//void glClientActiveTextureARB(GLenum texture_)
+//{
+//  typedef void (* PFNGLCLIENTACTIVETEXTUREARBPROC)( GLenum texture_);
+//  RESOLVE(PFNGLCLIENTACTIVETEXTUREARBPROC, "glClientActiveTextureARB");
+//  RESOLVED_PROC(texture_ );
+//}
+//
+//void glMultiTexCoord1dARB(GLenum target_, GLdouble s_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1DARBPROC)( GLenum target_,  GLdouble s_);
+//  RESOLVE(PFNGLMULTITEXCOORD1DARBPROC, "glMultiTexCoord1dARB");
+//  RESOLVED_PROC(target_, s_ );
+//}
+//
+//void glMultiTexCoord1dvARB(GLenum target_, const GLdouble* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1DVARBPROC)( GLenum target_,  const GLdouble* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD1DVARBPROC, "glMultiTexCoord1dvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord1fARB(GLenum target_, GLfloat s_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1FARBPROC)( GLenum target_,  GLfloat s_);
+//  RESOLVE(PFNGLMULTITEXCOORD1FARBPROC, "glMultiTexCoord1fARB");
+//  RESOLVED_PROC(target_, s_ );
+//}
+//
+//void glMultiTexCoord1fvARB(GLenum target_, const GLfloat* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1FVARBPROC)( GLenum target_,  const GLfloat* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD1FVARBPROC, "glMultiTexCoord1fvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord1iARB(GLenum target_, GLint s_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1IARBPROC)( GLenum target_,  GLint s_);
+//  RESOLVE(PFNGLMULTITEXCOORD1IARBPROC, "glMultiTexCoord1iARB");
+//  RESOLVED_PROC(target_, s_ );
+//}
+//
+//void glMultiTexCoord1ivARB(GLenum target_, const GLint* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1IVARBPROC)( GLenum target_,  const GLint* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD1IVARBPROC, "glMultiTexCoord1ivARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord1sARB(GLenum target_, GLshort s_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1SARBPROC)( GLenum target_,  GLshort s_);
+//  RESOLVE(PFNGLMULTITEXCOORD1SARBPROC, "glMultiTexCoord1sARB");
+//  RESOLVED_PROC(target_, s_ );
+//}
+//
+//void glMultiTexCoord1svARB(GLenum target_, const GLshort* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD1SVARBPROC)( GLenum target_,  const GLshort* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD1SVARBPROC, "glMultiTexCoord1svARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord2dARB(GLenum target_, GLdouble s_, GLdouble t_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2DARBPROC)( GLenum target_,  GLdouble s_,  GLdouble t_);
+//  RESOLVE(PFNGLMULTITEXCOORD2DARBPROC, "glMultiTexCoord2dARB");
+//  RESOLVED_PROC(target_, s_, t_ );
+//}
+//
+//void glMultiTexCoord2dvARB(GLenum target_, const GLdouble* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2DVARBPROC)( GLenum target_,  const GLdouble* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD2DVARBPROC, "glMultiTexCoord2dvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord2fARB(GLenum target_, GLfloat s_, GLfloat t_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2FARBPROC)( GLenum target_,  GLfloat s_,  GLfloat t_);
+//  RESOLVE(PFNGLMULTITEXCOORD2FARBPROC, "glMultiTexCoord2fARB");
+//  RESOLVED_PROC(target_, s_, t_ );
+//}
+//
+//void glMultiTexCoord2fvARB(GLenum target_, const GLfloat* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2FVARBPROC)( GLenum target_,  const GLfloat* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD2FVARBPROC, "glMultiTexCoord2fvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord2iARB(GLenum target_, GLint s_, GLint t_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2IARBPROC)( GLenum target_,  GLint s_,  GLint t_);
+//  RESOLVE(PFNGLMULTITEXCOORD2IARBPROC, "glMultiTexCoord2iARB");
+//  RESOLVED_PROC(target_, s_, t_ );
+//}
+//
+//void glMultiTexCoord2ivARB(GLenum target_, const GLint* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2IVARBPROC)( GLenum target_,  const GLint* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD2IVARBPROC, "glMultiTexCoord2ivARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord2sARB(GLenum target_, GLshort s_, GLshort t_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2SARBPROC)( GLenum target_,  GLshort s_,  GLshort t_);
+//  RESOLVE(PFNGLMULTITEXCOORD2SARBPROC, "glMultiTexCoord2sARB");
+//  RESOLVED_PROC(target_, s_, t_ );
+//}
+//
+//void glMultiTexCoord2svARB(GLenum target_, const GLshort* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD2SVARBPROC)( GLenum target_,  const GLshort* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD2SVARBPROC, "glMultiTexCoord2svARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord3dARB(GLenum target_, GLdouble s_, GLdouble t_, GLdouble r_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3DARBPROC)( GLenum target_,  GLdouble s_,  GLdouble t_,  GLdouble r_);
+//  RESOLVE(PFNGLMULTITEXCOORD3DARBPROC, "glMultiTexCoord3dARB");
+//  RESOLVED_PROC(target_, s_, t_, r_ );
+//}
+//
+//void glMultiTexCoord3dvARB(GLenum target_, const GLdouble* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3DVARBPROC)( GLenum target_,  const GLdouble* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD3DVARBPROC, "glMultiTexCoord3dvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord3fARB(GLenum target_, GLfloat s_, GLfloat t_, GLfloat r_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3FARBPROC)( GLenum target_,  GLfloat s_,  GLfloat t_,  GLfloat r_);
+//  RESOLVE(PFNGLMULTITEXCOORD3FARBPROC, "glMultiTexCoord3fARB");
+//  RESOLVED_PROC(target_, s_, t_, r_ );
+//}
+//
+//void glMultiTexCoord3fvARB(GLenum target_, const GLfloat* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3FVARBPROC)( GLenum target_,  const GLfloat* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD3FVARBPROC, "glMultiTexCoord3fvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord3iARB(GLenum target_, GLint s_, GLint t_, GLint r_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3IARBPROC)( GLenum target_,  GLint s_,  GLint t_,  GLint r_);
+//  RESOLVE(PFNGLMULTITEXCOORD3IARBPROC, "glMultiTexCoord3iARB");
+//  RESOLVED_PROC(target_, s_, t_, r_ );
+//}
+//
+//void glMultiTexCoord3ivARB(GLenum target_, const GLint* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3IVARBPROC)( GLenum target_,  const GLint* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD3IVARBPROC, "glMultiTexCoord3ivARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord3sARB(GLenum target_, GLshort s_, GLshort t_, GLshort r_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3SARBPROC)( GLenum target_,  GLshort s_,  GLshort t_,  GLshort r_);
+//  RESOLVE(PFNGLMULTITEXCOORD3SARBPROC, "glMultiTexCoord3sARB");
+//  RESOLVED_PROC(target_, s_, t_, r_ );
+//}
+//
+//void glMultiTexCoord3svARB(GLenum target_, const GLshort* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD3SVARBPROC)( GLenum target_,  const GLshort* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD3SVARBPROC, "glMultiTexCoord3svARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord4dARB(GLenum target_, GLdouble s_, GLdouble t_, GLdouble r_, GLdouble q_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4DARBPROC)( GLenum target_,  GLdouble s_,  GLdouble t_,  GLdouble r_,  GLdouble q_);
+//  RESOLVE(PFNGLMULTITEXCOORD4DARBPROC, "glMultiTexCoord4dARB");
+//  RESOLVED_PROC(target_, s_, t_, r_, q_ );
+//}
+//
+//void glMultiTexCoord4dvARB(GLenum target_, const GLdouble* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4DVARBPROC)( GLenum target_,  const GLdouble* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD4DVARBPROC, "glMultiTexCoord4dvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord4fARB(GLenum target_, GLfloat s_, GLfloat t_, GLfloat r_, GLfloat q_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4FARBPROC)( GLenum target_,  GLfloat s_,  GLfloat t_,  GLfloat r_,  GLfloat q_);
+//  RESOLVE(PFNGLMULTITEXCOORD4FARBPROC, "glMultiTexCoord4fARB");
+//  RESOLVED_PROC(target_, s_, t_, r_, q_ );
+//}
+//
+//void glMultiTexCoord4fvARB(GLenum target_, const GLfloat* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4FVARBPROC)( GLenum target_,  const GLfloat* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD4FVARBPROC, "glMultiTexCoord4fvARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord4iARB(GLenum target_, GLint s_, GLint t_, GLint r_, GLint q_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4IARBPROC)( GLenum target_,  GLint s_,  GLint t_,  GLint r_,  GLint q_);
+//  RESOLVE(PFNGLMULTITEXCOORD4IARBPROC, "glMultiTexCoord4iARB");
+//  RESOLVED_PROC(target_, s_, t_, r_, q_ );
+//}
+//
+//void glMultiTexCoord4ivARB(GLenum target_, const GLint* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4IVARBPROC)( GLenum target_,  const GLint* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD4IVARBPROC, "glMultiTexCoord4ivARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glMultiTexCoord4sARB(GLenum target_, GLshort s_, GLshort t_, GLshort r_, GLshort q_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4SARBPROC)( GLenum target_,  GLshort s_,  GLshort t_,  GLshort r_,  GLshort q_);
+//  RESOLVE(PFNGLMULTITEXCOORD4SARBPROC, "glMultiTexCoord4sARB");
+//  RESOLVED_PROC(target_, s_, t_, r_, q_ );
+//}
+//
+//void glMultiTexCoord4svARB(GLenum target_, const GLshort* v_)
+//{
+//  typedef void (* PFNGLMULTITEXCOORD4SVARBPROC)( GLenum target_,  const GLshort* v_);
+//  RESOLVE(PFNGLMULTITEXCOORD4SVARBPROC, "glMultiTexCoord4svARB");
+//  RESOLVED_PROC(target_, v_ );
+//}
+//
+//void glCompressedTexImage3DARB(GLenum target_, GLint level_, GLenum internalformat_, GLsizei width_, GLsizei height_, GLsizei depth_, GLint border_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXIMAGE3DARBPROC)( GLenum target_,  GLint level_,  GLenum internalformat_,  GLsizei width_,  GLsizei height_,  GLsizei depth_,  GLint border_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXIMAGE3DARBPROC, "glCompressedTexImage3DARB");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, height_, depth_, border_, imageSize_, data_ );
+//}
+//
+//void glCompressedTexImage2DARB(GLenum target_, GLint level_, GLenum internalformat_, GLsizei width_, GLsizei height_, GLint border_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXIMAGE2DARBPROC)( GLenum target_,  GLint level_,  GLenum internalformat_,  GLsizei width_,  GLsizei height_,  GLint border_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXIMAGE2DARBPROC, "glCompressedTexImage2DARB");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, height_, border_, imageSize_, data_ );
+//}
+//
+//void glCompressedTexImage1DARB(GLenum target_, GLint level_, GLenum internalformat_, GLsizei width_, GLint border_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXIMAGE1DARBPROC)( GLenum target_,  GLint level_,  GLenum internalformat_,  GLsizei width_,  GLint border_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXIMAGE1DARBPROC, "glCompressedTexImage1DARB");
+//  RESOLVED_PROC(target_, level_, internalformat_, width_, border_, imageSize_, data_ );
+//}
+//
+//void glCompressedTexSubImage3DARB(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLint zoffset_, GLsizei width_, GLsizei height_, GLsizei depth_, GLenum format_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXSUBIMAGE3DARBPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLint zoffset_,  GLsizei width_,  GLsizei height_,  GLsizei depth_,  GLenum format_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXSUBIMAGE3DARBPROC, "glCompressedTexSubImage3DARB");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, zoffset_, width_, height_, depth_, format_, imageSize_, data_ );
+//}
+//
+//void glCompressedTexSubImage2DARB(GLenum target_, GLint level_, GLint xoffset_, GLint yoffset_, GLsizei width_, GLsizei height_, GLenum format_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXSUBIMAGE2DARBPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLint yoffset_,  GLsizei width_,  GLsizei height_,  GLenum format_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXSUBIMAGE2DARBPROC, "glCompressedTexSubImage2DARB");
+//  RESOLVED_PROC(target_, level_, xoffset_, yoffset_, width_, height_, format_, imageSize_, data_ );
+//}
+//
+//void glCompressedTexSubImage1DARB(GLenum target_, GLint level_, GLint xoffset_, GLsizei width_, GLenum format_, GLsizei imageSize_, const void * data_)
+//{
+//  typedef void (* PFNGLCOMPRESSEDTEXSUBIMAGE1DARBPROC)( GLenum target_,  GLint level_,  GLint xoffset_,  GLsizei width_,  GLenum format_,  GLsizei imageSize_,  const void * data_);
+//  RESOLVE(PFNGLCOMPRESSEDTEXSUBIMAGE1DARBPROC, "glCompressedTexSubImage1DARB");
+//  RESOLVED_PROC(target_, level_, xoffset_, width_, format_, imageSize_, data_ );
+//}
+//
+//void glGetCompressedTexImageARB(GLenum target_, GLint level_, void * img_)
+//{
+//  typedef void (* PFNGLGETCOMPRESSEDTEXIMAGEARBPROC)( GLenum target_,  GLint level_,  void * img_);
+//  RESOLVE(PFNGLGETCOMPRESSEDTEXIMAGEARBPROC, "glGetCompressedTexImageARB");
+//  RESOLVED_PROC(target_, level_, img_ );
+//}
+

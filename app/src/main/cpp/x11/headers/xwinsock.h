@@ -11,7 +11,7 @@
 #define ATOM wATOM
 #define BYTE wBYTE
 #define FreeResource wFreeResource
-#include <winsock2.h>
+#include "../../windows/winsock2.h"
 #undef Status
 #define Status int
 #undef BYTE

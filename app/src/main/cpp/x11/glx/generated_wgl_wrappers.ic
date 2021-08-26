@@ -1,0 +1,108 @@
+///* Automatically generated from wgl.xml - DO NOT EDIT */
+//
+//RESOLVE_DECL(PFNWGLGETEXTENSIONSSTRINGARBPROC);
+//RESOLVE_DECL(PFNWGLMAKECONTEXTCURRENTARBPROC);
+//RESOLVE_DECL(PFNWGLCREATEPBUFFERARBPROC);
+//RESOLVE_DECL(PFNWGLGETPBUFFERDCARBPROC);
+//RESOLVE_DECL(PFNWGLRELEASEPBUFFERDCARBPROC);
+//RESOLVE_DECL(PFNWGLDESTROYPBUFFERARBPROC);
+//RESOLVE_DECL(PFNWGLGETPIXELFORMATATTRIBIVARBPROC);
+//RESOLVE_DECL(PFNWGLCHOOSEPIXELFORMATARBPROC);
+//RESOLVE_DECL(PFNWGLSWAPINTERVALEXTPROC);
+//
+//void wglResolveExtensionProcs(void)
+//{
+//  PRERESOLVE(PFNWGLGETEXTENSIONSSTRINGARBPROC, "wglGetExtensionsStringARB");
+//  PRERESOLVE(PFNWGLMAKECONTEXTCURRENTARBPROC, "wglMakeContextCurrentARB");
+//  PRERESOLVE(PFNWGLCREATEPBUFFERARBPROC, "wglCreatePbufferARB");
+//  PRERESOLVE(PFNWGLGETPBUFFERDCARBPROC, "wglGetPbufferDCARB");
+//  PRERESOLVE(PFNWGLRELEASEPBUFFERDCARBPROC, "wglReleasePbufferDCARB");
+//  PRERESOLVE(PFNWGLDESTROYPBUFFERARBPROC, "wglDestroyPbufferARB");
+//  PRERESOLVE(PFNWGLGETPIXELFORMATATTRIBIVARBPROC, "wglGetPixelFormatAttribivARB");
+//  PRERESOLVE(PFNWGLCHOOSEPIXELFORMATARBPROC, "wglChoosePixelFormatARB");
+//  PRERESOLVE(PFNWGLSWAPINTERVALEXTPROC, "wglSwapIntervalEXT");
+//}
+//
+///* Automatically generated from wgl.xml - DO NOT EDIT */
+//
+//const char * wglGetExtensionsStringARBWrapper(HDC hdc_)
+//{
+//  RESOLVE_RET(PFNWGLGETEXTENSIONSSTRINGARBPROC, "wglGetExtensionsStringARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglGetExtensionsStringARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLGETEXTENSIONSSTRINGARBPROC)(hdc_ );
+//}
+//
+//BOOL wglMakeContextCurrentARBWrapper(HDC hDrawDC_, HDC hReadDC_, HGLRC hglrc_)
+//{
+//  RESOLVE_RET(PFNWGLMAKECONTEXTCURRENTARBPROC, "wglMakeContextCurrentARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglMakeContextCurrentARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLMAKECONTEXTCURRENTARBPROC)(hDrawDC_, hReadDC_, hglrc_ );
+//}
+//
+//HPBUFFERARB wglCreatePbufferARBWrapper(HDC hDC_, int  iPixelFormat_, int  iWidth_, int  iHeight_, const int * piAttribList_)
+//{
+//  RESOLVE_RET(PFNWGLCREATEPBUFFERARBPROC, "wglCreatePbufferARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglCreatePbufferARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLCREATEPBUFFERARBPROC)(hDC_, iPixelFormat_, iWidth_, iHeight_, piAttribList_ );
+//}
+//
+//HDC wglGetPbufferDCARBWrapper(HPBUFFERARB hPbuffer_)
+//{
+//  RESOLVE_RET(PFNWGLGETPBUFFERDCARBPROC, "wglGetPbufferDCARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglGetPbufferDCARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLGETPBUFFERDCARBPROC)(hPbuffer_ );
+//}
+//
+//int wglReleasePbufferDCARBWrapper(HPBUFFERARB hPbuffer_, HDC hDC_)
+//{
+//  RESOLVE_RET(PFNWGLRELEASEPBUFFERDCARBPROC, "wglReleasePbufferDCARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglReleasePbufferDCARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLRELEASEPBUFFERDCARBPROC)(hPbuffer_, hDC_ );
+//}
+//
+//BOOL wglDestroyPbufferARBWrapper(HPBUFFERARB hPbuffer_)
+//{
+//  RESOLVE_RET(PFNWGLDESTROYPBUFFERARBPROC, "wglDestroyPbufferARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglDestroyPbufferARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLDESTROYPBUFFERARBPROC)(hPbuffer_ );
+//}
+//
+//BOOL wglGetPixelFormatAttribivARBWrapper(HDC hdc_, int  iPixelFormat_, int  iLayerPlane_, UINT nAttributes_, const int * piAttributes_, int * piValues_)
+//{
+//  RESOLVE_RET(PFNWGLGETPIXELFORMATATTRIBIVARBPROC, "wglGetPixelFormatAttribivARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglGetPixelFormatAttribivARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLGETPIXELFORMATATTRIBIVARBPROC)(hdc_, iPixelFormat_, iLayerPlane_, nAttributes_, piAttributes_, piValues_ );
+//}
+//
+//BOOL wglChoosePixelFormatARBWrapper(HDC hdc_, const int * piAttribIList_, const FLOAT* pfAttribFList_, UINT nMaxFormats_, int * piFormats_, UINT* nNumFormats_)
+//{
+//  RESOLVE_RET(PFNWGLCHOOSEPIXELFORMATARBPROC, "wglChoosePixelFormatARB", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglChoosePixelFormatARB\n");
+//
+//  return RESOLVED_PROC(PFNWGLCHOOSEPIXELFORMATARBPROC)(hdc_, piAttribIList_, pfAttribFList_, nMaxFormats_, piFormats_, nNumFormats_ );
+//}
+//
+//BOOL wglSwapIntervalEXTWrapper(int  interval_)
+//{
+//  RESOLVE_RET(PFNWGLSWAPINTERVALEXTPROC, "wglSwapIntervalEXT", FALSE);
+//
+//  if (glxWinDebugSettings.enableWGLcallTrace) ErrorF("wglSwapIntervalEXT\n");
+//
+//  return RESOLVED_PROC(PFNWGLSWAPINTERVALEXTPROC)(interval_ );
+//}
+//

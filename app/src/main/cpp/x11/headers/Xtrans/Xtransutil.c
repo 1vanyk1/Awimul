@@ -1,3 +1,6 @@
+#ifndef _Xtransutil_H
+#define _Xtransutil_H
+
 #ifdef XTHREADS
 #include "../xthreads.h"
 #endif
@@ -7,6 +10,10 @@
 #endif
 
 #define TRANS_CLIENT
+#define TRANS_SERVER
+#define TRANS_REOPEN
+
+#include "Xtransint.h"
 
 #ifdef X11_t
 
@@ -372,6 +379,7 @@ TRANS(WSAStartup) (void)
 #endif
 
 #include <ctype.h>
+#include <string.h>
 
 static int
 is_numeric (const char *str)
@@ -389,6 +397,7 @@ is_numeric (const char *str)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+
 
 #if !defined(S_IFLNK) && !defined(S_ISLNK)
 #undef lstat
@@ -460,7 +469,7 @@ trans_mkdir(const char *path, int mode)
 
     } else {
 	if (S_ISDIR(buf.st_mode)) {
-	    int updateOwner = 0;
+		int updateOwner = 0;
 	    int updateMode = 0;
 	    int updatedOwner = 0;
 	    int updatedMode = 0;
@@ -574,3 +583,4 @@ trans_mkdir(const char *path, int mode)
 }
 
 #endif /* TRANS_SERVER */
+#endif //_Xtransutil_H

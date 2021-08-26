@@ -226,7 +226,7 @@ typedef unsigned int ULONG, *PULONG;
 
 typedef void                                   *LPVOID;
 typedef const void                             *LPCVOID;
-typedef int             BOOL,       *PBOOL,    *LPBOOL;
+typedef int             *PBOOL,    *LPBOOL;
 typedef unsigned char   BYTE,       *PBYTE,    *LPBYTE;
 typedef unsigned short  WORD,       *PWORD,    *LPWORD;
 typedef int             INT,        *PINT,     *LPINT;
@@ -267,7 +267,7 @@ typedef unsigned int    DWORD,      *PDWORD,   *LPDWORD;
 # define DECL_WINELIB_TYPE_AW(type)  typedef WINELIB_NAME_AW(type) type;
 #endif
 
-#include <winnt.h>
+#include "winnt.h"
 
 /* Polymorphic types */
 
@@ -277,7 +277,7 @@ typedef LONG_PTR        LRESULT;
 
 /* Integer types */
 
-typedef WORD            ATOM;
+//typedef WORD            ATOM;
 typedef DWORD           COLORREF, *LPCOLORREF;
 
 
