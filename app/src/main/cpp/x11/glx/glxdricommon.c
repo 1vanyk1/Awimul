@@ -17,7 +17,7 @@
 #include "glxcontext.h"
 #include "glxscreens.h"
 #include "glxdricommon.h"
-#include "../../dri/dri.h"
+//#include "../../dri/dri.h"
 
 #define __ATTRIB(attrib, field) \
     { attrib, offsetof(__GLXconfig, field) }
@@ -250,7 +250,7 @@ glxProbeDriver(const char *driverName,
                void **renderExt, const char *renderName, int renderVersion)
 {
     int i;
-    void *driver = NULL;
+    void *driver;
     char filename[PATH_MAX];
     char *get_extensions_name;
     const __DRIextension **extensions = NULL;
@@ -263,62 +263,56 @@ glxProbeDriver(const char *driverName,
     if (!path)
         path = dri_driver_path;
 
-//    driver = dlopen("/dev/null", RTLD_LAZY | RTLD_LOCAL);
-    driver = (void *)malloc(1); // driver must be not null
+    do {
+        const char *next;
+        int path_len;
 
-//    do {
-//        const char *next;
-//        int path_len;
-//
-//        next = strchr(path, ':');
-//        if (next) {
-//            path_len = next - path;
-//            next++;
-//        } else {
-//            path_len = strlen(path);
-//            next = NULL;
-//        }
-//
-////        get_extensions = __driDriverGetExtensions_swrast();
-//
-//        snprintf(filename, sizeof filename, "%.*s/%s_dri.so", path_len, path,
-//                 driverName);
-//
-//        driver = dlopen(filename, RTLD_LAZY | RTLD_LOCAL);
-//        if (driver != NULL)
-//            break;
-//
-//        LogMessage(X_ERROR, "AIGLX error: dlopen of %s failed (%s)\n",
-//                   filename, dlerror());
-//
-//        path = next;
-//    } while (path);
-//
-//    if (driver == NULL) {
-//        LogMessage(X_ERROR, "AIGLX error: unable to load driver %s\n",
-//                   driverName);
-//        goto cleanup_failure;
-//    }
+        next = strchr(path, ':');
+        if (next) {
+            path_len = next - path;
+            next++;
+        } else {
+            path_len = strlen(path);
+            next = NULL;
+        }
 
-//    if (asprintf(&get_extensions_name, "%s_%s",
-//                 __DRI_DRIVER_GET_EXTENSIONS, driverName) != -1) {
-//        const __DRIextension **(*get_extensions)(void);
-//
-//        for (i = 0; i < strlen(get_extensions_name); i++) {
-//            /* Replace all non-alphanumeric characters with underscore,
-//             * since they are not allowed in C symbol names. That fixes up
-//             * symbol name for drivers with '-drm' suffix
-//             */
-//            if (!isalnum(get_extensions_name[i]))
-//                get_extensions_name[i] = '_';
-//        }
-//
-//        get_extensions = dlsym(driver, get_extensions_name);
-//        if (get_extensions)
-//            extensions = get_extensions();
-//        free(get_extensions_name);
-//    }
-    extensions = __driDriverGetExtensions_swrast();
+        snprintf(filename, sizeof filename, "%.*s/%s_dri.so", path_len, path,
+                 driverName);
+
+        driver = dlopen(filename, RTLD_LAZY | RTLD_LOCAL);
+        if (driver != NULL)
+            break;
+
+        LogMessage(X_ERROR, "AIGLX error: dlopen of %s failed (%s)\n",
+                   filename, dlerror());
+
+        path = next;
+    } while (path);
+
+    if (driver == NULL) {
+        LogMessage(X_ERROR, "AIGLX error: unable to load driver %s\n",
+                   driverName);
+        goto cleanup_failure;
+    }
+
+    if (asprintf(&get_extensions_name, "%s_%s",
+                 __DRI_DRIVER_GET_EXTENSIONS, driverName) != -1) {
+        const __DRIextension **(*get_extensions)(void);
+
+        for (i = 0; i < strlen(get_extensions_name); i++) {
+            /* Replace all non-alphanumeric characters with underscore,
+             * since they are not allowed in C symbol names. That fixes up
+             * symbol name for drivers with '-drm' suffix
+             */
+            if (!isalnum(get_extensions_name[i]))
+                get_extensions_name[i] = '_';
+        }
+
+        get_extensions = dlsym(driver, get_extensions_name);
+        if (get_extensions)
+            extensions = get_extensions();
+        free(get_extensions_name);
+    }
 
     if (!extensions)
         extensions = dlsym(driver, __DRI_DRIVER_EXTENSIONS);

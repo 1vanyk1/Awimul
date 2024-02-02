@@ -416,6 +416,422 @@ add_library(xserver SHARED
         os/strndup.c os/timingsafe_memcmp.c os/xdmauth.c os/xdmcp.c os/xstrans.c
 
 
+        mesa/main/dd.h mesa/main/menums.h mesa/main/formats.h mesa/main/macros.h
+        mesa/main/mesa_private.h mesa/main/glheader.h mesa/main/errors.h mesa/main/enums.h
+        mesa/main/context.h mesa/main/glformats.h mesa/main/texcompress.h mesa/main/debug_output.h
+        mesa/main/mtypes.h mesa/main/texcompress_fxt1.h mesa/main/texstore.h mesa/main/version.h
+        mesa/main/hash.h mesa/main/image.h mesa/main/colormac.h mesa/main/config.h
+        mesa/main/mipmap.h mesa/main/texcompress_s3tc_tmp.h mesa/main/texcompress_s3tc.h
+        mesa/main/format_unpack.h mesa/main/texcompress_rgtc.h mesa/main/draw_validate.h
+        mesa/main/texcompress_etc.h mesa/main/texcompress_bptc.h mesa/main/texcompress_bptc_tmp.h
+        mesa/main/texcompress_etc_tmp.h mesa/main/texobj.h mesa/main/teximage.h
+        mesa/main/samplerobj.h mesa/main/texturebindless.h mesa/main/shaderimage.h
+        mesa/main/bufferobj.h mesa/main/externalobjects.h mesa/main/texstorage.h
+        mesa/main/textureview.h mesa/main/transformfeedback.h mesa/main/varray.h mesa/main/enable.h
+        mesa/main/arrayobj.h mesa/main/state.h mesa/main/get.h mesa/main/dispatch.h mesa/main/draw.h
+        mesa/main/blend.h mesa/main/extensions.h mesa/main/spirv_extensions.h mesa/main/stencil.h
+        mesa/main/framebuffer.h mesa/main/fbobject.h mesa/main/buffers.h mesa/main/multisample.h
+        mesa/main/renderbuffer.h mesa/main/clip.h mesa/main/light.h mesa/main/pixel.h
+        mesa/main/pbo.h mesa/main/pixelstore.h mesa/main/pixeltransfer.h mesa/main/format_pack.h
+        mesa/main/texcompress_cpal.h mesa/main/shaderobj.h mesa/main/shaderapi.h
+        mesa/main/uniforms.h mesa/main/glspirv.h mesa/main/extensions_table.h mesa/main/accum.h
+        mesa/main/condrender.h mesa/main/queryobj.h mesa/main/api_exec.h mesa/main/attrib.h
+        mesa/main/clear.h mesa/main/depth.h mesa/main/fog.h mesa/main/hint.h mesa/main/lines.h
+        mesa/main/matrix.h mesa/main/points.h mesa/main/polygon.h mesa/main/pack.h
+        mesa/main/format_utils.h mesa/main/shared.h mesa/main/atifragshader.h mesa/main/dlist.h
+        mesa/main/syncobj.h mesa/main/scissor.h mesa/main/texenv.h mesa/main/texgen.h
+        mesa/main/texparam.h mesa/main/viewport.h mesa/main/bbox.h mesa/main/conservativeraster.h
+        mesa/main/cpuinfo.h mesa/main/debug.h mesa/main/readpix.h mesa/main/eval.h
+        mesa/main/feedback.h mesa/main/glthread.h mesa/main/glthread_marshal.h mesa/main/git_sha1.h
+        mesa/main/performance_monitor.h mesa/main/performance_query.h mesa/main/pipelineobj.h
+        mesa/main/rastpos.h mesa/main/remap.h mesa/main/remap_helper.h mesa/main/marshal_generated.h
+        mesa/main/api_arrayelt.h mesa/main/arbprogram.h mesa/main/vtxfmt.h mesa/main/format_info.h
+        mesa/main/get_hash.h mesa/main/ffvertex_prog.h mesa/main/texenvprogram.h
+        mesa/main/program_binary.h mesa/main/texstate.h mesa/main/sse_minmax.h mesa/main/blit.h
+        mesa/main/colortab.h mesa/main/compute.h mesa/main/convolve.h mesa/main/copyimage.h
+        mesa/main/drawpix.h mesa/main/drawtex.h mesa/main/es1_conversion.h mesa/main/genmipmap.h
+        mesa/main/histogram.h mesa/main/objectlabel.h mesa/main/objectpurge.h
+        mesa/main/texgetimage.h mesa/main/program_resource.h mesa/main/barrier.h
+        mesa/main/formatquery.h mesa/main/vdpau.h mesa/main/querymatrix.h mesa/main/texformat.h
+        mesa/main/execmem.h
+
+        mesa/main/formats.c mesa/main/errors.c mesa/main/context.c mesa/main/glformats.c
+        mesa/main/texcompress.c mesa/main/debug_output.c mesa/main/texcompress_fxt1.c
+        mesa/main/texstore.c mesa/main/version.c mesa/main/hash.c mesa/main/image.c
+        mesa/main/mipmap.c mesa/main/texcompress_s3tc.c mesa/main/texcompress_rgtc.c
+        mesa/main/draw_validate.c mesa/main/texcompress_etc.c mesa/main/texcompress_bptc.c
+        mesa/main/texobj.c mesa/main/teximage.c mesa/main/samplerobj.c mesa/main/texturebindless.c
+        mesa/main/shaderimage.c mesa/main/bufferobj.c mesa/main/externalobjects.c mesa/main/draw.c
+        mesa/main/texstorage.c mesa/main/textureview.c mesa/main/transformfeedback.c
+        mesa/main/varray.c mesa/main/enable.c mesa/main/arrayobj.c mesa/main/state.c mesa/main/get.c
+        mesa/main/blend.c mesa/main/extensions.c mesa/main/spirv_extensions.c mesa/main/stencil.c
+        mesa/main/framebuffer.c mesa/main/fbobject.c mesa/main/buffers.c mesa/main/multisample.c
+        mesa/main/renderbuffer.c mesa/main/clip.c mesa/main/light.c mesa/main/pixel.c
+        mesa/main/pbo.c mesa/main/pixelstore.c mesa/main/pixeltransfer.c
+        mesa/main/texcompress_cpal.c mesa/main/shaderobj.c mesa/main/shaderapi.c
+        mesa/main/uniforms.c mesa/main/glspirv.c mesa/main/extensions_table.c mesa/main/accum.c
+        mesa/main/condrender.c mesa/main/queryobj.c mesa/main/attrib.c mesa/main/clear.c
+        mesa/main/depth.c mesa/main/fog.c mesa/main/hint.c mesa/main/lines.c mesa/main/matrix.c
+        mesa/main/points.c mesa/main/polygon.c mesa/main/pack.c mesa/main/format_utils.c
+        mesa/main/shared.c mesa/main/atifragshader.c mesa/main/dlist.c mesa/main/syncobj.c
+        mesa/main/scissor.c mesa/main/texenv.c mesa/main/texgen.c mesa/main/texparam.c
+        mesa/main/viewport.c mesa/main/bbox.c mesa/main/conservativeraster.c mesa/main/cpuinfo.c
+        mesa/main/debug.c mesa/main/readpix.c mesa/main/eval.c mesa/main/feedback.c
+        mesa/main/glthread.c mesa/main/performance_monitor.c mesa/main/performance_query.c
+        mesa/main/pipelineobj.c mesa/main/rastpos.c mesa/main/remap.c
+        mesa/main/marshal_generated0.c mesa/main/marshal_generated1.c mesa/main/marshal_generated2.c
+        mesa/main/marshal_generated3.c mesa/main/marshal_generated4.c mesa/main/marshal_generated5.c
+        mesa/main/marshal_generated6.c mesa/main/marshal_generated7.c
+        mesa/main/api_arrayelt.c mesa/main/arbprogram.c mesa/main/vtxfmt.c mesa/main/ffvertex_prog.c
+        mesa/main/program_binary.c mesa/main/enums.c mesa/main/glthread_varray.c
+        mesa/main/glthread_shaderobj.c mesa/main/glthread_get.c mesa/main/glthread_draw.c
+        mesa/main/glthread_bufferobj.c mesa/main/getstring.c mesa/main/shader_query.cpp
+        mesa/main/uniform_query.cpp mesa/main/texstate.c mesa/main/sse_minmax.c mesa/main/api_exec.c
+        mesa/main/format_fallback.c mesa/main/format_pack.c mesa/main/blit.c mesa/main/colortab.c
+        mesa/main/compute.c mesa/main/convolve.c mesa/main/copyimage.c mesa/main/drawpix.c
+        mesa/main/drawtex.c mesa/main/es1_conversion.c mesa/main/genmipmap.c mesa/main/histogram.c
+        mesa/main/objectlabel.c mesa/main/objectpurge.c mesa/main/texgetimage.c
+        mesa/main/program_resource.c mesa/main/barrier.c mesa/main/formatquery.c mesa/main/vdpau.c
+        mesa/main/robustness.c mesa/main/ff_fragment_shader.cpp mesa/main/querymatrix.c
+        mesa/main/texformat.c mesa/main/execmem.c
+
+        mesa/util/macros.h mesa/util/u_math.h mesa/util/u_cpu_detect.h mesa/util/u_thread.h
+        mesa/util/detect_os.h mesa/util/u_endian.h mesa/util/bitscan.h mesa/util/u_debug.h
+        mesa/util/os_misc.h mesa/util/os_file.h mesa/util/u_string.h mesa/util/rounding.h
+        mesa/util/compiler.h mesa/util/hash_table.h mesa/util/u_memory.h mesa/util/os_memory.h
+        mesa/util/os_memory_stdc.h mesa/util/os_memory_aligned.h mesa/util/fast_urem_by_const.h
+        mesa/util/xxhash.h mesa/util/ralloc.h mesa/util/list.h mesa/util/u_idalloc.h
+        mesa/util/simple_mtx.h mesa/util/futex.h mesa/util/format_srgb.h mesa/util/rgtc.h
+        mesa/util/texcompress_rgtc_tmp.h mesa/util/half_float.h mesa/util/softfloat.h
+        mesa/util/format_rgb9e5.h mesa/util/format_r11g11b10f.h mesa/util/debug.h
+        mesa/util/u_atomic.h mesa/util/set.h mesa/util/bitset.h mesa/util/blob.h
+        mesa/util/disk_cache.h mesa/util/mesa-sha1.h mesa/util/build_id.h mesa/util/disk_cache_os.h
+        mesa/util/u_queue.h mesa/util/os_time.h mesa/util/fossilize_db.h mesa/util/u_process.h
+        mesa/util/crc32.h mesa/util/rand_xor.h mesa/util/compress.h mesa/util/enum_operators.h
+        mesa/util/strtod.h mesa/util/u_dynarray.h mesa/util/simple_list.h mesa/util/strndup.h
+        mesa/util/string_buffer.h mesa/util/double.h mesa/util/bigmath.h mesa/util/u_vector.h
+        mesa/util/memstream.h mesa/util/u_printf.h mesa/util/u_inlines.h mesa/util/u_box.h
+        mesa/util/u_debug_refcnt.h mesa/util/u_debug_describe.h mesa/util/u_debug_stack.h
+        mesa/util/u_debug_symbol.h mesa/util/u_hash_table.h mesa/util/u_pointer.h
+        mesa/util/dbghelp.h mesa/util/u_draw_quad.h mesa/util/u_draw.h mesa/util/u_framebuffer.h
+        mesa/util/u_vbuf.h mesa/util/u_dump.h mesa/util/u_screen.h mesa/util/u_upload_mgr.h
+        mesa/util/u_sampler.h mesa/util/u_simple_shaders.h mesa/util/u_prim.h mesa/util/u_bitmask.h
+        mesa/util/u_mm.h
+
+        mesa/util/u_math.c mesa/util/u_cpu_detect.c mesa/util/bitscan.c mesa/util/u_debug.c
+        mesa/util/os_misc.c mesa/util/os_file.c mesa/util/hash_table.c mesa/util/ralloc.c
+        mesa/util/u_idalloc.c mesa/util/rgtc.c mesa/util/half_float.c mesa/util/softfloat.c
+        mesa/util/debug.c mesa/util/u_atomic.c mesa/util/set.c mesa/util/blob.c
+        mesa/util/disk_cache.c mesa/util/mesa-sha1.c mesa/util/build_id.c mesa/util/disk_cache_os.c
+        mesa/util/u_queue.c mesa/util/os_time.c mesa/util/fossilize_db.c mesa/util/u_process.c
+        mesa/util/crc32.c mesa/util/rand_xor.c mesa/util/compress.c mesa/util/strtod.c
+        mesa/util/string_buffer.c mesa/util/double.c mesa/util/u_vector.c mesa/util/format_srgb.c
+        mesa/util/memstream.c mesa/util/u_printf.cpp mesa/util/u_debug_refcnt.c
+        mesa/util/u_debug_describe.c mesa/util/u_debug_stack.c mesa/util/u_debug_symbol.c
+        mesa/util/u_hash_table.c mesa/util/u_draw_quad.c mesa/util/u_draw.c
+        mesa/util/u_framebuffer.c mesa/util/u_vbuf.c mesa/util/u_screen.c mesa/util/u_upload_mgr.c
+        mesa/util/u_sampler.c mesa/util/u_simple_shaders.c mesa/util/u_prim.c mesa/util/u_bitmask.c
+        mesa/util/u_mm.c
+
+        mesa/util/format/u_format_fxt1.h mesa/util/format/u_format.h
+        mesa/util/format/u_format_s3tc.h mesa/util/format/u_format_pack.h
+        mesa/util/format/u_format_bptc.h mesa/util/format/u_format_etc.h
+        mesa/util/format/u_format_latc.h mesa/util/format/u_format_other.h
+        mesa/util/format/u_format_rgtc.h mesa/util/format/u_format_tests.h
+        mesa/util/format/u_format_yuv.h mesa/util/format/u_format_zs.h
+        mesa/util/format/format_utils.h
+        mesa/util/format/u_format_fxt1.c mesa/util/format/u_format.c
+        mesa/util/format/u_format_s3tc.c mesa/util/format/u_format_pack.c
+        mesa/util/format/u_format_bptc.c mesa/util/format/u_format_etc.c
+        mesa/util/format/u_format_latc.c mesa/util/format/u_format_other.c
+        mesa/util/format/u_format_rgtc.c mesa/util/format/u_format_tests.c
+        mesa/util/format/u_format_yuv.c mesa/util/format/u_format_zs.c
+
+        mesa/util/sha1/sha1.h
+        mesa/util/sha1/sha1.c
+
+
+        mesa/include/c11_compat.h mesa/include/c99_compat.h mesa/include/no_extern_c.h
+        mesa/include/c99_math.h mesa/include/c99_alloca.h mesa/include/vulkan_core.h
+
+        mesa/include/pipe/p_config.h mesa/include/pipe/p_format.h mesa/include/pipe/p_compiler.h
+        mesa/include/pipe/p_state.h mesa/include/pipe/p_defines.h mesa/include/pipe/p_screen.h
+        mesa/include/pipe/p_video_enums.h mesa/include/pipe/p_context.h
+        mesa/include/pipe/p_shader_tokens.h
+
+        mesa/include/c11/threads.h mesa/include/c11/threads_win32.h mesa/include/c11/threads_posix.h
+
+
+        mesa/math/m_matrix.h mesa/math/m_eval.h mesa/math/m_vector_asm.h mesa/math/m_vector.h
+        mesa/math/m_xform.h mesa/math/m_xform_tmp.h mesa/math/m_clip_tmp.h mesa/math/m_norm_tmp.h
+        mesa/math/m_dotprod_tmp.h mesa/math/m_copy_tmp.h mesa/math/m_translate.h
+        mesa/math/m_trans_tmp.h
+
+        mesa/math/m_matrix.c mesa/math/m_eval.c mesa/math/m_vector.c mesa/math/m_xform.c
+        mesa/math/m_translate.c
+
+
+        mesa/program/prog_instruction.h mesa/program/prog_parameter.h mesa/program/prog_statevars.h
+        mesa/program/program.h mesa/program/prog_cache.h mesa/program/ir_to_mesa.h
+        mesa/program/symbol_table.h mesa/program/arbprogparse.h mesa/program/programopt.h
+        mesa/program/prog_optimize.h mesa/program/prog_print.h mesa/program/program_parser.h
+        mesa/program/program_parse.h mesa/program/prog_parameter_layout.h
+        mesa/program/prog_execute.h mesa/program/prog_noise.h
+
+        mesa/program/prog_instruction.c mesa/program/prog_parameter.c mesa/program/prog_statevars.c
+        mesa/program/program.c mesa/program/prog_cache.c mesa/program/ir_to_mesa.cpp
+        mesa/program/symbol_table.c mesa/program/arbprogparse.c mesa/program/programopt.c
+        mesa/program/prog_optimize.c mesa/program/prog_print.c mesa/program/program_parse.c
+        mesa/program/prog_parameter_layout.c mesa/program/program_lexer.c
+        mesa/program/program_parse_extra.c mesa/program/prog_opt_constant_fold.c
+        mesa/program/prog_execute.c mesa/program/prog_noise.c
+
+
+        mesa/compiler/shader_enums.h mesa/compiler/glsl_types.h mesa/compiler/shader_info.h
+        mesa/compiler/nir_types.h mesa/compiler/builtin_type_macros.h
+
+        mesa/compiler/shader_enums.c mesa/compiler/glsl_types.cpp mesa/compiler/nir_types.cpp
+
+
+        mesa/compiler/glsl/string_to_uint_map.h mesa/compiler/glsl/glsl_parser_extras.h
+        mesa/compiler/glsl/glsl_symbol_table.h mesa/compiler/glsl/ir_uniform.h
+        mesa/compiler/glsl/ast.h mesa/compiler/glsl/list.h mesa/compiler/glsl/ir.h
+        mesa/compiler/glsl/ir_visitor.h mesa/compiler/glsl/ir_hierarchical_visitor.h
+        mesa/compiler/glsl/glsl_parser.h mesa/compiler/glsl/ir_optimization.h
+        mesa/compiler/glsl/loop_analysis.h mesa/compiler/glsl/builtin_functions.h
+        mesa/compiler/glsl/ir_builder.h mesa/compiler/glsl/ir_expression_operation.h
+        mesa/compiler/glsl/serialize.h mesa/compiler/glsl/program.h
+        mesa/compiler/glsl/ir_expression_flattening.h mesa/compiler/glsl/ir_rvalue_visitor.h
+        mesa/compiler/glsl/linker.h mesa/compiler/glsl/shader_cache.h
+        mesa/compiler/glsl/linker_util.h mesa/compiler/glsl/link_varyings.h
+        mesa/compiler/glsl/ir_expression_operation_strings.h
+        mesa/compiler/glsl/link_uniform_block_active_visitor.h
+        mesa/compiler/glsl/ir_array_refcount.h mesa/compiler/glsl/lower_buffer_access.h
+        mesa/compiler/glsl/builtin_int64.h mesa/compiler/glsl/ir_expression_operation_constant.h
+        mesa/compiler/glsl/ir_function_inlining.h mesa/compiler/glsl/ir_variable_refcount.h
+        mesa/compiler/glsl/ir_print_visitor.h mesa/compiler/glsl/ir_basic_block.h
+        mesa/compiler/glsl/opt_add_neg_to_sub.h
+
+        mesa/compiler/glsl/string_to_uint_map.cpp mesa/compiler/glsl/glsl_parser_extras.cpp
+        mesa/compiler/glsl/glsl_symbol_table.cpp mesa/compiler/glsl/ir.cpp
+        mesa/compiler/glsl/ir_hierarchical_visitor.cpp mesa/compiler/glsl/glsl_parser.cpp
+        mesa/compiler/glsl/loop_analysis.cpp mesa/compiler/glsl/builtin_functions.cpp
+        mesa/compiler/glsl/ir_builder.cpp mesa/compiler/glsl/serialize.cpp
+        mesa/compiler/glsl/ir_expression_flattening.cpp mesa/compiler/glsl/ir_rvalue_visitor.cpp
+        mesa/compiler/glsl/linker.cpp mesa/compiler/glsl/shader_cache.cpp
+        mesa/compiler/glsl/linker_util.cpp mesa/compiler/glsl/link_varyings.cpp
+        mesa/compiler/glsl/link_uniform_blocks.cpp mesa/compiler/glsl/link_atomics.cpp
+        mesa/compiler/glsl/link_uniform_block_active_visitor.cpp
+        mesa/compiler/glsl/link_uniform_initializers.cpp mesa/compiler/glsl/link_functions.cpp
+        mesa/compiler/glsl/link_interface_blocks.cpp mesa/compiler/glsl/link_uniforms.cpp
+        mesa/compiler/glsl/ir_array_refcount.cpp mesa/compiler/glsl/lower_vertex_id.cpp
+        mesa/compiler/glsl/lower_vector_insert.cpp mesa/compiler/glsl/lower_vector_derefs.cpp
+        mesa/compiler/glsl/lower_vector.cpp mesa/compiler/glsl/lower_vec_index_to_swizzle.cpp
+        mesa/compiler/glsl/lower_vec_index_to_cond_assign.cpp
+        mesa/compiler/glsl/lower_variable_index_to_cond_assign.cpp
+        mesa/compiler/glsl/lower_ubo_reference.cpp mesa/compiler/glsl/lower_texture_projection.cpp
+        mesa/compiler/glsl/lower_buffer_access.cpp mesa/compiler/glsl/lower_builtins.cpp
+        mesa/compiler/glsl/lower_blend_equation_advanced.cpp mesa/compiler/glsl/lower_cs_derived.cpp
+        mesa/compiler/glsl/lower_const_arrays_to_uniforms.cpp mesa/compiler/glsl/lower_discard.cpp
+        mesa/compiler/glsl/lower_discard_flow.cpp mesa/compiler/glsl/lower_distance.cpp
+        mesa/compiler/glsl/lower_if_to_cond_assign.cpp mesa/compiler/glsl/lower_instructions.cpp
+        mesa/compiler/glsl/lower_int64.cpp mesa/compiler/glsl/lower_jumps.cpp
+        mesa/compiler/glsl/lower_mat_op_to_vec.cpp mesa/compiler/glsl/lower_offset_array.cpp
+        mesa/compiler/glsl/lower_named_interface_blocks.cpp
+        mesa/compiler/glsl/lower_output_reads.cpp mesa/compiler/glsl/lower_packed_varyings.cpp
+        mesa/compiler/glsl/lower_packing_builtins.cpp mesa/compiler/glsl/lower_precision.cpp
+        mesa/compiler/glsl/lower_shared_reference.cpp mesa/compiler/glsl/lower_subroutine.cpp
+        mesa/compiler/glsl/lower_tess_level.cpp mesa/compiler/glsl/generate_ir.cpp
+        mesa/compiler/glsl/ast_type.cpp mesa/compiler/glsl/ast_array_index.cpp
+        mesa/compiler/glsl/ast_expr.cpp mesa/compiler/glsl/ast_function.cpp
+        mesa/compiler/glsl/ast_to_hir.cpp mesa/compiler/glsl/ir_clone.cpp
+        mesa/compiler/glsl/ir_constant_expression.cpp mesa/compiler/glsl/ir_hv_accept.cpp
+        mesa/compiler/glsl/ir_function.cpp mesa/compiler/glsl/ir_function_can_inline.cpp
+        mesa/compiler/glsl/ir_function_detect_recursion.cpp mesa/compiler/glsl/ir_equals.cpp
+        mesa/compiler/glsl/hir_field_selection.cpp mesa/compiler/glsl/builtin_variables.cpp
+        mesa/compiler/glsl/opt_function_inlining.cpp mesa/compiler/glsl/opt_dead_code.cpp
+        mesa/compiler/glsl/ir_variable_refcount.cpp mesa/compiler/glsl/opt_dead_builtin_varyings.cpp
+        mesa/compiler/glsl/opt_dead_builtin_variables.cpp mesa/compiler/glsl/ir_print_visitor.cpp
+        mesa/compiler/glsl/opt_dead_code_local.cpp mesa/compiler/glsl/opt_dead_functions.cpp
+        mesa/compiler/glsl/ir_basic_block.cpp mesa/compiler/glsl/opt_algebraic.cpp
+        mesa/compiler/glsl/opt_array_splitting.cpp mesa/compiler/glsl/opt_conditional_discard.cpp
+        mesa/compiler/glsl/opt_constant_folding.cpp mesa/compiler/glsl/opt_constant_propagation.cpp
+        mesa/compiler/glsl/opt_constant_variable.cpp mesa/compiler/glsl/opt_if_simplification.cpp
+        mesa/compiler/glsl/opt_copy_propagation_elements.cpp mesa/compiler/glsl/opt_minmax.cpp
+        mesa/compiler/glsl/opt_flatten_nested_if_blocks.cpp mesa/compiler/glsl/opt_flip_matrices.cpp
+        mesa/compiler/glsl/opt_rebalance_tree.cpp mesa/compiler/glsl/opt_redundant_jumps.cpp
+        mesa/compiler/glsl/opt_structure_splitting.cpp mesa/compiler/glsl/opt_swizzle.cpp
+        mesa/compiler/glsl/opt_tree_grafting.cpp mesa/compiler/glsl/opt_vectorize.cpp
+        mesa/compiler/glsl/builtin_types.cpp mesa/compiler/glsl/glsl_lexer.cpp
+        mesa/compiler/glsl/ir_validate.cpp mesa/compiler/glsl/loop_unroll.cpp
+        mesa/compiler/glsl/propagate_invariance.cpp mesa/compiler/glsl/lower_xfb_varying.cpp
+        mesa/compiler/glsl/ir_set_program_inouts.cpp
+
+        mesa/compiler/glsl/glcpp/glcpp.h mesa/compiler/glsl/glcpp/glcpp-parse.h
+        mesa/compiler/glsl/glcpp/pp.c mesa/compiler/glsl/glcpp/glcpp.c
+        mesa/compiler/glsl/glcpp/glcpp-parse.c mesa/compiler/glsl/glcpp/glcpp-lex.c
+
+
+        mesa/compiler/spirv/nir_spirv.h mesa/compiler/spirv/vtn_private.h
+        mesa/compiler/spirv/spirv.h mesa/compiler/spirv/vtn_generator_ids.h
+        mesa/compiler/spirv/GLSL.ext.AMD.h mesa/compiler/spirv/GLSL.std.450.h
+        mesa/compiler/spirv/OpenCL.std.h
+
+        mesa/compiler/spirv/gl_spirv.c mesa/compiler/spirv/spirv_info.c
+        mesa/compiler/spirv/spirv_to_nir.c mesa/compiler/spirv/vtn_variables.c
+        mesa/compiler/spirv/vtn_amd.c mesa/compiler/spirv/vtn_glsl450.c
+        mesa/compiler/spirv/vtn_alu.c mesa/compiler/spirv/vtn_opencl.c
+        mesa/compiler/spirv/vtn_subgroup.c mesa/compiler/spirv/vtn_cfg.c
+        mesa/compiler/spirv/vtn_gather_types.c
+
+
+        mesa/compiler/nir/nir.h mesa/compiler/nir/nir_builder.h mesa/compiler/nir/nir_control_flow.h
+        mesa/compiler/nir/nir_control_flow_private.h mesa/compiler/nir/nir_opcodes.h
+        mesa/compiler/nir/nir_intrinsics.h mesa/compiler/nir/nir_intrinsics_indices.h
+        mesa/compiler/nir/nir_inline_helpers.h mesa/compiler/nir/nir_builder_opcodes.h
+        mesa/compiler/nir/nir_loop_analyze.h mesa/compiler/nir/nir_constant_expressions.h
+        mesa/compiler/nir/nir_instr_set.h mesa/compiler/nir/nir_vla.h
+        mesa/compiler/nir/nir_worklist.h mesa/compiler/nir/nir_serialize.h
+        mesa/compiler/nir/nir_deref.h mesa/compiler/nir/nir_builtin_builder.h
+        mesa/compiler/nir/nir_phi_builder.h
+
+        mesa/compiler/nir/nir.c mesa/compiler/nir/nir_control_flow.c mesa/compiler/nir/nir_opcodes.c
+        mesa/compiler/nir/nir_intrinsics.c mesa/compiler/nir/nir_metadata.c
+        mesa/compiler/nir/nir_loop_analyze.c mesa/compiler/nir/nir_constant_expressions.c
+        mesa/compiler/nir/nir_dominance.c mesa/compiler/nir/nir_instr_set.c
+        mesa/compiler/nir/nir_lower_int64.c mesa/compiler/nir/nir_lower_double_ops.c
+        mesa/compiler/nir/nir_live_ssa_defs_impl.c mesa/compiler/nir/nir_worklist.c
+        mesa/compiler/nir/nir_divergence_analysis.c mesa/compiler/nir/nir_inline_functions.c
+        mesa/compiler/nir/nir_clone.c mesa/compiler/nir/nir_print.c mesa/compiler/nir/nir_validate.c
+        mesa/compiler/nir/nir_lower_variable_initializers.c mesa/compiler/nir/nir_serialize.c
+        mesa/compiler/nir/nir_split_per_member_structs.c mesa/compiler/nir/nir_deref.c
+        mesa/compiler/nir/nir_lower_io.c mesa/compiler/nir/nir_builtin_builder.c
+        mesa/compiler/nir/nir_opt_dce.c mesa/compiler/nir/nir_remove_dead_variables.c
+        mesa/compiler/nir/nir_lower_goto_ifs.c mesa/compiler/nir/nir_lower_frexp.c
+        mesa/compiler/nir/nir_split_var_copies.c mesa/compiler/nir/nir_opt_copy_propagate.c
+        mesa/compiler/nir/nir_lower_returns.c mesa/compiler/nir/nir_repair_ssa.c
+        mesa/compiler/nir/nir_phi_builder.c mesa/compiler/nir/nir_lower_regs_to_ssa.c
+        mesa/compiler/nir/nir_from_ssa.c
+
+
+        mesa/vbo/vbo.h mesa/vbo/vbo_attrib.h mesa/vbo/vbo_init_tmp.h mesa/vbo/vbo_util.h
+        mesa/vbo/vbo_save.h mesa/vbo/vbo_exec.h mesa/vbo/vbo_private.h mesa/vbo/vbo_attrib_tmp.h
+        mesa/vbo/vbo_noop.h
+
+        mesa/vbo/vbo_save.c mesa/vbo/vbo_exec.c mesa/vbo/vbo_save_api.c mesa/vbo/vbo_noop.c
+        mesa/vbo/vbo_exec_api.c mesa/vbo/vbo_save_draw.c mesa/vbo/vbo_save_loopback.c
+        mesa/vbo/vbo_exec_draw.c mesa/vbo/vbo_exec_eval.c mesa/vbo/vbo_context.c
+        mesa/vbo/vbo_get_minmax_index_mapped.c
+
+
+        mesa/tnl/tnl.h mesa/tnl/t_context.h mesa/tnl/t_pipeline.h mesa/tnl/t_vp_build.h
+        mesa/tnl/t_vertex.h mesa/tnl/t_rebase.h mesa/tnl/t_vb_cliptmp.h mesa/tnl/t_vb_rendertmp.h
+        mesa/tnl/t_vb_lighttmp.h mesa/tnl/t_split.h
+
+        mesa/tnl/t_context.c mesa/tnl/t_pipeline.c mesa/tnl/t_vp_build.c mesa/tnl/t_vertex.c
+        mesa/tnl/t_draw.c mesa/tnl/t_rebase.c mesa/tnl/t_vb_program.c mesa/tnl/t_vertex_generic.c
+        mesa/tnl/t_vb_render.c mesa/tnl/t_vertex_sse.c mesa/tnl/t_vb_light.c mesa/tnl/t_vb_texgen.c
+        mesa/tnl/t_vb_texmat.c mesa/tnl/t_vb_vertex.c mesa/tnl/t_split.c mesa/tnl/t_vb_fog.c
+        mesa/tnl/t_vb_points.c mesa/tnl/t_vb_normals.c mesa/tnl/t_split_copy.c
+        mesa/tnl/t_split_inplace.c
+
+
+        mesa/mapi/u_current.h mesa/mapi/table.h mesa/mapi/stub.h mesa/mapi/entry.h
+        mesa/mapi/mapi_tmp.h mesa/mapi/glapi_mapi_tmp.h mesa/mapi/shared_glapi_mapi_tmp.h
+
+        mesa/mapi/u_current.c mesa/mapi/table.c mesa/mapi/stub.c mesa/mapi/entry.c
+        mesa/mapi/mapi_glapi.c
+
+        mesa/mapi/glapi/glapi.h mesa/mapi/glapi/glapitable.h mesa/mapi/glapi/glapioffsets.h
+        mesa/mapi/glapi/glapiremap_table.h mesa/mapi/glapi/glapidispatch.h
+        mesa/mapi/glapi/glapi_priv.h mesa/mapi/glapi/glapitemp.h mesa/mapi/glapi/glprocs.h
+
+        mesa/mapi/glapi/glapi.c mesa/mapi/glapi/glapi_getproc.c mesa/mapi/glapi/glapi_dispatch.c
+        mesa/mapi/glapi/glapi_entrypoint.c mesa/mapi/glapi/glapi_nop.c
+
+
+        mesa/swrast/s_context.h mesa/swrast/swrast.h mesa/swrast/s_chan.h mesa/swrast/s_span.h
+        mesa/swrast/s_fragprog.h mesa/swrast/s_blend.h mesa/swrast/s_lines.h mesa/swrast/s_points.h
+        mesa/swrast/s_feedback.h mesa/swrast/s_triangle.h mesa/swrast/s_aaline.h
+        mesa/swrast/s_aalinetemp.h mesa/swrast/s_aatriangle.h mesa/swrast/s_aatritemp.h
+        mesa/swrast/s_texfilter.h mesa/swrast/s_texfetch.h mesa/swrast/s_texfetch_tmp.h
+        mesa/swrast/s_atifragshader.h mesa/swrast/s_alpha.h mesa/swrast/s_depth.h
+        mesa/swrast/s_fog.h mesa/swrast/s_logic.h mesa/swrast/s_masking.h mesa/swrast/s_stencil.h
+        mesa/swrast/s_texcombine.h mesa/swrast/s_linetemp.h mesa/swrast/s_tritemp.h
+        mesa/swrast/s_renderbuffer.h mesa/swrast/s_zoom.h
+
+        mesa/swrast/s_context.c mesa/swrast/s_span.c mesa/swrast/s_fragprog.c mesa/swrast/s_blend.c
+        mesa/swrast/s_lines.c mesa/swrast/s_points.c mesa/swrast/s_feedback.c
+        mesa/swrast/s_triangle.c mesa/swrast/s_aaline.c mesa/swrast/s_aatriangle.c
+        mesa/swrast/s_texfilter.c mesa/swrast/s_texfetch.c mesa/swrast/s_atifragshader.c
+        mesa/swrast/s_alpha.c mesa/swrast/s_depth.c mesa/swrast/s_fog.c mesa/swrast/s_logic.c
+        mesa/swrast/s_masking.c mesa/swrast/s_stencil.c mesa/swrast/s_texcombine.c
+        mesa/swrast/s_renderbuffer.c mesa/swrast/s_drawpix.c mesa/swrast/s_zoom.c
+        mesa/swrast/s_clear.c mesa/swrast/s_bitmap.c mesa/swrast/s_copypix.c mesa/swrast/s_blit.c
+        mesa/swrast/s_texrender.c mesa/swrast/s_texture.c
+
+
+        mesa/swrast_setup/swrast_setup.h mesa/swrast_setup/ss_context.h mesa/swrast_setup/ss_vb.h
+        mesa/swrast_setup/ss_triangle.h mesa/swrast_setup/ss_tritmp.h
+
+        mesa/swrast_setup/ss_context.c mesa/swrast_setup/ss_triangle.c
+
+
+        mesa/drivers/common/driverfuncs.h mesa/drivers/common/driverfuncs.c
+        mesa/drivers/common/meta.h mesa/drivers/common/meta.c mesa/drivers/common/meta_blit.c
+        mesa/drivers/common/meta_generate_mipmap.c
+
+
+        mesa/drivers/x11/glxapi.h mesa/drivers/x11/glxheader.h mesa/drivers/x11/xfonts.h
+        mesa/drivers/x11/xmesaP.h mesa/drivers/x11/xmesa.h mesa/drivers/x11/xmesa_x.h
+
+        mesa/drivers/x11/glxapi.c mesa/drivers/x11/fakeglx.c mesa/drivers/x11/xfonts.c
+        mesa/drivers/x11/xm_api.c mesa/drivers/x11/xm_buffer.c mesa/drivers/x11/xm_dd.c
+        mesa/drivers/x11/xm_tri.c mesa/drivers/x11/xm_line.c
+
+
+        mesa/gallium/frontend/api.h mesa/gallium/frontend/xlibsw_api.h
+        mesa/gallium/frontend/sw_winsys.h mesa/gallium/frontend/winsys_handle.h
+
+
+        mesa/gallium/frontends/xm_api.h mesa/gallium/frontends/xm_st.h
+        mesa/gallium/frontends/xm_public.h
+
+        mesa/gallium/frontends/xm_api.c mesa/gallium/frontends/xm_st.c
+
+
+        mesa/gallium/hud/hud_context.h mesa/gallium/hud/hud_private.h mesa/gallium/hud/font.h
+
+        mesa/gallium/hud/hud_context.c mesa/gallium/hud/font.c mesa/gallium/hud/hud_driver_query.c
+        mesa/gallium/hud/hud_cpu.c mesa/gallium/hud/hud_fps.c
+
+
+        mesa/gallium/tgsi/tgsi_parse.h mesa/gallium/tgsi/tgsi_text.h mesa/gallium/tgsi/tgsi_dump.h
+        mesa/gallium/tgsi/tgsi_strings.h mesa/gallium/tgsi/tgsi_ureg.h mesa/gallium/tgsi/tgsi_info.h
+        mesa/gallium/tgsi/tgsi_info_opcodes.h mesa/gallium/tgsi/tgsi_iterate.h
+        mesa/gallium/tgsi/tgsi_build.h mesa/gallium/tgsi/tgsi_sanity.h mesa/gallium/tgsi/tgsi_util.h
+        mesa/gallium/tgsi/tgsi_exec.h mesa/gallium/tgsi/tgsi_from_mesa.h
+        mesa/gallium/tgsi/tgsi_opcode_tmp.h
+
+        mesa/gallium/tgsi/tgsi_parse.c mesa/gallium/tgsi/tgsi_text.c mesa/gallium/tgsi/tgsi_dump.c
+        mesa/gallium/tgsi/tgsi_strings.c mesa/gallium/tgsi/tgsi_ureg.c mesa/gallium/tgsi/tgsi_info.c
+        mesa/gallium/tgsi/tgsi_iterate.c mesa/gallium/tgsi/tgsi_build.c
+        mesa/gallium/tgsi/tgsi_sanity.c mesa/gallium/tgsi/tgsi_util.c mesa/gallium/tgsi/tgsi_exec.c
+        mesa/gallium/tgsi/tgsi_from_mesa.c
+
+
+        mesa/gallium/cso_cache/cso_context.h mesa/gallium/cso_cache/cso_context.c
+        mesa/gallium/cso_cache/cso_cache.h mesa/gallium/cso_cache/cso_cache.c
+        mesa/gallium/cso_cache/cso_hash.h mesa/gallium/cso_cache/cso_hash.c
+
+
+        mesa/gallium/translate/translate_cache.h mesa/gallium/translate/translate_cache.c
+        mesa/gallium/translate/translate.h mesa/gallium/translate/translate.c
+        mesa/gallium/translate/translate_generic.c mesa/gallium/translate/translate_sse.c
+
+
+        mesa/os/os_thread.h
+
 #        mesa/main/dd.h mesa/main/menums.h mesa/main/formats.h mesa/main/macros.h
 #        mesa/main/mesa_private.h mesa/main/glheader.h mesa/main/errors.h mesa/main/enums.h
 #        mesa/main/context.h mesa/main/glformats.h mesa/main/texcompress.h mesa/main/debug_output.h
@@ -1025,53 +1441,53 @@ add_library(xserver SHARED
 #        libepoxy/dispatch_common.c
 
 
-        gl4es/gl/arbconverter.c gl4es/gl/arbgenerator.c gl4es/gl/arbhelper.c gl4es/gl/arbparser.c
-        gl4es/gl/array.c gl4es/gl/blit.c gl4es/gl/blend.c gl4es/gl/buffers.c gl4es/gl/build_info.c
-        gl4es/gl/debug.c gl4es/gl/decompress.c gl4es/gl/depth.c gl4es/gl/directstate.c
-        gl4es/gl/drawing.c gl4es/gl/enable.c gl4es/gl/envvars.c gl4es/gl/eval.c gl4es/gl/face.c
-        gl4es/gl/fog.c gl4es/gl/fpe.c gl4es/gl/fpe_cache.c gl4es/gl/fpe_shader.c
-        gl4es/gl/framebuffers.c gl4es/gl/gl_lookup.c gl4es/gl/getter.c gl4es/gl/gl4es.c
-        gl4es/gl/glstate.c gl4es/gl/hint.c gl4es/gl/init.c gl4es/gl/light.c gl4es/gl/line.c
-        gl4es/gl/list.c gl4es/gl/listdraw.c gl4es/gl/listrl.c gl4es/gl/loader.c gl4es/gl/logs.c
-        gl4es/gl/matrix.c gl4es/gl/matvec.c gl4es/gl/oldprogram.c gl4es/gl/pixel.c gl4es/gl/planes.c
-        gl4es/gl/pointsprite.c gl4es/gl/preproc.c gl4es/gl/program.c gl4es/gl/queries.c
-        gl4es/gl/raster.c gl4es/gl/render.c gl4es/gl/shader.c gl4es/gl/shaderconv.c
-        gl4es/gl/shader_hacks.c gl4es/gl/stack.c gl4es/gl/stencil.c gl4es/gl/string_utils.c
-        gl4es/gl/stubs.c gl4es/gl/texenv.c gl4es/gl/texgen.c gl4es/gl/texture.c
-        gl4es/gl/texture_compressed.c gl4es/gl/texture_params.c gl4es/gl/texture_read.c
-        gl4es/gl/texture_3d.c gl4es/gl/uniform.c gl4es/gl/vertexattrib.c gl4es/gl/wrap/gl4eswraps.c
-        gl4es/gl/wrap/gles.c gl4es/gl/wrap/glstub.c gl4es/gl/math/matheval.c
-
-        gl4es/version.h gl4es/gl/arbconverter.h gl4es/gl/arbgenerator.h gl4es/gl/arbhelper.h
-        gl4es/gl/arbparser.h gl4es/gl/array.h gl4es/gl/blend.h gl4es/gl/blit.h gl4es/gl/buffers.h
-        gl4es/gl/build_info.h gl4es/gl/const.h gl4es/gl/debug.h gl4es/gl/decompress.h
-        gl4es/gl/depth.h gl4es/gl/directstate.h gl4es/gl/envvars.h gl4es/gl/eval.h gl4es/gl/face.h
-        gl4es/gl/fog.h gl4es/gl/fpe.h gl4es/gl/fpe_shader.h gl4es/gl/framebuffers.h
-        gl4es/gl/gl_lookup.h gl4es/gl/gles.h gl4es/gl/gl4es.h gl4es/gl/glstate.h gl4es/gl/hint.h
-        gl4es/gl/init.h gl4es/gl/light.h gl4es/gl/line.h gl4es/gl/list.h gl4es/gl/loader.h
-        gl4es/gl/logs.h gl4es/gl/matrix.h gl4es/gl/matvec.h gl4es/gl/oldprogram.h gl4es/gl/pixel.h
-        gl4es/gl/planes.h gl4es/gl/pointsprite.h gl4es/gl/preproc.h gl4es/gl/program.h
-        gl4es/gl/queries.h gl4es/gl/raster.h gl4es/gl/render.h gl4es/gl/shader.h
-        gl4es/gl/shaderconv.h gl4es/gl/shader_hacks.h gl4es/gl/stack.h gl4es/gl/state.h
-        gl4es/gl/stencil.h gl4es/gl/stb_dxt_104.h gl4es/gl/string_utils.h gl4es/gl/texenv.h
-        gl4es/gl/texgen.h gl4es/gl/uniform.h gl4es/gl/texture.h gl4es/gl/vertexattrib.h
-        gl4es/gl/math/eval.h gl4es/gl/wrap/gl4es.h gl4es/gl/wrap/gles.h gl4es/gl/wrap/stub.h
-
-
-        gl4es/glx/hardext.c gl4es/glx/gbm.c gl4es/glx/glx.c gl4es/glx/lookup.c gl4es/glx/rpi.c
-        gl4es/glx/streaming.c gl4es/glx/utils.c
-
-        gl4es/glx/glx_gbm.h gl4es/glx/gbmfunc.h gl4es/glx/drmfunc.h gl4es/glx/glx.h
-        gl4es/glx/hardext.h gl4es/glx/rpi.h gl4es/glx/streaming.h gl4es/glx/utils.h
-
-        gl4es/include/khash.h gl4es/include/gl4eshint.h
-
-
-        dri/dri_interface.h dri/dri_private.h dri/errors.h
-        dri/dri.c dri/dri_backend.c dri/errors.c
-
-        dri/st/st.h
-        dri/st/st.c
+#        gl4es/gl/arbconverter.c gl4es/gl/arbgenerator.c gl4es/gl/arbhelper.c gl4es/gl/arbparser.c
+#        gl4es/gl/array.c gl4es/gl/blit.c gl4es/gl/blend.c gl4es/gl/buffers.c gl4es/gl/build_info.c
+#        gl4es/gl/debug.c gl4es/gl/decompress.c gl4es/gl/depth.c gl4es/gl/directstate.c
+#        gl4es/gl/drawing.c gl4es/gl/enable.c gl4es/gl/envvars.c gl4es/gl/eval.c gl4es/gl/face.c
+#        gl4es/gl/fog.c gl4es/gl/fpe.c gl4es/gl/fpe_cache.c gl4es/gl/fpe_shader.c
+#        gl4es/gl/framebuffers.c gl4es/gl/gl_lookup.c gl4es/gl/getter.c gl4es/gl/gl4es.c
+#        gl4es/gl/glstate.c gl4es/gl/hint.c gl4es/gl/init.c gl4es/gl/light.c gl4es/gl/line.c
+#        gl4es/gl/list.c gl4es/gl/listdraw.c gl4es/gl/listrl.c gl4es/gl/loader.c gl4es/gl/logs.c
+#        gl4es/gl/matrix.c gl4es/gl/matvec.c gl4es/gl/oldprogram.c gl4es/gl/pixel.c gl4es/gl/planes.c
+#        gl4es/gl/pointsprite.c gl4es/gl/preproc.c gl4es/gl/program.c gl4es/gl/queries.c
+#        gl4es/gl/raster.c gl4es/gl/render.c gl4es/gl/shader.c gl4es/gl/shaderconv.c
+#        gl4es/gl/shader_hacks.c gl4es/gl/stack.c gl4es/gl/stencil.c gl4es/gl/string_utils.c
+#        gl4es/gl/stubs.c gl4es/gl/texenv.c gl4es/gl/texgen.c gl4es/gl/texture.c
+#        gl4es/gl/texture_compressed.c gl4es/gl/texture_params.c gl4es/gl/texture_read.c
+#        gl4es/gl/texture_3d.c gl4es/gl/uniform.c gl4es/gl/vertexattrib.c gl4es/gl/wrap/gl4eswraps.c
+#        gl4es/gl/wrap/gles.c gl4es/gl/wrap/glstub.c gl4es/gl/math/matheval.c
+#
+#        gl4es/version.h gl4es/gl/arbconverter.h gl4es/gl/arbgenerator.h gl4es/gl/arbhelper.h
+#        gl4es/gl/arbparser.h gl4es/gl/array.h gl4es/gl/blend.h gl4es/gl/blit.h gl4es/gl/buffers.h
+#        gl4es/gl/build_info.h gl4es/gl/const.h gl4es/gl/debug.h gl4es/gl/decompress.h
+#        gl4es/gl/depth.h gl4es/gl/directstate.h gl4es/gl/envvars.h gl4es/gl/eval.h gl4es/gl/face.h
+#        gl4es/gl/fog.h gl4es/gl/fpe.h gl4es/gl/fpe_shader.h gl4es/gl/framebuffers.h
+#        gl4es/gl/gl_lookup.h gl4es/gl/gles.h gl4es/gl/gl4es.h gl4es/gl/glstate.h gl4es/gl/hint.h
+#        gl4es/gl/init.h gl4es/gl/light.h gl4es/gl/line.h gl4es/gl/list.h gl4es/gl/loader.h
+#        gl4es/gl/logs.h gl4es/gl/matrix.h gl4es/gl/matvec.h gl4es/gl/oldprogram.h gl4es/gl/pixel.h
+#        gl4es/gl/planes.h gl4es/gl/pointsprite.h gl4es/gl/preproc.h gl4es/gl/program.h
+#        gl4es/gl/queries.h gl4es/gl/raster.h gl4es/gl/render.h gl4es/gl/shader.h
+#        gl4es/gl/shaderconv.h gl4es/gl/shader_hacks.h gl4es/gl/stack.h gl4es/gl/state.h
+#        gl4es/gl/stencil.h gl4es/gl/stb_dxt_104.h gl4es/gl/string_utils.h gl4es/gl/texenv.h
+#        gl4es/gl/texgen.h gl4es/gl/uniform.h gl4es/gl/texture.h gl4es/gl/vertexattrib.h
+#        gl4es/gl/math/eval.h gl4es/gl/wrap/gl4es.h gl4es/gl/wrap/gles.h gl4es/gl/wrap/stub.h
+#
+#
+#        gl4es/glx/hardext.c gl4es/glx/gbm.c gl4es/glx/glx.c gl4es/glx/lookup.c gl4es/glx/rpi.c
+#        gl4es/glx/streaming.c gl4es/glx/utils.c
+#
+#        gl4es/glx/glx_gbm.h gl4es/glx/gbmfunc.h gl4es/glx/drmfunc.h gl4es/glx/glx.h
+#        gl4es/glx/hardext.h gl4es/glx/rpi.h gl4es/glx/streaming.h gl4es/glx/utils.h
+#
+#        gl4es/include/khash.h gl4es/include/gl4eshint.h
+#
+#
+#        dri/dri_interface.h dri/dri_private.h dri/errors.h
+#        dri/dri.c dri/dri_backend.c dri/errors.c
+#
+#        dri/st/st.h
+#        dri/st/st.c
 
 
         cutils/properties.h

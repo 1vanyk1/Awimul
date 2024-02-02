@@ -1068,7 +1068,7 @@ struct gl_tex_env_argument
 {
 #ifdef __GNUC__
     __extension__ uint8_t Source:4;  /**< TEXENV_SRC_x */
-   __extension__ uint8_t Operand:2; /**< TEXENV_OPR_x */
+    __extension__ uint8_t Operand:2; /**< TEXENV_OPR_x */
 #else
     uint8_t Source;  /**< SRC_x */
     uint8_t Operand; /**< OPR_x */
@@ -3734,11 +3734,6 @@ struct gl_program_constants
  */
 struct gl_constants
 {
-    /**
-     * Bitmask of valid primitive types supported by the driver,
-     */
-    GLbitfield DriverSupportedPrimMask;
-
     GLuint MaxTextureMbytes;      /**< Max memory per image, in MB */
     GLuint MaxTextureSize;        /**< Max 1D/2D texture size, in pixels*/
     GLuint Max3DTextureLevels;    /**< Max mipmap levels for 3D textures */
@@ -3857,12 +3852,6 @@ struct gl_constants
     GLboolean ForceGLSLExtensionsWarn;
 
     /**
-     * Force all shaders to behave as if they were declared with the
-     * compatibility token.
-     */
-    GLboolean ForceCompatShaders;
-
-    /**
      * If non-zero, forces GLSL shaders to behave as if they began
      * with "#version ForceGLSLVersion".
      */
@@ -3908,12 +3897,6 @@ struct gl_constants
     GLboolean AllowHigherCompatVersion;
 
     /**
-     * Allow GLSL shaders with the compatibility version directive
-     * in non-compatibility profiles. (for shader-db)
-     */
-    GLboolean AllowGLSLCompatShaders;
-
-    /**
      * Allow extra tokens at end of preprocessor directives. The CTS now tests
      * to make sure these are not allowed. However, previously drivers would
      * allow them to exist and just issue a warning so some old applications
@@ -3922,25 +3905,10 @@ struct gl_constants
     GLboolean AllowExtraPPTokens;
 
     /**
-     * The spec forbids a shader to "statically write both gl_ClipVertex
-     * and gl_ClipDistance".
-     * This option adds a tolerance for shader that statically writes to
-     * both but at least one of the write can be removed by a dead code
-     * elimination pass.
-     */
-    GLboolean DoDCEBeforeClipCullAnalysis;
-
-    /**
      * Force computing the absolute value for sqrt() and inversesqrt() to follow
      * D3D9 when apps rely on this behaviour.
      */
     GLboolean ForceGLSLAbsSqrt;
-
-    /**
-     * Forces the GLSL compiler to ignore writes to readonly vars rather than
-     * throwing an error.
-     */
-    GLboolean GLSLIgnoreWriteToReadonlyVar;
 
     /**
      * Types of variable to default initialized to zero. Supported values are:
@@ -4026,6 +3994,20 @@ struct gl_constants
     GLuint MaxDualSourceDrawBuffers;
 
     /**
+     * Whether the implementation strips out and ignores texture borders.
+     *
+     * Many GPU hardware implementations don't support rendering with texture
+     * borders and mipmapped textures.  (Note: not static border color, but the
+     * old 1-pixel border around each edge).  Implementations then have to do
+     * slow fallbacks to be correct, or just ignore the border and be fast but
+     * wrong.  Setting the flag strips the border off of TexImage calls,
+     * providing "fast but wrong" at significantly reduced driver complexity.
+     *
+     * Texture borders are deprecated in GL 3.0.
+     **/
+    GLboolean StripTextureBorder;
+
+    /**
      * For drivers which can do a better job at eliminating unused uniforms
      * than the GLSL compiler.
      *
@@ -4059,6 +4041,12 @@ struct gl_constants
      */
     bool GLSLTessLevelsAsInputs;
 
+    /**
+     * Always use the GetTransformFeedbackVertexCount() driver hook, rather
+     * than passing the transform feedback object to the drawing function.
+     */
+    GLboolean AlwaysUseGetTransformFeedbackVertexCount;
+
     /** GL_ARB_map_buffer_alignment */
     GLuint MinMapBufferAlignment;
 
@@ -4081,14 +4069,6 @@ struct gl_constants
      * This variable is mutually exlusive with DisableVaryingPacking.
      */
     GLboolean DisableTransformFeedbackPacking;
-
-    /**
-     * Align varyings to POT in a slot
-     *
-     * Drivers that prefer varyings to be aligned to POT must set this value to GL_TRUE
-     */
-    GLboolean PreferPOTAlignedVaryings;
-
 
     /**
      * UBOs and SSBOs can be packed tightly by the OpenGL implementation when
@@ -4237,8 +4217,15 @@ struct gl_constants
     /** Whether the vertex buffer offset is a signed 32-bit integer. */
     bool VertexBufferOffsetIsInt32;
 
+    /** Whether the driver can handle MultiDrawElements with non-VBO indices. */
+    bool MultiDrawWithUserIndices;
+
     /** Whether out-of-order draw (Begin/End) optimizations are allowed. */
     bool AllowDrawOutOfOrder;
+
+    /** Whether draw merging optimizations are allowed (might cause
+     *  incorrect results). */
+    bool AllowIncorrectPrimitiveId;
 
     /** Whether to allow the fast path for frequently updated VAOs. */
     bool AllowDynamicVAOFastPath;
@@ -4257,7 +4244,6 @@ struct gl_constants
     struct spirv_supported_extensions *SpirVExtensions;
 
     char *VendorOverride;
-    char *RendererOverride;
 
     /** Buffer size used to upload vertices from glBegin/glEnd. */
     unsigned glBeginEndBufferSize;
@@ -4267,21 +4253,7 @@ struct gl_constants
      *  produce 0 instead of leaving the texture content undefined).
      */
     bool NoClippingOnCopyTex;
-
-    /**
-     * Force glthread to always return GL_FRAMEBUFFER_COMPLETE to prevent
-     * synchronization. Used for apps that call it every frame or multiple times
-     * a frame, but always getting framebuffer completeness.
-     */
-    bool GLThreadNopCheckFramebufferStatus;
-
-    /** GL_ARB_sparse_texture */
-    GLuint MaxSparseTextureSize;
-    GLuint MaxSparse3DTextureSize;
-    GLuint MaxSparseArrayTextureLayers;
-    bool SparseTextureFullArrayCubeMipmaps;
 };
-
 
 
 /**
