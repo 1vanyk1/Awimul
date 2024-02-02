@@ -7,6 +7,7 @@
 #include "Xprivate.h"
 #include "Xxcbint.h"
 #include "../xcb/xcbext.h"
+#include "../main_wm.h"
 
 #include <assert.h>
 #ifdef HAVE_INTTYPES_H

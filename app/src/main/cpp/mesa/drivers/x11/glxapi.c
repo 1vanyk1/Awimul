@@ -358,11 +358,11 @@ glXGetCurrentDisplay(void)
 GLXFBConfig PUBLIC *
 glXChooseFBConfig(Display *dpy, int screen, const int *attribList, int *nitems)
 {
-struct _glxapi_table *t;
-GET_DISPATCH(dpy, t);
-if (!t)
-return 0;
-return t->ChooseFBConfig(dpy, screen, attribList, nitems);
+    struct _glxapi_table *t;
+    GET_DISPATCH(dpy, t);
+    if (!t)
+        return 0;
+    return t->ChooseFBConfig(dpy, screen, attribList, nitems);
 }
 
 
@@ -391,11 +391,11 @@ return t->CreatePbuffer(dpy, config, attribList);
 GLXPixmap PUBLIC
 glXCreatePixmap(Display *dpy, GLXFBConfig config, Pixmap pixmap, const int *attribList)
 {
-struct _glxapi_table *t;
-GET_DISPATCH(dpy, t);
-if (!t)
-return 0;
-return t->CreatePixmap(dpy, config, pixmap, attribList);
+    struct _glxapi_table *t;
+    GET_DISPATCH(dpy, t);
+    if (!t)
+        return 0;
+    return t->CreatePixmap(dpy, config, pixmap, attribList);
 }
 
 

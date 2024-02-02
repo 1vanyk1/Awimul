@@ -8,6 +8,7 @@
 #include "../headers/extensions/shmproto.h"
 #include "../headers/extensions/Xext.h"
 #include "../headers/extensions/extutil.h"
+#include "../../main_wm.h"
 
 static XExtensionInfo _shm_info_data;
 static XExtensionInfo *shm_info = &_shm_info_data;

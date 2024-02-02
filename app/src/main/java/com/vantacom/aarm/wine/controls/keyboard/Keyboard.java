@@ -126,12 +126,13 @@ public class Keyboard implements OnKeyboardVisibilityListener {
     }
 
     public boolean pressKey(int action, int key, int metaState) {
-        if (!xserver.isSystemPaused()) {
-            if (isShiftPressed) {
-                xserver.getWineActivity().invoke("wine_keyboard_event", xserver.getFocusedWindow().getHWND(), action, 59, metaState);
-            }
-            return (boolean) xserver.getWineActivity().invoke("wine_keyboard_event", xserver.getFocusedWindow().getHWND(), action, key, metaState);
-        }
+        xserver.getWM().keyPress(key, action);
+//        if (!xserver.isSystemPaused()) {
+//            if (isShiftPressed) {
+//                xserver.getWineActivity().invoke("wine_keyboard_event", xserver.getFocusedWindow().getHWND(), action, 59, metaState);
+//            }
+//            return (boolean) xserver.getWineActivity().invoke("wine_keyboard_event", xserver.getFocusedWindow().getHWND(), action, key, metaState);
+//        }
         return false;
     }
 }

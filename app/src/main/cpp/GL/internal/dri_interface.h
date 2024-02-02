@@ -466,9 +466,15 @@ struct __DRI2interopExtensionRec {
 typedef struct __DRIgetDrawableInfoExtensionRec __DRIgetDrawableInfoExtension;
 typedef struct __DRIsystemTimeExtensionRec __DRIsystemTimeExtension;
 typedef struct __DRIdamageExtensionRec __DRIdamageExtension;
+typedef struct __DRI2bufferDamageExtensionRec   __DRI2bufferDamageExtension;
 typedef struct __DRIloaderExtensionRec __DRIloaderExtension;
 typedef struct __DRIswrastLoaderExtensionRec __DRIswrastLoaderExtension;
 
+struct __DRI2bufferDamageExtensionRec {
+    __DRIextension base;
+    void (*set_damage_region)(__DRIdrawable *drawable, unsigned int nrects,
+                              int *rects);
+};
 
 /**
  * Callback to getDrawableInfo protocol
@@ -561,6 +567,20 @@ struct __DRIswrastLoaderExtensionRec {
     /*
      * Drawable position and size
      */
+
+    void (*putImageShm2)(__DRIdrawable *drawable, int op,
+                         int x, int y,
+                         int width, int height, int stride,
+                         int shmid, char *shmaddr, unsigned offset,
+                         void *loaderPrivate);
+
+
+    void (*putImageShm)(__DRIdrawable *drawable, int op,
+                        int x, int y, int width, int height, int stride,
+                        int shmid, char *shmaddr, unsigned offset,
+                        void *loaderPrivate);
+
+
     void (*getDrawableInfo)(__DRIdrawable *drawable,
                             int *x, int *y, int *width, int *height,
                             void *loaderPrivate);
@@ -711,7 +731,13 @@ struct __DRIuseInvalidateExtensionRec {
 #define __DRI_ATTRIB_BIND_TO_TEXTURE_TARGETS	46
 #define __DRI_ATTRIB_YINVERTED			47
 #define __DRI_ATTRIB_FRAMEBUFFER_SRGB_CAPABLE	48
-#define __DRI_ATTRIB_MAX			(__DRI_ATTRIB_FRAMEBUFFER_SRGB_CAPABLE + 1)
+#define __DRI_ATTRIB_MUTABLE_RENDER_BUFFER	49 /* EGL_MUTABLE_RENDER_BUFFER_BIT_KHR */
+#define __DRI_ATTRIB_RED_SHIFT			50
+#define __DRI_ATTRIB_GREEN_SHIFT		51
+#define __DRI_ATTRIB_BLUE_SHIFT			52
+#define __DRI_ATTRIB_ALPHA_SHIFT		53
+#define __DRI_ATTRIB_MAX			54
+
 
 /* __DRI_ATTRIB_RENDER_TYPE */
 #define __DRI_ATTRIB_RGBA_BIT			0x01
@@ -998,6 +1024,7 @@ enum dri_loader_cap {
      * only BGRA ordering can be exposed.
      */
     DRI_LOADER_CAP_RGBA_ORDERING,
+    DRI_LOADER_CAP_FP16,
 };
 
 struct __DRIdri2LoaderExtensionRec {
@@ -1061,6 +1088,15 @@ struct __DRIdri2LoaderExtensionRec {
      * \since 4
      */
     unsigned (*getCapability)(void *loaderPrivate, enum dri_loader_cap cap);
+
+    /**
+     * Clean up any loader state associated with an image.
+     *
+     * \param loaderPrivate  Loader's private data that was previously passed
+     *                       into a __DRIimageExtensionRec::createImage function
+     * \since 5
+     */
+    void (*destroyLoaderImageState)(void *loaderPrivate);
 };
 
 /**
@@ -1699,7 +1735,48 @@ struct __DRIimageLookupExtensionRec {
 
     __DRIimage *(*lookupEGLImage)(__DRIscreen *screen, void *image,
                                   void *loaderPrivate);
+    unsigned char (*validateEGLImage)(void *image, void *loaderPrivate);
+    __DRIimage *(*lookupEGLImageValidated)(void *image, void *loaderPrivate);
+
 };
+
+#define __DRI_IMAGE_FORMAT_RGB565       0x1001
+#define __DRI_IMAGE_FORMAT_XRGB8888     0x1002
+#define __DRI_IMAGE_FORMAT_ARGB8888     0x1003
+#define __DRI_IMAGE_FORMAT_ABGR8888     0x1004
+#define __DRI_IMAGE_FORMAT_XBGR8888     0x1005
+#define __DRI_IMAGE_FORMAT_R8           0x1006 /* Since version 5 */
+#define __DRI_IMAGE_FORMAT_GR88         0x1007
+#define __DRI_IMAGE_FORMAT_NONE         0x1008
+#define __DRI_IMAGE_FORMAT_XRGB2101010  0x1009
+#define __DRI_IMAGE_FORMAT_ARGB2101010  0x100a
+#define __DRI_IMAGE_FORMAT_SARGB8       0x100b
+#define __DRI_IMAGE_FORMAT_ARGB1555     0x100c
+#define __DRI_IMAGE_FORMAT_R16          0x100d
+#define __DRI_IMAGE_FORMAT_GR1616       0x100e
+#define __DRI_IMAGE_FORMAT_YUYV         0x100f
+#define __DRI_IMAGE_FORMAT_XBGR2101010  0x1010
+#define __DRI_IMAGE_FORMAT_ABGR2101010  0x1011
+#define __DRI_IMAGE_FORMAT_SABGR8       0x1012
+#define __DRI_IMAGE_FORMAT_UYVY         0x1013
+#define __DRI_IMAGE_FORMAT_XBGR16161616F 0x1014
+#define __DRI_IMAGE_FORMAT_ABGR16161616F 0x1015
+#define __DRI_IMAGE_FORMAT_SXRGB8       0x1016
+#define __DRI_IMAGE_FORMAT_ABGR16161616 0x1017
+
+#define __DRI_IMAGE_FOURCC_RGBA16161616 0x38344152
+
+#define __DRI_IMAGE_COMPONENTS_RGB	0x3001
+#define __DRI_IMAGE_COMPONENTS_RGBA	0x3002
+#define __DRI_IMAGE_COMPONENTS_Y_U_V	0x3003
+#define __DRI_IMAGE_COMPONENTS_Y_UV	0x3004
+#define __DRI_IMAGE_COMPONENTS_Y_XUXV	0x3005
+#define __DRI_IMAGE_COMPONENTS_Y_UXVX	0x3008
+#define __DRI_IMAGE_COMPONENTS_AYUV	0x3009
+#define __DRI_IMAGE_COMPONENTS_XYUV	0x300A
+#define __DRI_IMAGE_COMPONENTS_R	0x3006
+#define __DRI_IMAGE_COMPONENTS_RG	0x3007
+
 
 /**
  * This extension allows for common DRI2 options
@@ -1714,7 +1791,9 @@ struct __DRI2configQueryExtensionRec {
     int (*configQueryb)(__DRIscreen *screen, const char *var, unsigned char *val);
     int (*configQueryi)(__DRIscreen *screen, const char *var, int *val);
     int (*configQueryf)(__DRIscreen *screen, const char *var, float *val);
+    int (*configQuerys)(__DRIscreen *screen, const char *var, char **val);
 };
+
 
 /**
  * Robust context driver extension.
@@ -1841,6 +1920,11 @@ typedef struct __DRIDriverVtableExtensionRec {
 #define   __DRI2_RENDERER_HAS_CONTEXT_PRIORITY_MEDIUM         (1 << 1)
 #define   __DRI2_RENDERER_HAS_CONTEXT_PRIORITY_HIGH           (1 << 2)
 
+#define __DRI2_RENDERER_HAS_PROTECTED_CONTENT                 0x000e
+#define __DRI2_RENDERER_PREFER_BACK_BUFFER_REUSE              0x000f
+#define __DRI2_RENDERER_HAS_NO_ERROR_CONTEXT                  0x0010
+
+
 typedef struct __DRI2rendererQueryExtensionRec __DRI2rendererQueryExtension;
 struct __DRI2rendererQueryExtensionRec {
     __DRIextension base;
@@ -1864,6 +1948,9 @@ struct __DRIimageList {
     __DRIimage *front;
 };
 
+#define __DRI_MUTABLE_RENDER_BUFFER_LOADER "DRI_MutableRenderBufferLoader"
+#define __DRI_MUTABLE_RENDER_BUFFER_LOADER_VERSION 1
+
 #define __DRI_IMAGE_LOADER "DRI_IMAGE_LOADER"
 #define __DRI_IMAGE_LOADER_VERSION 3
 
@@ -1880,7 +1967,8 @@ struct __DRIimageLoaderExtensionRec {
      * \param stamp              Address of variable to be updated when
      *                           getBuffers must be called again
      * \param loaderPrivate      The loaderPrivate for driDrawable
-     * \param buffer_mask        Set of buffers to allocate
+     * \param buffer_mask        Set of buffers to allocate. A bitmask of
+     *                           __DRIimageBufferMask.
      * \param buffers            Returned buffers
      */
     int (*getBuffers)(__DRIdrawable *driDrawable,
@@ -1923,7 +2011,17 @@ struct __DRIimageLoaderExtensionRec {
      * \since 3
      */
     void (*flushSwapBuffers)(__DRIdrawable *driDrawable, void *loaderPrivate);
+
+    /**
+     * Clean up any loader state associated with an image.
+     *
+     * \param loaderPrivate  Loader's private data that was previously passed
+     *                       into a __DRIimageExtensionRec::createImage function
+     * \since 4
+     */
+    void (*destroyLoaderImageState)(void *loaderPrivate);
 };
+
 
 /**
  * DRI extension.

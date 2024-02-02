@@ -1,6 +1,6 @@
-#ifdef HAVE_DIX_CONFIG_H
-#include <dix-config.h>
-#endif
+//#ifdef HAVE_DIX_CONFIG_H
+#include "../../headers/dix-config.h"
+//#endif
 
 #if defined(WIN32)
 #include "../../headers/xwinsock.h"
@@ -39,7 +39,6 @@
 #include "../../mi/miline.h"
 #include "../../headers/glx_extinit.h"
 #include "../../randr/randrstr.h"
-#include "../../../main_wm.h"
 
 #define VFB_DEFAULT_WIDTH      1280
 #define VFB_DEFAULT_HEIGHT     1024
@@ -853,44 +852,59 @@ vfbScreenInit(ScreenPtr pScreen, int argc, char **argv)
     if (!pbits)
         return FALSE;
 
-    switch (pvfb->depth) {
-        case 8:
-            miSetVisualTypesAndMasks(8,
-                                     ((1 << StaticGray) |
-                                      (1 << GrayScale) |
-                                      (1 << StaticColor) |
-                                      (1 << PseudoColor) |
-                                      (1 << TrueColor) |
-                                      (1 << DirectColor)), 8, PseudoColor, 0, 0, 0);
-            break;
-        case 15:
-            miSetVisualTypesAndMasks(15,
-                                     ((1 << TrueColor) |
-                                      (1 << DirectColor)),
-                                     8, TrueColor, 0x7c00, 0x03e0, 0x001f);
-            break;
-        case 16:
-            miSetVisualTypesAndMasks(16,
-                                     ((1 << TrueColor) |
-                                      (1 << DirectColor)),
-                                     8, TrueColor, 0xf800, 0x07e0, 0x001f);
-            break;
-        case 24:
-            miSetVisualTypesAndMasks(24,
-                                     ((1 << TrueColor) |
-                                      (1 << DirectColor)),
-                                     8, TrueColor, 0xff0000, 0x00ff00, 0x0000ff);
-            break;
-        case 30:
-            miSetVisualTypesAndMasks(30,
-                                     ((1 << TrueColor) |
-                                      (1 << DirectColor)),
-                                     10, TrueColor, 0x3ff00000, 0x000ffc00,
-                                     0x000003ff);
-            break;
-        default:
-            return FALSE;
-    }
+    Pixel red_mask, blue_mask, green_mask;
+    int bpc, green_bpc, i;
+
+    bpc = pvfb->depth / 3;
+    green_bpc = pvfb->depth - 2 * bpc;
+    blue_mask = (1 << bpc) - 1;
+    green_mask = ((1 << green_bpc) - 1) << bpc;
+    red_mask = blue_mask << (green_bpc + bpc);
+
+    miSetVisualTypesAndMasks(pvfb->depth,
+                             ((1 << TrueColor) | (1 << DirectColor)),
+                             green_bpc, TrueColor,
+                             red_mask, green_mask, blue_mask);
+
+
+//    switch (pvfb->depth) {
+//        case 8:
+//            miSetVisualTypesAndMasks(8,
+//                                     ((1 << StaticGray) |
+//                                      (1 << GrayScale) |
+//                                      (1 << StaticColor) |
+//                                      (1 << PseudoColor) |
+//                                      (1 << TrueColor) |
+//                                      (1 << DirectColor)), 8, PseudoColor, 0, 0, 0);
+//            break;
+//        case 15:
+//            miSetVisualTypesAndMasks(15,
+//                                     ((1 << TrueColor) |
+//                                      (1 << DirectColor)),
+//                                     8, TrueColor, 0x7c00, 0x03e0, 0x001f);
+//            break;
+//        case 16:
+//            miSetVisualTypesAndMasks(16,
+//                                     ((1 << TrueColor) |
+//                                      (1 << DirectColor)),
+//                                     8, TrueColor, 0xf800, 0x07e0, 0x001f);
+//            break;
+//        case 24:
+//            miSetVisualTypesAndMasks(24,
+//                                     ((1 << TrueColor) |
+//                                      (1 << DirectColor)),
+//                                     8, TrueColor, 0xff0000, 0x00ff00, 0x0000ff);
+//            break;
+//        case 30:
+//            miSetVisualTypesAndMasks(30,
+//                                     ((1 << TrueColor) |
+//                                      (1 << DirectColor)),
+//                                     10, TrueColor, 0x3ff00000, 0x000ffc00,
+//                                     0x000003ff);
+//            break;
+//        default:
+//            return FALSE;
+//    }
 
     miSetPixmapDepths();
 

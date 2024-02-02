@@ -420,6 +420,161 @@ Xtransport_table Xtransports[] = {
 #define NUMTRANS	(sizeof(Xtransports)/sizeof(Xtransport_table))
 
 
+//#ifdef X11_t
+
+/*
+ * These values come from X.h and Xauth.h, and MUST match them. Some
+ * of these values are also defined by the ChangeHost protocol message.
+ */
+
+#define FamilyInternet		0	/* IPv4 */
+#define FamilyDECnet		1
+#define FamilyChaos		2
+#define FamilyInternet6		6
+#define FamilyAmoeba		33
+#define FamilyLocalHost		252
+#define FamilyKrb5Principal	253
+#define FamilyNetname		254
+#define FamilyLocal		256
+#define FamilyWild		65535
+
+/*
+ * TRANS(ConvertAddress) converts a sockaddr based address to an
+ * X authorization based address. Some of this is defined as part of
+ * the ChangeHost protocol. The rest is just done in a consistent manner.
+ */
+
+int
+TRANS_XSERV(ConvertAddress)(int *familyp, int *addrlenp, Xtransaddr **addrp)
+
+{
+
+    prmsg(2,"ConvertAddress(%d,%d,%p)\n",*familyp,*addrlenp,*addrp);
+
+    switch( *familyp )
+    {
+#if defined(TCPCONN)
+        case AF_INET:
+        {
+            /*
+             * Check for the BSD hack localhost address 127.0.0.1.
+             * In this case, we are really FamilyLocal.
+             */
+
+            struct sockaddr_in saddr;
+            int len = sizeof(saddr.sin_addr.s_addr);
+            char *cp = (char *) &saddr.sin_addr.s_addr;
+
+            memcpy (&saddr, *addrp, sizeof (struct sockaddr_in));
+
+            if ((len == 4) && (cp[0] == 127) && (cp[1] == 0) &&
+                (cp[2] == 0) && (cp[3] == 1))
+            {
+                *familyp=FamilyLocal;
+            }
+            else
+            {
+                *familyp=FamilyInternet;
+                *addrlenp=len;
+                memcpy(*addrp,&saddr.sin_addr,len);
+            }
+            break;
+        }
+
+#if defined(IPv6) && defined(AF_INET6)
+            case AF_INET6:
+    {
+	struct sockaddr_in6 saddr6;
+
+	memcpy (&saddr6, *addrp, sizeof (struct sockaddr_in6));
+
+	if (IN6_IS_ADDR_LOOPBACK(&saddr6.sin6_addr))
+	{
+	    *familyp=FamilyLocal;
+	}
+	else if (IN6_IS_ADDR_V4MAPPED(&(saddr6.sin6_addr))) {
+	    char *cp = (char *) &saddr6.sin6_addr.s6_addr[12];
+
+	    if ((cp[0] == 127) && (cp[1] == 0) &&
+	      (cp[2] == 0) && (cp[3] == 1))
+	    {
+		*familyp=FamilyLocal;
+	    }
+	    else
+	    {
+		*familyp=FamilyInternet;
+		*addrlenp = sizeof (struct in_addr);
+		memcpy(*addrp,cp,*addrlenp);
+	    }
+	}
+	else
+	{
+	    *familyp=FamilyInternet6;
+	    *addrlenp=sizeof(saddr6.sin6_addr);
+	    memcpy(*addrp,&saddr6.sin6_addr,sizeof(saddr6.sin6_addr));
+	}
+	break;
+    }
+#endif /* IPv6 */
+#endif /* defined(TCPCONN) */
+
+
+#if defined(UNIXCONN) || defined(LOCALCONN)
+        case AF_UNIX:
+        {
+            *familyp=FamilyLocal;
+            break;
+        }
+#endif /* defined(UNIXCONN) || defined(LOCALCONN) */
+
+
+        default:
+            prmsg(1,"ConvertAddress: Unknown family type %d\n",
+                  *familyp);
+            return -1;
+    }
+
+
+    if (*familyp == FamilyLocal)
+    {
+        /*
+         * In the case of a local connection, we need to get the
+         * host name for authentication.
+         */
+
+        char hostnamebuf[256];
+        int len = TRANS(GetHostname) (hostnamebuf, sizeof hostnamebuf);
+
+        if (len > 0) {
+            if (*addrp && *addrlenp < (len + 1))
+            {
+                free (*addrp);
+                *addrp = NULL;
+            }
+            if (!*addrp)
+                *addrp = malloc (len + 1);
+            if (*addrp) {
+                strcpy ((char *) *addrp, hostnamebuf);
+                *addrlenp = len;
+            } else {
+                *addrlenp = 0;
+            }
+        }
+        else
+        {
+            if (*addrp)
+                free (*addrp);
+            *addrp = NULL;
+            *addrlenp = 0;
+        }
+    }
+
+    return 0;
+}
+
+//#endif /* X11_t */
+
+
 #ifdef WIN32
 #define ioctl ioctlsocket
 #endif

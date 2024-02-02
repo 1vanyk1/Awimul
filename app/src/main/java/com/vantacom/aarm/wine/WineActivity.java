@@ -11,6 +11,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -36,9 +37,12 @@ import com.vantacom.aarm.wine.controls.touchscreen.BaseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.MouseControls;
 import com.vantacom.aarm.wine.controls.touchscreen.TouchControls;
 import com.vantacom.aarm.wine.xserver.XServerManager;
+import com.vantacom.aarm.wine.xserver.views.ScreenGroupView;
+import com.vantacom.aarm.wine.xserver.views.ScreenView;
+import com.vantacom.aarm.xserver.WM;
 
 
- public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
+public class WineActivity extends AppCompatActivity implements View.OnTouchListener {
     private ConstraintLayout view;
     private String wineABI;
     private ProcessManager processManager;
@@ -271,6 +275,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
         super.onResume();
         ifTurnedOff = false;
         if (processManager != null && !workInBG) {
+            sendSimpleMessage(WineService.RESUME_XSERVER);
             processManager.resumeSystem();
         }
         if (xserver != null) {
@@ -340,6 +345,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
             }
         });
         if (ifTurnedOff && !workInBG) {
+            sendSimpleMessage(WineService.PAUSE_XSERVER);
             processManager.pauseSystem();
         }
     }
@@ -352,6 +358,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
         }
         ifTurnedOff = true;
         if (processManager != null && !workInBG) {
+            sendSimpleMessage(WineService.PAUSE_XSERVER);
             processManager.pauseSystem();
         }
         sendSimpleMessage(WineService.HIDE_KEYBOARD);
@@ -390,7 +397,7 @@ import com.vantacom.aarm.wine.xserver.XServerManager;
                 xserver.getKeyboard().pressKey(event.getAction(), 111, 0);
             } else if ((InputDevice.getDevice(event.getDeviceId()).getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE) {
                 if (event.getAction() == KeyEvent.ACTION_UP) {
-                    MouseActions.singleRightButtonClick(xserver.getCursor().getX(), xserver.getCursor().getY(), xserver.getWineActivity(), xserver.getFocusedWindow());
+                    MouseActions.singleRightButtonClick(xserver.getCursor().getX(), xserver.getCursor().getY(), xserver.getWM());
                 }
             }
         } else if (!isSystemPaused()) {

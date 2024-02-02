@@ -1,0 +1,65 @@
+#include "../../include/pipe/p_state.h"
+#include "u_format.h"
+#include "u_debug_describe.h"
+#include "../../../mesa/util/u_string.h"
+
+void
+debug_describe_reference(char* buf, UNUSED const struct pipe_reference*ptr)
+{
+    strcpy(buf, "pipe_object");
+}
+
+void
+debug_describe_resource(char* buf, const struct pipe_resource *ptr)
+{
+    switch(ptr->target)
+    {
+        case PIPE_BUFFER:
+            sprintf(buf, "pipe_buffer<%u>", (unsigned)util_format_get_stride(ptr->format, ptr->width0));
+            break;
+        case PIPE_TEXTURE_1D:
+            sprintf(buf, "pipe_texture1d<%u,%s,%u>", ptr->width0, util_format_short_name(ptr->format), ptr->last_level);
+            break;
+        case PIPE_TEXTURE_2D:
+            sprintf(buf, "pipe_texture2d<%u,%u,%s,%u>", ptr->width0, ptr->height0, util_format_short_name(ptr->format), ptr->last_level);
+            break;
+        case PIPE_TEXTURE_RECT:
+            sprintf(buf, "pipe_texture_rect<%u,%u,%s>", ptr->width0, ptr->height0, util_format_short_name(ptr->format));
+            break;
+        case PIPE_TEXTURE_CUBE:
+            sprintf(buf, "pipe_texture_cube<%u,%u,%s,%u>", ptr->width0, ptr->height0, util_format_short_name(ptr->format), ptr->last_level);
+            break;
+        case PIPE_TEXTURE_3D:
+            sprintf(buf, "pipe_texture3d<%u,%u,%u,%s,%u>", ptr->width0, ptr->height0, ptr->depth0, util_format_short_name(ptr->format), ptr->last_level);
+            break;
+        default:
+            sprintf(buf, "pipe_martian_resource<%u>", ptr->target);
+            break;
+    }
+}
+
+void
+debug_describe_surface(char* buf, const struct pipe_surface *ptr)
+{
+    char res[128];
+    debug_describe_resource(res, ptr->texture);
+    sprintf(buf, "pipe_surface<%s,%u,%u,%u>", res, ptr->u.tex.level, ptr->u.tex.first_layer, ptr->u.tex.last_layer);
+}
+
+void
+debug_describe_sampler_view(char* buf, const struct pipe_sampler_view *ptr)
+{
+    char res[128];
+    debug_describe_resource(res, ptr->texture);
+    sprintf(buf, "pipe_sampler_view<%s,%s>", res, util_format_short_name(ptr->format));
+}
+
+void
+debug_describe_so_target(char* buf,
+                         const struct pipe_stream_output_target *ptr)
+{
+    char res[128];
+    debug_describe_resource(res, ptr->buffer);
+    sprintf(buf, "pipe_stream_output_target<%s,%u,%u>", res,
+            ptr->buffer_offset, ptr->buffer_size);
+}

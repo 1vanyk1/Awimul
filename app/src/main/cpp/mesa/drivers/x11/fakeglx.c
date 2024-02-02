@@ -10,6 +10,7 @@
 #include "xfonts.h"
 #include "xmesaP.h"
 #include "../../util/u_math.h"
+#include "../../../main_wm.h"
 
 /* This indicates the client-side GLX API and GLX encoder version. */
 #define CLIENT_MAJOR_VERSION 1
@@ -240,7 +241,6 @@ save_glx_visual( Display *dpy, XVisualInfo *vinfo,
     /* Force the visual to have an alpha channel */
     if (getenv("MESA_GLX_FORCE_ALPHA"))
         alphaFlag = GL_TRUE;
-
     /* First check if a matching visual is already in the list */
     for (i=0; i<NumVisuals; i++) {
         XMesaVisual v = VisualTable[i];
@@ -857,14 +857,14 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
 
         switch (*parselist) {
             case GLX_USE_GL:
-                if (fbConfig) {
-                    /* invalid token */
-                    return NULL;
-                }
-                else {
-                    /* skip */
+//                if (fbConfig) {
+//                    /* invalid token */
+//                    return NULL;
+//                }
+//                else {
+//                    /* skip */
                     parselist++;
-                }
+//                }
                 break;
             case GLX_BUFFER_SIZE:
                 parselist++;
@@ -905,8 +905,9 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
             case GLX_AUX_BUFFERS:
                 parselist++;
                 numAux = *parselist++;
-                if (numAux > MAX_AUX_BUFFERS)
+                if (numAux > MAX_AUX_BUFFERS) {
                     return NULL;
+                }
                 break;
             case GLX_RED_SIZE:
                 parselist++;
@@ -1002,17 +1003,19 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
             case GLX_SAMPLE_BUFFERS_ARB:
             case GLX_SAMPLES_ARB:
                 parselist++;
-                if (*parselist++ != 0)
+                if (*parselist++ != 0) {
                     /* ms not supported */
                     return NULL;
+                }
                 break;
 
                 /*
                  * FBConfig attribs.
                  */
             case GLX_RENDER_TYPE:
-                if (!fbConfig)
+                if (!fbConfig) {
                     return NULL;
+                }
                 parselist++;
                 if (*parselist & GLX_RGBA_BIT) {
                     rgb_flag = GL_TRUE;
@@ -1029,8 +1032,9 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
                 parselist++;
                 break;
             case GLX_DRAWABLE_TYPE:
-                if (!fbConfig)
+                if (!fbConfig) {
                     return NULL;
+                }
                 parselist++;
                 if (*parselist & ~(GLX_WINDOW_BIT | GLX_PIXMAP_BIT | GLX_PBUFFER_BIT)) {
                     return NULL; /* bad bit */
@@ -1039,8 +1043,9 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
                 break;
             case GLX_FBCONFIG_ID:
             case GLX_VISUAL_ID:
-                if (!fbConfig)
+                if (!fbConfig) {
                     return NULL;
+                }
                 parselist++;
                 desiredVisualID = *parselist++;
                 break;
@@ -1048,8 +1053,9 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
             case GLX_MAX_PBUFFER_WIDTH:
             case GLX_MAX_PBUFFER_HEIGHT:
             case GLX_MAX_PBUFFER_PIXELS:
-                if (!fbConfig)
+                if (!fbConfig) {
                     return NULL;
+                }
                 parselist += 2;
                 /* ignore */
                 break;
@@ -1082,15 +1088,13 @@ choose_visual( Display *dpy, int screen, const int *list, GLboolean fbConfig )
 
             default:
                 /* undefined attribute */
-                _mesa_warning(NULL, "unexpected attrib 0x%x in choose_visual()",
+                ALOGE("unexpected attrib 0x%x in choose_visual()",
                               *parselist);
                 return NULL;
         }
     }
-
     if (!rgb_flag)
         return NULL;
-
     (void) caveat;
     (void) min_ci;
 

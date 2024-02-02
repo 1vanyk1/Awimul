@@ -12,6 +12,7 @@
 #include <string>
 #include <unordered_map>
 #include "util.h"
+#include "main_wm.h"
 
 class WindowManager {
 public:
@@ -20,6 +21,8 @@ public:
 
     ~WindowManager();
     void Run();
+
+    Display* getDisplay();
 
 private:
     WindowManager(Display* display);

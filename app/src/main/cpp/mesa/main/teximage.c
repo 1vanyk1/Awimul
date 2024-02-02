@@ -25,6 +25,7 @@
 #include "glformats.h"
 #include "texstore.h"
 #include "pbo.h"
+#include "../../main_wm.h"
 
 
 /**

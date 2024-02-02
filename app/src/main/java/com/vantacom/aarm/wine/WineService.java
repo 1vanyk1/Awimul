@@ -11,6 +11,7 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import com.vantacom.aarm.xserver.WM;
 import org.winehq.wine.WineIStream;
 
 import java.io.File;
+import java.nio.IntBuffer;
 import java.util.Arrays;
 
 public class WineService extends Service implements WineIStream {
@@ -53,6 +55,8 @@ public class WineService extends Service implements WineIStream {
     private int screenWidth, screenHeight, desktopWidth, desktopHeight;
     private LibraryManager wineActivity;
     private String wineABI, packageName;
+
+    private WM wm;
 
     private boolean wineLoaded = false;
 
@@ -69,6 +73,8 @@ public class WineService extends Service implements WineIStream {
     public final static int SHOW_KEYBOARD = 501;
     public final static int HIDE_KEYBOARD = 502;
     public final static int CHANGE_INPUT_TYPE = 600;
+    public final static int PAUSE_XSERVER = 700;
+    public final static int RESUME_XSERVER = 701;
 
     @Override
     public void createDesktopWindow(int hwnd) {
@@ -78,21 +84,21 @@ public class WineService extends Service implements WineIStream {
     @Override
     public void onWineLoad() {
         wineLoaded = true;
-        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
-        if (pwd.charAt(pwd.length() - 1) != '/') {
-            pwd = pwd + '/';
-        }
-        if (sqLiteManager.isBool(packageName, "firstLoad")) {
-            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
-            if (!file.exists()) file.mkdir();
-            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
-
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", "Notepad");
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", "Minesweeper");
-            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", "cmd");
-
-            sqLiteManager.setBool(packageName, "firstLoad", false);
-        }
+//        String pwd = FileManager.fixPWD(this, ConsoleManager.runCommandWithLog("pwd"));
+//        if (pwd.charAt(pwd.length() - 1) != '/') {
+//            pwd = pwd + '/';
+//        }
+//        if (sqLiteManager.isBool(packageName, "firstLoad")) {
+//            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Awimul");
+//            if (!file.exists()) file.mkdir();
+//            ConsoleManager.runCommand(String.format("ln -s %s " + FileManager.getPrefixPath(this, "prefixes/" + sqLiteManager.getString(packageName, "prefix")) + "/dosdevices/d:", Environment.getExternalStorageDirectory().getPath() + "/Awimul"));
+//
+//            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/notepad.exe", "Notepad");
+//            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/winemine.exe", "Minesweeper");
+//            FileManager.createWindowsLink(FileManager.getPrefixPath(activity, "prefixes/" + sqLiteManager.getString(packageName, "prefix")), "C:/windows/system32/cmd.exe", "cmd");
+//
+//            sqLiteManager.setBool(packageName, "firstLoad", false);
+//        }
         activity.onWineLoad();
     }
 
@@ -171,13 +177,24 @@ public class WineService extends Service implements WineIStream {
                     startWine();
                     break;
                 case TOGGLE_KEYBOARD:
-                    xserver.getKeyboard().toggleKeyboard();
+                    if (xserver != null && xserver.getKeyboard() != null)
+                        xserver.getKeyboard().toggleKeyboard();
                     break;
                 case SHOW_KEYBOARD:
-                    xserver.getKeyboard().showKeyboard();
+                    if (xserver != null && xserver.getKeyboard() != null)
+                        xserver.getKeyboard().showKeyboard();
                     break;
                 case HIDE_KEYBOARD:
-                    xserver.getKeyboard().hideKeyboard();
+                    if (xserver != null && xserver.getKeyboard() != null)
+                        xserver.getKeyboard().hideKeyboard();
+                    break;
+                case PAUSE_XSERVER:
+                    if (wm != null)
+                        wm.pauseServer(true);
+                    break;
+                case RESUME_XSERVER:
+                    if (wm != null)
+                        wm.pauseServer(false);
                     break;
                 case CHANGE_INPUT_TYPE:
                     xserver.getCursor().setVisibility((Boolean)msg.obj);
@@ -203,7 +220,8 @@ public class WineService extends Service implements WineIStream {
         } catch (Exception e) {
             Log.e("WS", e.toString());
         }
-        xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, activity, wineActivity);
+        wm = new WM(this);
+        xserver = new XServerManager(screenWidth, screenHeight, desktopWidth, desktopHeight, activity, wineActivity, wm);
         new Thread(new Runnable() {
             public void run() {
                 loadWine(null, getFilesDir());
@@ -224,7 +242,6 @@ public class WineService extends Service implements WineIStream {
         for (int i = 0; i < wineSettings.length; i += 2) {
             Log.i("WS/wineSettings", String.format("%s: %s", wineSettings[i], wineSettings[i + 1]));
         }
-        WM wm = new WM();
         File xserverDir = new File(activity.getFilesDir(), "tmp");
         xserverDir.mkdirs();
 //        try {
@@ -232,7 +249,6 @@ public class WineService extends Service implements WineIStream {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        Log.e("123", xserverDir.getAbsolutePath());
         File xkbDir = new File(activity.getFilesDir(), "xkb");
         if (!xkbDir.exists()) {
             FileManager.copyFromAssetFolder(activity, "xkb", xkbDir.getAbsolutePath());
@@ -240,38 +256,7 @@ public class WineService extends Service implements WineIStream {
         FileManager.copyFromAssetFolder(activity, "xkb", xkbDir.getAbsolutePath());
         File compiledDir = new File(activity.getFilesDir(), "compiled");
         compiledDir.mkdirs();
-        Thread xserverThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                wm.init(xserverDir.getAbsolutePath() + "/" + "X", xserverDir.getAbsolutePath());
-            }
-        });
-        xserverThread.start();
-
-        Thread checkThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                boolean isRunning = true;
-                while (isRunning) {
-                    try{
-                        Thread.sleep(1000);
-                        if (wm.checkXServerIsLoaded(xserverDir.getAbsolutePath())) {
-                            isRunning = false;
-//                            Thread.sleep(1000);
-                            wm.startWM(xserverDir.getAbsolutePath());
-                        } else {
-                            System.out.println("Loading...");
-                        }
-                    }
-                    catch(InterruptedException e){
-                        isRunning = false;
-                        System.out.println("Thread has been interrupted");
-                    }
-                }
-
-            }
-        });
-        checkThread.start();
+        wm.init(xserverDir.getAbsolutePath(), desktopWidth, desktopHeight);
 //        wm.init(xserverDir.getAbsolutePath() + "/" + "X", xserverDir.getAbsolutePath());
 //        wineActivity.invoke("wine_init", new String[]{wineSettings[1], "explorer", "/desktop=shell,,android", path2file}, wineSettings);
     }
@@ -314,6 +299,9 @@ public class WineService extends Service implements WineIStream {
     public void onDestroy() {
         stopForeground(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        if (wm != null) {
+            wm.shutDown();
+        }
         xserver.destroy();
         notificationManager.cancel(NOTIFY_ID);
     }

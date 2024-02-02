@@ -26,6 +26,7 @@
 #include "../common/driverfuncs.h"
 #include "../common/meta.h"
 #include "../../util/u_memory.h"
+#include "../../../main_wm.h"
 
 /**
  * Global X driver lock
@@ -178,29 +179,29 @@ get_drawable_size( XMesaDisplay *dpy, Drawable d, GLuint *width, GLuint *height 
 }
 
 
-///**
-// * Return the size of the window (or pixmap) that corresponds to the
-// * given XMesaBuffer.
-// * \param width  returns width in pixels
-// * \param height  returns height in pixels
-// */
-//void
-//xmesa_get_window_size(XMesaDisplay *dpy, XMesaBuffer b,
-//                      GLuint *width, GLuint *height)
-//{
-//    Status stat;
-//
-//    mtx_lock(&_xmesa_lock);
-//    XSync(b->xm_visual->display, 0); /* added for Chromium */
-//    stat = get_drawable_size(dpy, b->frontxrb->pixmap, width, height);
-//    mtx_unlock(&_xmesa_lock);
-//
-//    if (!stat) {
-//        /* probably querying a window that's recently been destroyed */
-//        _mesa_warning(NULL, "XGetGeometry failed!\n");
-//        *width = *height = 1;
-//    }
-//}
+/**
+ * Return the size of the window (or pixmap) that corresponds to the
+ * given XMesaBuffer.
+ * \param width  returns width in pixels
+ * \param height  returns height in pixels
+ */
+void
+xmesa_get_window_size1(XMesaDisplay *dpy, XMesaBuffer b,
+                      GLuint *width, GLuint *height)
+{
+    Status stat;
+
+    mtx_lock(&_xmesa_lock);
+    XSync(b->xm_visual->display, 0); /* added for Chromium */
+    stat = get_drawable_size(dpy, b->frontxrb->pixmap, width, height);
+    mtx_unlock(&_xmesa_lock);
+
+    if (!stat) {
+        /* probably querying a window that's recently been destroyed */
+        _mesa_warning(NULL, "XGetGeometry failed!\n");
+        *width = *height = 1;
+    }
+}
 
 
 
@@ -1019,7 +1020,7 @@ XMesaCreatePixmapTextureBuffer(XMesaVisual v, XMesaPixmap p,
         return NULL;
 
     /* get pixmap size, update framebuffer/renderbuffer dims */
-    xmesa_get_window_size(v->display, b, &width, &height);
+    xmesa_get_window_size1(v->display, b, &width, &height);
     _mesa_resize_framebuffer(NULL, &(b->mesa_buffer), width, height);
 
     if (target == 0) {
@@ -1114,7 +1115,7 @@ void
 xmesa_check_and_update_buffer_size(XMesaContext xmctx, XMesaBuffer drawBuffer)
 {
     GLuint width, height;
-    xmesa_get_window_size(drawBuffer->display, drawBuffer, &width, &height);
+    xmesa_get_window_size1(drawBuffer->display, drawBuffer, &width, &height);
     if (drawBuffer->mesa_buffer.Width != width ||
         drawBuffer->mesa_buffer.Height != height) {
         struct gl_context *ctx = xmctx ? &xmctx->mesa : NULL;

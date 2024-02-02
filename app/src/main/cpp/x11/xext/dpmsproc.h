@@ -1,5 +1,5 @@
 #ifdef HAVE_DIX_CONFIG_H
-#include <dix-config.h>
+#include "../headers/dix-config.h"
 #endif
 
 #ifndef _DPMSPROC_H_

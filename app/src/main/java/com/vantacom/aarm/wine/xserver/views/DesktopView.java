@@ -2,6 +2,7 @@ package com.vantacom.aarm.wine.xserver.views;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.vantacom.aarm.wine.xserver.XServerManager;
@@ -25,6 +26,11 @@ public class DesktopView extends ViewGroup {
         this.layoutHeight = layoutHeight;
         this.xserver = xserver;
         createDesktopWindow(hwnd);
+        ScreenGroupView screenGroupView = new ScreenGroupView(xserver, xserver.getWM());
+        addView(screenGroupView);
+        screenGroupView.setLayout(0, 0, width, height);
+        screenGroupView.createContentView().layout(0, 0, width, height);
+        screenGroupView.setScale(1);
         addView(xserver.getCursor().getView());
     }
 

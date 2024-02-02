@@ -44,7 +44,7 @@ enum {
 };
 
 struct __GLXdrawable {
-    void (*destroy) (__GLXdrawable * private);
+    void (*destroy) (__GLXdrawable * _private);
     GLboolean(*swapBuffers) (ClientPtr client, __GLXdrawable *);
     void (*copySubBuffer) (__GLXdrawable * drawable,
                            int x, int y, int w, int h);

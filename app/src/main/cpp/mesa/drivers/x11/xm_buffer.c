@@ -8,6 +8,7 @@
 #include "../../main/renderbuffer.h"
 #include "../../swrast/s_renderbuffer.h"
 #include "../../util/u_memory.h"
+#include "../../../impl/sys/shm.h"
 #include "../../../x11/headers/extensions/XShm.h"
 
 

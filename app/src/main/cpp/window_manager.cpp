@@ -1,9 +1,12 @@
 #include "window_manager.h"
+#include "main_wm.h"
 #include "x11/headers/xutil.h"
 #include <cstring>
 #include <algorithm>
 #include <android/log.h>
+#include <thread>
 #include "util.h"
+#include "x11/headers/xlibint.h"
 
 #define LOG_TAG "WM"
 #define ALOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
@@ -24,11 +27,22 @@ unique_ptr<WindowManager> WindowManager::Create(const string& display_str) {
     // 1. Open X display.
     const char* display_c_str =
             display_str.empty() ? nullptr : display_str.c_str();
-    Display* display = XOpenDisplay(display_c_str);
-    if (display == nullptr) {
-        ALOGE("Failed to open X display %s", XDisplayName(display_c_str));
-        return nullptr;
+
+    Display* display = nullptr;
+    double start = clock();
+    int attempts = 0;
+    while (display == nullptr) {           // Wait until XServer is loaded.
+        if (attempts > 128) {
+            ALOGE("Failed to open X display %s", XDisplayName(display_c_str));
+            return nullptr;
+        }
+        if ((clock() - start) > 100000) {
+            display = XOpenDisplay(NULL);
+            attempts++;
+            start = clock();
+        }
     }
+
     // 2. Construct WindowManager instance.
     return unique_ptr<WindowManager>(new WindowManager(display));
 }
@@ -42,6 +56,10 @@ WindowManager::WindowManager(Display* display)
 
 WindowManager::~WindowManager() {
     XCloseDisplay(display_);
+}
+
+Display * WindowManager::getDisplay() {
+    return display_;
 }
 
 void WindowManager::Run() {

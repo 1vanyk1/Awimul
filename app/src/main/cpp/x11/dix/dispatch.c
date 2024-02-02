@@ -8,6 +8,7 @@
 int ProcInitialConnection();
 #endif
 
+#include <android/native_window.h>
 #include "../headers/windowstr.h"
 #include "../headers/fonts/fontstruct.h"
 #include "../headers/fonts/libxfont2.h"
@@ -33,6 +34,7 @@ int ProcInitialConnection();
 #include "../../xcb/xcb.h"
 #include "../xfixes/xfixesint.h"
 #include "../../main_wm.h"
+#include "../fb/fb.h"
 
 #ifdef XSERVER_DTRACE
 #include "../headers/registry.h"
@@ -377,12 +379,29 @@ DisableLimitedSchedulingLatency(void)
         SmartScheduleLatencyLimited = 0;
 }
 
+#define FPS(start) (CLOCKS_PER_SEC / (clock()-start))
+
+extern int gotDrawable;
+
+extern CARD32 *NativeFbBits;
+
+extern int isOnXserver;
+
+extern int isPausedXserver;
+
 void
 Dispatch(void)
 {
     int result;
     ClientPtr client;
     long start_tick;
+//    FbBits *dst;
+    long win_width, win_height;
+    FbStride dstStride;
+    int dstBpp;
+    int dstXoff, dstYoff;
+    DrawablePtr pNativeDraw;
+    GC *pGC;
 
     nextFreeClientID = 1;
     nClients = 0;
@@ -390,11 +409,25 @@ Dispatch(void)
     SmartScheduleSlice = SmartScheduleInterval;
     init_client_ready();
 
-    while (!dispatchException) {
+    double start = clock();
+
+    while (!dispatchException && isOnXserver) {
+        if (isPausedXserver) continue;
         if (InputCheckPending()) {
             ProcessInputEvents();
             FlushIfCriticalOutputPending();
         }
+//        if (FPS(start) < 30) {
+//            if (gotDrawable && nativeWindow != NULL) {
+//                ANativeWindow_Buffer surface_buffer;
+//                if (ANativeWindow_lock(nativeWindow, &surface_buffer, NULL) == 0) {
+//                    memcpy(surface_buffer.bits, NativeFbBits, win_width * win_height * 4);
+//                    ANativeWindow_unlockAndPost(nativeWindow);
+//                }
+//                ALOGE("gotDrawable %ld, %ld, %4.f", win_width, win_height, FPS(start));
+//            }
+//            ALOGE("UPDATE");
+//        }
         if (!WaitForSomething(clients_are_ready()))
             continue;
 
@@ -456,6 +489,29 @@ Dispatch(void)
                         currentClient = client;
                         result =
                                 (*client->requestVector[client->majorOp]) (client);
+
+//                        start = clock();
+                        if (!gotDrawable) {
+                            xFillPolyReq *stuff = (xFillPolyReq *) client->requestBuffer;
+                            int tmprc = dixLookupDrawable(&(pNativeDraw), stuff->drawable, client, M_ANY,
+                                                          DixWriteAccess);
+                            if (tmprc == Success) {
+                                pNativeDraw = &pNativeDraw->pScreen->root->drawable;
+                                tmprc = dixLookupGC(&(pGC), stuff->gc, client, DixUseAccess);
+                                if (tmprc == Success)
+                                    if ((pGC->depth == pNativeDraw->depth) &&
+                                        (pGC->pScreen == pNativeDraw->pScreen)) {
+                                        if (pGC->serialNumber != pNativeDraw->serialNumber)
+                                            ValidateGC(pNativeDraw, pGC);
+                                        win_width = pNativeDraw->width;
+                                        win_height = pNativeDraw->height;
+                                        fbGetDrawable(pNativeDraw, NativeFbBits, dstStride, dstBpp, dstXoff,
+                                                      dstYoff);
+                                        gotDrawable = TRUE;
+                                    }
+                            }
+                        }
+
                         currentClient = NULL;
                     }
                 }

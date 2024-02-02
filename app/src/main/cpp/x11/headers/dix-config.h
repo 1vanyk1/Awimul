@@ -130,7 +130,7 @@
 #undef HAVE_MKOSTEMP
 
 /* Define to 1 if you have the `mmap' function. */
-#undef HAVE_MMAP
+#define HAVE_MMAP 1
 
 /* Define to 1 if you have the function pthread_setname_np(const char*) */
 #undef HAVE_PTHREAD_SETNAME_NP_WITHOUT_TID

@@ -6,6 +6,7 @@
 
 #include "table.h"
 #include "stub.h"
+#include "../../main_wm.h"
 
 #else
 

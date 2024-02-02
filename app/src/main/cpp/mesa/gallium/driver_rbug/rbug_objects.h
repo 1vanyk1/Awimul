@@ -1,0 +1,201 @@
+#ifndef RBUG_OBJECTS_H
+#define RBUG_OBJECTS_H
+
+
+#include "../../include/pipe/p_compiler.h"
+#include "../../include/pipe/p_state.h"
+
+#include "rbug_screen.h"
+
+struct rbug_context;
+
+
+struct rbug_resource
+{
+    struct pipe_resource base;
+
+    struct pipe_resource *resource;
+
+    struct rbug_list list;
+};
+
+
+enum rbug_shader_type
+{
+    RBUG_SHADER_GEOM,
+    RBUG_SHADER_VERTEX,
+    RBUG_SHADER_FRAGMENT,
+};
+
+struct rbug_shader
+{
+    struct rbug_list list;
+
+    void *shader;
+    void *tokens;
+    void *replaced_shader;
+    void *replaced_tokens;
+
+    enum rbug_shader_type type;
+    bool disabled;
+};
+
+
+struct rbug_sampler_view
+{
+    struct pipe_sampler_view base;
+
+    struct pipe_sampler_view *sampler_view;
+};
+
+
+struct rbug_surface
+{
+    struct pipe_surface base;
+
+    struct pipe_surface *surface;
+};
+
+
+struct rbug_transfer
+{
+    struct pipe_transfer base;
+
+    struct pipe_context *pipe;
+    struct pipe_transfer *transfer;
+};
+
+
+static inline struct rbug_resource *
+rbug_resource(struct pipe_resource *_resource)
+{
+    if (!_resource)
+        return NULL;
+    (void)rbug_screen(_resource->screen);
+    return (struct rbug_resource *)_resource;
+}
+
+static inline struct rbug_sampler_view *
+rbug_sampler_view(struct pipe_sampler_view *_sampler_view)
+{
+    if (!_sampler_view)
+        return NULL;
+    (void)rbug_resource(_sampler_view->texture);
+    return (struct rbug_sampler_view *)_sampler_view;
+}
+
+static inline struct rbug_surface *
+rbug_surface(struct pipe_surface *_surface)
+{
+    if (!_surface)
+        return NULL;
+    (void)rbug_resource(_surface->texture);
+    return (struct rbug_surface *)_surface;
+}
+
+static inline struct rbug_transfer *
+rbug_transfer(struct pipe_transfer *_transfer)
+{
+    if (!_transfer)
+        return NULL;
+    (void)rbug_resource(_transfer->resource);
+    return (struct rbug_transfer *)_transfer;
+}
+
+static inline struct rbug_shader *
+rbug_shader(void *_state)
+{
+    if (!_state)
+        return NULL;
+    return (struct rbug_shader *)_state;
+}
+
+static inline struct pipe_resource *
+rbug_resource_unwrap(struct pipe_resource *_resource)
+{
+    if (!_resource)
+        return NULL;
+    return rbug_resource(_resource)->resource;
+}
+
+static inline struct pipe_sampler_view *
+rbug_sampler_view_unwrap(struct pipe_sampler_view *_sampler_view)
+{
+    if (!_sampler_view)
+        return NULL;
+    return rbug_sampler_view(_sampler_view)->sampler_view;
+}
+
+static inline struct pipe_surface *
+rbug_surface_unwrap(struct pipe_surface *_surface)
+{
+    if (!_surface)
+        return NULL;
+    return rbug_surface(_surface)->surface;
+}
+
+static inline struct pipe_transfer *
+rbug_transfer_unwrap(struct pipe_transfer *_transfer)
+{
+    if (!_transfer)
+        return NULL;
+    return rbug_transfer(_transfer)->transfer;
+}
+
+static inline void *
+rbug_shader_unwrap(void *_state)
+{
+    struct rbug_shader *shader;
+    if (!_state)
+        return NULL;
+
+    shader = rbug_shader(_state);
+    return shader->replaced_shader ? shader->replaced_shader : shader->shader;
+}
+
+
+struct pipe_resource *
+rbug_resource_create(struct rbug_screen *rb_screen,
+                     struct pipe_resource *resource);
+
+void
+rbug_resource_destroy(struct rbug_resource *rb_resource);
+
+struct pipe_surface *
+rbug_surface_create(struct rbug_context *rb_context,
+                    struct rbug_resource *rb_resource,
+                    struct pipe_surface *surface);
+
+void
+rbug_surface_destroy(struct rbug_context *rb_context,
+                     struct rbug_surface *rb_surface);
+
+struct pipe_sampler_view *
+rbug_sampler_view_create(struct rbug_context *rb_context,
+                         struct rbug_resource *rb_resource,
+                         struct pipe_sampler_view *view);
+
+void
+rbug_sampler_view_destroy(struct rbug_context *rb_context,
+                          struct rbug_sampler_view *rb_sampler_view);
+
+struct pipe_transfer *
+rbug_transfer_create(struct rbug_context *rb_context,
+                     struct rbug_resource *rb_resource,
+                     struct pipe_transfer *transfer);
+
+void
+rbug_transfer_destroy(struct rbug_context *rb_context,
+                      struct rbug_transfer *rb_transfer);
+
+void *
+rbug_shader_create(struct rbug_context *rb_context,
+                   const struct pipe_shader_state *state,
+                   void *result, enum rbug_shader_type type);
+
+void
+rbug_shader_destroy(struct rbug_context *rb_context,
+                    struct rbug_shader *rb_shader);
+
+
+#endif /* RBUG_OBJECTS_H */

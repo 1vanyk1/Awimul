@@ -311,7 +311,7 @@ extern XMesaBuffer
 xmesa_find_buffer(Display *dpy, Colormap cmap, XMesaBuffer notThis);
 
 extern void
-xmesa_get_window_size(Display *dpy, XMesaBuffer b,
+xmesa_get_window_size1(Display *dpy, XMesaBuffer b,
                       GLuint *width, GLuint *height);
 
 extern void

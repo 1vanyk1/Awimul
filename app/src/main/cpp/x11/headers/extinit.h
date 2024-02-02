@@ -8,6 +8,13 @@
 extern _X_EXPORT Bool noCompositeExtension;
 extern void CompositeExtensionInit(void);
 
+#define XTEST 1
+#define COMPOSITE 1
+#define DAMAGE 1
+#define MITSHM 1
+#define DPMSExtension 1
+#define GLXEXT 1
+
 #ifdef DAMAGE
 extern _X_EXPORT Bool noDamageExtension;
 extern void DamageExtensionInit(void);
@@ -29,6 +36,7 @@ extern void GEExtensionInit(void);
 
 #ifdef GLXEXT
 extern _X_EXPORT Bool noGlxExtension;
+extern void GlxExtensionInit(void);
 #endif
 
 #include "extensions/panoramiXproto.h"

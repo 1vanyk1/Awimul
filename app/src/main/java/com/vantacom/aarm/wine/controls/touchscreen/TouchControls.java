@@ -54,7 +54,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
     public void stopMoving() {
         if (!isMultiTouch) {
             if (isMoving) {
-                MouseActions.setLeftButtonClick(mouse.getX(), mouse.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+                MouseActions.setLeftButtonClick(mouse.getX(), mouse.getY(), xserver.getWM(), MouseActions.MOUSE_UP);
                 isMoving = false;
                 if (isLongPress) {
                     isLongPress = false;
@@ -101,12 +101,12 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
                                 try {
                                     mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
                                 } catch (ClassNotFoundException e) {}
-                                MouseActions.setLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN);
+                                MouseActions.setLeftButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_DOWN);
                             } else {
                                 try {
                                     mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
                                 } catch (ClassNotFoundException e) {}
-                                MouseActions.setLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE);
+                                MouseActions.setLeftButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_MOVE);
                             }
                         }
                     }
@@ -122,7 +122,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
                     isMultiTouch = true;
                     if (event.getPointerCount() == 2) {
                         xserver.getResizeManager().setStartDistance(event, point2);
-                        MouseActions.setLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+//                        MouseActions.setLeftButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_UP);
                         event.setAction(MotionEvent.ACTION_UP);
                         gDetector.onTouchEvent(event);
                     } else if (event.getPointerCount() == 3) {
@@ -145,7 +145,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
             case MotionEvent.ACTION_UP:
                 if (!isMultiTouch) {
                     if (isMoving) {
-                        MouseActions.setLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP);
+//                        MouseActions.setLeftButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_UP);
                         isMoving = false;
                         if (isLongPress) {
                             isLongPress = false;
@@ -154,7 +154,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
                         if (isLongPress) {
                             isLongPress = false;
                             updateWindow(event);
-                            MouseActions.singleRightButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow());
+                            MouseActions.singleRightButtonClick(event.getX(), event.getY(), xserver.getWM());
                         }
                     }
                     xserver.getFocusedWindow().setCanMove(true);
@@ -201,9 +201,10 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
     public boolean onSingleTapUp(MotionEvent event) {
         if (!isMultiTouch) {
             updateWindow(event);
-            return MouseActions.singleLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow());
+            return MouseActions.singleLeftButtonClick(event.getX(), event.getY(), xserver.getWM());
         }
-        return MouseActions.setLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE);
+        return true;
+//        return MouseActions.setLeftButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_MOVE);
     }
 
     @Override
@@ -236,7 +237,7 @@ public class TouchControls extends BaseControls implements GestureDetector.OnGes
 
     @Override
     public boolean onDoubleTap(MotionEvent event) {
-        return MouseActions.singleLeftButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow());
+        return MouseActions.singleLeftButtonClick(event.getX(), event.getY(), xserver.getWM());
     }
 
     @Override

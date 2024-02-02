@@ -40,7 +40,7 @@ public abstract class BaseControls implements View.OnTouchListener, View.OnGener
         }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_DOWN, MouseActions.LEFT_BUTTON);
+                MouseActions.setButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_DOWN, MouseActions.LEFT_BUTTON);
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (xserver.getFocusedWindow().getCanMove()) {
@@ -50,14 +50,14 @@ public abstract class BaseControls implements View.OnTouchListener, View.OnGener
                     try {
                         mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
                     } catch (ClassNotFoundException e) {}
-                    MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
+                    MouseActions.setButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (isMoving) {
                     isMoving = false;
                 }
-                MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_UP, MouseActions.LEFT_BUTTON);
+                MouseActions.setButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_UP, MouseActions.LEFT_BUTTON);
                 xserver.getFocusedWindow().setCanMove(true);
                 break;
         }
@@ -76,12 +76,12 @@ public abstract class BaseControls implements View.OnTouchListener, View.OnGener
         try {
             mouse.setPosition(xserver.getFocusedWindow().convertWinCordsToDesk(event.getX(), event.getY()));
         } catch (ClassNotFoundException e) {}
-        MouseActions.setButtonClick(event.getX(), event.getY(), wineActivity, xserver.getFocusedWindow(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
+        MouseActions.setButtonClick(event.getX(), event.getY(), xserver.getWM(), MouseActions.MOUSE_MOVE, MouseActions.LEFT_BUTTON);
         if (event.getAction() == MotionEvent.ACTION_SCROLL) {
             if (event.getAxisValue(MotionEvent.AXIS_VSCROLL) < 0.0f) {
-                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), -1);
+                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWM(), -1);
             } else {
-                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), 1);
+                MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWM(), 1);
             }
         }
         return false;

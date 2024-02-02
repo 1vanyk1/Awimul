@@ -865,7 +865,7 @@ GetDisplay(char *program, char *dpyName)
 /***====================================================================***/
 
 #ifdef DEBUG
-extern int yydebug;
+int yydebug;
 #endif
 
 int

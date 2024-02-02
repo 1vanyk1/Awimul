@@ -12,6 +12,7 @@ import com.vantacom.aarm.wine.WineActivity;
 import com.vantacom.aarm.wine.controls.keyboard.Keyboard;
 import com.vantacom.aarm.wine.xserver.views.Window;
 import com.vantacom.aarm.wine.xserver.views.WindowsGroup;
+import com.vantacom.aarm.xserver.WM;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class XServerManager {
     private int screenWidth, screenHeight;
     private int desktopWidth, desktopHeight;
     private WineActivity activity;
+    private WM wm;
     private LibraryManager wineActivity;
     private Keyboard keyboard;
     private DesktopView desktopView;
@@ -31,12 +33,13 @@ public class XServerManager {
 
     private final static int LOG_PIXELS = 96;
 
-    public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, LibraryManager wineActivity) {
+    public XServerManager(int screenWidth, int screenHeight, int desktopWidth, int desktopHeight, WineActivity activity, LibraryManager wineActivity, WM wm) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.desktopWidth = desktopWidth;
         this.desktopHeight = desktopHeight;
         this.activity = activity;
+        this.wm = wm;
         this.wineActivity = wineActivity;
         this.keyboard = new Keyboard(activity, this);
         zOrder = new ArrayList<Integer>();
@@ -127,6 +130,8 @@ public class XServerManager {
     public Context getContext() { return activity; }
 
     public LibraryManager getWineActivity() { return wineActivity; }
+
+    public WM getWM() { return wm; }
 
     public Keyboard getKeyboard() { return keyboard; }
 
@@ -252,11 +257,11 @@ public class XServerManager {
             this.desktopView = new DesktopView(this, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
             addWindow(hwnd, desktopView.getDesktopWindow());
             changeFocus(desktopView.getDesktopWindow());
-            try {
-                wineActivity.invoke("wine_config_changed", LOG_PIXELS);
-            } catch (Exception e) {
-                Log.e("wine", e.toString());
-            }
+//            try {
+//                wineActivity.invoke("wine_config_changed", LOG_PIXELS);
+//            } catch (Exception e) {
+//                Log.e("wine", e.toString());
+//            }
         } else {
             activity.runOnUiThread(new Runnable() {
                 @Override
@@ -264,11 +269,11 @@ public class XServerManager {
                     XServerManager.this.desktopView = new DesktopView(XServerManager.this, activity, hwnd, desktopWidth, desktopHeight, screenWidth, screenHeight);
                     addWindow(hwnd, desktopView.getDesktopWindow());
                     changeFocus(desktopView.getDesktopWindow());
-                    try {
-                        wineActivity.invoke("wine_config_changed", LOG_PIXELS);
-                    } catch (Exception e) {
-                        Log.e("wine", e.toString());
-                    }
+//                    try {
+//                        wineActivity.invoke("wine_config_changed", LOG_PIXELS);
+//                    } catch (Exception e) {
+//                        Log.e("wine", e.toString());
+//                    }
                 }
             });
             activity.createDesktopWindow(XServerManager.this);

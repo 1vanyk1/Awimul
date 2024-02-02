@@ -1,5 +1,5 @@
-#ifndef _SYS_SHM_H
-#define _SYS_SHM_H
+#ifndef _SYS_SHM_H_
+#define _SYS_SHM_H_
 
 #include <linux/shm.h>
 #include <stdint.h>

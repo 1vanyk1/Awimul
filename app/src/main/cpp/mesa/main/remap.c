@@ -9,6 +9,7 @@
 #define need_MESA_remap_table
 #include "remap_helper.h"
 #include "errors.h"
+#include "../../main_wm.h"
 
 
 /* this is global for quick access */

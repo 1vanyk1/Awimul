@@ -406,10 +406,10 @@ void glXSwapIntervalEXT (Display *dpy, GLXDrawable drawable, int interval);
 #define GLX_AUX9_EXT                      0x20EB
 typedef void ( *PFNGLXBINDTEXIMAGEEXTPROC) (Display *dpy, GLXDrawable drawable, int buffer, const int *attrib_list);
 typedef void ( *PFNGLXRELEASETEXIMAGEEXTPROC) (Display *dpy, GLXDrawable drawable, int buffer);
-#ifdef GLX_GLXEXT_PROTOTYPES
+//#ifdef GLX_GLXEXT_PROTOTYPES
 void glXBindTexImageEXT (Display *dpy, GLXDrawable drawable, int buffer, const int *attrib_list);
 void glXReleaseTexImageEXT (Display *dpy, GLXDrawable drawable, int buffer);
-#endif
+//#endif
 #endif /* GLX_EXT_texture_from_pixmap */
 
 #ifndef GLX_EXT_visual_info

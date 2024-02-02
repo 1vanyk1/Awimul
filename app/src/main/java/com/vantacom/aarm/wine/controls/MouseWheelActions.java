@@ -24,10 +24,10 @@ public class MouseWheelActions {
     public void move(Mouse mouse, MotionEvent event) {
         float eventY = event.getY();
         if (eventY + 5 < y) {
-            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), -1);
+            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWM(), -1);
             y = eventY;
         } else if (eventY - 5 > y) {
-            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWineActivity(), xserver.getFocusedWindow(), 1);
+            MouseActions.scroll(mouse.getX(), mouse.getY(), xserver.getWM(), 1);
             y = eventY;
         }
     }

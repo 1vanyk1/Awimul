@@ -49,6 +49,10 @@ extern void Dispatch(void);
 
 CallbackListPtr RootWindowFinalizeCallback = NULL;
 
+extern int isOnXserver;
+
+extern int gotDrawable;
+
 int
 dix_main(int argc, char *argv[], char *envp[])
 {
@@ -67,7 +71,7 @@ dix_main(int argc, char *argv[], char *envp[])
 
     alwaysCheckForInput[0] = 0;
     alwaysCheckForInput[1] = 1;
-    while (1) {
+    while (isOnXserver) {
         serverGeneration++;
         ScreenSaverTime = defaultScreenSaverTime;
         ScreenSaverInterval = defaultScreenSaverInterval;
@@ -193,6 +197,8 @@ dix_main(int argc, char *argv[], char *envp[])
         InputThreadInit();
 
         Dispatch();
+
+        gotDrawable = FALSE;
 
         UndisplayDevices();
         DisableAllDevices();

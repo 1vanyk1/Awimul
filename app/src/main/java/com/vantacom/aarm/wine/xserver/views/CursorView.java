@@ -14,10 +14,12 @@ public class CursorView extends androidx.appcompat.widget.AppCompatImageView {
         super(context);
         this.context = context;
         Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.arror);
-        setImageBitmap(image);
-        layout(0, 0, image.getWidth(), image.getHeight());
-        setX(x);
-        setY(y);
+        if (image != null) {
+            setImageBitmap(image);
+            layout(0, 0, image.getWidth(), image.getHeight());
+            setX(x);
+            setY(y);
+        }
         setVisibility(INVISIBLE);
     }
 

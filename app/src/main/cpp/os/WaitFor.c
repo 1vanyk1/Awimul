@@ -15,7 +15,7 @@
 #include "../x11/headers/dixstruct.h"
 #include "../x11/headers/opaque.h"
 #ifdef DPMSExtension
-#include "dpmsproc.h"
+#include "../x11/xext/dpmsproc.h"
 #endif
 #include "../x11/headers/busfault.h"
 #include "../main_wm.h"
@@ -38,7 +38,7 @@
 #endif
 
 #ifdef DPMSExtension
-#include <X11/extensions/dpmsconst.h>
+#include "../x11/headers/extensions/dpmsconst.h"
 #endif
 
 struct _OsTimerRec {
@@ -109,6 +109,8 @@ check_timers(void)
  *     pClientsReady is an array to store ready client->index values into.
  *****************/
 
+extern int isOnXserver;
+
 Bool
 WaitForSomething(Bool are_ready)
 {
@@ -133,7 +135,7 @@ WaitForSomething(Bool are_ready)
 
     /* We need a while loop here to handle
        crashed connections and the screen saver timeout */
-    while (1) {
+    while (isOnXserver) {
         /* deal with any blocked jobs */
         if (workQueue) {
             ProcessWorkQueue();
@@ -178,6 +180,7 @@ WaitForSomething(Bool are_ready)
             return TRUE;
         }
     }
+    return FALSE;
 }
 
 void

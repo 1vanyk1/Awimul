@@ -445,8 +445,8 @@ __glXDRIscreenProbe(ScreenPtr pScreen)
     return &screen->base;
 
     handle_error:
-    if (screen->driver)
-        dlclose(screen->driver);
+//    if (screen->driver) // uncomment if a real dri is used
+//        dlclose(screen->driver);
 
     free(screen);
 

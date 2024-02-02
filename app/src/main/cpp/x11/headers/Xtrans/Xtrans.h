@@ -30,6 +30,8 @@ static const char *__xtransname = "_X11Trans";
 
 #define TRANS_XSERV(func) _XSERVTrans##func
 
+#define TRANS_ICE(func) _IceTrans##func
+
 #define TRANS(func) _XimXTrans##func
 
 #ifdef FS_t
@@ -363,6 +365,192 @@ int TRANS(WSAStartup)();
 
 
 
+void TRANS_ICE(FreeConnInfo) (
+        XtransConnInfo 	/* ciptr */
+);
+
+#ifdef TRANS_CLIENT
+
+XtransConnInfo TRANS_ICE(OpenCOTSClient)(
+        const char *	/* address */
+);
+
+#endif /* TRANS_CLIENT */
+
+XtransConnInfo TRANS_ICE(OpenCOTSServer)(
+        const char *	/* address */
+);
+
+XtransConnInfo TRANS_ICE(ReopenCOTSServer)(
+        int,		/* trans_id */
+        int,		/* fd */
+        const char *	/* port */
+);
+
+int TRANS_ICE(GetReopenInfo)(
+        XtransConnInfo,	/* ciptr */
+        int *,		/* trans_id */
+        int *,		/* fd */
+        char **		/* port */
+);
+
+
+int TRANS_ICE(SetOption)(
+        XtransConnInfo,	/* ciptr */
+        int,		/* option */
+        int			/* arg */
+);
+
+int TRANS_ICE(CreateListener)(
+        XtransConnInfo,	/* ciptr */
+        const char *,	/* port */
+        unsigned int	/* flags */
+);
+
+int TRANS_ICE(Received) (
+        const char*         /* protocol*/
+);
+
+int TRANS_ICE(NoListen) (
+        const char*         /* protocol*/
+);
+
+int TRANS_ICE(Listen) (
+        const char*         /* protocol*/
+);
+
+int TRANS_ICE(IsListening) (
+        const char*         /* protocol*/
+);
+
+int TRANS_ICE(ResetListener)(
+        XtransConnInfo	/* ciptr */
+);
+
+XtransConnInfo TRANS_ICE(Accept)(
+        XtransConnInfo,	/* ciptr */
+        int *		/* status */
+);
+
+#ifdef TRANS_CLIENT
+
+int TRANS_ICE(Connect)(
+        XtransConnInfo,	/* ciptr */
+        const char *	/* address */
+);
+
+#endif /* TRANS_CLIENT */
+
+int TRANS_ICE(BytesReadable)(
+        XtransConnInfo,	/* ciptr */
+        BytesReadable_t *	/* pend */
+);
+
+int TRANS_ICE(Read)(
+        XtransConnInfo,	/* ciptr */
+        char *,		/* buf */
+        int			/* size */
+);
+
+int TRANS_ICE(Write)(
+        XtransConnInfo,	/* ciptr */
+        char *,		/* buf */
+        int			/* size */
+);
+
+int TRANS_ICE(Readv)(
+        XtransConnInfo,	/* ciptr */
+        struct iovec *,	/* buf */
+        int			/* size */
+);
+
+int TRANS_ICE(Writev)(
+        XtransConnInfo,	/* ciptr */
+        struct iovec *,	/* buf */
+        int			/* size */
+);
+
+int TRANS_ICE(SendFd) (XtransConnInfo ciptr, int fd, int do_close);
+
+int TRANS_ICE(RecvFd) (XtransConnInfo ciptr);
+
+int TRANS_ICE(Disconnect)(
+        XtransConnInfo	/* ciptr */
+);
+
+int TRANS_ICE(Close)(
+        XtransConnInfo	/* ciptr */
+);
+
+int TRANS_ICE(CloseForCloning)(
+        XtransConnInfo	/* ciptr */
+);
+
+int TRANS_ICE(IsLocal)(
+        XtransConnInfo	/* ciptr */
+);
+
+int TRANS_ICE(GetPeerAddr)(
+        XtransConnInfo,	/* ciptr */
+        int *,		/* familyp */
+        int *,		/* addrlenp */
+        Xtransaddr **	/* addrp */
+);
+
+int TRANS_ICE(GetConnectionNumber)(
+        XtransConnInfo	/* ciptr */
+);
+
+int TRANS_ICE(MakeAllCOTSServerListeners)(
+        const char *,	/* port */
+        int *,		/* partial */
+        int *,		/* count_ret */
+        XtransConnInfo **	/* ciptrs_ret */
+);
+
+
+/*
+ * Function Prototypes for Utility Functions.
+ */
+
+#ifdef X11_t
+
+int TRANS_ICE(ConvertAddress)(
+    int *,		/* familyp */
+    int *,		/* addrlenp */
+    Xtransaddr **	/* addrp */
+);
+
+#endif /* X11_t */
+
+//#ifdef ICE_t
+
+char *
+TRANS_ICE(GetMyNetworkId)(
+    XtransConnInfo	/* ciptr */
+);
+
+char *
+TRANS_ICE(GetPeerNetworkId)(
+    XtransConnInfo	/* ciptr */
+);
+
+//#endif /* ICE_t */
+
+int
+TRANS_ICE(GetHostname) (
+        char *	/* buf */,
+        int 	/* maxlen */
+);
+
+#if defined(WIN32) && defined(TCPCONN)
+int TRANS_ICE(WSAStartup)();
+#endif
+
+
+
+
+
 void TRANS_XSERV(FreeConnInfo) (
         XtransConnInfo 	/* ciptr */
 );
@@ -376,20 +564,20 @@ XtransConnInfo TRANS_XSERV(OpenCOTSClient)(
 #endif /* TRANS_CLIENT */
 
 XtransConnInfo TRANS_XSERV(OpenCOTSServer)(
-    const char *	/* address */
+        const char *	/* address */
 );
 
 XtransConnInfo TRANS_XSERV(ReopenCOTSServer)(
-    int,		/* trans_id */
-    int,		/* fd */
-    const char *	/* port */
+        int,		/* trans_id */
+        int,		/* fd */
+        const char *	/* port */
 );
 
 int TRANS_XSERV(GetReopenInfo)(
-    XtransConnInfo,	/* ciptr */
-    int *,		/* trans_id */
-    int *,		/* fd */
-    char **		/* port */
+        XtransConnInfo,	/* ciptr */
+        int *,		/* trans_id */
+        int *,		/* fd */
+        char **		/* port */
 );
 
 
@@ -400,34 +588,34 @@ int TRANS_XSERV(SetOption)(
 );
 
 int TRANS_XSERV(CreateListener)(
-    XtransConnInfo,	/* ciptr */
-    const char *,	/* port */
-    unsigned int	/* flags */
+        XtransConnInfo,	/* ciptr */
+        const char *,	/* port */
+        unsigned int	/* flags */
 );
 
 int TRANS_XSERV(Received) (
-    const char*         /* protocol*/
+        const char*         /* protocol*/
 );
 
 int TRANS_XSERV(NoListen) (
-    const char*         /* protocol*/
+        const char*         /* protocol*/
 );
 
 int TRANS_XSERV(Listen) (
-    const char*         /* protocol*/
+        const char*         /* protocol*/
 );
 
 int TRANS_XSERV(IsListening) (
-    const char*         /* protocol*/
+        const char*         /* protocol*/
 );
 
 int TRANS_XSERV(ResetListener)(
-    XtransConnInfo	/* ciptr */
+        XtransConnInfo	/* ciptr */
 );
 
 XtransConnInfo TRANS_XSERV(Accept)(
-    XtransConnInfo,	/* ciptr */
-    int *		/* status */
+        XtransConnInfo,	/* ciptr */
+        int *		/* status */
 );
 
 #ifdef TRANS_CLIENT
@@ -500,10 +688,10 @@ int TRANS_XSERV(GetConnectionNumber)(
 );
 
 int TRANS_XSERV(MakeAllCOTSServerListeners)(
-    const char *,	/* port */
-    int *,		/* partial */
-    int *,		/* count_ret */
-    XtransConnInfo **	/* ciptrs_ret */
+        const char *,	/* port */
+        int *,		/* partial */
+        int *,		/* count_ret */
+        XtransConnInfo **	/* ciptrs_ret */
 );
 
 
@@ -544,5 +732,9 @@ TRANS_XSERV(GetHostname) (
 #if defined(WIN32) && defined(TCPCONN)
 int TRANS_XSERV(WSAStartup)();
 #endif
+
+
+
+
 
 #endif /* _XTRANS_H_ */
